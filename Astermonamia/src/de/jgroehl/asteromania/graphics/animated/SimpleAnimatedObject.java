@@ -6,8 +6,8 @@ import android.graphics.Bitmap;
 public class SimpleAnimatedObject extends AnimatedGraphicsObject {
 
 	public SimpleAnimatedObject(float xPosition, float yPosition,
-			Bitmap graphics, int frameCount, int animationPeriod) {
-		super(xPosition, yPosition, graphics, frameCount, animationPeriod);
+			Bitmap graphics, int frameCount, int animationPeriod, Align align) {
+		super(xPosition, yPosition, graphics, frameCount, animationPeriod, align);
 
 	}
 

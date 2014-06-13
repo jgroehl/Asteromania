@@ -26,7 +26,8 @@ public class SimpleShot extends GraphicsObject {
 						: BitmapFactory
 								.decodeResource(
 										res,
-										de.jgroehl.asteromania.R.drawable.normal_shot_up));
+										de.jgroehl.asteromania.R.drawable.normal_shot_up),
+				Align.MID_CENTER);
 		direction = target.equals(Target.PLAYER) ? 1.0f : -1.0f;
 		this.shotSpeed = shotSpeed;
 	}
@@ -35,7 +36,7 @@ public class SimpleShot extends GraphicsObject {
 	public void update(GameHandler handler) {
 
 		yPosition = yPosition + (shotSpeed * direction);
-		if (yPosition > 1.1f || yPosition < -0.1f){
+		if (yPosition > 1.1f || yPosition < -0.1f) {
 			handler.remove(this);
 		}
 

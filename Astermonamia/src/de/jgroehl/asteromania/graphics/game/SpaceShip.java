@@ -26,10 +26,12 @@ public class SpaceShip extends AnimatedGraphicsObject {
 	private float shotSpeedFactor = 1.0f;
 
 	public SpaceShip(Bitmap graphics, SensorHandler sensorHandler, Resources res) {
-		super(0.5f, 0.8f, graphics, IMAGE_FRAMES, ANIMATION_TIME);
+		super(0.5f, 0.8f, graphics, IMAGE_FRAMES, ANIMATION_TIME,
+				Align.MID_CENTER);
 		this.sensorHandler = sensorHandler;
 		flames = new SimpleAnimatedObject(xPosition, yPosition,
-				BitmapFactory.decodeResource(res, R.drawable.fire), 6, 75);
+				BitmapFactory.decodeResource(res, R.drawable.fire), 6, 75,
+				Align.MID_CENTER);
 		flames.setInsets(-1, graphics.getHeight() / 2 - 2);
 		Log.d(TAG, "Player Object created.");
 	}

@@ -12,8 +12,8 @@ public abstract class AbstractClickableElement extends GraphicsObject implements
 	private final EventCallback callback;
 
 	public AbstractClickableElement(float xPosition, float yPosition, Bitmap graphics,
-			EventCallback callback) {
-		super(xPosition, yPosition, graphics);
+			EventCallback callback, Align align) {
+		super(xPosition, yPosition, graphics, align);
 		this.callback = callback;
 	}
 
