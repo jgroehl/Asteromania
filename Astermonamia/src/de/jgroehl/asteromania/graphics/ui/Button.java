@@ -10,116 +10,113 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.util.Log;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
-import de.jgroehl.asteromania.graphics.GameObject;
-import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 
-public class Button extends GameObject implements Clickable {
+public class Button extends AbstractClickableElement {
 
-	private final float width;
-	private final float height;
+	private final float relativeWidth;
+	private final float relativeHeight;
 	private final String buttonText;
 	private Paint textPaint;
 	private Rect textBounds = new Rect();
 	private RectF drawRect;
-	private Bitmap background;
 	private Bitmap ninePatch;
-	private Bitmap icon;
 	private Bitmap rawIcon;
 	private final Paint graphicsPaint = new Paint();
-	private final EventCallback callback;
+	private Align align;
 
 	public Button(String buttonText, float xPosition, float yPosition,
 			float width, float height, Resources resources,
 			EventCallback callback) {
-		super(xPosition, yPosition);
+		this(buttonText, xPosition, yPosition, width, height, resources,
+				callback, Align.MID_CENTER);
+	}
+
+	public Button(String buttonText, float xPosition, float yPosition,
+			float width, float height, Resources resources,
+			EventCallback callback, Align align) {
+		super(xPosition, yPosition, null, callback, align);
 
 		ninePatch = BitmapFactory.decodeResource(resources, R.drawable.button);
 		this.buttonText = buttonText;
 
-		this.width = width;
-		this.height = height;
+		this.align = align;
 
-		this.callback = callback;
+		this.relativeWidth = width;
+		this.relativeHeight = height;
 
 	}
 
 	public Button(Bitmap icon, float xPosition, float yPosition, float width,
 			float height, Resources resources, EventCallback callback) {
-		super(xPosition, yPosition);
+		this(icon, xPosition, yPosition, width, height, resources, callback,
+				Align.MID_CENTER);
+	}
+
+	public Button(Bitmap icon, float xPosition, float yPosition, float width,
+			float height, Resources resources, EventCallback callback,
+			Align align) {
+		super(xPosition, yPosition, null, callback, align);
 
 		this.rawIcon = icon;
+
+		this.align = align;
 
 		buttonText = null;
 		ninePatch = BitmapFactory.decodeResource(resources, R.drawable.button);
 
-		this.width = width;
-		this.height = height;
+		this.relativeWidth = width;
+		this.relativeHeight = height;
 
-		this.callback = callback;
-	}
-
-	@Override
-	public boolean isClicked(int x, int y, int screenWidth, int screenHeight) {
-		return xPosition * screenWidth - width * screenWidth / 2 < x
-				&& xPosition * screenWidth + width * screenWidth / 2 > x
-				&& yPosition * screenHeight - height * screenHeight / 2 < y
-				&& yPosition * screenHeight + height * screenHeight / 2 > y;
-	}
-
-	@Override
-	public void performAction(GameHandler gameHandler) {
-		gameHandler.getSoundManager().playClickSound();
-		callback.action(gameHandler);
 	}
 
 	@Override
 	public void draw(Canvas c) {
 		if (drawRect == null) {
-			drawRect = new RectF(xPosition * c.getWidth() - (width / 2)
-					* c.getWidth(), yPosition * c.getHeight() - (height / 2)
-					* c.getHeight(), xPosition * c.getWidth() + (width / 2)
-					* c.getWidth(), yPosition * c.getHeight() + (height / 2)
-					* c.getHeight());
-		}
-		if (background == null) {
-			background = createBackground(c.getWidth(), c.getHeight(),
-					createNinePatch(ninePatch));
-			ninePatch = null;
+			drawRect = new RectF(xPosition * c.getWidth() - (relativeWidth / 2)
+					* c.getWidth(), yPosition * c.getHeight()
+					- (relativeHeight / 2) * c.getHeight(), xPosition
+					* c.getWidth() + (relativeWidth / 2) * c.getWidth(),
+					yPosition * c.getHeight() + (relativeHeight / 2)
+							* c.getHeight());
 		}
 		if (buttonText != null && textPaint == null) {
 			textPaint = setupTextPaint(c.getHeight());
 		}
-		if (rawIcon != null && icon == null) {
-			icon = Bitmap.createScaledBitmap(rawIcon,
-					(int) (width * c.getWidth() * 0.75),
-					(int) (height * c.getHeight() * 0.75), true);
-			rawIcon = null;
+		if (graphics == null) {
+			setGraphics(
+					Bitmap.createBitmap(createBackground(c.getWidth(),
+							c.getHeight(), createNinePatch(ninePatch))), align);
+			Canvas c2 = new Canvas(graphics);
+			if (buttonText != null) {
+				drawText(c2, 2, 2, Color.LTGRAY);
+				drawText(c2, 0, 0, Color.GRAY);
+				drawText(c2, -1, -1, Color.DKGRAY);
+			}
+			if (rawIcon != null) {
+				Log.i("IMPORTANT", "created icon!");
+				c2.drawBitmap(
+						Bitmap.createScaledBitmap(rawIcon, (int) (relativeWidth
+								* c.getWidth() * 0.75), (int) (relativeHeight
+								* c.getHeight() * 0.75), true),
+						(float) (c2.getWidth() * 0.125),
+						(float) (c2.getHeight() * 0.0625), graphicsPaint);
+				rawIcon = null;
+			}
+			ninePatch = null;
 		}
-		c.drawBitmap(background,
-				xPosition * c.getWidth() - width * c.getWidth() / 2, yPosition
-						* c.getHeight() - height * c.getHeight() / 2,
-				graphicsPaint);
-		if (buttonText != null) {
-			drawText(c, 2, 2, Color.LTGRAY);
-			drawText(c, 0, 0, Color.GRAY);
-			drawText(c, -1, -1, Color.DKGRAY);
-		} else if (icon != null) {
-			c.drawBitmap(icon, xPosition * c.getWidth() - width * c.getWidth()
-					* 3 / 8, yPosition * c.getHeight() - height * c.getHeight()
-					/ 2, graphicsPaint);
-		}
+
+		super.draw(c);
 
 	}
 
 	private void drawText(Canvas c, int xTrans, int yTrans, int color) {
 		textPaint.setColor(color);
-		c.drawText(buttonText, xPosition * c.getWidth() - width * c.getWidth()
-				/ 2 + (drawRect.width() - textBounds.width()) / 2 + xTrans,
-				yPosition * c.getHeight() + height * c.getHeight() * 2 / 5
-						- textPaint.getFontMetrics().bottom + yTrans, textPaint);
+		c.drawText(buttonText, (drawRect.width() - textBounds.width()) / 2
+				+ xTrans, drawRect.height() * 11 / 16 + yTrans, textPaint);
 	}
 
 	@Override
@@ -128,8 +125,8 @@ public class Button extends GameObject implements Clickable {
 	}
 
 	private Bitmap createBackground(int width, int height, Bitmap[] ninePatch) {
-		int targetWidth = (int) (this.width * width);
-		int targetHeight = (int) (this.height * height);
+		int targetWidth = (int) (this.relativeWidth * width);
+		int targetHeight = (int) (this.relativeHeight * height);
 
 		Bitmap result = Bitmap.createBitmap(targetWidth, targetHeight,
 				Bitmap.Config.ARGB_8888);
@@ -197,7 +194,7 @@ public class Button extends GameObject implements Clickable {
 	private Paint setupTextPaint(int height) {
 		Paint textPaint = new Paint();
 		textPaint.setStyle(Style.FILL);
-		textPaint.setTextSize((int) (this.height * height * 0.666));
+		textPaint.setTextSize((int) (this.relativeHeight * height * 0.666));
 		textPaint.setColor(Color.BLACK);
 		textPaint.setTypeface(Typeface.create("CALIBRI", Typeface.BOLD));
 		textPaint.getTextBounds(buttonText, 0, buttonText.length(), textBounds);

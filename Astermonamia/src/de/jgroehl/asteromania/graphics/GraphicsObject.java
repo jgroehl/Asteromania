@@ -6,12 +6,12 @@ import android.graphics.Paint;
 
 public abstract class GraphicsObject extends GameObject {
 
-	private final Bitmap graphics;
+	protected Bitmap graphics;
 	private final Paint imagePaint = new Paint();
-	protected final int alignmentX;
-	protected final int alignmentY;
-	protected final int width;
-	protected final int height;
+	protected int alignmentX;
+	protected int alignmentY;
+	protected int width;
+	protected int height;
 
 	/**
 	 * The Alignment of the image relative to its x and y position.
@@ -31,8 +31,13 @@ public abstract class GraphicsObject extends GameObject {
 
 		this.graphics = graphics;
 
-		width = graphics.getWidth();
-		height = graphics.getHeight();
+		if (graphics != null) {
+			width = graphics.getWidth();
+			height = graphics.getHeight();
+		} else {
+			width = 0;
+			height = 0;
+		}
 
 		alignmentX = determineAlignmentX(align);
 		alignmentY = determineAlignmentY(align);
@@ -59,7 +64,7 @@ public abstract class GraphicsObject extends GameObject {
 		case BOTTOM_LEFT:
 		case MID_LEFT:
 		case TOP_LEFT:
-			return 0;
+			return width;
 		case BOTTOM_CENTER:
 		case MID_CENTER:
 		case TOP_CENTER:
@@ -67,8 +72,9 @@ public abstract class GraphicsObject extends GameObject {
 		case BOTTOM_RIGHT:
 		case MID_RIGHT:
 		case TOP_RIGHT:
+			return 0;
 		default:
-			return width;
+			return 0;
 		}
 	}
 
@@ -106,5 +112,17 @@ public abstract class GraphicsObject extends GameObject {
 
 	public int getGraphicsHeight() {
 		return height;
+	}
+
+	public void setAlignment(Align align) {
+		alignmentX = determineAlignmentX(align);
+		alignmentY = determineAlignmentY(align);
+	}
+
+	public void setGraphics(Bitmap graphics, Align align) {
+		this.graphics = graphics;
+		width = graphics.getWidth();
+		height = graphics.getHeight();
+		setAlignment(align);
 	}
 }

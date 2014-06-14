@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import de.jgroehl.asteromania.control.interfaces.EventHandler;
 import de.jgroehl.asteromania.control.interfaces.GraphicsHandler;
 import de.jgroehl.asteromania.graphics.GameObject;
+import de.jgroehl.asteromania.graphics.GameObject.Level;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
@@ -49,7 +50,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		if (addedObjects.size() > 0) {
 			for (GameObject gameObject : addedObjects.keySet()) {
 				for (GameState state : addedObjects.get(gameObject))
-					gameObjects.get(state).add(gameObject);
+					if (gameObject.getLevel().equals(Level.TOP))
+						gameObjects.get(state).add(gameObject);
+					else
+						gameObjects.get(state).add(0, gameObject);
 
 				if (gameObject instanceof Clickable) {
 					for (GameState state : addedObjects.get(gameObject))

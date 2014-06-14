@@ -11,21 +11,18 @@ public abstract class AbstractClickableElement extends GraphicsObject implements
 
 	private final EventCallback callback;
 
-	public AbstractClickableElement(float xPosition, float yPosition, Bitmap graphics,
-			EventCallback callback, Align align) {
+	public AbstractClickableElement(float xPosition, float yPosition,
+			Bitmap graphics, EventCallback callback, Align align) {
 		super(xPosition, yPosition, graphics, align);
 		this.callback = callback;
 	}
 
 	@Override
 	public boolean isClicked(int x, int y, int screenWidth, int screenHeight) {
-		return xPosition * screenWidth - getGraphicsWidth() * screenWidth / 2 < x
-				&& xPosition * screenWidth + getGraphicsWidth() * screenWidth
-						/ 2 > x
-				&& yPosition * screenHeight - getGraphicsHeight()
-						* screenHeight / 2 < y
-				&& yPosition * screenHeight + getGraphicsHeight()
-						* screenHeight / 2 > y;
+		return xPosition * screenWidth - alignmentX < x
+				&& xPosition * screenWidth - alignmentX + getGraphicsWidth() > x
+				&& yPosition * screenHeight - alignmentY < y
+				&& yPosition * screenHeight - alignmentY + getGraphicsHeight() > y;
 	}
 
 	@Override

@@ -13,11 +13,11 @@ import android.view.SurfaceView;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.control.SoundManager;
-import de.jgroehl.asteromania.control.callbacks.GameStateCallback;
+import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
-import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.game.SimpleShot.Target;
+import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
@@ -79,15 +79,15 @@ public class MainGamePanel extends SurfaceView implements
 		gameHandler.update();
 
 		gameHandler.add(new Button("Start", 0.5f, 0.15f, 0.4f, 0.2f,
-				getResources(), new GameStateCallback(GameState.MAIN)),
+				getResources(), new MenuButtonCallback(GameState.MAIN)),
 				GameState.MENU);
 		gameHandler.update();
 		gameHandler.add(new Button("Score", 0.5f, 0.4f, 0.4f, 0.2f,
-				getResources(), new GameStateCallback(GameState.HIGHSCORE)),
+				getResources(), new MenuButtonCallback(GameState.HIGHSCORE)),
 				GameState.MENU);
 		gameHandler.update();
 		gameHandler.add(new Button("Shop", 0.5f, 0.65f, 0.4f, 0.2f,
-				getResources(), new GameStateCallback(GameState.SHOP)),
+				getResources(), new MenuButtonCallback(GameState.SHOP)),
 				GameState.MENU);
 		gameHandler.update();
 		gameHandler.add(new Button("Quit", 0.5f, 0.9f, 0.4f, 0.2f,
@@ -117,13 +117,13 @@ public class MainGamePanel extends SurfaceView implements
 		gameHandler.add(
 				new Button(BitmapFactory.decodeResource(getResources(),
 						R.drawable.settings), 0.80f, 0.075f, 0.1f, 0.15f,
-						getResources(), new GameStateCallback(
+						getResources(), new MenuButtonCallback(
 								GameState.SETTINGS)), GameState.MAIN);
 		gameHandler.update();
 
 		Button button = new Button(BitmapFactory.decodeResource(getResources(),
 				R.drawable.home), 0.95f, 0.075f, 0.1f, 0.15f, getResources(),
-				new GameStateCallback(GameState.MENU));
+				new MenuButtonCallback(GameState.MENU));
 		for (GameState state : GameState.values())
 			if (!state.equals(GameState.MENU)) {
 				gameHandler.add(button, state);
