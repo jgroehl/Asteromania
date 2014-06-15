@@ -7,8 +7,8 @@ import de.jgroehl.asteromania.control.interfaces.EventCallback;
 public class SimpleClickableElement extends AbstractClickableElement {
 
 	public SimpleClickableElement(float xPosition, float yPosition,
-			Bitmap graphics, EventCallback callback, Align align) {
-		super(xPosition, yPosition, graphics, callback, align);
+			Bitmap graphics, EventCallback callback) {
+		super(xPosition, yPosition, graphics, callback);
 	}
 
 	@Override

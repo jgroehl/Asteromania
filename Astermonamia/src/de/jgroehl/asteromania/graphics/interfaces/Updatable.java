@@ -4,6 +4,6 @@ import de.jgroehl.asteromania.control.GameHandler;
 
 public interface Updatable {
 
-	void update(GameHandler handler);
+	void update(GameHandler gameHandler);
 
 }

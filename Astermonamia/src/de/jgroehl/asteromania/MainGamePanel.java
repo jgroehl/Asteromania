@@ -16,8 +16,8 @@ import de.jgroehl.asteromania.control.SoundManager;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
-import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.game.Enemy;
+import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
@@ -79,19 +79,19 @@ public class MainGamePanel extends SurfaceView implements
 		gameHandler.add(new Starfield(), GameState.MAIN, GameState.MENU);
 		gameHandler.update();
 
-		gameHandler.add(new Button("Start", 0.5f, 0.15f, 0.4f, 0.2f,
+		gameHandler.add(new Button("Start", 0.3f, 0.10f, 0.4f, 0.2f,
 				getResources(), new MenuButtonCallback(GameState.MAIN)),
 				GameState.MENU);
 		gameHandler.update();
-		gameHandler.add(new Button("Score", 0.5f, 0.4f, 0.4f, 0.2f,
+		gameHandler.add(new Button("Score", 0.3f, 0.3f, 0.4f, 0.2f,
 				getResources(), new MenuButtonCallback(GameState.HIGHSCORE)),
 				GameState.MENU);
 		gameHandler.update();
-		gameHandler.add(new Button("Shop", 0.5f, 0.65f, 0.4f, 0.2f,
+		gameHandler.add(new Button("Shop", 0.3f, 0.5f, 0.4f, 0.2f,
 				getResources(), new MenuButtonCallback(GameState.SHOP)),
 				GameState.MENU);
 		gameHandler.update();
-		gameHandler.add(new Button("Quit", 0.5f, 0.9f, 0.4f, 0.2f,
+		gameHandler.add(new Button("Quit", 0.3f, 0.7f, 0.4f, 0.2f,
 				getResources(), new EventCallback() {
 
 					@Override
@@ -107,27 +107,27 @@ public class MainGamePanel extends SurfaceView implements
 				GameState.MAIN);
 		gameHandler.add(
 				new Enemy(BitmapFactory.decodeResource(getResources(),
-						R.drawable.enemy), 12, 300), GameState.MAIN);
+						R.drawable.enemy), 12, 50), GameState.MAIN);
 		gameHandler.update();
 
-		gameHandler.add(new Button("Shoot", 0.05f, 0.9f, 0.1f, 0.1f,
+		gameHandler.add(new Button("Shoot", 0f, 0.9f, 0.1f, 0.1f,
 				getResources(), new ShotFiredCallback(Target.ENEMY)),
 				GameState.MAIN);
-		gameHandler.add(new Button("Shoot", 0.95f, 0.9f, 0.1f, 0.1f,
+		gameHandler.add(new Button("Shoot", 0.9f, 0.9f, 0.1f, 0.1f,
 				getResources(), new ShotFiredCallback(Target.ENEMY)),
 				GameState.MAIN);
 		gameHandler.update();
 
 		gameHandler.add(
 				new Button(BitmapFactory.decodeResource(getResources(),
-						R.drawable.settings), 0.80f, 0.075f, 0.1f, 0.15f,
+						R.drawable.settings), 0.875f, 0f, 0.05f, 0.075f,
 						getResources(), new MenuButtonCallback(
 								GameState.SETTINGS)), GameState.MAIN);
 		gameHandler.update();
 
 		Button button = new Button(BitmapFactory.decodeResource(getResources(),
-				R.drawable.home), 0.95f, 0.075f, 0.1f, 0.15f, getResources(),
-				new MenuButtonCallback(GameState.MENU));
+				R.drawable.home), 0.95f, 0f, 0.05f, 0.075f,
+				getResources(), new MenuButtonCallback(GameState.MENU));
 		for (GameState state : GameState.values())
 			if (!state.equals(GameState.MENU)) {
 				gameHandler.add(button, state);

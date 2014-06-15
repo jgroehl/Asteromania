@@ -15,6 +15,7 @@ public class Shot extends GraphicsObject {
 	private final float direction;
 	private final float shotSpeed;
 	private int damage;
+	private Target target;
 
 	public Shot(float xPosition, float yPosition, Target target,
 			float shotSpeed, Resources res) {
@@ -28,8 +29,8 @@ public class Shot extends GraphicsObject {
 						: BitmapFactory
 								.decodeResource(
 										res,
-										de.jgroehl.asteromania.R.drawable.normal_shot_up),
-				Align.MID_CENTER);
+										de.jgroehl.asteromania.R.drawable.normal_shot_up));
+		this.target = target;
 		direction = target.equals(Target.PLAYER) ? 1.0f : -1.0f;
 		this.shotSpeed = shotSpeed;
 		damage = 1;
@@ -57,5 +58,9 @@ public class Shot extends GraphicsObject {
 
 	public int getDamage() {
 		return damage;
+	}
+
+	public Target getTarget() {
+		return target;
 	}
 }

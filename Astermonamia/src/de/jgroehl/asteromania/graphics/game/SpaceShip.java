@@ -27,13 +27,10 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private float shotSpeedFactor = 1.0f;
 
 	public SpaceShip(Bitmap graphics, SensorHandler sensorHandler, Resources res) {
-		super(0.5f, 0.8f, graphics, IMAGE_FRAMES, ANIMATION_TIME,
-				Align.MID_CENTER);
+		super(0.6f, 0.7f, graphics, IMAGE_FRAMES, ANIMATION_TIME);
 		this.sensorHandler = sensorHandler;
 		flames = new SimpleAnimatedObject(xPosition, yPosition,
-				BitmapFactory.decodeResource(res, R.drawable.fire), 6, 75,
-				Align.MID_CENTER);
-		flames.setInsets(-1, graphics.getHeight() / 2 - 2);
+				BitmapFactory.decodeResource(res, R.drawable.fire), 6, 75);
 		Log.d(TAG, "Player Object created.");
 	}
 
@@ -48,7 +45,11 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		} else {
 			normalizePlayerFrame();
 		}
-		flames.setPosition(xPosition, yPosition);
+		flames.setPosition(
+				xPosition + getRelativeWidth() / 2 - flames.getRelativeWidth()
+						/ 2,
+				yPosition + getRelativeHeight() - flames.getRelativeHeight()
+						/ 10);
 		flames.update(handler);
 
 	}
@@ -91,10 +92,10 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 		xPosition -= value * sign;
 
-		if (xPosition <= SCREEN_MINIMUM)
-			xPosition = SCREEN_MINIMUM;
-		if (xPosition >= SCREEN_MAXIMUM)
-			xPosition = SCREEN_MAXIMUM;
+		if (xPosition <= SCREEN_MINIMUM - getRelativeWidth() / 2)
+			xPosition = SCREEN_MINIMUM - getRelativeWidth() / 2;
+		if (xPosition >= SCREEN_MAXIMUM - getRelativeWidth() / 2)
+			xPosition = SCREEN_MAXIMUM - getRelativeWidth() / 2;
 
 	}
 

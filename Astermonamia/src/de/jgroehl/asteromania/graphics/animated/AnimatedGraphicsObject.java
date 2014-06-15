@@ -13,14 +13,13 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject {
 	private int currentFrame;
 	private final int maxFrames;
 	protected final Timer animationTimer;
-	private int xInset = 0;
-	private int yInset = 0;
 
 	public AnimatedGraphicsObject(float xPosition, float yPosition,
-			Bitmap graphics, int frameCount, int animationPeriod, Align align) {
-		super(xPosition, yPosition, graphics.getWidth() / frameCount, graphics
-				.getHeight(), align);
+			Bitmap graphics, int frameCount, int animationPeriod) {
+		super(xPosition, yPosition, null);
 
+		int width = graphics.getWidth() / frameCount;
+		int height = graphics.getHeight();
 		animationTimer = new Timer(animationPeriod);
 		imagePaint.setStyle(Paint.Style.FILL);
 
@@ -33,17 +32,11 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject {
 		}
 	}
 
-	public void setInsets(int x, int y) {
-		this.xInset = x;
-		this.yInset = y;
-	}
-
 	@Override
 	public void draw(Canvas c) {
 		determineRelativeSize(c, imageFrames[currentFrame]);
-		c.drawBitmap(imageFrames[currentFrame], xPosition * c.getWidth()
-				- alignmentX + xInset, yPosition * c.getHeight() - alignmentY
-				+ yInset, imagePaint);
+		c.drawBitmap(imageFrames[currentFrame], xPosition * c.getWidth(),
+				yPosition * c.getHeight(), imagePaint);
 	}
 
 	protected void setFrame(int frame) {

@@ -17,8 +17,6 @@ import de.jgroehl.asteromania.control.interfaces.EventCallback;
 
 public class Button extends AbstractClickableElement {
 
-	private final float relativeWidth;
-	private final float relativeHeight;
 	private final String buttonText;
 	private Paint textPaint;
 	private Rect textBounds = new Rect();
@@ -26,24 +24,14 @@ public class Button extends AbstractClickableElement {
 	private Bitmap ninePatch;
 	private Bitmap rawIcon;
 	private final Paint graphicsPaint = new Paint();
-	private Align align;
 
 	public Button(String buttonText, float xPosition, float yPosition,
 			float width, float height, Resources resources,
 			EventCallback callback) {
-		this(buttonText, xPosition, yPosition, width, height, resources,
-				callback, Align.MID_CENTER);
-	}
-
-	public Button(String buttonText, float xPosition, float yPosition,
-			float width, float height, Resources resources,
-			EventCallback callback, Align align) {
-		super(xPosition, yPosition, null, callback, align);
+		super(xPosition, yPosition, null, callback);
 
 		ninePatch = BitmapFactory.decodeResource(resources, R.drawable.button);
 		this.buttonText = buttonText;
-
-		this.align = align;
 
 		this.relativeWidth = width;
 		this.relativeHeight = height;
@@ -52,18 +40,9 @@ public class Button extends AbstractClickableElement {
 
 	public Button(Bitmap icon, float xPosition, float yPosition, float width,
 			float height, Resources resources, EventCallback callback) {
-		this(icon, xPosition, yPosition, width, height, resources, callback,
-				Align.MID_CENTER);
-	}
-
-	public Button(Bitmap icon, float xPosition, float yPosition, float width,
-			float height, Resources resources, EventCallback callback,
-			Align align) {
-		super(xPosition, yPosition, null, callback, align);
+		super(xPosition, yPosition, null, callback);
 
 		this.rawIcon = icon;
-
-		this.align = align;
 
 		buttonText = null;
 		ninePatch = BitmapFactory.decodeResource(resources, R.drawable.button);
@@ -87,9 +66,8 @@ public class Button extends AbstractClickableElement {
 			textPaint = setupTextPaint(c.getHeight());
 		}
 		if (graphics == null) {
-			setGraphics(
-					Bitmap.createBitmap(createBackground(c.getWidth(),
-							c.getHeight(), createNinePatch(ninePatch))), align);
+			setGraphics(Bitmap.createBitmap(createBackground(c.getWidth(),
+					c.getHeight(), createNinePatch(ninePatch))));
 			Canvas c2 = new Canvas(graphics);
 			if (buttonText != null) {
 				drawText(c2, 2, 2, Color.LTGRAY);
