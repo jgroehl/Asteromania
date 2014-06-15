@@ -16,7 +16,8 @@ import de.jgroehl.asteromania.control.SoundManager;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
-import de.jgroehl.asteromania.graphics.game.SimpleShot.Target;
+import de.jgroehl.asteromania.graphics.game.Shot.Target;
+import de.jgroehl.asteromania.graphics.game.Enemy;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
@@ -32,7 +33,7 @@ public class MainGamePanel extends SurfaceView implements
 
 	private final Paint backgroundPaint = new Paint();
 
-	private final GameHandler gameHandler = new GameHandler(GameState.MAIN,
+	private final GameHandler gameHandler = new GameHandler(GameState.MENU,
 			new SoundManager(getContext()), getResources());
 	private final SensorHandler sensorHandler;
 
@@ -104,6 +105,9 @@ public class MainGamePanel extends SurfaceView implements
 				new SpaceShip(BitmapFactory.decodeResource(getResources(),
 						R.drawable.spaceship), sensorHandler, getResources()),
 				GameState.MAIN);
+		gameHandler.add(
+				new Enemy(BitmapFactory.decodeResource(getResources(),
+						R.drawable.enemy), 12, 300), GameState.MAIN);
 		gameHandler.update();
 
 		gameHandler.add(new Button("Shoot", 0.05f, 0.9f, 0.1f, 0.1f,

@@ -15,15 +15,18 @@ import de.jgroehl.asteromania.graphics.GameObject.Level;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
+import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 
 public class GameHandler implements GraphicsHandler, EventHandler {
 
-	Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
+	private Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
 
-	Map<GameState, List<Clickable>> clickableObjects = new HashMap<GameState, List<Clickable>>();
+	private Map<GameState, List<Clickable>> clickableObjects = new HashMap<GameState, List<Clickable>>();
 
-	Map<GameObject, GameState[]> addedObjects = new HashMap<GameObject, GameState[]>();
+	private Map<GameObject, GameState[]> addedObjects = new HashMap<GameObject, GameState[]>();
+
+	private Map<GameState, List<Hitable>> hitableObjects = new HashMap<GameState, List<Hitable>>();
 
 	private List<GameObject> removedObjects = new ArrayList<GameObject>();
 
@@ -40,6 +43,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		for (GameState s : GameState.values()) {
 			gameObjects.put(s, new ArrayList<GameObject>());
 			clickableObjects.put(s, new ArrayList<Clickable>());
+			hitableObjects.put(s, new ArrayList<Hitable>());
 		}
 		this.soundManager = soundManager;
 		this.res = res;
@@ -60,6 +64,11 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 						clickableObjects.get(state).add((Clickable) gameObject);
 				}
 
+				if (gameObject instanceof Hitable) {
+					for (GameState state : addedObjects.get(gameObject))
+						hitableObjects.get(state).add((Hitable) gameObject);
+				}
+
 				if (player == null && gameObject instanceof SpaceShip) {
 					player = (SpaceShip) gameObject;
 				}
@@ -74,6 +83,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 						l.remove(gameObject);
 				}
 				for (List<Clickable> l : clickableObjects.values()) {
+					if (l.contains(gameObject))
+						l.remove(gameObject);
+				}
+				for (List<Hitable> l : hitableObjects.values()) {
 					if (l.contains(gameObject))
 						l.remove(gameObject);
 				}
@@ -140,6 +153,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	public void setResources(Resources res) {
 		this.res = res;
+	}
+
+	public List<Hitable> getHitableObjects() {
+		return hitableObjects.get(state);
 	}
 
 }

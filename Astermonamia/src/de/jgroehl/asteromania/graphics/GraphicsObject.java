@@ -6,12 +6,15 @@ import android.graphics.Paint;
 
 public abstract class GraphicsObject extends GameObject {
 
+	private static final float DEFAULT_RELATIVE_SIZE = 0.0f;
 	protected Bitmap graphics;
 	private final Paint imagePaint = new Paint();
 	protected int alignmentX;
 	protected int alignmentY;
 	protected int width;
 	protected int height;
+	private float relativeWidth = DEFAULT_RELATIVE_SIZE;
+	private float relativeHeight = DEFAULT_RELATIVE_SIZE;
 
 	/**
 	 * The Alignment of the image relative to its x and y position.
@@ -100,10 +103,20 @@ public abstract class GraphicsObject extends GameObject {
 	@Override
 	public void draw(Canvas c) {
 
-		if (graphics != null)
+		if (graphics != null) {
+			determineRelativeSize(c, graphics);
 			c.drawBitmap(graphics, xPosition * c.getWidth() - alignmentX,
 					yPosition * c.getHeight() - alignmentY, imagePaint);
+		}
 
+	}
+
+	protected void determineRelativeSize(Canvas c, Bitmap graphics) {
+		if (relativeHeight == DEFAULT_RELATIVE_SIZE
+				&& relativeWidth == DEFAULT_RELATIVE_SIZE) {
+			relativeHeight = ((float) graphics.getHeight()) / c.getHeight();
+			relativeWidth = ((float) graphics.getWidth()) / c.getWidth();
+		}
 	}
 
 	public int getGraphicsWidth() {
@@ -123,6 +136,16 @@ public abstract class GraphicsObject extends GameObject {
 		this.graphics = graphics;
 		width = graphics.getWidth();
 		height = graphics.getHeight();
+		relativeHeight = DEFAULT_RELATIVE_SIZE;
+		relativeWidth = DEFAULT_RELATIVE_SIZE;
 		setAlignment(align);
+	}
+
+	public float getRelativeHeight() {
+		return relativeHeight;
+	}
+
+	public float getRelativeWidth() {
+		return relativeWidth;
 	}
 }

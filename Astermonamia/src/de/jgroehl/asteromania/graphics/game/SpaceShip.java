@@ -9,9 +9,10 @@ import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
 import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
+import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
-public class SpaceShip extends AnimatedGraphicsObject {
+public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 	private static final String TAG = SpaceShip.class.getSimpleName();
 	private final SensorHandler sensorHandler;
@@ -103,6 +104,11 @@ public class SpaceShip extends AnimatedGraphicsObject {
 
 	public float getShotSpeed() {
 		return BASIC_SHOT_SPEED * shotSpeedFactor;
+	}
+
+	@Override
+	public void getShot(GameHandler gameHandler, Shot shot) {
+		// TODO:
 	}
 
 }

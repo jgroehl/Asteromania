@@ -18,7 +18,8 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject {
 
 	public AnimatedGraphicsObject(float xPosition, float yPosition,
 			Bitmap graphics, int frameCount, int animationPeriod, Align align) {
-		super(xPosition, yPosition, graphics.getWidth() / frameCount, graphics.getHeight() , align);
+		super(xPosition, yPosition, graphics.getWidth() / frameCount, graphics
+				.getHeight(), align);
 
 		animationTimer = new Timer(animationPeriod);
 		imagePaint.setStyle(Paint.Style.FILL);
@@ -39,6 +40,7 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject {
 
 	@Override
 	public void draw(Canvas c) {
+		determineRelativeSize(c, imageFrames[currentFrame]);
 		c.drawBitmap(imageFrames[currentFrame], xPosition * c.getWidth()
 				- alignmentX + xInset, yPosition * c.getHeight() - alignmentY
 				+ yInset, imagePaint);
