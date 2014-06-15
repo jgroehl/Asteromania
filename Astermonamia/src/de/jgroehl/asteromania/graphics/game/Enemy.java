@@ -35,6 +35,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable {
 		if (shot.getTarget() == Target.ENEMY) {
 			xPosition = (float) Math.random();
 			moveRight = !moveRight;
+			gameHandler.remove(shot);
 		}
 	}
 

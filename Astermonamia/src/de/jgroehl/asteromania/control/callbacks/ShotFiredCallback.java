@@ -21,11 +21,10 @@ public class ShotFiredCallback implements EventCallback {
 	public void action(GameHandler gameHandler) {
 		Log.d(TAG, "Shot fired");
 		gameHandler.getSoundManager().playNormalShotSound();
-		Shot shot = new Shot(gameHandler.getPlayer().getX(),
-				gameHandler.getPlayer().getY()
-						- gameHandler.getPlayer().getRelativeHeight() / 3,
-				target, gameHandler.getPlayer().getShotSpeed(),
-				gameHandler.getResources());
+		Shot shot = new Shot(gameHandler.getPlayer().getX()
+				+ gameHandler.getPlayer().getRelativeWidth() * 0.35f,
+				gameHandler.getPlayer().getY(), target, gameHandler.getPlayer()
+						.getShotSpeed(), gameHandler.getResources());
 		shot.setLevel(Level.BOTTOM);
 		gameHandler.add(shot, GameState.MAIN);
 

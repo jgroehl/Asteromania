@@ -45,7 +45,6 @@ public class Shot extends GraphicsObject {
 					getRelativeHeight(), go.getX(), go.getY(),
 					go.getRelativeWidth(), go.getRelativeHeight())) {
 				hitable.getShot(handler, this);
-				handler.remove(this);
 			}
 		}
 
