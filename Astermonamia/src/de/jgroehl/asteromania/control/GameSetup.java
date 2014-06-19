@@ -5,6 +5,7 @@ import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
+import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
 import de.jgroehl.asteromania.graphics.game.Enemy;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
@@ -60,7 +61,7 @@ public class GameSetup {
 		gameHandler.add(
 				new Button("Shoot", 0.9f, 0.9f, 0.1f, 0.1f, gameHandler
 						.getResources(), new ShotFiredCallback(Target.ENEMY)),
-			GameState.MAIN);
+				GameState.MAIN);
 		gameHandler.update();
 
 		gameHandler.add(
@@ -80,6 +81,11 @@ public class GameSetup {
 				gameHandler.add(button, state);
 				gameHandler.update();
 			}
+
+		gameHandler.add(
+				new SimpleAnimatedObject(0.5f, 0.5f, BitmapFactory
+						.decodeResource(gameHandler.getResources(),
+								R.drawable.coin), 13, 100), GameState.MAIN);
 	}
 
 }

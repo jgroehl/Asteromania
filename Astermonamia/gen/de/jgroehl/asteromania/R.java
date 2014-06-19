@@ -1078,16 +1078,17 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int button=0x7f020057;
-        public static final int enemy=0x7f020058;
-        public static final int fire=0x7f020059;
-        public static final int home=0x7f02005a;
-        public static final int ic_launcher=0x7f02005b;
-        public static final int normal_shot_down=0x7f02005c;
-        public static final int normal_shot_up=0x7f02005d;
-        public static final int settings=0x7f02005e;
-        public static final int spaceship=0x7f02005f;
-        public static final int spaceship2=0x7f020060;
-        public static final int start=0x7f020061;
+        public static final int coin=0x7f020058;
+        public static final int enemy=0x7f020059;
+        public static final int fire=0x7f02005a;
+        public static final int home=0x7f02005b;
+        public static final int ic_launcher=0x7f02005c;
+        public static final int normal_shot_down=0x7f02005d;
+        public static final int normal_shot_up=0x7f02005e;
+        public static final int settings=0x7f02005f;
+        public static final int spaceship=0x7f020060;
+        public static final int spaceship2=0x7f020061;
+        public static final int start=0x7f020062;
     }
     public static final class id {
         public static final int action_bar=0x7f06001c;
@@ -1210,8 +1211,7 @@ containing a value of this type.
     public static final class raw {
         public static final int click=0x7f050000;
         public static final int megasound=0x7f050001;
-        public static final int properties=0x7f050002;
-        public static final int shoot=0x7f050003;
+        public static final int shoot=0x7f050002;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
