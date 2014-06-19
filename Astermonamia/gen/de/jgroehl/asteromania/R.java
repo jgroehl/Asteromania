@@ -1086,7 +1086,8 @@ containing a value of this type.
         public static final int normal_shot_up=0x7f02005d;
         public static final int settings=0x7f02005e;
         public static final int spaceship=0x7f02005f;
-        public static final int start=0x7f020060;
+        public static final int spaceship2=0x7f020060;
+        public static final int start=0x7f020061;
     }
     public static final class id {
         public static final int action_bar=0x7f06001c;

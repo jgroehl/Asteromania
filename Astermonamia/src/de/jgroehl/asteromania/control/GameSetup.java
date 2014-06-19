@@ -44,7 +44,7 @@ public class GameSetup {
 
 		gameHandler.add(
 				new SpaceShip(BitmapFactory.decodeResource(
-						gameHandler.getResources(), R.drawable.spaceship),
+						gameHandler.getResources(), R.drawable.spaceship2),
 						sensorHandler, gameHandler.getResources()),
 				GameState.MAIN);
 		gameHandler.add(

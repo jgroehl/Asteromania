@@ -23,13 +23,15 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private static final int IMAGE_FRAMES = 15;
 	private static final float BASIC_SHOT_SPEED = 0.01f;
 	private int normalFrame = getMaxFrame() / 2;
-	private final SimpleAnimatedObject flames;
+	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];
 	private float shotSpeedFactor = 1.0f;
 
 	public SpaceShip(Bitmap graphics, SensorHandler sensorHandler, Resources res) {
 		super(0.6f, 0.7f, graphics, IMAGE_FRAMES, ANIMATION_TIME);
 		this.sensorHandler = sensorHandler;
-		flames = new SimpleAnimatedObject(xPosition, yPosition,
+		flames[0] = new SimpleAnimatedObject(xPosition, yPosition,
+				BitmapFactory.decodeResource(res, R.drawable.fire), 6, 75);
+		flames[1] = new SimpleAnimatedObject(xPosition, yPosition,
 				BitmapFactory.decodeResource(res, R.drawable.fire), 6, 75);
 		Log.d(TAG, "Player Object created.");
 	}
@@ -45,19 +47,26 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		} else {
 			normalizePlayerFrame();
 		}
-		flames.setPosition(
-				xPosition + getRelativeWidth() / 2 - flames.getRelativeWidth()
+		flames[0].setPosition(
+				xPosition + getRelativeWidth()* 5 / 8 - flames[0].getRelativeWidth()
 						/ 2,
-				yPosition + getRelativeHeight() - flames.getRelativeHeight()
-						/ 10);
-		flames.update(handler);
+				yPosition + getRelativeHeight() - flames[0].getRelativeHeight()
+						/ 5);
+		flames[0].update(handler);
+		flames[1].setPosition(
+				xPosition + getRelativeWidth() * 3 / 9 - flames[1].getRelativeWidth()
+				/ 2,
+				yPosition + getRelativeHeight() - flames[1].getRelativeHeight()
+				/ 5);
+		flames[1].update(handler);
 
 	}
 
 	@Override
 	public void draw(Canvas c) {
 		super.draw(c);
-		flames.draw(c);
+		flames[0].draw(c);
+		flames[1].draw(c);
 	};
 
 	private void normalizePlayerFrame() {
