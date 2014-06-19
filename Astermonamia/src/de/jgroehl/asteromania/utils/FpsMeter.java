@@ -43,7 +43,8 @@ public class FpsMeter implements Drawable {
 
 		if (System.currentTimeMillis() - time >= SECOND) {
 			lastFpsCount = frames;
-			lastSleepTime = sleepTimes / frames;
+			if (frames > 0)
+				lastSleepTime = sleepTimes / frames;
 			time = System.currentTimeMillis();
 			sleepTimes = 0;
 			frames = 0;

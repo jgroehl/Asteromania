@@ -39,11 +39,11 @@ public class StatusBar extends GameObject {
 	@Override
 	public void draw(Canvas c) {
 
-		c.drawRect(bounds, contentsPaint);
 
 		bounds = new RectF(xPosition * c.getWidth(), yPosition * c.getHeight(),
 				xPosition * c.getWidth() + relativeWidth * c.getWidth(),
 				yPosition * c.getHeight() + relativeHeight * c.getHeight());
+		c.drawRect(bounds, contentsPaint);
 		c.drawRect(bounds, framePaint);
 
 		if (text != null) {

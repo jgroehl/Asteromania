@@ -2,14 +2,12 @@ package de.jgroehl.asteromania.control;
 
 import android.graphics.BitmapFactory;
 import de.jgroehl.asteromania.R;
-import de.jgroehl.asteromania.R.drawable;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.graphics.game.Enemy;
-import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
-import de.jgroehl.asteromania.graphics.game.StatusBar;
+import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
@@ -62,7 +60,7 @@ public class GameSetup {
 		gameHandler.add(
 				new Button("Shoot", 0.9f, 0.9f, 0.1f, 0.1f, gameHandler
 						.getResources(), new ShotFiredCallback(Target.ENEMY)),
-				GameState.MAIN);
+			GameState.MAIN);
 		gameHandler.update();
 
 		gameHandler.add(
@@ -82,8 +80,6 @@ public class GameSetup {
 				gameHandler.add(button, state);
 				gameHandler.update();
 			}
-
-		gameHandler.add(new StatusBar(0.0f, 0.0f, 0.4f, 0.1f), GameState.MAIN);
 	}
 
 }
