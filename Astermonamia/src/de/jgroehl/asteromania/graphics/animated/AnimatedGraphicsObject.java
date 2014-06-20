@@ -1,42 +1,56 @@
 package de.jgroehl.asteromania.graphics.animated;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.SparseArray;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
 import de.jgroehl.asteromania.time.Timer;
 
 public abstract class AnimatedGraphicsObject extends GraphicsObject {
 
-	private Paint imagePaint = new Paint();
-	private final Bitmap[] imageFrames;
+	private static final SparseArray<Bitmap[]> imageCache = new SparseArray<Bitmap[]>();
+
+	private final Paint imagePaint = new Paint();
+	protected final int imageResource;
 	private int currentFrame;
 	private final int maxFrames;
 	protected final Timer animationTimer;
 
 	public AnimatedGraphicsObject(float xPosition, float yPosition,
-			Bitmap graphics, int frameCount, int animationPeriod) {
-		super(xPosition, yPosition, null);
+			int imageResource, int frameCount, int animationPeriod,
+			Context context) {
+		super(xPosition, yPosition, null, context);
 
-		int width = graphics.getWidth() / frameCount;
-		int height = graphics.getHeight();
+		this.imageResource = imageResource;
 		animationTimer = new Timer(animationPeriod);
 		imagePaint.setStyle(Paint.Style.FILL);
 
-		imageFrames = new Bitmap[frameCount];
 		maxFrames = frameCount;
 
-		for (int i = 0; i < maxFrames; i++) {
-			imageFrames[i] = Bitmap.createBitmap(graphics, i * width, 0, width,
-					height);
+		if (imageCache.get(imageResource) == null) {
+			Bitmap graphics = BitmapFactory.decodeResource(
+					context.getResources(), imageResource);
+			int width = graphics.getWidth() / frameCount;
+			int height = graphics.getHeight();
+			Bitmap[] imageFrames = new Bitmap[frameCount];
+
+			for (int i = 0; i < maxFrames; i++) {
+				imageFrames[i] = Bitmap.createBitmap(graphics, i * width, 0,
+						width, height);
+			}
+			imageCache.put(imageResource, imageFrames);
 		}
+
 	}
 
 	@Override
 	public void draw(Canvas c) {
-		determineRelativeSize(c, imageFrames[currentFrame]);
-		c.drawBitmap(imageFrames[currentFrame], xPosition * c.getWidth(),
-				yPosition * c.getHeight(), imagePaint);
+		determineRelativeSize(c, imageCache.get(imageResource)[currentFrame]);
+		c.drawBitmap(imageCache.get(imageResource)[currentFrame],
+				xPosition * c.getWidth(), yPosition * c.getHeight(), imagePaint);
 	}
 
 	protected void setFrame(int frame) {

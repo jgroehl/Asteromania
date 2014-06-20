@@ -1,5 +1,6 @@
 package de.jgroehl.asteromania.graphics;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,8 +13,8 @@ public abstract class GraphicsObject extends GameObject {
 	protected float relativeWidth = DEFAULT_RELATIVE_SIZE;
 	protected float relativeHeight = DEFAULT_RELATIVE_SIZE;
 
-	public GraphicsObject(float xPosition, float yPosition, Bitmap graphics) {
-		super(xPosition, yPosition);
+	public GraphicsObject(float xPosition, float yPosition, Bitmap graphics, Context context) {
+		super(xPosition, yPosition, context);
 
 		imagePaint.setStyle(Paint.Style.FILL);
 

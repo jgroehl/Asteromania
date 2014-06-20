@@ -1,5 +1,6 @@
 package de.jgroehl.asteromania.graphics.game;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,8 +22,8 @@ public class StatusBar extends GameObject {
 	private RectF bounds;
 
 	public StatusBar(float xPosition, float yPosition, float realativeWidth,
-			float relativeHeight) {
-		super(xPosition, yPosition);
+			float relativeHeight, Context context) {
+		super(xPosition, yPosition, context);
 		this.relativeHeight = relativeHeight;
 		this.relativeWidth = realativeWidth;
 		textPaint.setColor(Color.WHITE);

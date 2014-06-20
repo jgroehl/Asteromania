@@ -24,7 +24,7 @@ public class ShotFiredCallback implements EventCallback {
 		Shot shot = new Shot(gameHandler.getPlayer().getX()
 				+ gameHandler.getPlayer().getRelativeWidth() * 0.35f,
 				gameHandler.getPlayer().getY(), target, gameHandler.getPlayer()
-						.getShotSpeed(), gameHandler.getResources());
+						.getShotSpeed(), gameHandler.getContext());
 		shot.setLevel(Level.BOTTOM);
 		gameHandler.add(shot, GameState.MAIN);
 

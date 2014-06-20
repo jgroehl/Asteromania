@@ -1,5 +1,6 @@
 package de.jgroehl.asteromania.graphics.starfield;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -15,8 +16,8 @@ public class StarObject extends GameObject implements Updatable {
 	private final float speed;
 
 	public StarObject(float xPosition, float yPosition, int diameter,
-			int paintColor, float speed) {
-		super(xPosition, yPosition);
+			int paintColor, float speed, Context context) {
+		super(xPosition, yPosition, context);
 
 		this.speed = speed;
 		this.diameter = diameter;

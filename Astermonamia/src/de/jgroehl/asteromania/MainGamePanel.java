@@ -39,8 +39,7 @@ public class MainGamePanel extends SurfaceView implements
 		super(context);
 
 		gameHandler = new GameHandler(GameState.MENU, new SoundManager(
-				getContext()), getResources(),
-				new CryptoHandler(getResources()), getContext());
+				getContext()), getContext(), new CryptoHandler(getResources()));
 
 		sensorHandler = new SensorHandler(context, Context.SENSOR_SERVICE);
 

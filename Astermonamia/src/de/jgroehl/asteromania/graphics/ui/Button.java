@@ -1,6 +1,6 @@
 package de.jgroehl.asteromania.graphics.ui;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -26,11 +26,11 @@ public class Button extends AbstractClickableElement {
 	private final Paint graphicsPaint = new Paint();
 
 	public Button(String buttonText, float xPosition, float yPosition,
-			float width, float height, Resources resources,
-			EventCallback callback) {
-		super(xPosition, yPosition, null, callback);
+			float width, float height, EventCallback callback, Context context) {
+		super(xPosition, yPosition, null, callback, context);
 
-		ninePatch = BitmapFactory.decodeResource(resources, R.drawable.button);
+		ninePatch = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.button);
 		this.buttonText = buttonText;
 
 		this.relativeWidth = width;
@@ -39,13 +39,14 @@ public class Button extends AbstractClickableElement {
 	}
 
 	public Button(Bitmap icon, float xPosition, float yPosition, float width,
-			float height, Resources resources, EventCallback callback) {
-		super(xPosition, yPosition, null, callback);
+			float height, EventCallback callback, Context context) {
+		super(xPosition, yPosition, null, callback, context);
 
 		this.rawIcon = icon;
 
 		buttonText = null;
-		ninePatch = BitmapFactory.decodeResource(resources, R.drawable.button);
+		ninePatch = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.button);
 
 		this.relativeWidth = width;
 		this.relativeHeight = height;

@@ -1,5 +1,6 @@
 package de.jgroehl.asteromania.graphics;
 
+import android.content.Context;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 
@@ -13,11 +14,13 @@ public abstract class GameObject implements Drawable, Updatable {
 	protected final static float SCREEN_MAXIMUM = 1.0f;
 	protected float xPosition;
 	protected float yPosition;
+	protected final Context context;
 	private Level level = Level.TOP;
 
-	public GameObject(float xPosition, float yPosition) {
+	public GameObject(float xPosition, float yPosition, Context context) {
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
+		this.context = context;
 	}
 
 	public void setPosition(float xPosition, float yPosition) {

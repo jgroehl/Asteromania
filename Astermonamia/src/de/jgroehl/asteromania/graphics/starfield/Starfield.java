@@ -1,5 +1,6 @@
 package de.jgroehl.asteromania.graphics.starfield;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import de.jgroehl.asteromania.control.GameHandler;
@@ -25,24 +26,25 @@ public class Starfield extends GameObject implements Drawable, Updatable {
 	private final StarObject[] stars = new StarObject[AMOUNT_OF_SMALL_STARS
 			+ AMOUNT_OF_MEDIUM_STARS + AMOUNT_OF_BIG_STARS];
 
-	public Starfield() {
+	public Starfield(Context context) {
 
-		super(0, 0);
+		super(0, 0, context);
 
 		for (int i = 0; i < AMOUNT_OF_SMALL_STARS; i++) {
 			stars[i] = new StarObject((float) Math.random(),
 					(float) Math.random(), SMALL_STAR_RADIUS, SMALL_STAR_COLOR,
-					SMALL_STAR_SPEED);
+					SMALL_STAR_SPEED, context);
 		}
 		for (int i = 0; i < AMOUNT_OF_MEDIUM_STARS; i++) {
 			stars[i + AMOUNT_OF_SMALL_STARS] = new StarObject(
 					(float) Math.random(), (float) Math.random(),
-					MEDIUM_STAR_RADIUS, MEDIUM_STAR_COLOR, MEDIUM_STAR_SPEED);
+					MEDIUM_STAR_RADIUS, MEDIUM_STAR_COLOR, MEDIUM_STAR_SPEED,
+					context);
 		}
 		for (int i = 0; i < AMOUNT_OF_BIG_STARS; i++) {
 			stars[i + AMOUNT_OF_SMALL_STARS + AMOUNT_OF_MEDIUM_STARS] = new StarObject(
 					(float) Math.random(), (float) Math.random(),
-					BIG_STAR_RADIUS, BIG_STAR_COLOR, BIG_STAR_SPEED);
+					BIG_STAR_RADIUS, BIG_STAR_COLOR, BIG_STAR_SPEED, context);
 		}
 	}
 

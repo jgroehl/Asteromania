@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.MotionEvent;
 import de.jgroehl.asteromania.control.interfaces.EventHandler;
 import de.jgroehl.asteromania.control.interfaces.GraphicsHandler;
@@ -36,14 +35,14 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	private SpaceShip player;
 
-	private Resources res;
+	private Context context;
 
 	private GameState state = null;
 
 	private PlayerInfo playerInfo;
 
 	public GameHandler(GameState state, SoundManager soundManager,
-			Resources res, CryptoHandler cryptoHandler, Context context) {
+			Context context, CryptoHandler cryptoHandler) {
 		this.state = state;
 		for (GameState s : GameState.values()) {
 			gameObjects.put(s, new ArrayList<GameObject>());
@@ -51,7 +50,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 			hitableObjects.put(s, new ArrayList<Hitable>());
 		}
 		this.soundManager = soundManager;
-		this.res = res;
+		this.context = context;
 		playerInfo = new PlayerInfo(cryptoHandler, context);
 
 	}
@@ -153,12 +152,8 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		this.player = player;
 	}
 
-	public Resources getResources() {
-		return res;
-	}
-
-	public void setResources(Resources res) {
-		this.res = res;
+	public Context getContext() {
+		return context;
 	}
 
 	public List<Hitable> getHitableObjects() {

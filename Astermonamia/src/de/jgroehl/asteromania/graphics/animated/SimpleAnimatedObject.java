@@ -1,13 +1,13 @@
 package de.jgroehl.asteromania.graphics.animated;
 
+import android.content.Context;
 import de.jgroehl.asteromania.control.GameHandler;
-import android.graphics.Bitmap;
 
 public class SimpleAnimatedObject extends AnimatedGraphicsObject {
 
 	public SimpleAnimatedObject(float xPosition, float yPosition,
-			Bitmap graphics, int frameCount, int animationPeriod) {
-		super(xPosition, yPosition, graphics, frameCount, animationPeriod);
+			int imageResource, int frameCount, int animationPeriod, Context context) {
+		super(xPosition, yPosition, imageResource, frameCount, animationPeriod, context);
 
 	}
 

@@ -1,7 +1,6 @@
 package de.jgroehl.asteromania.graphics.game;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
@@ -14,8 +13,9 @@ public class Enemy extends SimpleAnimatedObject implements Hitable {
 
 	private boolean moveRight = true;
 
-	public Enemy(Bitmap graphics, int frameCount, int animationPeriod) {
-		super(0.5f, 0.2f, graphics, frameCount, animationPeriod);
+	public Enemy(int frameCount, int animationPeriod, Context context) {
+		super(0.5f, 0.2f, de.jgroehl.asteromania.R.drawable.enemy, frameCount,
+				animationPeriod, context);
 	}
 
 	@Override
@@ -35,14 +35,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable {
 	@Override
 	public void getShot(GameHandler gameHandler, Shot shot) {
 		if (shot.getTarget() == Target.ENEMY) {
-			gameHandler
-					.add(new Coin(
-							xPosition,
-							yPosition,
-							BitmapFactory.decodeResource(
-									gameHandler.getResources(),
-									de.jgroehl.asteromania.R.drawable.rotating_coin)),
-							GameState.MAIN);
+			gameHandler.add(new Coin(xPosition, yPosition, context),
+					GameState.MAIN);
 			xPosition = (float) Math.random();
 			moveRight = !moveRight;
 			gameHandler.remove(shot);

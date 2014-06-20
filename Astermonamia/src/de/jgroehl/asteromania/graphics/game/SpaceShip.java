@@ -1,8 +1,6 @@
 package de.jgroehl.asteromania.graphics.game;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 import de.jgroehl.asteromania.R;
@@ -26,13 +24,14 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];
 	private float shotSpeedFactor = 1.0f;
 
-	public SpaceShip(Bitmap graphics, SensorHandler sensorHandler, Resources res) {
-		super(0.6f, 0.7f, graphics, IMAGE_FRAMES, ANIMATION_TIME);
+	public SpaceShip(SensorHandler sensorHandler, Context context) {
+		super(0.6f, 0.7f, R.drawable.spaceship2, IMAGE_FRAMES, ANIMATION_TIME,
+				context);
 		this.sensorHandler = sensorHandler;
 		flames[0] = new SimpleAnimatedObject(xPosition, yPosition,
-				BitmapFactory.decodeResource(res, R.drawable.fire), 6, 75);
+				R.drawable.fire, 6, 75, context);
 		flames[1] = new SimpleAnimatedObject(xPosition, yPosition,
-				BitmapFactory.decodeResource(res, R.drawable.fire), 6, 75);
+				R.drawable.fire, 6, 75, context);
 		Log.d(TAG, "Player Object created.");
 	}
 
@@ -47,17 +46,13 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		} else {
 			normalizePlayerFrame();
 		}
-		flames[0].setPosition(
-				xPosition + getRelativeWidth()* 5 / 8 - flames[0].getRelativeWidth()
-						/ 2,
-				yPosition + getRelativeHeight() - flames[0].getRelativeHeight()
-						/ 5);
+		flames[0].setPosition(xPosition + getRelativeWidth() * 5 / 8
+				- flames[0].getRelativeWidth() / 2, yPosition
+				+ getRelativeHeight() - flames[0].getRelativeHeight() / 5);
 		flames[0].update(handler);
-		flames[1].setPosition(
-				xPosition + getRelativeWidth() * 3 / 9 - flames[1].getRelativeWidth()
-				/ 2,
-				yPosition + getRelativeHeight() - flames[1].getRelativeHeight()
-				/ 5);
+		flames[1].setPosition(xPosition + getRelativeWidth() * 3 / 9
+				- flames[1].getRelativeWidth() / 2, yPosition
+				+ getRelativeHeight() - flames[1].getRelativeHeight() / 5);
 		flames[1].update(handler);
 
 	}

@@ -1,6 +1,6 @@
 package de.jgroehl.asteromania.graphics.game;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
@@ -18,18 +18,18 @@ public class Shot extends GraphicsObject {
 	private Target target;
 
 	public Shot(float xPosition, float yPosition, Target target,
-			float shotSpeed, Resources res) {
+			float shotSpeed, Context context) {
 		super(
 				xPosition,
 				yPosition,
 				target.equals(Target.PLAYER) ? BitmapFactory
 						.decodeResource(
-								res,
+								context.getResources(),
 								de.jgroehl.asteromania.R.drawable.normal_shot_down)
 						: BitmapFactory
 								.decodeResource(
-										res,
-										de.jgroehl.asteromania.R.drawable.normal_shot_up));
+										context.getResources(),
+										de.jgroehl.asteromania.R.drawable.normal_shot_up), context);
 		this.target = target;
 		direction = target.equals(Target.PLAYER) ? 1.0f : -1.0f;
 		this.shotSpeed = shotSpeed;
