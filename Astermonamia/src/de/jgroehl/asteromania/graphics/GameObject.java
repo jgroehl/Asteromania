@@ -41,7 +41,7 @@ public abstract class GameObject implements Drawable, Updatable {
 		this.level = level;
 	}
 
-	public static boolean imagesOverlap(float x1, float y1, float width1,
+	public boolean imagesOverlap(float x1, float y1, float width1,
 			float height1, float x2, float y2, float width2, float height2) {
 
 		boolean isLeft = x1 + width1 < x2;
@@ -51,5 +51,4 @@ public abstract class GameObject implements Drawable, Updatable {
 
 		return !(isLeft || isRight || isBelow || isAbove);
 	}
-
 }

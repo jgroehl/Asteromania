@@ -8,9 +8,10 @@ public class SoundManager {
 
 	private final SoundPool soundPool = new SoundPool(5,
 			AudioManager.STREAM_MUSIC, 100);
-	private static final int NUMBER_OF_SOUNDS = 2;
+	private static final int NUMBER_OF_SOUNDS = 3;
 	private static final int CLICK_ID = 0;
 	private static final int SHOT_ID = 1;
+	private static final int COIN_ID = 2;
 	private final int[] sounds;
 
 	public SoundManager(Context context) {
@@ -20,6 +21,8 @@ public class SoundManager {
 				de.jgroehl.asteromania.R.raw.click, 100);
 		sounds[SHOT_ID] = soundPool.load(context,
 				de.jgroehl.asteromania.R.raw.shoot, 100);
+		sounds[COIN_ID] = soundPool.load(context,
+				de.jgroehl.asteromania.R.raw.coin, 100);
 	}
 
 	public void playClickSound() {
@@ -39,6 +42,10 @@ public class SoundManager {
 
 	public void playNormalShotSound() {
 		playSound(SHOT_ID, 1.2f);
+	}
+
+	public void playCoinSound() {
+		playSound(COIN_ID);
 	}
 
 }

@@ -63,7 +63,7 @@ public class FpsMeter implements Drawable {
 			}
 			return true;
 		} else {
-			Log.d(TAG, "Notifying calling instance about too short sleepTime: "
+			Log.d(TAG, "Too short sleepTime: "
 					+ sleepTime);
 			return false;
 		}

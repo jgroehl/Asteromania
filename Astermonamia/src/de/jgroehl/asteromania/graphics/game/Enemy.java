@@ -1,7 +1,9 @@
 package de.jgroehl.asteromania.graphics.game;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
@@ -33,6 +35,14 @@ public class Enemy extends SimpleAnimatedObject implements Hitable {
 	@Override
 	public void getShot(GameHandler gameHandler, Shot shot) {
 		if (shot.getTarget() == Target.ENEMY) {
+			gameHandler
+					.add(new Coin(
+							xPosition,
+							yPosition,
+							BitmapFactory.decodeResource(
+									gameHandler.getResources(),
+									de.jgroehl.asteromania.R.drawable.rotating_coin)),
+							GameState.MAIN);
 			xPosition = (float) Math.random();
 			moveRight = !moveRight;
 			gameHandler.remove(shot);
