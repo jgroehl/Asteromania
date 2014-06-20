@@ -15,7 +15,7 @@ import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
 public class GameSetup {
 
-	public static void initializeGameObjects(GameHandler gameHandler,
+	public void initializeGameObjects(GameHandler gameHandler,
 			SensorHandler sensorHandler) {
 		gameHandler.add(new Starfield(), GameState.MAIN, GameState.MENU);
 		gameHandler.update();
@@ -38,6 +38,7 @@ public class GameSetup {
 
 					@Override
 					public void action(GameHandler gamehandler) {
+						gamehandler.getPlayerInfo().savePlayerInfo();
 						System.exit(0);
 					}
 				}), GameState.MENU);
@@ -85,7 +86,8 @@ public class GameSetup {
 		gameHandler.add(
 				new SimpleAnimatedObject(0.5f, 0.5f, BitmapFactory
 						.decodeResource(gameHandler.getResources(),
-								R.drawable.coin), 13, 100), GameState.MAIN);
+								R.drawable.rotating_coin), 13, 100),
+				GameState.MAIN);
 	}
 
 }

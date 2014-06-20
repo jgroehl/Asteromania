@@ -9,12 +9,16 @@ public class MainActivity extends Activity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
 	private static final boolean DEBUG = true;
+	private MainGamePanel mainGamePanel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "Executing onCreate of MainActivity...");
 		super.onCreate(savedInstanceState);
-		setContentView(new MainGamePanel(this, DEBUG));
+		
+		mainGamePanel = new MainGamePanel(this, DEBUG);
+
+		setContentView(mainGamePanel);
 
 		Toast.makeText(this, "Welcome to Asteromania", Toast.LENGTH_SHORT)
 				.show();
@@ -31,6 +35,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		Log.d(TAG, "Destroying Application...");
+		mainGamePanel.getGameHandler().getPlayerInfo().savePlayerInfo();
 		super.onDestroy();
 	}
 

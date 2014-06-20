@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.view.MotionEvent;
 import de.jgroehl.asteromania.control.interfaces.EventHandler;
 import de.jgroehl.asteromania.control.interfaces.GraphicsHandler;
+import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.graphics.GameObject;
 import de.jgroehl.asteromania.graphics.GameObject.Level;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
@@ -17,6 +18,7 @@ import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
+import de.jgroehl.asteromania.player.PlayerInfo;
 
 public class GameHandler implements GraphicsHandler, EventHandler {
 
@@ -38,7 +40,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	private GameState state = null;
 
-	public GameHandler(GameState state, SoundManager soundManager, Resources res) {
+	private PlayerInfo playerInfo;
+
+	public GameHandler(GameState state, SoundManager soundManager,
+			Resources res, CryptoHandler cryptoHandler, Context context) {
 		this.state = state;
 		for (GameState s : GameState.values()) {
 			gameObjects.put(s, new ArrayList<GameObject>());
@@ -47,6 +52,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		}
 		this.soundManager = soundManager;
 		this.res = res;
+		playerInfo = new PlayerInfo(cryptoHandler, context);
 
 	}
 
@@ -157,6 +163,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	public List<Hitable> getHitableObjects() {
 		return hitableObjects.get(state);
+	}
+
+	public PlayerInfo getPlayerInfo() {
+		return playerInfo;
 	}
 
 }

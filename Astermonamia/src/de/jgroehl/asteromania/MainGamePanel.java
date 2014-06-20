@@ -13,6 +13,7 @@ import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameSetup;
 import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.control.SoundManager;
+import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
@@ -25,9 +26,9 @@ public class MainGamePanel extends SurfaceView implements
 
 	private final Paint backgroundPaint = new Paint();
 
-	private final GameHandler gameHandler = new GameHandler(GameState.MENU,
-			new SoundManager(getContext()), getResources());
+	private final GameHandler gameHandler;
 	private final SensorHandler sensorHandler;
+	private GameSetup gameSetup = new GameSetup();
 
 	protected MainGamePanel(Context context) {
 		this(context, false);
@@ -36,6 +37,10 @@ public class MainGamePanel extends SurfaceView implements
 	public MainGamePanel(Context context, boolean debug) {
 
 		super(context);
+
+		gameHandler = new GameHandler(GameState.MENU, new SoundManager(
+				getContext()), getResources(),
+				new CryptoHandler(getResources()), getContext());
 
 		sensorHandler = new SensorHandler(context, Context.SENSOR_SERVICE);
 
@@ -59,7 +64,7 @@ public class MainGamePanel extends SurfaceView implements
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.d(TAG, "Try starting application...");
 		if (!thread.isRunning()) {
-			GameSetup.initializeGameObjects(gameHandler, sensorHandler);
+			gameSetup.initializeGameObjects(gameHandler, sensorHandler);
 			thread.start();
 		} else {
 			Log.d(TAG, "Application already running.");
@@ -80,6 +85,9 @@ public class MainGamePanel extends SurfaceView implements
 				Log.w(TAG, "Thread was not stopped.");
 			}
 		}
+		Log.d(TAG, "Try saving player state...");
+		gameHandler.getPlayerInfo().savePlayerInfo();
+		Log.d(TAG, "Try saving player state...[Done]");
 		Log.d(TAG, "Try stopping application...[Done]");
 	}
 
@@ -119,6 +127,10 @@ public class MainGamePanel extends SurfaceView implements
 
 	public void update() {
 		gameHandler.update();
+	}
+
+	public GameHandler getGameHandler() {
+		return gameHandler;
 	}
 
 }
