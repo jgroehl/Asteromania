@@ -18,6 +18,7 @@ import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.player.PlayerInfo;
+import de.jgroehl.asteromania.player.PlayerInfoDisplay;
 
 public class GameHandler implements GraphicsHandler, EventHandler {
 
@@ -41,6 +42,8 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	private PlayerInfo playerInfo;
 
+	private PlayerInfoDisplay playerInfoDisplay;
+
 	public GameHandler(GameState state, SoundManager soundManager,
 			Context context, CryptoHandler cryptoHandler) {
 		this.state = state;
@@ -53,6 +56,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		this.context = context;
 		playerInfo = new PlayerInfo(cryptoHandler, context);
 
+		playerInfoDisplay = new PlayerInfoDisplay(context, playerInfo);
 	}
 
 	public void update() {
@@ -162,6 +166,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	public PlayerInfo getPlayerInfo() {
 		return playerInfo;
+	}
+
+	public PlayerInfoDisplay getPlayerInfoDisplay() {
+		return playerInfoDisplay;
 	}
 
 }

@@ -2,32 +2,49 @@ package de.jgroehl.asteromania.graphics;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
+import android.util.SparseArray;
 
 public abstract class GraphicsObject extends GameObject {
 
+	protected static final SparseArray<Bitmap[]> imageCache = new SparseArray<Bitmap[]>();
+
 	private static final float DEFAULT_RELATIVE_SIZE = 0.0f;
-	protected Bitmap graphics;
+
+	public static final int INVALID_GRAPHICS_ID = -1;
 	private final Paint imagePaint = new Paint();
 	protected float relativeWidth = DEFAULT_RELATIVE_SIZE;
 	protected float relativeHeight = DEFAULT_RELATIVE_SIZE;
 
-	public GraphicsObject(float xPosition, float yPosition, Bitmap graphics, Context context) {
+	protected int graphicsId;
+
+	public GraphicsObject(float xPosition, float yPosition, int graphicsId,
+			Context context) {
 		super(xPosition, yPosition, context);
 
 		imagePaint.setStyle(Paint.Style.FILL);
-
-		this.graphics = graphics;
+		this.graphicsId = graphicsId;
+		if (graphicsId != INVALID_GRAPHICS_ID
+				&& imageCache.get(graphicsId) == null) {
+			imageCache.put(
+					graphicsId,
+					new Bitmap[] { BitmapFactory.decodeResource(
+							context.getResources(), graphicsId) });
+		}
 	}
 
 	@Override
 	public void draw(Canvas c) {
 
-		if (graphics != null) {
-			determineRelativeSize(c, graphics);
-			c.drawBitmap(graphics, xPosition * c.getWidth(),
-					yPosition * c.getHeight(), imagePaint);
+		if (graphicsId != INVALID_GRAPHICS_ID
+				&& imageCache.get(graphicsId) != null) {
+			determineRelativeSize(c, imageCache.get(graphicsId)[0]);
+			c.drawBitmap(imageCache.get(graphicsId)[0],
+					xPosition * c.getWidth(), yPosition * c.getHeight(),
+					imagePaint);
 		}
 
 	}
@@ -37,8 +54,15 @@ public abstract class GraphicsObject extends GameObject {
 		relativeWidth = ((float) graphics.getWidth()) / c.getWidth();
 	}
 
-	public void setGraphics(Bitmap graphics) {
-		this.graphics = graphics;
+	public void setGraphics(int graphicsId) {
+		this.graphicsId = graphicsId;
+		if (graphicsId != INVALID_GRAPHICS_ID
+				&& imageCache.get(graphicsId) == null) {
+			imageCache.put(
+					graphicsId,
+					new Bitmap[] { BitmapFactory.decodeResource(
+							context.getResources(), graphicsId) });
+		}
 	}
 
 	public float getRelativeHeight() {
@@ -47,6 +71,20 @@ public abstract class GraphicsObject extends GameObject {
 
 	public float getRelativeWidth() {
 		return relativeWidth;
+	}
+
+	protected void addGraphics(int hashCode, Bitmap[] b) {
+		if (imageCache.get(hashCode) == null) {
+			this.graphicsId = hashCode;
+			imageCache.put(hashCode, b);
+			Log.d(GraphicsObject.class.getSimpleName(),
+					"Added an image for hash (" + hashCode + ")");
+		} else {
+			Log.w(GraphicsObject.class.getSimpleName(),
+					"Try setting a new image to cache even though"
+							+ "there is already an image for hash (" + hashCode
+							+ ") present.");
+		}
 	}
 
 }

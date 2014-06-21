@@ -1,7 +1,6 @@
 package de.jgroehl.asteromania.graphics.ui;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
@@ -13,8 +12,8 @@ public abstract class AbstractClickableElement extends GraphicsObject implements
 	private final EventCallback callback;
 
 	public AbstractClickableElement(float xPosition, float yPosition,
-			Bitmap graphics, EventCallback callback, Context context) {
-		super(xPosition, yPosition, graphics, context);
+			int graphicsId, EventCallback callback, Context context) {
+		super(xPosition, yPosition, graphicsId, context);
 		this.callback = callback;
 	}
 

@@ -5,34 +5,30 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.SparseArray;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
 import de.jgroehl.asteromania.time.Timer;
 
 public abstract class AnimatedGraphicsObject extends GraphicsObject {
 
-	private static final SparseArray<Bitmap[]> imageCache = new SparseArray<Bitmap[]>();
-
 	private final Paint imagePaint = new Paint();
-	protected final int imageResource;
 	private int currentFrame;
 	private final int maxFrames;
 	protected final Timer animationTimer;
 
 	public AnimatedGraphicsObject(float xPosition, float yPosition,
-			int imageResource, int frameCount, int animationPeriod,
+			int graphicsId, int frameCount, int animationPeriod,
 			Context context) {
-		super(xPosition, yPosition, null, context);
+		super(xPosition, yPosition, INVALID_GRAPHICS_ID, context);
 
-		this.imageResource = imageResource;
+		this.graphicsId = graphicsId;
 		animationTimer = new Timer(animationPeriod);
 		imagePaint.setStyle(Paint.Style.FILL);
 
 		maxFrames = frameCount;
 
-		if (imageCache.get(imageResource) == null) {
+		if (imageCache.get(graphicsId) == null) {
 			Bitmap graphics = BitmapFactory.decodeResource(
-					context.getResources(), imageResource);
+					context.getResources(), graphicsId);
 			int width = graphics.getWidth() / frameCount;
 			int height = graphics.getHeight();
 			Bitmap[] imageFrames = new Bitmap[frameCount];
@@ -41,15 +37,15 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject {
 				imageFrames[i] = Bitmap.createBitmap(graphics, i * width, 0,
 						width, height);
 			}
-			imageCache.put(imageResource, imageFrames);
+			imageCache.put(graphicsId, imageFrames);
 		}
 
 	}
 
 	@Override
 	public void draw(Canvas c) {
-		determineRelativeSize(c, imageCache.get(imageResource)[currentFrame]);
-		c.drawBitmap(imageCache.get(imageResource)[currentFrame],
+		determineRelativeSize(c, imageCache.get(graphicsId)[currentFrame]);
+		c.drawBitmap(imageCache.get(graphicsId)[currentFrame],
 				xPosition * c.getWidth(), yPosition * c.getHeight(), imagePaint);
 	}
 

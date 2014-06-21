@@ -77,6 +77,9 @@ public class GameSetup {
 				gameHandler.add(button, state);
 				gameHandler.update();
 			}
+
+		gameHandler.add(gameHandler.getPlayerInfoDisplay(), GameState.MAIN);
+		gameHandler.update();
 	}
 
 }

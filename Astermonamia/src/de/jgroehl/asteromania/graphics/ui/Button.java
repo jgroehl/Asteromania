@@ -27,7 +27,7 @@ public class Button extends AbstractClickableElement {
 
 	public Button(String buttonText, float xPosition, float yPosition,
 			float width, float height, EventCallback callback, Context context) {
-		super(xPosition, yPosition, null, callback, context);
+		super(xPosition, yPosition, INVALID_GRAPHICS_ID, callback, context);
 
 		ninePatch = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.button);
@@ -40,7 +40,7 @@ public class Button extends AbstractClickableElement {
 
 	public Button(Bitmap icon, float xPosition, float yPosition, float width,
 			float height, EventCallback callback, Context context) {
-		super(xPosition, yPosition, null, callback, context);
+		super(xPosition, yPosition, INVALID_GRAPHICS_ID, callback, context);
 
 		this.rawIcon = icon;
 
@@ -66,30 +66,45 @@ public class Button extends AbstractClickableElement {
 		if (buttonText != null && textPaint == null) {
 			textPaint = setupTextPaint(c.getHeight());
 		}
-		if (graphics == null) {
-			setGraphics(Bitmap.createBitmap(createBackground(c.getWidth(),
-					c.getHeight(), createNinePatch(ninePatch))));
-			Canvas c2 = new Canvas(graphics);
-			if (buttonText != null) {
-				drawText(c2, 2, 2, Color.LTGRAY);
-				drawText(c2, 0, 0, Color.GRAY);
-				drawText(c2, -1, -1, Color.DKGRAY);
+		if (graphicsId == INVALID_GRAPHICS_ID) {
+			graphicsId = getGraphicsId();
+			if (imageCache.get(graphicsId) == null) {
+				Bitmap b = Bitmap.createBitmap(createBackground(c.getWidth(),
+						c.getHeight(), createNinePatch(ninePatch)));
+				addGraphics(graphicsId, new Bitmap[] { b });
+				Canvas c2 = new Canvas(imageCache.get(graphicsId)[0]);
+				if (buttonText != null) {
+					drawText(c2, 2, 2, Color.LTGRAY);
+					drawText(c2, 0, 0, Color.GRAY);
+					drawText(c2, -1, -1, Color.DKGRAY);
+				}
+				if (rawIcon != null) {
+					Log.i("IMPORTANT", "created icon!");
+					c2.drawBitmap(
+							Bitmap.createScaledBitmap(
+									rawIcon,
+									(int) (relativeWidth * c.getWidth() * 0.75),
+									(int) (relativeHeight * c.getHeight() * 0.75),
+									true), (float) (c2.getWidth() * 0.125),
+							(float) (c2.getHeight() * 0.0625), graphicsPaint);
+					rawIcon = null;
+				}
+				ninePatch = null;
 			}
-			if (rawIcon != null) {
-				Log.i("IMPORTANT", "created icon!");
-				c2.drawBitmap(
-						Bitmap.createScaledBitmap(rawIcon, (int) (relativeWidth
-								* c.getWidth() * 0.75), (int) (relativeHeight
-								* c.getHeight() * 0.75), true),
-						(float) (c2.getWidth() * 0.125),
-						(float) (c2.getHeight() * 0.0625), graphicsPaint);
-				rawIcon = null;
-			}
-			ninePatch = null;
 		}
 
 		super.draw(c);
 
+	}
+
+	private int getGraphicsId() {
+		int value = (int) (relativeWidth * 1000 * 31);
+		value += (int) (relativeHeight * 1000000 * 31);
+		if (buttonText != null)
+			value += buttonText.hashCode();
+		if (rawIcon != null)
+			value += rawIcon.hashCode();
+		return value;
 	}
 
 	private void drawText(Canvas c, int xTrans, int yTrans, int color) {
