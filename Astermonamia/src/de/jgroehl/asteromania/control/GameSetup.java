@@ -49,7 +49,8 @@ public class GameSetup {
 
 		gameHandler.add(new SpaceShip(sensorHandler, gameHandler.getContext()),
 				GameState.MAIN);
-		gameHandler.add(new Enemy(12, 50, gameHandler.getContext()),
+		
+		gameHandler.add(new Enemy(15, 100,gameHandler.getContext()),
 				GameState.MAIN);
 		gameHandler.update();
 
