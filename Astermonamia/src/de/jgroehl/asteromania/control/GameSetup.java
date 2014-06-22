@@ -10,6 +10,7 @@ import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
+import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
 public class GameSetup {
@@ -52,10 +53,7 @@ public class GameSetup {
 				GameState.MAIN);
 		gameHandler.update();
 
-		gameHandler.add(new Button("Shoot", 0f, 0.9f, 0.1f, 0.1f,
-				new ShotFiredCallback(Target.ENEMY), gameHandler.getContext()),
-				GameState.MAIN);
-		gameHandler.add(new Button("Shoot", 0.9f, 0.9f, 0.1f, 0.1f,
+		gameHandler.add(new SimpleClickableElement(0.8f, 0.8f, 0.2f, 0.2f,
 				new ShotFiredCallback(Target.ENEMY), gameHandler.getContext()),
 				GameState.MAIN);
 		gameHandler.update();

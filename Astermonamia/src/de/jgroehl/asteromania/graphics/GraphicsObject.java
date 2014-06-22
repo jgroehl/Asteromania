@@ -21,6 +21,13 @@ public abstract class GraphicsObject extends GameObject {
 
 	protected int graphicsId;
 
+	public GraphicsObject(float xPosition, float yPosition, float width,
+			float height, Context context) {
+		this(xPosition, yPosition, INVALID_GRAPHICS_ID, context);
+		relativeWidth = width;
+		relativeHeight = height;
+	}
+
 	public GraphicsObject(float xPosition, float yPosition, int graphicsId,
 			Context context) {
 		super(xPosition, yPosition, context);

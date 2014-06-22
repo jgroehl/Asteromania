@@ -7,6 +7,11 @@ import de.jgroehl.asteromania.control.interfaces.EventCallback;
 public class SimpleClickableElement extends AbstractClickableElement {
 
 	public SimpleClickableElement(float xPosition, float yPosition,
+			float width, float height, EventCallback callback, Context context) {
+		super(xPosition, yPosition, width, height, callback, context);
+	}
+
+	public SimpleClickableElement(float xPosition, float yPosition,
 			int graphicsId, EventCallback callback, Context context) {
 		super(xPosition, yPosition, graphicsId, callback, context);
 	}
