@@ -22,7 +22,6 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private static final float BASIC_SHOT_SPEED = 0.01f;
 	private int normalFrame = getMaxFrame() / 2;
 	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];
-	private float shotSpeedFactor = 1.0f;
 
 	public SpaceShip(SensorHandler sensorHandler, Context context) {
 		super(0.6f, 0.7f, R.drawable.spaceship2, IMAGE_FRAMES, ANIMATION_TIME,
@@ -108,7 +107,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	}
 
 	public float getShotSpeed() {
-		return BASIC_SHOT_SPEED * shotSpeedFactor;
+		return BASIC_SHOT_SPEED;
 	}
 
 	@Override

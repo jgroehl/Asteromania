@@ -16,6 +16,7 @@ import de.jgroehl.asteromania.crypto.CryptoHandler.CryptoException;
 
 public class PlayerInfo {
 
+	private static final String TAG = PlayerInfo.class.getSimpleName();
 	private CryptoHandler cryptoHandler;
 	private final Context context;
 
@@ -26,20 +27,25 @@ public class PlayerInfo {
 		this.cryptoHandler = cryptoHandler;
 		this.context = context;
 
+		Log.d(TAG, "Loading playerInfo from internal memory...");
+		setUpPlayerInfo();
+		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void setUpPlayerInfo() {
 		try {
 			coins = Integer
 					.parseInt(getDecryptedStringFromFile(COIN_FILE_NAME));
 		} catch (NumberFormatException e) {
-			Log.w(PlayerInfo.class.getSimpleName(),
-					"Amount of coins not readable. This is because of missing file or invalid file contents.");
+			Log.w(TAG, "Amount of coins not readable. Setting coins to 0.");
 			coins = 0;
 		}
 	}
 
 	public void savePlayerInfo() {
-		Log.d(PlayerInfo.class.getSimpleName(), "Saving PlayerInfo...");
+		Log.d(TAG, "Saving PlayerInfo...");
 		writeAndEncryptString(COIN_FILE_NAME, String.valueOf(coins));
-		Log.d(PlayerInfo.class.getSimpleName(), "Saving PlayerInfo...[Done]");
+		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
 
@@ -50,20 +56,20 @@ public class PlayerInfo {
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
 			BufferedWriter bw = new BufferedWriter(osw);
 
-			bw.write(new String(cryptoHandler.encode(Base64.encode(
-					value.getBytes(), Base64.DEFAULT))));
+			String output = new String(Base64.encode(
+					cryptoHandler.encode(value.getBytes()), Base64.URL_SAFE));
+			Log.d(TAG, "Saved value [" + output + "] to " + fileName);
+			bw.write(output);
 
 			bw.close();
 			osw.close();
 			fos.close();
 		} catch (IOException e) {
-			Log.e(PlayerInfo.class.getSimpleName(),
-					"Saving value " + value + " for " + fileName
-							+ " failed because of IO: " + e.getMessage());
+			Log.e(TAG, "Saving value " + value + " for " + fileName
+					+ " failed because of IO: " + e.getMessage());
 		} catch (CryptoException e) {
-			Log.e(PlayerInfo.class.getSimpleName(),
-					"Saving value " + value + " for " + fileName
-							+ " failed because of crypto: " + e.getMessage());
+			Log.e(TAG, "Saving value " + value + " for " + fileName
+					+ " failed because of crypto: " + e.getMessage());
 		}
 	}
 
@@ -71,28 +77,34 @@ public class PlayerInfo {
 		String result = "";
 		try {
 			FileInputStream coinInputStream = context.openFileInput(fileName);
-			if (coinInputStream == null)
+			if (coinInputStream == null) {
+				Log.w(TAG, "When opening " + fileName
+						+ " the file was not existing.");
 				return result;
+			}
 			InputStreamReader isr = new InputStreamReader(coinInputStream);
 			BufferedReader bufferedReader = new BufferedReader(isr);
 
 			String readLine = bufferedReader.readLine();
-			if (readLine == null)
+			if (readLine == null) {
+				Log.w(TAG, "When reading " + fileName
+						+ " the file was not readable or empty.");
 				return result;
+			}
+			Log.d(TAG, "Read value [" + readLine + "] from " + fileName);
 			result = new String(cryptoHandler.decode(Base64.decode(
-					readLine.getBytes(), Base64.DEFAULT)));
+					readLine.getBytes(), Base64.URL_SAFE)));
 
 			coinInputStream.close();
 			isr.close();
 			bufferedReader.close();
 		} catch (IOException e) {
-			Log.e(PlayerInfo.class.getSimpleName(),
+			Log.e(TAG,
 					"Error while retrieving input string from file: "
 							+ e.getMessage());
 			return "";
 		} catch (CryptoException e) {
-			Log.e(PlayerInfo.class.getSimpleName(),
-					"Crypto Exception while reading file: " + e.getMessage());
+			Log.e(TAG, "Crypto Exception while reading file: " + e.getMessage());
 			return "";
 		}
 

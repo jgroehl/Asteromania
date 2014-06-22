@@ -9,7 +9,7 @@ public class Coin extends AnimatedGraphicsObject {
 
 	private static final int FRAME_COUNT = 13;
 	private static final int ANIMATION_PERIOD = 50;
-	private static final float V_SPEED = 0.01f;
+	private static final float V_SPEED = 0.02f;
 
 	public Coin(float xPosition, float yPosition, Context context) {
 		super(xPosition, yPosition,

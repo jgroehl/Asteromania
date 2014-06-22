@@ -8,7 +8,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	private MainGamePanel mainGamePanel;
 
 	@Override

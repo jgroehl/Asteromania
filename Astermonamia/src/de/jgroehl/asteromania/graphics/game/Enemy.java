@@ -9,7 +9,7 @@ import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 
 public class Enemy extends SimpleAnimatedObject implements Hitable {
 
-	private float speed = 0.005f;
+	private float speed = 0.01f;
 
 	private boolean moveRight = true;
 

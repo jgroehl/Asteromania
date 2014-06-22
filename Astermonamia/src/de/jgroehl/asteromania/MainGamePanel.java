@@ -84,9 +84,7 @@ public class MainGamePanel extends SurfaceView implements
 				Log.w(TAG, "Thread was not stopped.");
 			}
 		}
-		Log.d(TAG, "Try saving player state...");
 		gameHandler.getPlayerInfo().savePlayerInfo();
-		Log.d(TAG, "Try saving player state...[Done]");
 		Log.d(TAG, "Try stopping application...[Done]");
 	}
 
