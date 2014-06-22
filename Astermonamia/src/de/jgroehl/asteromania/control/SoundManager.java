@@ -41,7 +41,11 @@ public class SoundManager {
 	}
 
 	public void playNormalShotSound() {
-		playSound(SHOT_ID, 1.2f);
+		playSound(SHOT_ID, 1.5f);
+	}
+	
+	public void playEnemyShotSound() {
+		playSound(SHOT_ID, 0.6f);
 	}
 
 	public void playCoinSound() {

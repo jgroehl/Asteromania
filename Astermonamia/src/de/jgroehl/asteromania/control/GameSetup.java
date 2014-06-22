@@ -50,7 +50,7 @@ public class GameSetup {
 		gameHandler.add(new SpaceShip(sensorHandler, gameHandler.getContext()),
 				GameState.MAIN);
 		
-		gameHandler.add(new Enemy(15, 100,gameHandler.getContext()),
+		gameHandler.add(Enemy.createNormalEnemy(gameHandler.getContext()),
 				GameState.MAIN);
 		gameHandler.update();
 
@@ -80,5 +80,4 @@ public class GameSetup {
 		gameHandler.add(gameHandler.getPlayerInfoDisplay(), GameState.MAIN);
 		gameHandler.update();
 	}
-
 }

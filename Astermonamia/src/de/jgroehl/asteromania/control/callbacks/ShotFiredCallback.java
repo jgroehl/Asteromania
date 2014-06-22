@@ -1,6 +1,5 @@
 package de.jgroehl.asteromania.control.callbacks;
 
-import android.util.Log;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
@@ -10,7 +9,6 @@ import de.jgroehl.asteromania.graphics.game.Shot.Target;
 
 public class ShotFiredCallback implements EventCallback {
 
-	private static final String TAG = ShotFiredCallback.class.getSimpleName();
 	private final Target target;
 
 	public ShotFiredCallback(Target target) {
@@ -19,7 +17,6 @@ public class ShotFiredCallback implements EventCallback {
 
 	@Override
 	public void action(GameHandler gameHandler) {
-		Log.d(TAG, "Shot fired");
 		gameHandler.getSoundManager().playNormalShotSound();
 		Shot shot = new Shot(gameHandler.getPlayer().getX()
 				+ gameHandler.getPlayer().getRelativeWidth() * 0.35f,
@@ -27,7 +24,6 @@ public class ShotFiredCallback implements EventCallback {
 						.getShotSpeed(), gameHandler.getContext());
 		shot.setLevel(Level.BOTTOM);
 		gameHandler.add(shot, GameState.MAIN);
-
 	}
 
 }

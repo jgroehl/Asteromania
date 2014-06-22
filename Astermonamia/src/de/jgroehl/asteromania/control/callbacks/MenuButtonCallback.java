@@ -16,7 +16,6 @@ public class MenuButtonCallback implements EventCallback {
 	public void action(GameHandler gameHandler) {
 		gameHandler.getSoundManager().playClickSound();
 		gameHandler.setState(state);
-
 	}
 
 }

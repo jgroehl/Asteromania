@@ -16,6 +16,7 @@ public class SensorHandler implements android.hardware.SensorEventListener {
 	private float rollAngle;
 	private float pitchAngle;
 
+	@SuppressWarnings("deprecation")
 	public SensorHandler(Context context, String sensorService) {
 		sensorManager = (SensorManager) context.getSystemService(sensorService);
 		sensorManager.registerListener(this,

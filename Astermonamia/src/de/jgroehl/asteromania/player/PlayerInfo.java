@@ -17,11 +17,11 @@ import de.jgroehl.asteromania.crypto.CryptoHandler.CryptoException;
 public class PlayerInfo {
 
 	private static final String TAG = PlayerInfo.class.getSimpleName();
+	private static final String COIN_FILE_NAME = "coins";
 	private CryptoHandler cryptoHandler;
 	private final Context context;
 
 	private int coins;
-	private final String COIN_FILE_NAME = "coins";
 
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
 		this.cryptoHandler = cryptoHandler;
