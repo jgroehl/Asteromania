@@ -35,7 +35,7 @@ public class Shot extends GraphicsObject {
 
 		for (Hitable hitable : handler.getHitableObjects()) {
 			GraphicsObject go = (GraphicsObject) hitable;
-			if (imagesOverlap(xPosition, yPosition, getRelativeWidth(),
+			if (imagesOverlap(getX(), getY(), getRelativeWidth(),
 					getRelativeHeight(), go.getX(), go.getY(),
 					go.getRelativeWidth(), go.getRelativeHeight())) {
 				hitable.getShot(handler, this);

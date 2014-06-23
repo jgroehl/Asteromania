@@ -94,4 +94,12 @@ public abstract class GraphicsObject extends GameObject {
 		}
 	}
 
+	public void setRelativeHeight(float relativeHeight) {
+		this.relativeHeight = relativeHeight;
+	}
+
+	public void setRelativeWidth(float relativeWidth) {
+		this.relativeWidth = relativeWidth;
+	}
+
 }
