@@ -18,6 +18,8 @@ public class PlayerInfo {
 
 	private static final String TAG = PlayerInfo.class.getSimpleName();
 	private static final String COIN_FILE_NAME = "coins";
+	private static final String HP_FILE_NAME = "health";
+	private static final String SPLIT_CHARACTER = "&";
 	private CryptoHandler cryptoHandler;
 	private final Context context;
 
@@ -26,7 +28,6 @@ public class PlayerInfo {
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
 		this.cryptoHandler = cryptoHandler;
 		this.context = context;
-
 		Log.d(TAG, "Loading playerInfo from internal memory...");
 		setUpPlayerInfo();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");

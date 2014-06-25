@@ -5,8 +5,10 @@ import android.graphics.Color;
 
 public class HpBar extends StatusBar {
 
-	public HpBar(int maximum, float relativeHeight, Context context) {
-		super(maximum, relativeHeight, context, FULL, Color.GREEN);
+	public HpBar(int maximum, float xPosition, float yPosition,
+			float relativeWidth, float relativeHeight, Context context) {
+		super(maximum, xPosition, yPosition, relativeWidth, relativeHeight,
+				context, FULL, Color.GREEN);
 	}
 
 	@Override

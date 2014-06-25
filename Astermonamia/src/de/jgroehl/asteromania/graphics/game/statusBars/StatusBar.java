@@ -17,9 +17,10 @@ public class StatusBar extends GraphicsObject {
 	private Paint contentsPaint = new Paint();
 	private RectF bounds = new RectF();
 
-	public StatusBar(int maximum, float relativeHeight, Context context,
+	public StatusBar(int maximum, float xPosition, float yPosition,
+			float relativeWidth, float relativeHeight, Context context,
 			int type, int color) {
-		super(0f, 0f, 0f, relativeHeight, context);
+		super(xPosition, xPosition, relativeWidth, relativeHeight, context);
 		contentsPaint.setStyle(Paint.Style.FILL);
 		contentsPaint.setColor(color);
 

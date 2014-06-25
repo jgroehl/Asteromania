@@ -7,6 +7,7 @@ import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
 import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
+import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
@@ -112,7 +113,10 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 	@Override
 	public void getShot(GameHandler gameHandler, Shot shot) {
-		// TODO:
+		if (shot.getTarget() == Target.PLAYER) {
+			gameHandler.getSoundManager().playerPlayerHitSound();
+			gameHandler.remove(shot);
+		}
 	}
 
 }
