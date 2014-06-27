@@ -52,11 +52,13 @@ public class GameSetup {
 		gameHandler.add(new SpaceShip(sensorHandler, gameHandler.getContext()),
 				GameState.MAIN);
 
-		for (int i = 0; i < NUMBER_ENEMIES; i++) {
-			gameHandler.add(Enemy.createNormalEnemy(gameHandler.getContext()),
-					GameState.MAIN);
-			gameHandler.update();
-		}
+		gameHandler.add(Enemy.createNormalEnemy(gameHandler.getContext()),
+				GameState.MAIN);
+		gameHandler.update();
+
+		gameHandler.add(Enemy.createBossEnemy(gameHandler.getContext()),
+				GameState.MAIN);
+		gameHandler.update();
 
 		gameHandler.add(new SimpleClickableElement(0.8f, 0.8f, 0.2f, 0.2f,
 				new ShotFiredCallback(Target.ENEMY), gameHandler.getContext()),
