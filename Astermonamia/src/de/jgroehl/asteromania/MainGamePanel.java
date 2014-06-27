@@ -27,7 +27,6 @@ public class MainGamePanel extends SurfaceView implements
 	private final Paint backgroundPaint = new Paint();
 
 	private final GameHandler gameHandler;
-	private final SensorHandler sensorHandler;
 	private GameSetup gameSetup = new GameSetup();
 
 	protected MainGamePanel(Context context) {
@@ -39,9 +38,8 @@ public class MainGamePanel extends SurfaceView implements
 		super(context);
 
 		gameHandler = new GameHandler(GameState.MENU, new SoundManager(
-				getContext()), getContext(), new CryptoHandler(getResources()));
-
-		sensorHandler = new SensorHandler(context, Context.SENSOR_SERVICE);
+				getContext()), getContext(), new CryptoHandler(getResources()),
+				new SensorHandler(context, Context.SENSOR_SERVICE));
 
 		getHolder().addCallback(this);
 
@@ -63,7 +61,7 @@ public class MainGamePanel extends SurfaceView implements
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.d(TAG, "Try starting application...");
 		if (!thread.isRunning()) {
-			gameSetup.initializeGameObjects(gameHandler, sensorHandler);
+			gameSetup.initializeGameObjects(gameHandler);
 			thread.start();
 		} else {
 			Log.d(TAG, "Application already running.");

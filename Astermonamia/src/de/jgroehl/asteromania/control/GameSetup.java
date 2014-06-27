@@ -7,18 +7,13 @@ import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.graphics.game.Enemy;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
-import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
-import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
 public class GameSetup {
 
-	private static final int NUMBER_ENEMIES = 2;
-
-	public void initializeGameObjects(GameHandler gameHandler,
-			SensorHandler sensorHandler) {
+	public void initializeGameObjects(GameHandler gameHandler) {
 		gameHandler.add(new Starfield(gameHandler.getContext()),
 				GameState.MAIN, GameState.MENU);
 		gameHandler.update();
@@ -48,9 +43,6 @@ public class GameSetup {
 					}
 				}, gameHandler.getContext()), GameState.MENU);
 		gameHandler.update();
-
-		gameHandler.add(new SpaceShip(sensorHandler, gameHandler.getContext()),
-				GameState.MAIN);
 
 		gameHandler.add(Enemy.createNormalEnemy(gameHandler.getContext()),
 				GameState.MAIN);

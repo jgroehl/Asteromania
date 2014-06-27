@@ -19,33 +19,37 @@ import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.player.PlayerInfo;
 import de.jgroehl.asteromania.player.PlayerInfoDisplay;
+import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
 public class GameHandler implements GraphicsHandler, EventHandler {
 
-	private Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
+	private final Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
 
-	private Map<GameState, List<Clickable>> clickableObjects = new HashMap<GameState, List<Clickable>>();
+	private final Map<GameState, List<Clickable>> clickableObjects = new HashMap<GameState, List<Clickable>>();
 
-	private Map<GameObject, GameState[]> addedObjects = new HashMap<GameObject, GameState[]>();
+	private final Map<GameObject, GameState[]> addedObjects = new HashMap<GameObject, GameState[]>();
 
-	private Map<GameState, List<Hitable>> hitableObjects = new HashMap<GameState, List<Hitable>>();
+	private final Map<GameState, List<Hitable>> hitableObjects = new HashMap<GameState, List<Hitable>>();
 
-	private List<GameObject> removedObjects = new ArrayList<GameObject>();
+	private final List<GameObject> removedObjects = new ArrayList<GameObject>();
 
 	private final SoundManager soundManager;
 
-	private SpaceShip player;
+	private final SpaceShip player;
 
-	private Context context;
+	private final Context context;
+
+	private final PlayerInfo playerInfo;
+
+	private final PlayerInfoDisplay playerInfoDisplay;
+
+	private final LevelHandler levelHandler;
 
 	private GameState state = null;
 
-	private PlayerInfo playerInfo;
-
-	private PlayerInfoDisplay playerInfoDisplay;
-
 	public GameHandler(GameState state, SoundManager soundManager,
-			Context context, CryptoHandler cryptoHandler) {
+			Context context, CryptoHandler cryptoHandler,
+			SensorHandler sensorHandler) {
 		this.state = state;
 		for (GameState s : GameState.values()) {
 			gameObjects.put(s, new ArrayList<GameObject>());
@@ -54,8 +58,9 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		}
 		this.soundManager = soundManager;
 		this.context = context;
+		player = new SpaceShip(sensorHandler, context);
 		playerInfo = new PlayerInfo(cryptoHandler, context);
-
+		levelHandler = new LevelHandler();
 		playerInfoDisplay = new PlayerInfoDisplay(context, playerInfo);
 	}
 
@@ -76,10 +81,6 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 				if (gameObject instanceof Hitable) {
 					for (GameState state : addedObjects.get(gameObject))
 						hitableObjects.get(state).add((Hitable) gameObject);
-				}
-
-				if (player == null && gameObject instanceof SpaceShip) {
-					player = (SpaceShip) gameObject;
 				}
 			}
 			addedObjects.clear();
@@ -155,10 +156,6 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	public SpaceShip getPlayer() {
 		return player;
-	}
-
-	public void setPlayer(SpaceShip player) {
-		this.player = player;
 	}
 
 	public Context getContext() {
