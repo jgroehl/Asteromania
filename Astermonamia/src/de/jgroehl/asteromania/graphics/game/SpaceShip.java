@@ -128,4 +128,9 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		}
 	}
 
+	public void getHitByAsteroid(GameHandler gameHandler, int damage) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

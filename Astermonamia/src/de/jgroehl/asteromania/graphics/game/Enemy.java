@@ -107,13 +107,17 @@ public class Enemy extends SimpleAnimatedObject implements Hitable {
 				0.02f, 2000, 0.01f);
 
 	}
-	
+
 	public static Enemy createBossEnemy(Context context) {
 
 		return new Enemy((float) Math.random(), 0.2f,
 				de.jgroehl.asteromania.R.drawable.enemy2, 6, 100, context, 50,
 				0.02f, 1000, 0.005f);
 
+	}
+
+	public boolean isAlive() {
+		return hpBar.getCurrentValue() > 0;
 	}
 
 }

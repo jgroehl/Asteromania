@@ -136,6 +136,11 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	}
 
+	public void addAllToMain(List<GameObject> gameObjects) {
+		for (GameObject gameObject : gameObjects)
+			add(gameObject, GameState.MAIN);
+	}
+
 	public GameState getGameState() {
 		return state;
 	}
