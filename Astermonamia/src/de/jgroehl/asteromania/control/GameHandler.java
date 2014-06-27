@@ -172,4 +172,9 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		return playerInfoDisplay;
 	}
 
+	public void gameLost() {
+		playerInfo.addCoins(-5);
+		playerInfo.getHealthPoints().reset();
+	}
+
 }

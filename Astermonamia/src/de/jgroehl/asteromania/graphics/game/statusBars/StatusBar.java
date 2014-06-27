@@ -20,7 +20,7 @@ public class StatusBar extends GraphicsObject {
 	public StatusBar(int maximum, float xPosition, float yPosition,
 			float relativeWidth, float relativeHeight, Context context,
 			int type, int color) {
-		super(xPosition, xPosition, relativeWidth, relativeHeight, context);
+		super(xPosition, yPosition, relativeWidth, relativeHeight, context);
 		contentsPaint.setStyle(Paint.Style.FILL);
 		contentsPaint.setColor(color);
 
@@ -72,5 +72,9 @@ public class StatusBar extends GraphicsObject {
 
 	public int getMaximum() {
 		return maximum;
+	}
+
+	public void reset() {
+		currentValue = maximum;
 	}
 }

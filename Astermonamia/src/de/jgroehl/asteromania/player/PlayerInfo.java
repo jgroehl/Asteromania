@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.util.Log;
 import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.crypto.CryptoHandler.CryptoException;
+import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
 
 public class PlayerInfo {
 
@@ -20,9 +21,15 @@ public class PlayerInfo {
 	private static final String COIN_FILE_NAME = "coins";
 	private static final String HP_FILE_NAME = "health";
 	private static final String SPLIT_CHARACTER = "&";
-	private CryptoHandler cryptoHandler;
+	private static final int DEFAULT_HEALTH = 20;
+	private static final float HEALTH_HEIGHT = 0.075f;
+	private static final float HEALTH_WIDTH = 0.3f;
+	private static final float HEALTH_X = 0.025f;
+	private static final float HEALTH_Y = 0.90f;
+	private final CryptoHandler cryptoHandler;
 	private final Context context;
 
+	private HpBar healthPoints;
 	private int coins;
 
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
@@ -37,22 +44,45 @@ public class PlayerInfo {
 		try {
 			coins = Integer
 					.parseInt(getDecryptedStringFromFile(COIN_FILE_NAME));
+			Log.d(TAG, "Set coins to " + coins);
+
 		} catch (NumberFormatException e) {
 			Log.w(TAG, "Amount of coins not readable. Setting coins to 0.");
 			coins = 0;
+		}
+
+		try {
+			String[] health = getDecryptedStringFromFile(HP_FILE_NAME).split(
+					SPLIT_CHARACTER);
+			int currentValue = Integer.parseInt(health[0]);
+			int maximum = Integer.parseInt(health[1]);
+
+			healthPoints = new HpBar(maximum, currentValue, HEALTH_X, HEALTH_Y,
+					HEALTH_WIDTH, HEALTH_HEIGHT, context);
+			Log.d(TAG, "Set HP to: " + currentValue + "/" + maximum);
+		} catch (NumberFormatException e) {
+			Log.w(TAG,
+					"Amount of health not readable. Setting to default value "
+							+ DEFAULT_HEALTH);
+			healthPoints = new HpBar(DEFAULT_HEALTH, DEFAULT_HEALTH, HEALTH_X,
+					HEALTH_Y, HEALTH_WIDTH, HEALTH_HEIGHT, context);
 		}
 	}
 
 	public void savePlayerInfo() {
 		Log.d(TAG, "Saving PlayerInfo...");
 		writeAndEncryptString(COIN_FILE_NAME, String.valueOf(coins));
+		writeAndEncryptString(
+				HP_FILE_NAME,
+				String.valueOf(healthPoints.getCurrentValue() + SPLIT_CHARACTER
+						+ healthPoints.getMaximum()));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
 
 	private void writeAndEncryptString(String fileName, String value) {
 		try {
-			FileOutputStream fos = context.openFileOutput(COIN_FILE_NAME,
+			FileOutputStream fos = context.openFileOutput(fileName,
 					Context.MODE_PRIVATE);
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
 			BufferedWriter bw = new BufferedWriter(osw);
@@ -118,6 +148,14 @@ public class PlayerInfo {
 
 	public int getCoins() {
 		return coins;
+	}
+
+	public HpBar getHealthPoints() {
+		return healthPoints;
+	}
+
+	public void setHealthPoints(HpBar healthPoints) {
+		this.healthPoints = healthPoints;
 	}
 
 }
