@@ -112,6 +112,9 @@ public class MainGamePanel extends SurfaceView implements
 				d.draw(c);
 			}
 
+			if (gameHandler.getGameState().equals(GameState.MAIN))
+				gameHandler.getPlayerInfoDisplay().draw(c);
+
 		} else {
 			Log.e(TAG, "Severe error displaying game state: Canvas was null");
 		}

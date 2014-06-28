@@ -18,19 +18,26 @@ import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
 public class PlayerInfo {
 
 	private static final String TAG = PlayerInfo.class.getSimpleName();
+
 	private static final String COIN_FILE_NAME = "coins";
 	private static final String HP_FILE_NAME = "health";
+	private static final String LEVEL_FILE_NAME = "level";
 	private static final String SPLIT_CHARACTER = "&";
+
 	private static final int DEFAULT_HEALTH = 20;
+	private static final int DEFAULT_LEVEL = 1;
+
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
 	private static final float HEALTH_X = 0.025f;
 	private static final float HEALTH_Y = 0.90f;
+
 	private final CryptoHandler cryptoHandler;
 	private final Context context;
 
 	private HpBar healthPoints;
 	private int coins;
+	private int level;
 
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
 		this.cryptoHandler = cryptoHandler;
@@ -67,6 +74,17 @@ public class PlayerInfo {
 			healthPoints = new HpBar(DEFAULT_HEALTH, DEFAULT_HEALTH, HEALTH_X,
 					HEALTH_Y, HEALTH_WIDTH, HEALTH_HEIGHT, context);
 		}
+
+		try {
+			level = Integer
+					.parseInt(getDecryptedStringFromFile(LEVEL_FILE_NAME));
+			Log.d(TAG, "Set level to " + level);
+
+		} catch (NumberFormatException e) {
+			Log.w(TAG, "Current level not readable. Setting level to "
+					+ DEFAULT_LEVEL);
+			level = DEFAULT_LEVEL;
+		}
 	}
 
 	public void savePlayerInfo() {
@@ -76,6 +94,7 @@ public class PlayerInfo {
 				HP_FILE_NAME,
 				String.valueOf(healthPoints.getCurrentValue() + SPLIT_CHARACTER
 						+ healthPoints.getMaximum()));
+		writeAndEncryptString(LEVEL_FILE_NAME, String.valueOf(level));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -156,6 +175,22 @@ public class PlayerInfo {
 
 	public void setHealthPoints(HpBar healthPoints) {
 		this.healthPoints = healthPoints;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public int nextLevel() {
+		return ++level;
+	}
+
+	public void resetLevel() {
+		level = 0;
+	}
+
+	public void resetHealth() {
+		healthPoints.reset();
 	}
 
 }

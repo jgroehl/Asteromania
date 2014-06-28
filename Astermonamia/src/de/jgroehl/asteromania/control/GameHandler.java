@@ -16,6 +16,7 @@ import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
+import de.jgroehl.asteromania.graphics.interfaces.Killable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.player.PlayerInfo;
 import de.jgroehl.asteromania.player.PlayerInfoDisplay;
@@ -103,6 +104,11 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 			}
 			removedObjects.clear();
 		}
+
+		if (levelHandler.isLevelOver()) {
+			addKillables(levelHandler.getLevelObjects(context,
+					playerInfo.nextLevel()));
+		}
 	}
 
 	@Override
@@ -142,6 +148,13 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 			add(gameObject, GameState.MAIN);
 	}
 
+	private void addKillables(List<Killable> killables) {
+		for (Killable k : killables) {
+			if (k instanceof GameObject)
+				add((GameObject) k, GameState.MAIN);
+		}
+	}
+
 	public GameState getGameState() {
 		return state;
 	}
@@ -175,8 +188,9 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 	}
 
 	public void gameLost() {
-		playerInfo.addCoins(-5);
-		playerInfo.getHealthPoints().reset();
+		levelHandler.killAllEntities(this);
+		playerInfo.resetHealth();
+		playerInfo.resetLevel();
 	}
 
 }

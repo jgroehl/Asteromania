@@ -8,9 +8,10 @@ import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
+import de.jgroehl.asteromania.graphics.interfaces.Killable;
 import de.jgroehl.asteromania.time.Timer;
 
-public class Enemy extends SimpleAnimatedObject implements Hitable {
+public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
 	private static final float UPPER_BOUND = 0.1f;
 	private static final float LOWER_BOUND = 0.2f;
@@ -92,32 +93,31 @@ public class Enemy extends SimpleAnimatedObject implements Hitable {
 						yPosition + relativeHeight * 0.4f, context),
 						GameState.MAIN);
 				gameHandler.remove(this);
-				// FIXME: Delete this line of code!
-				gameHandler.add(createNormalEnemy(gameHandler.getContext()),
-						GameState.MAIN);
 			}
 			gameHandler.remove(shot);
 		}
 	}
 
-	public static Enemy createNormalEnemy(Context context) {
-
+	public static Enemy createNormalEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
 				de.jgroehl.asteromania.R.drawable.enemy, 15, 100, context, 20,
 				0.02f, 2000, 0.01f);
-
 	}
 
-	public static Enemy createBossEnemy(Context context) {
-
+	public static Enemy createBossEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
 				de.jgroehl.asteromania.R.drawable.enemy2, 6, 100, context, 50,
 				0.02f, 1000, 0.005f);
-
 	}
 
+	@Override
 	public boolean isAlive() {
 		return hpBar.getCurrentValue() > 0;
+	}
+
+	@Override
+	public void kill() {
+		hpBar.setCurrentValue(0);
 	}
 
 }

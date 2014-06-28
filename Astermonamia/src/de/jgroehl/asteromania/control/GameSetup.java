@@ -5,7 +5,6 @@ import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
-import de.jgroehl.asteromania.graphics.game.Enemy;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
@@ -44,14 +43,6 @@ public class GameSetup {
 				}, gameHandler.getContext()), GameState.MENU);
 		gameHandler.update();
 
-		gameHandler.add(Enemy.createNormalEnemy(gameHandler.getContext()),
-				GameState.MAIN);
-		gameHandler.update();
-
-		gameHandler.add(Enemy.createBossEnemy(gameHandler.getContext()),
-				GameState.MAIN);
-		gameHandler.update();
-
 		gameHandler.add(new SimpleClickableElement(0.8f, 0.8f, 0.2f, 0.2f,
 				new ShotFiredCallback(Target.ENEMY), gameHandler.getContext()),
 				GameState.MAIN);
@@ -75,7 +66,7 @@ public class GameSetup {
 				gameHandler.update();
 			}
 
-		gameHandler.add(gameHandler.getPlayerInfoDisplay(), GameState.MAIN);
+		gameHandler.add(gameHandler.getPlayer(), GameState.MAIN);
 		gameHandler.update();
 	}
 }

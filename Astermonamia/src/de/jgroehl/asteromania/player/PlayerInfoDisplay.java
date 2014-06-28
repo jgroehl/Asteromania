@@ -47,6 +47,13 @@ public class PlayerInfoDisplay extends GameObject {
 		c.drawText(String.valueOf(playerInfo.getCoins()), 0.06f * c.getWidth(),
 				0.055f * c.getHeight(), textPaint);
 
+		textPaint.setColor(Color.rgb(40, 40, 60));
+		c.drawText("Level " + String.valueOf(playerInfo.getLevel()),
+				0.45f * c.getWidth() + 1, 0.055f * c.getHeight() + 1, textPaint);
+		textPaint.setColor(Color.rgb(190, 190, 220));
+		c.drawText("Level " + String.valueOf(playerInfo.getLevel()),
+				0.45f * c.getWidth(), 0.055f * c.getHeight(), textPaint);
+
 		playerInfo.getHealthPoints().draw(c);
 		float textX = (playerInfo.getHealthPoints().getX() + 0.01f)
 				* c.getWidth();
@@ -56,8 +63,8 @@ public class PlayerInfoDisplay extends GameObject {
 				* 0.8f * c.getHeight());
 		textPaint.setColor(Color.BLACK);
 		c.drawText("HP: " + playerInfo.getHealthPoints().getCurrentValue()
-				+ "/" + playerInfo.getHealthPoints().getMaximum(), textX+1,
-				textY+1, textPaint);
+				+ "/" + playerInfo.getHealthPoints().getMaximum(), textX + 1,
+				textY + 1, textPaint);
 		textPaint.setColor(Color.GRAY);
 		c.drawText("HP: " + playerInfo.getHealthPoints().getCurrentValue()
 				+ "/" + playerInfo.getHealthPoints().getMaximum(), textX,
