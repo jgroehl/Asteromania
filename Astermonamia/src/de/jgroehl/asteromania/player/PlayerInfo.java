@@ -76,8 +76,12 @@ public class PlayerInfo {
 		}
 
 		try {
+			// The level needs to be set at $readLevel$-1, because when first
+			// started, the application will increment the level (it is loaded
+			// with NO entities and therefore will be completed, hence the
+			// level-up)
 			level = Integer
-					.parseInt(getDecryptedStringFromFile(LEVEL_FILE_NAME));
+					.parseInt(getDecryptedStringFromFile(LEVEL_FILE_NAME)) - 1;
 			Log.d(TAG, "Set level to " + level);
 
 		} catch (NumberFormatException e) {
