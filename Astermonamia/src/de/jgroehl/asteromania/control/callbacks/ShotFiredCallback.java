@@ -9,19 +9,15 @@ import de.jgroehl.asteromania.graphics.game.Shot.Target;
 
 public class ShotFiredCallback implements EventCallback {
 
-	private final Target target;
-
-	public ShotFiredCallback(Target target) {
-		this.target = target;
-	}
-
 	@Override
 	public void action(GameHandler gameHandler) {
 		gameHandler.getSoundManager().playNormalShotSound();
 		Shot shot = new Shot(gameHandler.getPlayer().getX()
 				+ gameHandler.getPlayer().getRelativeWidth() * 0.35f,
-				gameHandler.getPlayer().getY(), target, gameHandler.getPlayer()
-						.getShotSpeed(), gameHandler.getContext());
+				gameHandler.getPlayer().getY(), Target.ENEMY, gameHandler
+						.getPlayer().getShotSpeed()
+						* gameHandler.getPlayerInfo().getShotSpeedFactor(),
+				gameHandler.getContext());
 		shot.setLevel(Level.BOTTOM);
 		gameHandler.add(shot, GameState.MAIN);
 	}

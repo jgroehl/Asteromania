@@ -43,6 +43,7 @@ public class PlayerInfo {
 	private int coins;
 	private int level;
 	private float maxSpeedFactor;
+	private float shotSpeedFactor;
 	private float sensitivity;
 
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
@@ -86,6 +87,20 @@ public class PlayerInfo {
 					"MaxSpeedFactor not readable. Reverting to default factor: "
 							+ DEFAULT_STAT_FACTOR);
 			maxSpeedFactor = DEFAULT_STAT_FACTOR;
+		}
+
+		try {
+			shotSpeedFactor = Float.parseFloat(stats[1]);
+		} catch (NumberFormatException e) {
+			Log.w(TAG,
+					"shotSpeedFactor not readable. Reverting to default factor: "
+							+ DEFAULT_STAT_FACTOR);
+			shotSpeedFactor = DEFAULT_STAT_FACTOR;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			Log.w(TAG,
+					"shotSpeedFactor not readable. Reverting to default factor: "
+							+ DEFAULT_STAT_FACTOR);
+			shotSpeedFactor = DEFAULT_STAT_FACTOR;
 		}
 	}
 
@@ -147,7 +162,8 @@ public class PlayerInfo {
 		writeAndEncryptString(LEVEL_FILE_NAME, String.valueOf(level));
 		writeAndEncryptString(SENSITIVIITY_FILE_NAME,
 				String.valueOf(sensitivity));
-		writeAndEncryptString(STATS_FILE_NAME, String.valueOf(maxSpeedFactor));
+		writeAndEncryptString(STATS_FILE_NAME, String.valueOf(maxSpeedFactor)
+				+ SPLIT_CHARACTER + String.valueOf(shotSpeedFactor));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -256,6 +272,18 @@ public class PlayerInfo {
 
 	public float getSensitivity() {
 		return sensitivity;
+	}
+
+	public void setSensitivity(float sensitivity) {
+		this.sensitivity = sensitivity;
+	}
+
+	public float getShotSpeedFactor() {
+		return shotSpeedFactor;
+	}
+
+	public void setShotSpeedFactor(float shotSpeedFactor) {
+		this.shotSpeedFactor = shotSpeedFactor;
 	}
 
 }
