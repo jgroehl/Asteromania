@@ -15,12 +15,12 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 	private static final String TAG = SpaceShip.class.getSimpleName();
 	private final SensorHandler sensorHandler;
-	private double sensitivity = 1.5;
 	private static final int MAX_DEGREE = 90;
 	private static final float MINIMUM_PITCH_VALUE = 0.5f;
 	private static final int ANIMATION_TIME = 25;
 	private static final int IMAGE_FRAMES = 15;
 	private static final float BASIC_SHOT_SPEED = 0.01f;
+	private static final float MAX_SHIP_SPEED = 0.01f;
 	private int normalFrame = getMaxFrame() / 2;
 	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];
 
@@ -41,7 +41,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		float pitch = sensorHandler.getPitchAngle();
 
 		if (Math.abs(pitch) > MINIMUM_PITCH_VALUE) {
-			movePlayerAccordingToPitch(pitch);
+			movePlayerAccordingToPitch(pitch, handler);
 			updatePlayerFrame(pitch);
 		} else {
 			normalizePlayerFrame();
@@ -84,7 +84,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 	}
 
-	private void movePlayerAccordingToPitch(float pitch) {
+	private void movePlayerAccordingToPitch(float pitch, GameHandler handler) {
 		float sign = Math.signum(pitch);
 
 		if (Math.abs(pitch) > MAX_DEGREE) {
@@ -92,7 +92,12 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		}
 
 		float value = (float) (Math.pow(Math.abs(pitch) / MAX_DEGREE,
-				sensitivity));
+				handler.getPlayerInfo().getSensitivity()));
+
+		if (value > MAX_SHIP_SPEED
+				* handler.getPlayerInfo().getMaxSpeedFactor())
+			value = MAX_SHIP_SPEED
+					* handler.getPlayerInfo().getMaxSpeedFactor();
 
 		xPosition -= value * sign;
 
@@ -101,10 +106,6 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		if (xPosition >= SCREEN_MAXIMUM - getRelativeWidth() / 2)
 			xPosition = SCREEN_MAXIMUM - getRelativeWidth() / 2;
 
-	}
-
-	public void setSensitivity(float sensitivity) {
-		this.sensitivity = sensitivity;
 	}
 
 	public float getShotSpeed() {

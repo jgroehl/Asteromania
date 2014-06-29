@@ -22,10 +22,14 @@ public class PlayerInfo {
 	private static final String COIN_FILE_NAME = "coins";
 	private static final String HP_FILE_NAME = "health";
 	private static final String LEVEL_FILE_NAME = "level";
+	private static final String SENSITIVIITY_FILE_NAME = "sensitivity";
+	private static final String STATS_FILE_NAME = "stats";
 	private static final String SPLIT_CHARACTER = "&";
 
 	private static final int DEFAULT_HEALTH = 20;
 	private static final int DEFAULT_LEVEL = 1;
+	private static final float DEFAULT_STAT_FACTOR = 1.0f;
+	private static final float DEFAULT_SENSITIVITY_VALUE = 1.5f;
 
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
@@ -38,43 +42,54 @@ public class PlayerInfo {
 	private HpBar healthPoints;
 	private int coins;
 	private int level;
+	private float maxSpeedFactor;
+	private float sensitivity;
 
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
 		this.cryptoHandler = cryptoHandler;
 		this.context = context;
-		Log.d(TAG, "Loading playerInfo from internal memory...");
 		setUpPlayerInfo();
-		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
 	}
 
 	private void setUpPlayerInfo() {
+		Log.d(TAG, "Loading playerInfo from internal memory...");
+		readCoins();
+		readHealth();
+		readLevel();
+		readSensitivity();
+		readStats();
+		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	protected void readSensitivity() {
 		try {
-			coins = Integer
-					.parseInt(getDecryptedStringFromFile(COIN_FILE_NAME));
-			Log.d(TAG, "Set coins to " + coins);
+			sensitivity = Float
+					.parseFloat(getDecryptedStringFromFile(SENSITIVIITY_FILE_NAME));
+			Log.d(TAG, "Set sensitivoity to " + sensitivity);
 
 		} catch (NumberFormatException e) {
-			Log.w(TAG, "Amount of coins not readable. Setting coins to 0.");
-			coins = 0;
+			Log.w(TAG, "Sensitivity not readable. Setting it to: "
+					+ DEFAULT_SENSITIVITY_VALUE);
+			sensitivity = DEFAULT_SENSITIVITY_VALUE;
 		}
+	}
+
+	private void readStats() {
+
+		String[] stats = getDecryptedStringFromFile(STATS_FILE_NAME).split(
+				SPLIT_CHARACTER);
 
 		try {
-			String[] health = getDecryptedStringFromFile(HP_FILE_NAME).split(
-					SPLIT_CHARACTER);
-			int currentValue = Integer.parseInt(health[0]);
-			int maximum = Integer.parseInt(health[1]);
-
-			healthPoints = new HpBar(maximum, currentValue, HEALTH_X, HEALTH_Y,
-					HEALTH_WIDTH, HEALTH_HEIGHT, context);
-			Log.d(TAG, "Set HP to: " + currentValue + "/" + maximum);
+			maxSpeedFactor = Float.parseFloat(stats[0]);
 		} catch (NumberFormatException e) {
 			Log.w(TAG,
-					"Amount of health not readable. Setting to default value "
-							+ DEFAULT_HEALTH);
-			healthPoints = new HpBar(DEFAULT_HEALTH, DEFAULT_HEALTH, HEALTH_X,
-					HEALTH_Y, HEALTH_WIDTH, HEALTH_HEIGHT, context);
+					"MaxSpeedFactor not readable. Reverting to default factor: "
+							+ DEFAULT_STAT_FACTOR);
+			maxSpeedFactor = DEFAULT_STAT_FACTOR;
 		}
+	}
 
+	protected void readLevel() {
 		try {
 			// The level needs to be set at $readLevel$-1, because when first
 			// started, the application will increment the level (it is loaded
@@ -91,6 +106,37 @@ public class PlayerInfo {
 		}
 	}
 
+	protected void readHealth() {
+		try {
+			String[] health = getDecryptedStringFromFile(HP_FILE_NAME).split(
+					SPLIT_CHARACTER);
+			int currentValue = Integer.parseInt(health[0]);
+			int maximum = Integer.parseInt(health[1]);
+
+			healthPoints = new HpBar(maximum, currentValue, HEALTH_X, HEALTH_Y,
+					HEALTH_WIDTH, HEALTH_HEIGHT, context);
+			Log.d(TAG, "Set HP to: " + currentValue + "/" + maximum);
+		} catch (NumberFormatException e) {
+			Log.w(TAG,
+					"Amount of health not readable. Setting to default value "
+							+ DEFAULT_HEALTH);
+			healthPoints = new HpBar(DEFAULT_HEALTH, DEFAULT_HEALTH, HEALTH_X,
+					HEALTH_Y, HEALTH_WIDTH, HEALTH_HEIGHT, context);
+		}
+	}
+
+	protected void readCoins() {
+		try {
+			coins = Integer
+					.parseInt(getDecryptedStringFromFile(COIN_FILE_NAME));
+			Log.d(TAG, "Set coins to " + coins);
+
+		} catch (NumberFormatException e) {
+			Log.w(TAG, "Amount of coins not readable. Setting coins to 0.");
+			coins = 0;
+		}
+	}
+
 	public void savePlayerInfo() {
 		Log.d(TAG, "Saving PlayerInfo...");
 		writeAndEncryptString(COIN_FILE_NAME, String.valueOf(coins));
@@ -99,6 +145,9 @@ public class PlayerInfo {
 				String.valueOf(healthPoints.getCurrentValue() + SPLIT_CHARACTER
 						+ healthPoints.getMaximum()));
 		writeAndEncryptString(LEVEL_FILE_NAME, String.valueOf(level));
+		writeAndEncryptString(SENSITIVIITY_FILE_NAME,
+				String.valueOf(sensitivity));
+		writeAndEncryptString(STATS_FILE_NAME, String.valueOf(maxSpeedFactor));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -195,6 +244,18 @@ public class PlayerInfo {
 
 	public void resetHealth() {
 		healthPoints.reset();
+	}
+
+	public float getMaxSpeedFactor() {
+		return maxSpeedFactor;
+	}
+
+	public void addMaxSpeedFactor(float extraSpeed) {
+		maxSpeedFactor += extraSpeed;
+	}
+
+	public float getSensitivity() {
+		return sensitivity;
 	}
 
 }
