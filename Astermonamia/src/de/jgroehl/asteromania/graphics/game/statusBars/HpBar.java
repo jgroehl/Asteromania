@@ -24,7 +24,7 @@ public class HpBar extends StatusBar {
 		float relativeValue = ((float) currentValue / getMaximum());
 		if (relativeValue > 0.67) {
 			setColor(Color.GREEN);
-		} else if (relativeValue > 0.33) {
+		} else if (relativeValue > 0.34) {
 			setColor(Color.YELLOW);
 		} else {
 			setColor(Color.RED);

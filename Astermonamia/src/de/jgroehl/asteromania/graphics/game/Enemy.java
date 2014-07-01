@@ -13,8 +13,14 @@ import de.jgroehl.asteromania.time.Timer;
 
 public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
+	private static final float BASIC_NORMAL_SPEED = 0.01f;
+	private static final int BASIC_NORMAL_SHOT_RATE = 2000;
+	private static final float BASIC_NORMAL_SHOT_SPEED = 0.02f;
 	private static final float UPPER_BOUND = 0.1f;
 	private static final float LOWER_BOUND = 0.2f;
+	private static final int BASIC_NORMAL_LIFEPOINTS = 3;
+	private static final float BASIC_NORMAL_DAMAGE = 1;
+	private static final int MINIMUM_AMOUNT_COINS_DROPPED = 1;
 	private final float speed;
 	private final Timer shootTimer;
 
@@ -91,7 +97,10 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 			gameHandler.getSoundManager().playEnemyHitSound();
 			hpBar.setCurrentValue(hpBar.getCurrentValue() - shot.getDamage());
 			if (hpBar.getCurrentValue() <= 0) {
-				Coin.addToHandler(gameHandler, this);
+				int amountCoins = (int) (Math.random() * ((shotDamage + 2.0) / 3.0))
+						+ MINIMUM_AMOUNT_COINS_DROPPED;
+				for (int i = 0; i < amountCoins; i++)
+					Coin.addToHandler(gameHandler, this);
 				gameHandler.remove(this);
 			}
 			gameHandler.remove(shot);
@@ -100,14 +109,27 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
 	public static Enemy createNormalEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
-				de.jgroehl.asteromania.R.drawable.enemy, 15, 100, context, 20,
-				0.02f, 2000, 0.01f, 1);
+				de.jgroehl.asteromania.R.drawable.enemy, 15, 100, context,
+				(int) (BASIC_NORMAL_LIFEPOINTS * ((level + 1) / 2.0)),
+				BASIC_NORMAL_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
+				(int) (BASIC_NORMAL_SHOT_RATE / ((Math.cbrt(level) + 2) / 3)),
+				BASIC_NORMAL_SPEED,
+				(int) (BASIC_NORMAL_DAMAGE * Math.sqrt(level)));
 	}
 
 	public static Enemy createBossEnemy(Context context, int level) {
-		return new Enemy((float) Math.random(), 0.2f,
-				de.jgroehl.asteromania.R.drawable.enemy2, 6, 100, context, 50,
-				0.02f, 1000, 0.005f, 1);
+		return new Enemy(
+				(float) Math.random(),
+				0.2f,
+				de.jgroehl.asteromania.R.drawable.enemy2,
+				6,
+				100,
+				context,
+				(int) (BASIC_NORMAL_LIFEPOINTS * 5 * (level + 1) / 2.0),
+				BASIC_NORMAL_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
+				(int) (BASIC_NORMAL_SHOT_RATE / 2.0 / ((Math.cbrt(level) + 2) / 3)),
+				(BASIC_NORMAL_SPEED / 2), (int) (BASIC_NORMAL_DAMAGE * 3 * Math
+						.sqrt(level)));
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import de.jgroehl.asteromania.time.Timer;
 
 public class ShotFiredCallback implements EventCallback {
 
-	private final int BASIC_SHOOT_FREQUENCY = 1000;
+	private final int BASIC_SHOOT_FREQUENCY = 500;
 	private final Timer shotFrequencyTimer = new Timer(BASIC_SHOOT_FREQUENCY);
 
 	@Override
@@ -18,7 +18,7 @@ public class ShotFiredCallback implements EventCallback {
 		if (shotFrequencyTimer.isPeriodOver()) {
 			gameHandler.getSoundManager().playNormalShotSound();
 			Shot shot = new Shot(gameHandler.getPlayer().getX()
-					+ gameHandler.getPlayer().getRelativeWidth() * 0.35f,
+					+ gameHandler.getPlayer().getRelativeWidth() * 0.48f,
 					gameHandler.getPlayer().getY(), Target.ENEMY, gameHandler
 							.getPlayer().getShotSpeed()
 							* gameHandler.getPlayerInfo().getShotSpeedFactor(),

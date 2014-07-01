@@ -41,15 +41,17 @@ public class Coin extends AnimatedGraphicsObject {
 
 	public static void addToHandler(GameHandler gameHandler,
 			GraphicsObject parent) {
-		gameHandler.add(new Coin(parent.getX()
-				+ (parent.getRelativeWidth() / 2) * plusMinus20Percent(),
-				parent.getY() + (parent.getRelativeHeight() / 2)
-						* plusMinus20Percent(), gameHandler.getContext()),
+		gameHandler.add(
+				new Coin(parent.getX() + (parent.getRelativeWidth() / 2)
+						* plusMinusXXPercent(0.5f), parent.getY()
+						- (parent.getRelativeHeight() / 3)
+						+ (parent.getRelativeHeight() / 2)
+						* plusMinusXXPercent(1.0f), gameHandler.getContext()),
 				GameState.MAIN);
 	}
 
-	private static float plusMinus20Percent() {
-		return (float) (0.8 + Math.random() * 0.4);
+	private static float plusMinusXXPercent(float xx) {
+		return (float) ((1.0f - xx) + Math.random() * 2 * xx);
 	}
 
 }

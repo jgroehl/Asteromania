@@ -26,7 +26,7 @@ public class PlayerInfo {
 	private static final String STATS_FILE_NAME = "stats";
 	private static final String SPLIT_CHARACTER = "&";
 
-	private static final int DEFAULT_HEALTH = 20;
+	private static final int DEFAULT_HEALTH = 10;
 	private static final int DEFAULT_LEVEL = 1;
 	private static final float DEFAULT_STAT_FACTOR = 1.0f;
 	private static final float DEFAULT_SENSITIVITY_VALUE = 1.5f;
@@ -133,7 +133,7 @@ public class PlayerInfo {
 
 		try {
 			if (stats.length >= 4) {
-				bonusDamage = Integer.parseInt(stats[4]);
+				bonusDamage = Integer.parseInt(stats[3]);
 			} else {
 				Log.w(TAG,
 						"bonusDamage not readable. Reverting to default factor: "
