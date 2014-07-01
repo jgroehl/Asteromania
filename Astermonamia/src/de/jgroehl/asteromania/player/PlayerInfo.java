@@ -44,6 +44,7 @@ public class PlayerInfo {
 	private int level;
 	private float maxSpeedFactor;
 	private float shotSpeedFactor;
+	private float shotFrequencyFactor;
 	private float sensitivity;
 
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
@@ -81,7 +82,14 @@ public class PlayerInfo {
 				SPLIT_CHARACTER);
 
 		try {
-			maxSpeedFactor = Float.parseFloat(stats[0]);
+			if (stats.length >= 1) {
+				maxSpeedFactor = Float.parseFloat(stats[0]);
+			} else {
+				Log.w(TAG,
+						"MaxSpeedFactor not readable. Reverting to default factor: "
+								+ DEFAULT_STAT_FACTOR);
+				maxSpeedFactor = DEFAULT_STAT_FACTOR;
+			}
 		} catch (NumberFormatException e) {
 			Log.w(TAG,
 					"MaxSpeedFactor not readable. Reverting to default factor: "
@@ -90,17 +98,35 @@ public class PlayerInfo {
 		}
 
 		try {
-			shotSpeedFactor = Float.parseFloat(stats[1]);
+			if (stats.length >= 2) {
+				shotSpeedFactor = Float.parseFloat(stats[1]);
+			} else {
+				Log.w(TAG,
+						"shotSpeedFactor not readable. Reverting to default factor: "
+								+ DEFAULT_STAT_FACTOR);
+				shotSpeedFactor = DEFAULT_STAT_FACTOR;
+			}
 		} catch (NumberFormatException e) {
 			Log.w(TAG,
 					"shotSpeedFactor not readable. Reverting to default factor: "
 							+ DEFAULT_STAT_FACTOR);
 			shotSpeedFactor = DEFAULT_STAT_FACTOR;
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+
+		try {
+			if (stats.length >= 3) {
+				shotFrequencyFactor = Float.parseFloat(stats[2]);
+			} else {
+				Log.w(TAG,
+						"shotFrequencyFactor not readable. Reverting to default factor: "
+								+ DEFAULT_STAT_FACTOR);
+				shotFrequencyFactor = DEFAULT_STAT_FACTOR;
+			}
+		} catch (NumberFormatException e) {
 			Log.w(TAG,
-					"shotSpeedFactor not readable. Reverting to default factor: "
+					"shotFrequencyFactor not readable. Reverting to default factor: "
 							+ DEFAULT_STAT_FACTOR);
-			shotSpeedFactor = DEFAULT_STAT_FACTOR;
+			shotFrequencyFactor = DEFAULT_STAT_FACTOR;
 		}
 	}
 
@@ -163,7 +189,8 @@ public class PlayerInfo {
 		writeAndEncryptString(SENSITIVIITY_FILE_NAME,
 				String.valueOf(sensitivity));
 		writeAndEncryptString(STATS_FILE_NAME, String.valueOf(maxSpeedFactor)
-				+ SPLIT_CHARACTER + String.valueOf(shotSpeedFactor));
+				+ SPLIT_CHARACTER + String.valueOf(shotSpeedFactor)
+				+ SPLIT_CHARACTER + String.valueOf(shotFrequencyFactor));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -286,4 +313,11 @@ public class PlayerInfo {
 		this.shotSpeedFactor = shotSpeedFactor;
 	}
 
+	public float getShotFrequencyFactor() {
+		return shotFrequencyFactor;
+	}
+
+	public void setShotFrequencyFactor(float shotFrequencyFactor) {
+		this.shotFrequencyFactor = shotFrequencyFactor;
+	}
 }

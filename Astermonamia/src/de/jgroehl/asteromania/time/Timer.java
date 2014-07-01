@@ -2,11 +2,12 @@ package de.jgroehl.asteromania.time;
 
 public class Timer {
 
-	private final int period;
+	private int period;
 	private long time = System.currentTimeMillis();
 
 	public Timer(int period) {
 		this.period = period;
+		time = System.currentTimeMillis();
 	}
 
 	public boolean isPeriodOver() {
@@ -21,4 +22,8 @@ public class Timer {
 		time = System.currentTimeMillis();
 	}
 
+	public void reset(int period) {
+		this.period = period;
+		reset();
+	}
 }
