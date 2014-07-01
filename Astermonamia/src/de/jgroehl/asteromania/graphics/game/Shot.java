@@ -17,7 +17,7 @@ public class Shot extends GraphicsObject {
 	private Target target;
 
 	public Shot(float xPosition, float yPosition, Target target,
-			float shotSpeed, Context context) {
+			float shotSpeed, Context context, int damage) {
 		super(
 				xPosition,
 				yPosition,
@@ -27,7 +27,7 @@ public class Shot extends GraphicsObject {
 		this.target = target;
 		direction = target.equals(Target.PLAYER) ? 1.0f : -1.0f;
 		this.shotSpeed = shotSpeed;
-		damage = 1;
+		this.damage = damage;
 	}
 
 	@Override

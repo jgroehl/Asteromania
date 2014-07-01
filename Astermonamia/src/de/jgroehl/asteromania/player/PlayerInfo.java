@@ -30,6 +30,7 @@ public class PlayerInfo {
 	private static final int DEFAULT_LEVEL = 1;
 	private static final float DEFAULT_STAT_FACTOR = 1.0f;
 	private static final float DEFAULT_SENSITIVITY_VALUE = 1.5f;
+	private static final int DEFAULT_BONUS_DAMAGE = 0;
 
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
@@ -46,6 +47,7 @@ public class PlayerInfo {
 	private float shotSpeedFactor;
 	private float shotFrequencyFactor;
 	private float sensitivity;
+	private int bonusDamage;
 
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
 		this.cryptoHandler = cryptoHandler;
@@ -128,6 +130,22 @@ public class PlayerInfo {
 							+ DEFAULT_STAT_FACTOR);
 			shotFrequencyFactor = DEFAULT_STAT_FACTOR;
 		}
+
+		try {
+			if (stats.length >= 4) {
+				bonusDamage = Integer.parseInt(stats[4]);
+			} else {
+				Log.w(TAG,
+						"bonusDamage not readable. Reverting to default factor: "
+								+ DEFAULT_BONUS_DAMAGE);
+				bonusDamage = DEFAULT_BONUS_DAMAGE;
+			}
+		} catch (NumberFormatException e) {
+			Log.w(TAG,
+					"bonusDamage not readable. Reverting to default factor: "
+							+ DEFAULT_BONUS_DAMAGE);
+			bonusDamage = DEFAULT_BONUS_DAMAGE;
+		}
 	}
 
 	protected void readLevel() {
@@ -190,7 +208,8 @@ public class PlayerInfo {
 				String.valueOf(sensitivity));
 		writeAndEncryptString(STATS_FILE_NAME, String.valueOf(maxSpeedFactor)
 				+ SPLIT_CHARACTER + String.valueOf(shotSpeedFactor)
-				+ SPLIT_CHARACTER + String.valueOf(shotFrequencyFactor));
+				+ SPLIT_CHARACTER + String.valueOf(shotFrequencyFactor)
+				+ SPLIT_CHARACTER + String.valueOf(bonusDamage));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -319,5 +338,13 @@ public class PlayerInfo {
 
 	public void setShotFrequencyFactor(float shotFrequencyFactor) {
 		this.shotFrequencyFactor = shotFrequencyFactor;
+	}
+
+	public int getBonusDamage() {
+		return bonusDamage;
+	}
+
+	public void setBonusDamage(int bonusDamage) {
+		this.bonusDamage = bonusDamage;
 	}
 }

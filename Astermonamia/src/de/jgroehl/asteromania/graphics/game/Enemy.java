@@ -23,11 +23,12 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
 	private final HpBar hpBar;
 	private final float shotSpeed;
+	private final int shotDamage;
 
 	public Enemy(float xPosition, float yPosition, int graphicsId,
 			int frameCount, int animationPeriod, Context context,
 			int lifepoints, float shotSpeed, int basicShootFrequency,
-			float basicSpeed) {
+			float basicSpeed, float basicDamage) {
 		super(xPosition, yPosition, graphicsId, frameCount, animationPeriod,
 				context);
 		hpBar = new HpBar(lifepoints, 0.05f, 0.85f, 0.3f, 0.01f, context);
@@ -35,6 +36,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 		shootTimer = new Timer(
 				(int) (basicShootFrequency * getPlusMinusTwentyPercent()));
 		speed = (float) (basicSpeed * getPlusMinusTwentyPercent());
+		shotDamage = (int) Math
+				.round((basicDamage * getPlusMinusTwentyPercent()));
 	}
 
 	private double getPlusMinusTwentyPercent() {
@@ -65,10 +68,9 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
 		if (shootTimer.isPeriodOver()) {
 			handler.getSoundManager().playEnemyShotSound();
-			handler.add(
-					new Shot(xPosition + relativeWidth / 2, yPosition
-							+ relativeHeight * 0.4f, Target.PLAYER, shotSpeed,
-							context), GameState.MAIN);
+			handler.add(new Shot(xPosition + relativeWidth / 2, yPosition
+					+ relativeHeight * 0.4f, Target.PLAYER, shotSpeed, context,
+					shotDamage), GameState.MAIN);
 		}
 
 		hpBar.setPosition(xPosition, yPosition + relativeHeight);
@@ -101,13 +103,13 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	public static Enemy createNormalEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
 				de.jgroehl.asteromania.R.drawable.enemy, 15, 100, context, 20,
-				0.02f, 2000, 0.01f);
+				0.02f, 2000, 0.01f, 1);
 	}
 
 	public static Enemy createBossEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
 				de.jgroehl.asteromania.R.drawable.enemy2, 6, 100, context, 50,
-				0.02f, 1000, 0.005f);
+				0.02f, 1000, 0.005f, 1);
 	}
 
 	@Override

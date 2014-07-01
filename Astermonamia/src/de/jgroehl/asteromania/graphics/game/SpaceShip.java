@@ -21,6 +21,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private static final int IMAGE_FRAMES = 15;
 	private static final float BASIC_SHOT_SPEED = 0.01f;
 	private static final float MAX_SHIP_SPEED = 0.01f;
+	private static final int BASIC_SHOT_DAMAGE = 1;
 	private int normalFrame = getMaxFrame() / 2;
 	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];
 
@@ -91,8 +92,8 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 			pitch = 2 * MAX_DEGREE - Math.abs(pitch);
 		}
 
-		float value = (float) (Math.pow(Math.abs(pitch) / MAX_DEGREE,
-				handler.getPlayerInfo().getSensitivity()));
+		float value = (float) (Math.pow(Math.abs(pitch) / MAX_DEGREE, handler
+				.getPlayerInfo().getSensitivity()));
 
 		if (value > MAX_SHIP_SPEED
 				* handler.getPlayerInfo().getMaxSpeedFactor())
@@ -140,6 +141,10 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 								- damage);
 		if (gameHandler.getPlayerInfo().getHealthPoints().getCurrentValue() <= 0)
 			gameHandler.gameLost();
+	}
+
+	public int getShotDamage() {
+		return BASIC_SHOT_DAMAGE;
 	}
 
 }
