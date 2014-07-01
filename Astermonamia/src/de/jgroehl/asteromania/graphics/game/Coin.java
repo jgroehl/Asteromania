@@ -2,6 +2,7 @@ package de.jgroehl.asteromania.graphics.game;
 
 import android.content.Context;
 import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
 import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
 
@@ -36,6 +37,19 @@ public class Coin extends AnimatedGraphicsObject {
 
 		setFrame((getFrame() + 1) % getMaxFrame());
 
+	}
+
+	public static void addToHandler(GameHandler gameHandler,
+			GraphicsObject parent) {
+		gameHandler.add(new Coin(parent.getX()
+				+ (parent.getRelativeWidth() / 2) * plusMinus20Percent(),
+				parent.getY() + (parent.getRelativeHeight() / 2)
+						* plusMinus20Percent(), gameHandler.getContext()),
+				GameState.MAIN);
+	}
+
+	private static float plusMinus20Percent() {
+		return (float) (0.8 + Math.random() * 0.4);
 	}
 
 }

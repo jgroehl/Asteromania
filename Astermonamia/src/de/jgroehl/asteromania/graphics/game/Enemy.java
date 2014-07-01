@@ -91,9 +91,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 			gameHandler.getSoundManager().playEnemyHitSound();
 			hpBar.setCurrentValue(hpBar.getCurrentValue() - shot.getDamage());
 			if (hpBar.getCurrentValue() <= 0) {
-				gameHandler.add(new Coin(xPosition + relativeWidth / 2,
-						yPosition + relativeHeight * 0.4f, context),
-						GameState.MAIN);
+				Coin.addToHandler(gameHandler, this);
 				gameHandler.remove(this);
 			}
 			gameHandler.remove(shot);

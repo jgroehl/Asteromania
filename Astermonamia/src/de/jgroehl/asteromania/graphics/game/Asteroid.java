@@ -2,7 +2,6 @@ package de.jgroehl.asteromania.graphics.game;
 
 import android.content.Context;
 import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
@@ -59,9 +58,7 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 			gameHandler.remove(shot);
 			if (life <= 0) {
 				gameHandler.remove(this);
-				gameHandler.add(new Coin(xPosition + relativeWidth / 2,
-						yPosition + relativeHeight * 0.4f, context),
-						GameState.MAIN);
+				Coin.addToHandler(gameHandler, this);
 			}
 		}
 	}
