@@ -47,14 +47,6 @@ public class GameSetup {
 				GameState.MAIN);
 		gameHandler.update();
 
-		gameHandler.add(
-				new Button(BitmapFactory.decodeResource(gameHandler
-						.getContext().getResources(), R.drawable.settings),
-						0.875f, 0f, 0.05f, 0.075f, new MenuButtonCallback(
-								GameState.SETTINGS), gameHandler.getContext()),
-				GameState.MAIN);
-		gameHandler.update();
-
 		Button button = new Button(BitmapFactory.decodeResource(gameHandler
 				.getContext().getResources(), R.drawable.home), 0.95f, 0f,
 				0.05f, 0.075f, new MenuButtonCallback(GameState.MENU),
@@ -67,5 +59,18 @@ public class GameSetup {
 
 		gameHandler.add(gameHandler.getPlayer(), GameState.MAIN);
 		gameHandler.update();
+
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler
+						.getContext().getResources(), R.drawable.right), 0.93f,
+						0.875f, 0.07f, 0.125f, new MenuButtonCallback(
+								GameState.SHOP2), gameHandler.getContext()),
+				GameState.SHOP);
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler
+						.getContext().getResources(), R.drawable.left), 0f,
+						0.875f, 0.07f, 0.125f, new MenuButtonCallback(
+								GameState.SHOP), gameHandler.getContext()),
+				GameState.SHOP2);
 	}
 }
