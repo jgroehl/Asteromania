@@ -8,7 +8,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
-	private static final boolean DEBUG = true;
+	public static final boolean DEBUG = true;
 	private MainGamePanel mainGamePanel;
 
 	@Override
@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "Executing onCreate of MainActivity...");
 		super.onCreate(savedInstanceState);
 		
-		mainGamePanel = new MainGamePanel(this, DEBUG);
+		mainGamePanel = new MainGamePanel(this);
 
 		setContentView(mainGamePanel);
 

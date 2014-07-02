@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
+import de.jgroehl.asteromania.MainActivity;
 import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.crypto.CryptoHandler.CryptoException;
 import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
@@ -36,6 +37,9 @@ public class PlayerInfo {
 	private static final float HEALTH_WIDTH = 0.3f;
 	private static final float HEALTH_X = 0.025f;
 	private static final float HEALTH_Y = 0.90f;
+
+	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 100000
+			: 0;
 
 	private final CryptoHandler cryptoHandler;
 	private final Context context;
@@ -192,7 +196,7 @@ public class PlayerInfo {
 
 		} catch (NumberFormatException e) {
 			Log.w(TAG, "Amount of coins not readable. Setting coins to 0.");
-			coins = 0;
+			coins = DEFAULT_COIN_VALUE;
 		}
 	}
 
@@ -288,8 +292,9 @@ public class PlayerInfo {
 		return healthPoints;
 	}
 
-	public void setHealthPoints(HpBar healthPoints) {
-		this.healthPoints = healthPoints;
+	public void addHealthPoints(int healthPoints) {
+		this.healthPoints.setMaximum(this.healthPoints.getMaximum()
+				+ healthPoints);
 	}
 
 	public int getLevel() {

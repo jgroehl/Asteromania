@@ -2,8 +2,10 @@ package de.jgroehl.asteromania.control;
 
 import android.graphics.BitmapFactory;
 import de.jgroehl.asteromania.R;
+import de.jgroehl.asteromania.control.callbacks.BuyItemCallback;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
+import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
@@ -72,5 +74,10 @@ public class GameSetup {
 						0.875f, 0.07f, 0.125f, new MenuButtonCallback(
 								GameState.SHOP), gameHandler.getContext()),
 				GameState.SHOP2);
+		gameHandler.update();
+
+		gameHandler.add(new Button("HP ("+ItemType.HP.cost+")", 0.1f, 0.1f, 0.3f, 0.2f,
+				new BuyItemCallback(ItemType.HP), gameHandler.getContext()),
+				GameState.SHOP);
 	}
 }

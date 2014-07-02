@@ -29,11 +29,7 @@ public class MainGamePanel extends SurfaceView implements
 	private final GameHandler gameHandler;
 	private GameSetup gameSetup = new GameSetup();
 
-	protected MainGamePanel(Context context) {
-		this(context, false);
-	}
-
-	public MainGamePanel(Context context, boolean debug) {
+	public MainGamePanel(Context context) {
 
 		super(context);
 
@@ -43,7 +39,7 @@ public class MainGamePanel extends SurfaceView implements
 
 		getHolder().addCallback(this);
 
-		thread = new MainThread(this.getHolder(), this, debug);
+		thread = new MainThread(this.getHolder(), this);
 
 		setFocusable(true);
 
@@ -55,6 +51,13 @@ public class MainGamePanel extends SurfaceView implements
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
+		Log.d(TAG, "Surface changed called...");
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasWindowFocus) {
+		Log.d(TAG, "Focus changed called");
+		super.onWindowFocusChanged(hasWindowFocus);
 	}
 
 	@Override

@@ -11,18 +11,15 @@ public class MainThread extends Thread {
 
 	private static final int MAX_FRAMES_SKIPPED = 4;
 
-	private final boolean DEBUG;
 	private final MainGamePanel gamePanel;
 	private final SurfaceHolder surfaceHolder;
 
 	private boolean running;
 	private FpsMeter fpsMeter = new FpsMeter();
 
-	public MainThread(SurfaceHolder surfaceHolder, MainGamePanel gamePanel,
-			boolean debug) {
+	public MainThread(SurfaceHolder surfaceHolder, MainGamePanel gamePanel) {
 		this.gamePanel = gamePanel;
 		this.surfaceHolder = surfaceHolder;
-		DEBUG = debug;
 	}
 
 	public void setRunning(boolean running) {
@@ -44,14 +41,14 @@ public class MainThread extends Thread {
 			Canvas c = null;
 			try {
 				c = surfaceHolder.lockCanvas();
-				
+
 				gamePanel.update();
 
 				gamePanel.updateGameState();
 
 				gamePanel.displayGameState(c);
 
-				if (DEBUG)
+				if (MainActivity.DEBUG)
 					diaplayDebugInfo(c, width, height);
 
 				int framesSkipped = 0;
