@@ -24,7 +24,8 @@ public class ShotFiredCallback implements EventCallback {
 							* gameHandler.getPlayerInfo().getShotSpeedFactor(),
 					gameHandler.getContext(), gameHandler.getPlayer()
 							.getShotDamage()
-							+ gameHandler.getPlayerInfo().getBonusDamage());
+							+ gameHandler.getPlayerInfo().getBonusDamage(),
+					null);
 			shot.setLevel(Level.BOTTOM);
 			gameHandler.add(shot, GameState.MAIN);
 			shotFrequencyTimer.reset((int) (BASIC_SHOOT_FREQUENCY / gameHandler

@@ -15,9 +15,10 @@ public class Shot extends GraphicsObject {
 	private final float shotSpeed;
 	private int damage;
 	private Target target;
+	private Enemy source;
 
 	public Shot(float xPosition, float yPosition, Target target,
-			float shotSpeed, Context context, int damage) {
+			float shotSpeed, Context context, int damage, Enemy source) {
 		super(
 				xPosition,
 				yPosition,
@@ -28,10 +29,14 @@ public class Shot extends GraphicsObject {
 		direction = target.equals(Target.PLAYER) ? 1.0f : -1.0f;
 		this.shotSpeed = shotSpeed;
 		this.damage = damage;
+		this.source = source;
 	}
 
 	@Override
 	public void update(GameHandler handler) {
+
+		if (source != null && !source.isAlive())
+			handler.remove(this);
 
 		for (Hitable hitable : handler.getHitableObjects()) {
 			GraphicsObject go = (GraphicsObject) hitable;

@@ -306,7 +306,7 @@ public class PlayerInfo {
 	}
 
 	public void resetLevel() {
-		level = 0;
+		level = DEFAULT_LEVEL - 1;
 	}
 
 	public void resetHealth() {

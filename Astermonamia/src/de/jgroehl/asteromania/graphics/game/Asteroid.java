@@ -1,6 +1,10 @@
 package de.jgroehl.asteromania.graphics.game;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import de.jgroehl.asteromania.MainActivity;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
@@ -11,9 +15,10 @@ import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 		Killable {
 
-	private static final int BASIC_LIFE = 2;
-	private static final int BASIC_DAMAGE = 2;
+	private static final int BASIC_LIFE = 3;
+	private static final int BASIC_DAMAGE = 5;
 	private static final float BASIC_SPEED = 0.015f;
+	private static final Paint textPaint = new Paint();
 
 	private int life;
 	private int damage;
@@ -49,6 +54,8 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 		this.life = life;
 		this.damage = damage;
 		this.speed = speed;
+		textPaint.setColor(Color.WHITE);
+		textPaint.setTextSize(18);
 	}
 
 	@Override
@@ -71,11 +78,11 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 	public static Asteroid createAsteroid(Context context, int level) {
 		AsteroidType type = getRandomAsteroidType();
 		return new Asteroid((float) Math.random(),
-				(float) (Math.random() * (-Math.cbrt(level))), type.getImage(),
+				(float) (Math.random() * (-Math.sqrt(level))), type.getImage(),
 				context, (int) Math.round(BASIC_LIFE * type.getModifyer()
-						* Math.cbrt(level)), (int) Math.round(BASIC_DAMAGE
+						* Math.sqrt(level)), (int) Math.round(BASIC_DAMAGE
 						* type.getModifyer() * Math.sqrt(level)), BASIC_SPEED
-						/ (float) Math.sqrt(type.getModifyer()));
+						/ (float) Math.cbrt(type.getModifyer()));
 	}
 
 	private static AsteroidType getRandomAsteroidType() {
@@ -107,5 +114,22 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 	@Override
 	public void kill() {
 		life = 0;
+	}
+
+	@Override
+	public void draw(Canvas c) {
+		super.draw(c);
+		if (MainActivity.DEBUG) {
+			c.drawText(
+					"HP:" + life,
+					getX() * c.getWidth(),
+					(getY() + getRelativeHeight()) * c.getHeight()
+							+ textPaint.getTextSize(), textPaint);
+			c.drawText(
+					"DMG: " + damage,
+					getX() * c.getWidth(),
+					(getY() + getRelativeHeight()) * c.getHeight()
+							+ textPaint.getTextSize() * 2, textPaint);
+		}
 	}
 }

@@ -2,6 +2,9 @@ package de.jgroehl.asteromania.graphics.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import de.jgroehl.asteromania.MainActivity;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
@@ -30,6 +33,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	private final HpBar hpBar;
 	private final float shotSpeed;
 	private final int shotDamage;
+	private static final Paint textPaint = new Paint();
 
 	public Enemy(float xPosition, float yPosition, int graphicsId,
 			int frameCount, int animationPeriod, Context context,
@@ -44,6 +48,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 		speed = (float) (basicSpeed * getPlusMinusTwentyPercent());
 		shotDamage = (int) Math
 				.round((basicDamage * getPlusMinusTwentyPercent()));
+		textPaint.setColor(Color.WHITE);
+		textPaint.setTextSize(18);
 	}
 
 	private double getPlusMinusTwentyPercent() {
@@ -76,7 +82,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 			handler.getSoundManager().playEnemyShotSound();
 			handler.add(new Shot(xPosition + relativeWidth / 2, yPosition
 					+ relativeHeight * 0.4f, Target.PLAYER, shotSpeed, context,
-					shotDamage), GameState.MAIN);
+					shotDamage, this), GameState.MAIN);
 		}
 
 		hpBar.setPosition(xPosition, yPosition + relativeHeight);
@@ -89,6 +95,18 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	public void draw(Canvas c) {
 		hpBar.draw(c);
 		super.draw(c);
+		if (MainActivity.DEBUG) {
+			c.drawText(
+					hpBar.getCurrentValue() + "/" + hpBar.getMaximum(),
+					getX() * c.getWidth(),
+					(getY() + getRelativeHeight()) * c.getHeight()
+							+ textPaint.getTextSize(), textPaint);
+			c.drawText(
+					"DMG: " + shotDamage,
+					getX() * c.getWidth(),
+					(getY() + getRelativeHeight()) * c.getHeight()
+							+ textPaint.getTextSize() * 2, textPaint);
+		}
 	}
 
 	@Override
