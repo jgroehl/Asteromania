@@ -62,7 +62,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		player = new SpaceShip(sensorHandler, context);
 		playerInfo = new PlayerInfo(cryptoHandler, context);
 		levelHandler = new LevelHandler();
-		playerInfoDisplay = new PlayerInfoDisplay(context, playerInfo);
+		playerInfoDisplay = new PlayerInfoDisplay(context, playerInfo, false);
 	}
 
 	public void update() {

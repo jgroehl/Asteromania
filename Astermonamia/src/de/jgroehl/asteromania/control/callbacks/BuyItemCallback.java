@@ -7,9 +7,12 @@ import de.jgroehl.asteromania.player.PlayerInfo;
 
 public class BuyItemCallback implements EventCallback {
 
+	public static final int DEFAULT_COST = 1000;
+
 	public enum ItemType {
 
-		HP(1, 5), DAMAGE(1, 3);
+		HP(1, 4), DAMAGE(1, 4), SPEED(0.1f, 2), SHOT_SPEED(0.1f, 2), SHOT_FREQUENCY(
+				0.1f, 2);
 
 		public final float increaseValue;
 		private final int baseCost;
@@ -22,12 +25,24 @@ public class BuyItemCallback implements EventCallback {
 		public int getCost(PlayerInfo playerInfo) {
 			switch (this) {
 			case HP:
-				return playerInfo.getHealthPoints().getMaximum() * baseCost;
+				return (int) (playerInfo.getHealthPoints().getMaximum() * baseCost);
 			case DAMAGE:
 				return (playerInfo.getBonusDamage() + baseCost)
 						* (playerInfo.getBonusDamage() + baseCost);
+			case SPEED:
+				return (int) Math
+						.pow((((playerInfo.getMaxSpeedFactor() - 1) * 6) + baseCost),
+								3);
+			case SHOT_FREQUENCY:
+				return (int) Math
+						.pow((((playerInfo.getShotFrequencyFactor() - 1) * 12) + baseCost),
+								3);
+			case SHOT_SPEED:
+				return (int) Math
+						.pow((((playerInfo.getShotSpeedFactor() - 1) * 9) + baseCost),
+								3);
 			default:
-				return 1;
+				return DEFAULT_COST;
 			}
 		}
 	}
@@ -52,7 +67,17 @@ public class BuyItemCallback implements EventCallback {
 				gameHandler.getPlayerInfo().addBonusDamage(
 						(int) type.increaseValue);
 				break;
-			default:
+			case SHOT_FREQUENCY:
+				gameHandler.getPlayerInfo().addShotFrequencyFactor(
+						type.increaseValue);
+				break;
+			case SHOT_SPEED:
+				gameHandler.getPlayerInfo().addShotSpeedFactor(
+						type.increaseValue);
+				break;
+			case SPEED:
+				gameHandler.getPlayerInfo().addMaxSpeedFactor(
+						type.increaseValue);
 				break;
 			}
 		} else {

@@ -44,10 +44,11 @@ public class StatusBar extends GraphicsObject {
 	@Override
 	public void draw(Canvas c) {
 		bounds.set(xPosition * c.getWidth(), yPosition * c.getHeight(),
-				xPosition * c.getWidth()
-						+ (relativeWidth * c.getWidth() * currentValue)
-						/ maximum, yPosition * c.getHeight() + relativeHeight
-						* c.getHeight());
+				xPosition
+						* c.getWidth()
+						+ (relativeWidth * c.getWidth() * (currentValue < 0 ? 0
+								: currentValue)) / maximum,
+				yPosition * c.getHeight() + relativeHeight * c.getHeight());
 		c.drawRect(bounds, contentsPaint);
 	}
 
@@ -64,6 +65,8 @@ public class StatusBar extends GraphicsObject {
 
 		if (currentValue > maximum)
 			maximum = currentValue;
+		if (currentValue < 0)
+			currentValue = 0;
 	}
 
 	public int getCurrentValue() {

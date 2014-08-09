@@ -9,6 +9,7 @@ import de.jgroehl.asteromania.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
+import de.jgroehl.asteromania.player.PlayerInfoDisplay;
 
 public class GameSetup {
 
@@ -75,14 +76,41 @@ public class GameSetup {
 				GameState.SHOP2);
 		gameHandler.update();
 
+		float shopButtonWidth = 0.5f;
+		float shopButtonHeight = 0.2f;
+
 		gameHandler.add(
-				new BuyItemShopButton("Health", 0.1f, 0.1f, 0.3f, 0.2f,
-						ItemType.HP, gameHandler.getContext(), gameHandler
-								.getPlayerInfo()), GameState.SHOP);
-		
+				new BuyItemShopButton("+1 HP", 0.1f, 0.1f, shopButtonWidth,
+						shopButtonHeight, ItemType.HP,
+						gameHandler.getContext(), gameHandler.getPlayerInfo()),
+				GameState.SHOP);
+
 		gameHandler.add(
-				new BuyItemShopButton("Damage", 0.1f, 0.4f, 0.3f, 0.2f,
-						ItemType.DAMAGE, gameHandler.getContext(), gameHandler
-								.getPlayerInfo()), GameState.SHOP);
+				new BuyItemShopButton("+1 DMG", 0.1f, 0.4f, shopButtonWidth,
+						shopButtonHeight, ItemType.DAMAGE, gameHandler
+								.getContext(), gameHandler.getPlayerInfo()),
+				GameState.SHOP);
+
+		gameHandler.add(
+				new BuyItemShopButton("10% SPD", 0.1f, 0.7f, shopButtonWidth,
+						shopButtonHeight, ItemType.SPEED, gameHandler
+								.getContext(), gameHandler.getPlayerInfo()),
+				GameState.SHOP);
+
+		gameHandler.add(new BuyItemShopButton("10% S.SPD", 0.1f, 0.1f,
+				shopButtonWidth, shopButtonHeight, ItemType.SHOT_SPEED,
+				gameHandler.getContext(), gameHandler.getPlayerInfo()),
+				GameState.SHOP2);
+
+		gameHandler.add(new BuyItemShopButton("10% S.FRQ", 0.1f, 0.4f,
+				shopButtonWidth, shopButtonHeight, ItemType.SHOT_FREQUENCY,
+				gameHandler.getContext(), gameHandler.getPlayerInfo()),
+				GameState.SHOP2);
+
+		gameHandler.add(new PlayerInfoDisplay(gameHandler.getContext(),
+				gameHandler.getPlayerInfo(), true), GameState.SHOP);
+
+		gameHandler.add(new PlayerInfoDisplay(gameHandler.getContext(),
+				gameHandler.getPlayerInfo(), true), GameState.SHOP2);
 	}
 }

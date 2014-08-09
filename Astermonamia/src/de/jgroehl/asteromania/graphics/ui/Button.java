@@ -221,8 +221,4 @@ public class Button extends AbstractClickableElement {
 		}
 		return ninePatch;
 	}
-
-	protected Paint getTextPaint() {
-		return textPaint;
-	}
 }

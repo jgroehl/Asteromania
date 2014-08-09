@@ -27,7 +27,7 @@ public class PlayerInfo {
 	private static final String STATS_FILE_NAME = "stats";
 	private static final String SPLIT_CHARACTER = "&";
 
-	private static final int DEFAULT_HEALTH = 10;
+	private static final int DEFAULT_HEALTH = 3;
 	private static final int DEFAULT_LEVEL = 1;
 	private static final float DEFAULT_STAT_FACTOR = 1.0f;
 	private static final float DEFAULT_SENSITIVITY_VALUE = 1.5f;
@@ -325,35 +325,28 @@ public class PlayerInfo {
 		return sensitivity;
 	}
 
-	public void setSensitivity(float sensitivity) {
-		this.sensitivity = sensitivity;
-	}
-
 	public float getShotSpeedFactor() {
 		return shotSpeedFactor;
-	}
-
-	public void setShotSpeedFactor(float shotSpeedFactor) {
-		this.shotSpeedFactor = shotSpeedFactor;
 	}
 
 	public float getShotFrequencyFactor() {
 		return shotFrequencyFactor;
 	}
 
-	public void setShotFrequencyFactor(float shotFrequencyFactor) {
-		this.shotFrequencyFactor = shotFrequencyFactor;
-	}
-
 	public int getBonusDamage() {
 		return bonusDamage;
 	}
 
-	public void setBonusDamage(int bonusDamage) {
-		this.bonusDamage = bonusDamage;
-	}
-
 	public void addBonusDamage(int increaseValue) {
 		bonusDamage += increaseValue;
+	}
+
+	public void addShotFrequencyFactor(float increaseValue) {
+		shotFrequencyFactor += increaseValue;
+
+	}
+
+	public void addShotSpeedFactor(float increaseValue) {
+		shotSpeedFactor += increaseValue;
 	}
 }
