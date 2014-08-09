@@ -12,7 +12,6 @@ import de.jgroehl.asteromania.control.interfaces.GraphicsHandler;
 import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.graphics.GameObject;
 import de.jgroehl.asteromania.graphics.GameObject.Level;
-import de.jgroehl.asteromania.graphics.game.Shot;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;

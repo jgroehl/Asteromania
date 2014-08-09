@@ -17,7 +17,18 @@ import de.jgroehl.asteromania.control.interfaces.EventCallback;
 
 public class Button extends AbstractClickableElement {
 
-	private final String buttonText;
+	private String buttonText;
+
+	public String getButtonText() {
+		return buttonText;
+	}
+
+	public void setButtonText(String buttonText) {
+		if (buttonText == null)
+			throw new IllegalStateException("Buttontext must not be null");
+		this.buttonText = buttonText;
+	}
+
 	private Paint textPaint;
 	private Rect textBounds = new Rect();
 	private RectF drawRect;
@@ -211,4 +222,7 @@ public class Button extends AbstractClickableElement {
 		return ninePatch;
 	}
 
+	protected Paint getTextPaint() {
+		return textPaint;
+	}
 }

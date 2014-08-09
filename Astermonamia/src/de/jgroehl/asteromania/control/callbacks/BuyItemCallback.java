@@ -3,19 +3,32 @@ package de.jgroehl.asteromania.control.callbacks;
 import android.widget.Toast;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
+import de.jgroehl.asteromania.player.PlayerInfo;
 
 public class BuyItemCallback implements EventCallback {
 
 	public enum ItemType {
 
-		HP(100, 1);
+		HP(1, 5), DAMAGE(1, 3);
 
-		public final int cost;
 		public final float increaseValue;
+		private final int baseCost;
 
-		private ItemType(int cost, float increaseValue) {
-			this.cost = cost;
+		private ItemType(float increaseValue, int baseCost) {
 			this.increaseValue = increaseValue;
+			this.baseCost = baseCost;
+		}
+
+		public int getCost(PlayerInfo playerInfo) {
+			switch (this) {
+			case HP:
+				return playerInfo.getHealthPoints().getMaximum() * baseCost;
+			case DAMAGE:
+				return (playerInfo.getBonusDamage() + baseCost)
+						* (playerInfo.getBonusDamage() + baseCost);
+			default:
+				return 1;
+			}
 		}
 	}
 
@@ -27,12 +40,19 @@ public class BuyItemCallback implements EventCallback {
 
 	@Override
 	public void action(GameHandler gameHandler) {
-		if (gameHandler.getPlayerInfo().getCoins() >= type.cost) {
-			gameHandler.getPlayerInfo().addCoins(-type.cost);
+		int cost = type.getCost(gameHandler.getPlayerInfo());
+		if (gameHandler.getPlayerInfo().getCoins() >= cost) {
+			gameHandler.getPlayerInfo().addCoins(-cost);
 			switch (type) {
 			case HP:
 				gameHandler.getPlayerInfo().addHealthPoints(
 						(int) (type.increaseValue));
+				break;
+			case DAMAGE:
+				gameHandler.getPlayerInfo().addBonusDamage(
+						(int) type.increaseValue);
+				break;
+			default:
 				break;
 			}
 		} else {

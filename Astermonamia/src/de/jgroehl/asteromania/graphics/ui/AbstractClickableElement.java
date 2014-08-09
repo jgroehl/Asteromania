@@ -37,4 +37,8 @@ public abstract class AbstractClickableElement extends GraphicsObject implements
 		callback.action(gameHandler);
 	}
 
+	protected EventCallback getCallback() {
+		return callback;
+	}
+
 }

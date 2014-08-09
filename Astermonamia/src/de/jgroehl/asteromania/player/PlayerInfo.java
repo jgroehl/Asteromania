@@ -352,4 +352,8 @@ public class PlayerInfo {
 	public void setBonusDamage(int bonusDamage) {
 		this.bonusDamage = bonusDamage;
 	}
+
+	public void addBonusDamage(int increaseValue) {
+		bonusDamage += increaseValue;
+	}
 }
