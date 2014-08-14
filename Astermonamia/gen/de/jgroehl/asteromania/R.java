@@ -1084,20 +1084,21 @@ containing a value of this type.
         public static final int fire=0x7f02005b;
         public static final int home=0x7f02005c;
         public static final int ic_launcher=0x7f02005d;
-        public static final int left=0x7f02005e;
-        public static final int normal_shot_down=0x7f02005f;
-        public static final int normal_shot_up=0x7f020060;
-        public static final int right=0x7f020061;
-        public static final int rock1=0x7f020062;
-        public static final int rock2=0x7f020063;
-        public static final int rock3=0x7f020064;
-        public static final int rock4=0x7f020065;
-        public static final int rock5=0x7f020066;
-        public static final int rotating_coin=0x7f020067;
-        public static final int settings=0x7f020068;
-        public static final int spaceship=0x7f020069;
-        public static final int spaceship2=0x7f02006a;
-        public static final int start=0x7f02006b;
+        public static final int kaboom=0x7f02005e;
+        public static final int left=0x7f02005f;
+        public static final int normal_shot_down=0x7f020060;
+        public static final int normal_shot_up=0x7f020061;
+        public static final int right=0x7f020062;
+        public static final int rock1=0x7f020063;
+        public static final int rock2=0x7f020064;
+        public static final int rock3=0x7f020065;
+        public static final int rock4=0x7f020066;
+        public static final int rock5=0x7f020067;
+        public static final int rotating_coin=0x7f020068;
+        public static final int settings=0x7f020069;
+        public static final int spaceship=0x7f02006a;
+        public static final int spaceship2=0x7f02006b;
+        public static final int start=0x7f02006c;
     }
     public static final class id {
         public static final int action_bar=0x7f06001c;
@@ -1218,12 +1219,13 @@ containing a value of this type.
         public static final int main=0x7f0d0000;
     }
     public static final class raw {
-        public static final int click=0x7f050000;
-        public static final int coin=0x7f050001;
-        public static final int hit=0x7f050002;
-        public static final int hit3=0x7f050003;
-        public static final int megasound=0x7f050004;
-        public static final int shoot=0x7f050005;
+        public static final int boom=0x7f050000;
+        public static final int click=0x7f050001;
+        public static final int coin=0x7f050002;
+        public static final int hit=0x7f050003;
+        public static final int hit3=0x7f050004;
+        public static final int megasound=0x7f050005;
+        public static final int shoot=0x7f050006;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

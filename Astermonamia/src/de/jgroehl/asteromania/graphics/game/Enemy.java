@@ -119,6 +119,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 						+ MINIMUM_AMOUNT_COINS_DROPPED;
 				for (int i = 0; i < amountCoins; i++)
 					Coin.addToHandler(gameHandler, this);
+				gameHandler.getSoundManager().playExplosionSound();
+				addExplosion(gameHandler);
 				gameHandler.remove(this);
 			}
 			gameHandler.remove(shot);

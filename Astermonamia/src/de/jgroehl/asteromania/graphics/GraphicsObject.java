@@ -7,6 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 import android.util.SparseArray;
+import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.GameState;
+import de.jgroehl.asteromania.graphics.game.Explosion;
 
 public abstract class GraphicsObject extends GameObject {
 
@@ -100,6 +103,11 @@ public abstract class GraphicsObject extends GameObject {
 
 	public void setRelativeWidth(float relativeWidth) {
 		this.relativeWidth = relativeWidth;
+	}
+
+	protected void addExplosion(GameHandler gameHandler) {
+		gameHandler.add(new Explosion(xPosition, yPosition, context),
+				GameState.MAIN);
 	}
 
 }
