@@ -11,7 +11,7 @@ public class BuyItemCallback implements EventCallback {
 
 	public enum ItemType {
 
-		HP(1, 4), DAMAGE(1, 4), SPEED(0.1f, 2), SHOT_SPEED(0.1f, 2), SHOT_FREQUENCY(
+		HP(1, 2), DAMAGE(1, 3), SPEED(0.1f, 1), SHOT_SPEED(0.1f, 2), SHOT_FREQUENCY(
 				0.1f, 2);
 
 		public final float increaseValue;

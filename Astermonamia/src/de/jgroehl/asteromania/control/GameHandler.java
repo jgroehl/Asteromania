@@ -18,6 +18,7 @@ import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.graphics.interfaces.Killable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
+import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.player.PlayerInfo;
 import de.jgroehl.asteromania.player.PlayerInfoDisplay;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
@@ -33,7 +34,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 	private final Map<GameState, List<Hitable>> hitableObjects = new HashMap<GameState, List<Hitable>>();
 
 	private final List<GameObject> removedObjects = new ArrayList<GameObject>();
-	
+
 	private final SoundManager soundManager;
 
 	private final SpaceShip player;
@@ -46,11 +47,15 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	private final LevelHandler levelHandler;
 
+	private final Transition transition;
+
 	private GameState state = null;
+
+	private Starfield starfield;
 
 	public GameHandler(GameState state, SoundManager soundManager,
 			Context context, CryptoHandler cryptoHandler,
-			SensorHandler sensorHandler) {
+			SensorHandler sensorHandler, Transition transition) {
 		this.state = state;
 		for (GameState s : GameState.values()) {
 			gameObjects.put(s, new ArrayList<GameObject>());
@@ -59,6 +64,8 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		}
 		this.soundManager = soundManager;
 		this.context = context;
+		this.transition = transition;
+		add(transition, GameState.MAIN);
 		player = new SpaceShip(sensorHandler, context);
 		playerInfo = new PlayerInfo(cryptoHandler, context);
 		levelHandler = new LevelHandler();
@@ -83,6 +90,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 					for (GameState state : addedObjects.get(gameObject))
 						hitableObjects.get(state).add((Hitable) gameObject);
 				}
+
+				if (gameObject instanceof Starfield) {
+					starfield = (Starfield) gameObject;
+				}
 			}
 			addedObjects.clear();
 		}
@@ -106,8 +117,20 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		}
 
 		if (levelHandler.isLevelOver()) {
-			addKillables(levelHandler.getLevelObjects(context,
-					playerInfo.nextLevel()));
+			if (playerInfo.getLevel() > 0) {
+				if (!transition.isInitialized()) {
+					transition.initialize();
+					playerInfo.addCoins(playerInfo.getLevel());
+				}
+				if (transition.isFinished()) {
+					transition.reset();
+					addKillables(levelHandler.getLevelObjects(context,
+							playerInfo.nextLevel()));
+				}
+			} else {
+				addKillables(levelHandler.getLevelObjects(context,
+						playerInfo.nextLevel()));
+			}
 		}
 	}
 
@@ -191,6 +214,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		levelHandler.killAllEntities(this);
 		playerInfo.resetHealth();
 		playerInfo.resetLevel();
+	}
+
+	public Starfield getStarfield() {
+		return starfield;
 	}
 
 }

@@ -14,6 +14,7 @@ public class StarObject extends GameObject implements Updatable {
 	private final int diameter;
 	private final RectF starRect;
 	private final float speed;
+	private float speedFactor = 1.0f;
 
 	public StarObject(float xPosition, float yPosition, int diameter,
 			int paintColor, float speed, Context context) {
@@ -38,11 +39,19 @@ public class StarObject extends GameObject implements Updatable {
 	@Override
 	public void update(GameHandler gameHandler) {
 
-		yPosition = yPosition + speed;
+		yPosition = yPosition + speed * speedFactor;
 		if (yPosition >= 1) {
 			xPosition = (float) Math.random();
-			yPosition = 0;
+			yPosition = (float) -(Math.random() * 0.1);
 		}
 
+	}
+
+	public void accelerate(float factor) {
+		speedFactor += factor;
+	}
+
+	public float getAcceleration() {
+		return speedFactor;
 	}
 }

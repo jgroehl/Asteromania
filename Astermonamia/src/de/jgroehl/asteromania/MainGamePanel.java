@@ -13,6 +13,7 @@ import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameSetup;
 import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.control.SoundManager;
+import de.jgroehl.asteromania.control.Transition;
 import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
@@ -35,7 +36,9 @@ public class MainGamePanel extends SurfaceView implements
 
 		gameHandler = new GameHandler(GameState.MENU, new SoundManager(
 				getContext()), getContext(), new CryptoHandler(getResources()),
-				new SensorHandler(context, Context.SENSOR_SERVICE));
+				new SensorHandler(context, Context.SENSOR_SERVICE),
+				new Transition(context));
+		
 
 		getHolder().addCallback(this);
 
