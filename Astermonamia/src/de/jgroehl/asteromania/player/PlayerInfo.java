@@ -1,20 +1,10 @@
 package de.jgroehl.asteromania.player;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-
 import android.content.Context;
-import android.util.Base64;
 import android.util.Log;
 import de.jgroehl.asteromania.MainActivity;
-import de.jgroehl.asteromania.crypto.CryptoHandler;
-import de.jgroehl.asteromania.crypto.CryptoHandler.CryptoException;
 import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
+import de.jgroehl.asteromania.io.FileHandler;
 
 public class PlayerInfo {
 
@@ -39,8 +29,8 @@ public class PlayerInfo {
 	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 1000000
 			: 0;
 
-	private final CryptoHandler cryptoHandler;
 	private final Context context;
+	private final FileHandler fileHandler;
 
 	private HpBar healthPoints;
 	private long coins;
@@ -50,9 +40,9 @@ public class PlayerInfo {
 	private float shotFrequencyFactor;
 	private int bonusDamage;
 
-	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
-		this.cryptoHandler = cryptoHandler;
+	public PlayerInfo(Context context, FileHandler fileHandler) {
 		this.context = context;
+		this.fileHandler = fileHandler;
 		setUpPlayerInfo();
 	}
 
@@ -67,8 +57,9 @@ public class PlayerInfo {
 
 	private void readStats() {
 
-		String[] stats = getDecryptedStringFromFile(STATS_FILE_NAME).split(
-				SPLIT_CHARACTER);
+		String[] stats = fileHandler
+				.getDecryptedStringFromFile(STATS_FILE_NAME).split(
+						SPLIT_CHARACTER);
 
 		try {
 			if (stats.length >= 1) {
@@ -141,8 +132,8 @@ public class PlayerInfo {
 			// started, the application will increment the level (it is loaded
 			// with NO entities and therefore will be completed, hence the
 			// level-up)
-			level = Integer
-					.parseInt(getDecryptedStringFromFile(LEVEL_FILE_NAME)) - 1;
+			level = Integer.parseInt(fileHandler
+					.getDecryptedStringFromFile(LEVEL_FILE_NAME)) - 1;
 			Log.d(TAG, "Set level to " + level);
 
 		} catch (NumberFormatException e) {
@@ -154,8 +145,8 @@ public class PlayerInfo {
 
 	protected void readHealth() {
 		try {
-			String[] health = getDecryptedStringFromFile(HP_FILE_NAME).split(
-					SPLIT_CHARACTER);
+			String[] health = fileHandler.getDecryptedStringFromFile(
+					HP_FILE_NAME).split(SPLIT_CHARACTER);
 			int currentValue = Integer.parseInt(health[0]);
 			int maximum = Integer.parseInt(health[1]);
 
@@ -173,8 +164,8 @@ public class PlayerInfo {
 
 	protected void readCoins() {
 		try {
-			coins = Integer
-					.parseInt(getDecryptedStringFromFile(COIN_FILE_NAME));
+			coins = Integer.parseInt(fileHandler
+					.getDecryptedStringFromFile(COIN_FILE_NAME));
 			Log.d(TAG, "Set coins to " + coins);
 
 		} catch (NumberFormatException e) {
@@ -185,80 +176,22 @@ public class PlayerInfo {
 
 	public void savePlayerInfo() {
 		Log.d(TAG, "Saving PlayerInfo...");
-		writeAndEncryptString(COIN_FILE_NAME, String.valueOf(coins));
-		writeAndEncryptString(
+		fileHandler
+				.writeAndEncryptString(COIN_FILE_NAME, String.valueOf(coins));
+		fileHandler.writeAndEncryptString(
 				HP_FILE_NAME,
 				String.valueOf(healthPoints.getCurrentValue() + SPLIT_CHARACTER
 						+ healthPoints.getMaximum()));
-		writeAndEncryptString(LEVEL_FILE_NAME, String.valueOf(level));
-		writeAndEncryptString(STATS_FILE_NAME, String.valueOf(maxSpeedFactor)
-				+ SPLIT_CHARACTER + String.valueOf(shotSpeedFactor)
-				+ SPLIT_CHARACTER + String.valueOf(shotFrequencyFactor)
-				+ SPLIT_CHARACTER + String.valueOf(bonusDamage));
+		fileHandler.writeAndEncryptString(LEVEL_FILE_NAME,
+				String.valueOf(level));
+		fileHandler.writeAndEncryptString(
+				STATS_FILE_NAME,
+				String.valueOf(maxSpeedFactor) + SPLIT_CHARACTER
+						+ String.valueOf(shotSpeedFactor) + SPLIT_CHARACTER
+						+ String.valueOf(shotFrequencyFactor) + SPLIT_CHARACTER
+						+ String.valueOf(bonusDamage));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
-	}
-
-	private void writeAndEncryptString(String fileName, String value) {
-		try {
-			FileOutputStream fos = context.openFileOutput(fileName,
-					Context.MODE_PRIVATE);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			BufferedWriter bw = new BufferedWriter(osw);
-
-			String output = new String(Base64.encode(
-					cryptoHandler.encode(value.getBytes()), Base64.URL_SAFE));
-			Log.d(TAG, "Saved value [" + output + "] to " + fileName);
-			bw.write(output);
-
-			bw.close();
-			osw.close();
-			fos.close();
-		} catch (IOException e) {
-			Log.e(TAG, "Saving value " + value + " for " + fileName
-					+ " failed because of IO: " + e.getMessage());
-		} catch (CryptoException e) {
-			Log.e(TAG, "Saving value " + value + " for " + fileName
-					+ " failed because of crypto: " + e.getMessage());
-		}
-	}
-
-	private String getDecryptedStringFromFile(String fileName) {
-		String result = "";
-		try {
-			FileInputStream coinInputStream = context.openFileInput(fileName);
-			if (coinInputStream == null) {
-				Log.w(TAG, "When opening " + fileName
-						+ " the file was not existing.");
-				return result;
-			}
-			InputStreamReader isr = new InputStreamReader(coinInputStream);
-			BufferedReader bufferedReader = new BufferedReader(isr);
-
-			String readLine = bufferedReader.readLine();
-			if (readLine == null) {
-				Log.w(TAG, "When reading " + fileName
-						+ " the file was not readable or empty.");
-				return result;
-			}
-			Log.d(TAG, "Read value [" + readLine + "] from " + fileName);
-			result = new String(cryptoHandler.decode(Base64.decode(
-					readLine.getBytes(), Base64.URL_SAFE)));
-
-			coinInputStream.close();
-			isr.close();
-			bufferedReader.close();
-		} catch (IOException e) {
-			Log.e(TAG,
-					"Error while retrieving input string from file: "
-							+ e.getMessage());
-			return "";
-		} catch (CryptoException e) {
-			Log.e(TAG, "Crypto Exception while reading file: " + e.getMessage());
-			return "";
-		}
-
-		return result;
 	}
 
 	public void addCoins(int amount) {

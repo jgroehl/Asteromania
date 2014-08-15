@@ -9,7 +9,6 @@ import android.content.Context;
 import android.view.MotionEvent;
 import de.jgroehl.asteromania.control.interfaces.EventHandler;
 import de.jgroehl.asteromania.control.interfaces.GraphicsHandler;
-import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.graphics.GameObject;
 import de.jgroehl.asteromania.graphics.GameObject.Level;
 import de.jgroehl.asteromania.graphics.game.Explosion;
@@ -20,6 +19,7 @@ import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.graphics.interfaces.Killable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
+import de.jgroehl.asteromania.io.FileHandler;
 import de.jgroehl.asteromania.player.PlayerInfo;
 import de.jgroehl.asteromania.player.PlayerInfoDisplay;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
@@ -55,7 +55,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 	private Starfield starfield;
 
 	public GameHandler(GameState state, SoundManager soundManager,
-			Context context, CryptoHandler cryptoHandler,
+			Context context, FileHandler fileHandler,
 			SensorHandler sensorHandler, Transition transition) {
 		this.state = state;
 		for (GameState s : GameState.values()) {
@@ -68,7 +68,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		this.transition = transition;
 		add(transition, GameState.MAIN);
 		player = new SpaceShip(sensorHandler, context);
-		playerInfo = new PlayerInfo(cryptoHandler, context);
+		playerInfo = new PlayerInfo(context, fileHandler);
 		levelHandler = new LevelHandler();
 		playerInfoDisplay = new PlayerInfoDisplay(context, playerInfo, false);
 	}

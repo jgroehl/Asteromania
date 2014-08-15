@@ -1,16 +1,23 @@
 package de.jgroehl.asteromania.crypto;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.util.Log;
 
 public class CryptoHandler {
 
+	private static final String TAG = CryptoHandler.class.getSimpleName();
 	private SecretKeySpec secretKeySpec;
 	private SecretKey sK;
 
@@ -22,18 +29,41 @@ public class CryptoHandler {
 		}
 	}
 
-	public CryptoHandler(Resources resources) {
+	public CryptoHandler(Context context) {
+		FileInputStream fis;
 		try {
-			ObjectInputStream ois = new ObjectInputStream(
-					resources
-							.openRawResource(de.jgroehl.asteromania.R.raw.megasound));
-			sK = (SecretKey) ois.readObject();
-			ois.close();
+			fis = context.openFileInput("cryptoKey");
+			try {
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				sK = (SecretKey) ois.readObject();
+				ois.close();
+				secretKeySpec = new SecretKeySpec(sK.getEncoded(), "AES");
+			} catch (Exception e) {
+				Log.e(TAG, "Fatal: Creating cryptoHandler failed.");
+				System.exit(123);
+			}
+		} catch (FileNotFoundException e) {
+			Log.w(TAG,
+					"Couldn't find crypto key. Creating new one. Old data will be lost.");
+			createCryptoKey(context);
+		}
+	}
+
+	private void createCryptoKey(Context context) {
+		try {
+			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+			SecureRandom secureRandom = new SecureRandom();
+			keyGenerator.init(secureRandom);
+			sK = keyGenerator.generateKey();
+			FileOutputStream fos = context.openFileOutput("cryptoKey",
+					Context.MODE_PRIVATE);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(sK);
+			oos.close();
 			secretKeySpec = new SecretKeySpec(sK.getEncoded(), "AES");
 		} catch (Exception e) {
-			Log.e(CryptoHandler.class.getSimpleName(),
-					"Creating cryptoHandlöer failed.");
-			System.exit(123);
+			Log.e(TAG,
+					"Creating Crypto Key failed. Progress will not be saved.");
 		}
 	}
 
