@@ -23,14 +23,12 @@ public class PlayerInfo {
 	private static final String COIN_FILE_NAME = "coins";
 	private static final String HP_FILE_NAME = "health";
 	private static final String LEVEL_FILE_NAME = "level";
-	private static final String SENSITIVIITY_FILE_NAME = "sensitivity";
 	private static final String STATS_FILE_NAME = "stats";
 	private static final String SPLIT_CHARACTER = "&";
 
 	private static final int DEFAULT_HEALTH = 3;
 	private static final int DEFAULT_LEVEL = 1;
 	private static final float DEFAULT_STAT_FACTOR = 1.0f;
-	private static final float DEFAULT_SENSITIVITY_VALUE = 1.5f;
 	private static final int DEFAULT_BONUS_DAMAGE = 0;
 
 	private static final float HEALTH_HEIGHT = 0.075f;
@@ -38,19 +36,18 @@ public class PlayerInfo {
 	private static final float HEALTH_X = 0.025f;
 	private static final float HEALTH_Y = 0.90f;
 
-	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 100000
+	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 1000000
 			: 0;
 
 	private final CryptoHandler cryptoHandler;
 	private final Context context;
 
 	private HpBar healthPoints;
-	private int coins;
+	private long coins;
 	private int level;
 	private float maxSpeedFactor;
 	private float shotSpeedFactor;
 	private float shotFrequencyFactor;
-	private float sensitivity;
 	private int bonusDamage;
 
 	public PlayerInfo(CryptoHandler cryptoHandler, Context context) {
@@ -64,22 +61,8 @@ public class PlayerInfo {
 		readCoins();
 		readHealth();
 		readLevel();
-		readSensitivity();
 		readStats();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
-	}
-
-	protected void readSensitivity() {
-		try {
-			sensitivity = Float
-					.parseFloat(getDecryptedStringFromFile(SENSITIVIITY_FILE_NAME));
-			Log.d(TAG, "Set sensitivoity to " + sensitivity);
-
-		} catch (NumberFormatException e) {
-			Log.w(TAG, "Sensitivity not readable. Setting it to: "
-					+ DEFAULT_SENSITIVITY_VALUE);
-			sensitivity = DEFAULT_SENSITIVITY_VALUE;
-		}
 	}
 
 	private void readStats() {
@@ -208,8 +191,6 @@ public class PlayerInfo {
 				String.valueOf(healthPoints.getCurrentValue() + SPLIT_CHARACTER
 						+ healthPoints.getMaximum()));
 		writeAndEncryptString(LEVEL_FILE_NAME, String.valueOf(level));
-		writeAndEncryptString(SENSITIVIITY_FILE_NAME,
-				String.valueOf(sensitivity));
 		writeAndEncryptString(STATS_FILE_NAME, String.valueOf(maxSpeedFactor)
 				+ SPLIT_CHARACTER + String.valueOf(shotSpeedFactor)
 				+ SPLIT_CHARACTER + String.valueOf(shotFrequencyFactor)
@@ -284,7 +265,7 @@ public class PlayerInfo {
 		coins += amount;
 	}
 
-	public int getCoins() {
+	public long getCoins() {
 		return coins;
 	}
 
@@ -319,10 +300,6 @@ public class PlayerInfo {
 
 	public void addMaxSpeedFactor(float extraSpeed) {
 		maxSpeedFactor += extraSpeed;
-	}
-
-	public float getSensitivity() {
-		return sensitivity;
 	}
 
 	public float getShotSpeedFactor() {

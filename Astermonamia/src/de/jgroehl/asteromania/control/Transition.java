@@ -16,7 +16,7 @@ public class Transition extends GameObject {
 
 	private static final float MIN_ACCELERATION = 1.0f;
 
-	private State state = State.NOT_INITIALIZED;
+	private State state = State.FINISHED;
 
 	public Transition(Context context) {
 		super(0, 0, context);

@@ -1,4 +1,4 @@
-package de.jgroehl.asteromania.control;
+package de.jgroehl.asteromania.graphics.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
-import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.player.PlayerInfo;
 
 public class BuyItemShopButton extends Button {

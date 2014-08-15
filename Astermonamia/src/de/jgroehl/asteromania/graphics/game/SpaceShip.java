@@ -92,8 +92,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 			pitch = 2 * MAX_DEGREE - Math.abs(pitch);
 		}
 
-		float value = (float) (Math.pow(Math.abs(pitch) / MAX_DEGREE, handler
-				.getPlayerInfo().getSensitivity()));
+		float value = (float) (Math.pow(Math.abs(pitch) / MAX_DEGREE, 1.4f));
 
 		if (value > MAX_SHIP_SPEED
 				* handler.getPlayerInfo().getMaxSpeedFactor())

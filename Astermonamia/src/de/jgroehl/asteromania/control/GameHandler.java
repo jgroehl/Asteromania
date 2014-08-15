@@ -12,6 +12,7 @@ import de.jgroehl.asteromania.control.interfaces.GraphicsHandler;
 import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.graphics.GameObject;
 import de.jgroehl.asteromania.graphics.GameObject.Level;
+import de.jgroehl.asteromania.graphics.game.Explosion;
 import de.jgroehl.asteromania.graphics.game.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
@@ -214,6 +215,9 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		levelHandler.killAllEntities(this);
 		playerInfo.resetHealth();
 		playerInfo.resetLevel();
+		soundManager.playExplosionSound();
+		add(new Explosion(0.45f, 0.45f, context), GameState.GAME_OVER);
+		state = GameState.GAME_OVER;
 	}
 
 	public Starfield getStarfield() {
