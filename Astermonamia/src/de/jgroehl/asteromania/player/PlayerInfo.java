@@ -14,12 +14,16 @@ public class PlayerInfo {
 	private static final String HP_FILE_NAME = "health";
 	private static final String LEVEL_FILE_NAME = "level";
 	private static final String STATS_FILE_NAME = "stats";
+	private static final String HIGHSCORE_FILE_NAME = "currentHighscore";
+	private static final String SCORE_FACTOR_FILE_NAME = "currentScoreFactor";
 	private static final String SPLIT_CHARACTER = "&";
 
 	private static final int DEFAULT_HEALTH = 3;
 	private static final int DEFAULT_LEVEL = 1;
 	private static final float DEFAULT_STAT_FACTOR = 1.0f;
 	private static final int DEFAULT_BONUS_DAMAGE = 0;
+	private static final long DEFAULT_HIGHSCORE = 0;
+	private static final long DEFAULT_SCORE_FACTOR = 1;
 
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
@@ -39,6 +43,8 @@ public class PlayerInfo {
 	private float shotSpeedFactor;
 	private float shotFrequencyFactor;
 	private int bonusDamage;
+	private long currentHighscore;
+	private long currentScoreFactor;
 
 	public PlayerInfo(Context context, FileHandler fileHandler) {
 		this.context = context;
@@ -52,7 +58,36 @@ public class PlayerInfo {
 		readHealth();
 		readLevel();
 		readStats();
+		readCurrentHighscore();
+		readCurrentScoreFactor();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void readCurrentScoreFactor() {
+		try {
+			currentScoreFactor = Long.parseLong(fileHandler
+					.getDecryptedStringFromFile(SCORE_FACTOR_FILE_NAME));
+			Log.d(TAG, "Set current Score Factor to " + currentScoreFactor);
+
+		} catch (NumberFormatException e) {
+			Log.w(TAG, "currentScoreFactor not readable. Setting level to "
+					+ DEFAULT_SCORE_FACTOR);
+			currentScoreFactor = DEFAULT_SCORE_FACTOR;
+		}
+	}
+
+	private void readCurrentHighscore() {
+		try {
+			currentHighscore = Long.parseLong(fileHandler
+					.getDecryptedStringFromFile(HIGHSCORE_FILE_NAME));
+			Log.d(TAG, "Set current Highscore to " + currentHighscore);
+
+		} catch (NumberFormatException e) {
+			Log.w(TAG, "currentHighscore not readable. Setting level to "
+					+ DEFAULT_HIGHSCORE);
+			currentHighscore = DEFAULT_HIGHSCORE;
+		}
+
 	}
 
 	private void readStats() {
@@ -190,6 +225,10 @@ public class PlayerInfo {
 						+ String.valueOf(shotSpeedFactor) + SPLIT_CHARACTER
 						+ String.valueOf(shotFrequencyFactor) + SPLIT_CHARACTER
 						+ String.valueOf(bonusDamage));
+		fileHandler.writeAndEncryptString(HIGHSCORE_FILE_NAME,
+				String.valueOf(currentHighscore));
+		fileHandler.writeAndEncryptString(SCORE_FACTOR_FILE_NAME,
+				String.valueOf(currentScoreFactor));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -216,15 +255,8 @@ public class PlayerInfo {
 	}
 
 	public int nextLevel() {
+		currentScoreFactor++;
 		return ++level;
-	}
-
-	public void resetLevel() {
-		level = DEFAULT_LEVEL - 1;
-	}
-
-	public void resetHealth() {
-		healthPoints.reset();
 	}
 
 	public float getMaxSpeedFactor() {
@@ -258,5 +290,24 @@ public class PlayerInfo {
 
 	public void addShotSpeedFactor(float increaseValue) {
 		shotSpeedFactor += increaseValue;
+	}
+
+	public void addScore(long value) {
+		currentHighscore += value * currentScoreFactor;
+	}
+
+	public long getCurrentHighscore() {
+		return currentHighscore;
+	}
+
+	public void reset() {
+		healthPoints.reset();
+		level = DEFAULT_LEVEL - 1;
+		currentHighscore = DEFAULT_HIGHSCORE;
+		currentScoreFactor = DEFAULT_SCORE_FACTOR;
+	}
+
+	public void resetScoreBonus() {
+		currentScoreFactor = DEFAULT_SCORE_FACTOR;
 	}
 }

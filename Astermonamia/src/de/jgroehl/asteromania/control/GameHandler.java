@@ -19,6 +19,7 @@ import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.graphics.interfaces.Killable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
+import de.jgroehl.asteromania.graphics.ui.Highscore;
 import de.jgroehl.asteromania.io.FileHandler;
 import de.jgroehl.asteromania.player.PlayerInfo;
 import de.jgroehl.asteromania.player.PlayerInfoDisplay;
@@ -50,23 +51,28 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	private final Transition transition;
 
+	private final Highscore highscore;
+
 	private GameState state = null;
 
 	private Starfield starfield;
 
 	public GameHandler(GameState state, SoundManager soundManager,
 			Context context, FileHandler fileHandler,
-			SensorHandler sensorHandler, Transition transition) {
+			SensorHandler sensorHandler, Transition transition,
+			Highscore highscore) {
 		this.state = state;
 		for (GameState s : GameState.values()) {
 			gameObjects.put(s, new ArrayList<GameObject>());
 			clickableObjects.put(s, new ArrayList<Clickable>());
 			hitableObjects.put(s, new ArrayList<Hitable>());
 		}
+		this.highscore = highscore;
 		this.soundManager = soundManager;
 		this.context = context;
 		this.transition = transition;
 		add(transition, GameState.MAIN);
+		add(highscore, GameState.HIGHSCORE);
 		player = new SpaceShip(sensorHandler, context);
 		playerInfo = new PlayerInfo(context, fileHandler);
 		levelHandler = new LevelHandler();
@@ -213,8 +219,8 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	public void gameLost() {
 		levelHandler.killAllEntities(this);
-		playerInfo.resetHealth();
-		playerInfo.resetLevel();
+		highscore.addNewHighscore(playerInfo.getCurrentHighscore());
+		playerInfo.reset();
 		soundManager.playExplosionSound();
 		add(new Explosion(0.45f, 0.45f, context), GameState.GAME_OVER);
 		state = GameState.GAME_OVER;
@@ -222,6 +228,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	public Starfield getStarfield() {
 		return starfield;
+	}
+
+	public Highscore getHighscore() {
+		return highscore;
 	}
 
 }

@@ -115,10 +115,11 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 			gameHandler.getSoundManager().playEnemyHitSound();
 			hpBar.setCurrentValue(hpBar.getCurrentValue() - shot.getDamage());
 			if (hpBar.getCurrentValue() <= 0) {
-				int amountCoins = (int) (Math.random() * ((shotDamage + 2.0) / 3.0))
-						+ MINIMUM_AMOUNT_COINS_DROPPED;
+				int amountCoins = (int) ((0.5 + Math.random() * 0.5)
+						* shotDamage + MINIMUM_AMOUNT_COINS_DROPPED);
 				for (int i = 0; i < amountCoins; i++)
 					Coin.addToHandler(gameHandler, this);
+				gameHandler.getPlayerInfo().addScore(shotDamage);
 				gameHandler.getSoundManager().playExplosionSound();
 				addExplosion(gameHandler);
 				gameHandler.remove(this);

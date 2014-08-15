@@ -57,9 +57,16 @@ public class PlayerInfoDisplay extends GameObject {
 			c.drawText("Level " + String.valueOf(playerInfo.getLevel()),
 					0.45f * c.getWidth() + 1, 0.055f * c.getHeight() + 1,
 					textPaint);
+			c.drawText(
+					"Score " + String.valueOf(playerInfo.getCurrentHighscore()),
+					0.45f * c.getWidth() + 1, 0.11f * c.getHeight() + 1,
+					textPaint);
 			textPaint.setColor(Color.rgb(190, 190, 220));
 			c.drawText("Level " + String.valueOf(playerInfo.getLevel()),
 					0.45f * c.getWidth(), 0.055f * c.getHeight(), textPaint);
+			c.drawText(
+					"Score " + String.valueOf(playerInfo.getCurrentHighscore()),
+					0.45f * c.getWidth(), 0.11f * c.getHeight(), textPaint);
 
 			playerInfo.getHealthPoints().draw(c);
 			float textX = (playerInfo.getHealthPoints().getX() + 0.01f)

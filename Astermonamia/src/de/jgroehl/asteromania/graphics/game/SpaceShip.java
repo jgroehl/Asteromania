@@ -116,6 +116,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	public void getShot(GameHandler gameHandler, Shot shot) {
 		if (shot.getTarget() == Target.PLAYER) {
 			gameHandler.getSoundManager().playerPlayerHitSound();
+			gameHandler.getPlayerInfo().resetScoreBonus();
 			gameHandler
 					.getPlayerInfo()
 					.getHealthPoints()

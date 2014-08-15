@@ -98,10 +98,11 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 			gameHandler.remove(shot);
 			if (life <= 0) {
 				gameHandler.remove(this);
-				int amountCoins = (int) Math.round(Math.random()
+				int amountCoins = (int) Math.round((0.5 + Math.random() * 0.5)
 						* Math.sqrt(damage)) + 1;
 				for (int i = 0; i < amountCoins; i++)
 					Coin.addToHandler(gameHandler, this);
+				gameHandler.getPlayerInfo().addScore(damage);
 			}
 		}
 	}

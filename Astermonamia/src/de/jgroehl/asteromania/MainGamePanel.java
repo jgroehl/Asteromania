@@ -17,6 +17,7 @@ import de.jgroehl.asteromania.control.Transition;
 import de.jgroehl.asteromania.crypto.CryptoHandler;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Updatable;
+import de.jgroehl.asteromania.graphics.ui.Highscore;
 import de.jgroehl.asteromania.io.FileHandler;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
@@ -35,10 +36,12 @@ public class MainGamePanel extends SurfaceView implements
 
 		super(context);
 
+		FileHandler fileHandler = new FileHandler(new CryptoHandler(
+				getContext()), getContext());
 		gameHandler = new GameHandler(GameState.MENU, new SoundManager(
-				getContext()), getContext(), new FileHandler(new CryptoHandler(
-				getContext()), getContext()), new SensorHandler(context,
-				Context.SENSOR_SERVICE), new Transition(context));
+				getContext()), getContext(), fileHandler, new SensorHandler(
+				context, Context.SENSOR_SERVICE), new Transition(context),
+				new Highscore(context, fileHandler));
 
 		getHolder().addCallback(this);
 

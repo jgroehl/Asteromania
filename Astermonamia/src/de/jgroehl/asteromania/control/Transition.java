@@ -10,7 +10,7 @@ public class Transition extends GameObject {
 		ACCELERATE, BRAKE, NOT_INITIALIZED, FINISHED
 	}
 
-	private static final float ACCELERATION_VALUE = 0.05f;
+	private static final float ACCELERATION_VALUE = 0.1f;
 
 	private static final float MAX_ACCELERATION = 10.0f;
 
