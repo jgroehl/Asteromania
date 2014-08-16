@@ -132,6 +132,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 	public void getHitByAsteroid(GameHandler gameHandler, int damage) {
 		gameHandler.getSoundManager().playerPlayerHitSound();
+		gameHandler.getPlayerInfo().resetScoreBonus();
 		gameHandler
 				.getPlayerInfo()
 				.getHealthPoints()

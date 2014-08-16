@@ -127,12 +127,14 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 			if (playerInfo.getLevel() > 0) {
 				if (!transition.isInitialized()) {
 					transition.initialize();
+					playerInfo.incerementScoreFactor();
+					playerInfo.nextLevel();
 					playerInfo.addCoins(playerInfo.getLevel());
 				}
 				if (transition.isFinished()) {
 					transition.reset();
 					addKillables(levelHandler.getLevelObjects(context,
-							playerInfo.nextLevel()));
+							playerInfo.getLevel()));
 				}
 			} else {
 				addKillables(levelHandler.getLevelObjects(context,

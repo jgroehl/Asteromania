@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import de.jgroehl.asteromania.MainActivity;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.graphics.GameObject;
 
@@ -58,14 +59,20 @@ public class PlayerInfoDisplay extends GameObject {
 					0.45f * c.getWidth() + 1, 0.055f * c.getHeight() + 1,
 					textPaint);
 			c.drawText(
-					"Score " + String.valueOf(playerInfo.getCurrentHighscore()),
+					"Score "
+							+ String.valueOf(playerInfo.getCurrentHighscore())
+							+ (MainActivity.DEBUG ? " ("
+									+ playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth() + 1, 0.11f * c.getHeight() + 1,
 					textPaint);
 			textPaint.setColor(Color.rgb(190, 190, 220));
 			c.drawText("Level " + String.valueOf(playerInfo.getLevel()),
 					0.45f * c.getWidth(), 0.055f * c.getHeight(), textPaint);
 			c.drawText(
-					"Score " + String.valueOf(playerInfo.getCurrentHighscore()),
+					"Score "
+							+ String.valueOf(playerInfo.getCurrentHighscore())
+							+ (MainActivity.DEBUG ? " ("
+									+ playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth(), 0.11f * c.getHeight(), textPaint);
 
 			playerInfo.getHealthPoints().draw(c);

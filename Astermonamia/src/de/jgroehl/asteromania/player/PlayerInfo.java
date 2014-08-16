@@ -245,9 +245,9 @@ public class PlayerInfo {
 		return healthPoints;
 	}
 
-	public void addHealthPoints(int healthPoints) {
-		this.healthPoints.setMaximum(this.healthPoints.getMaximum()
-				+ healthPoints);
+	public void addHealthPoints(int value) {
+		healthPoints.setMaximum(healthPoints.getMaximum() + value);
+		healthPoints.setCurrentValue(healthPoints.getCurrentValue() + value);
 	}
 
 	public int getLevel() {
@@ -255,7 +255,6 @@ public class PlayerInfo {
 	}
 
 	public int nextLevel() {
-		currentScoreFactor++;
 		return ++level;
 	}
 
@@ -309,5 +308,13 @@ public class PlayerInfo {
 
 	public void resetScoreBonus() {
 		currentScoreFactor = DEFAULT_SCORE_FACTOR;
+	}
+
+	public String getBonusFactor() {
+		return String.valueOf(currentScoreFactor);
+	}
+
+	public void incerementScoreFactor() {
+		currentScoreFactor++;
 	}
 }

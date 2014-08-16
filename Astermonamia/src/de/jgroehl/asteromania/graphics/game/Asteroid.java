@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import de.jgroehl.asteromania.MainActivity;
 import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
@@ -103,6 +104,9 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 				for (int i = 0; i < amountCoins; i++)
 					Coin.addToHandler(gameHandler, this);
 				gameHandler.getPlayerInfo().addScore(damage);
+				gameHandler.getSoundManager().playExplosionSound();
+				gameHandler.add(new Explosion(xPosition, yPosition, context),
+						GameState.MAIN);
 			}
 		}
 	}
