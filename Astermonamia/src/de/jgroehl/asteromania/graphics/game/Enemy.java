@@ -23,7 +23,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	private static final float LOWER_BOUND = 0.2f;
 	private static final int BASIC_NORMAL_LIFEPOINTS = 3;
 	private static final float BASIC_NORMAL_DAMAGE = 1;
-	private static final int MINIMUM_AMOUNT_COINS_DROPPED = 1;
+	private static final int MINIMUM_AMOUNT_COINS_DROPPED = 2;
 	private final float speed;
 	private final Timer shootTimer;
 
@@ -115,7 +115,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 			gameHandler.getSoundManager().playEnemyHitSound();
 			hpBar.setCurrentValue(hpBar.getCurrentValue() - shot.getDamage());
 			if (hpBar.getCurrentValue() <= 0) {
-				int amountCoins = (int) ((0.5 + Math.random() * 0.5)
+				int amountCoins = (int) ((0.25 + Math.random() * 0.5)
 						* shotDamage + MINIMUM_AMOUNT_COINS_DROPPED);
 				for (int i = 0; i < amountCoins; i++)
 					Coin.addToHandler(gameHandler, this);
@@ -131,26 +131,19 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	public static Enemy createNormalEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
 				de.jgroehl.asteromania.R.drawable.enemy, 15, 100, context,
-				(int) (BASIC_NORMAL_LIFEPOINTS * ((level + 1) / 2.0)),
+				(int) (BASIC_NORMAL_LIFEPOINTS * 2 * ((level + 1) / 2.0)),
 				BASIC_NORMAL_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
-				(int) (BASIC_NORMAL_SHOT_RATE / ((Math.cbrt(level) + 2) / 3)),
-				BASIC_NORMAL_SPEED,
+				(int) (BASIC_NORMAL_SHOT_RATE / 1.5), BASIC_NORMAL_SPEED,
 				(int) (BASIC_NORMAL_DAMAGE * Math.sqrt(level)));
 	}
 
 	public static Enemy createBossEnemy(Context context, int level) {
-		return new Enemy(
-				(float) Math.random(),
-				0.2f,
-				de.jgroehl.asteromania.R.drawable.enemy2,
-				6,
-				100,
-				context,
+		return new Enemy((float) Math.random(), 0.2f,
+				de.jgroehl.asteromania.R.drawable.enemy2, 6, 100, context,
 				(int) (BASIC_NORMAL_LIFEPOINTS * 5 * (level + 1) / 2.0),
 				BASIC_NORMAL_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
-				(int) (BASIC_NORMAL_SHOT_RATE / 2.0 / ((Math.cbrt(level) + 2) / 3)),
-				(BASIC_NORMAL_SPEED / 2), (int) (BASIC_NORMAL_DAMAGE * 3 * Math
-						.sqrt(level)));
+				(int) (BASIC_NORMAL_SHOT_RATE / 3.0), (BASIC_NORMAL_SPEED / 2),
+				(int) (BASIC_NORMAL_DAMAGE * 3 * Math.sqrt(level)));
 	}
 
 	@Override

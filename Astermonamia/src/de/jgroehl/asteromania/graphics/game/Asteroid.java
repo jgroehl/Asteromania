@@ -16,9 +16,9 @@ import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 		Killable {
 
-	private static final int BASIC_LIFE = 3;
-	private static final int BASIC_DAMAGE = 5;
-	private static final float BASIC_SPEED = 0.015f;
+	private static final int BASIC_LIFE = 4;
+	private static final int BASIC_DAMAGE = 7;
+	private static final float BASIC_SPEED = 0.01f;
 	private static final Paint textPaint = new Paint();
 
 	private int life;
@@ -103,7 +103,7 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 						* Math.sqrt(damage)) + 1;
 				for (int i = 0; i < amountCoins; i++)
 					Coin.addToHandler(gameHandler, this);
-				gameHandler.getPlayerInfo().addScore(damage);
+				gameHandler.getPlayerInfo().addScore((damage + 1) / 2);
 				gameHandler.getSoundManager().playExplosionSound();
 				gameHandler.add(new Explosion(xPosition, yPosition, context),
 						GameState.MAIN);

@@ -171,4 +171,8 @@ public class Highscore extends GameObject {
 		}
 	}
 
+	public boolean isNewHighscore(long currentHighscore) {
+		return highscores.toArray(new HighscoreElement[] {})[0].score <= currentHighscore;
+	}
+
 }

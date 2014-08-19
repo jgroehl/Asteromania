@@ -6,6 +6,7 @@ import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
+import de.jgroehl.asteromania.graphics.starfield.GameOverDisplay;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
@@ -113,11 +114,15 @@ public class GameSetup {
 
 		gameHandler.add(new PlayerInfoDisplay(gameHandler.getContext(),
 				gameHandler.getPlayerInfo(), true), GameState.SHOP2);
-		
+
 		gameHandler.add(
 				new Button("Back", 0.3f, 0.745f, 0.4f, 0.2f,
 						new MenuButtonCallback(GameState.MENU), gameHandler
 								.getContext()), GameState.GAME_OVER);
+
+		gameHandler.add(new GameOverDisplay(gameHandler.getContext(),
+				gameHandler.getPlayerInfo(), gameHandler.getHighscore()),
+				GameState.GAME_OVER);
 		gameHandler.update();
 	}
 }

@@ -45,6 +45,7 @@ public class PlayerInfo {
 	private int bonusDamage;
 	private long currentHighscore;
 	private long currentScoreFactor;
+	private long lastHighscore;
 
 	public PlayerInfo(Context context, FileHandler fileHandler) {
 		this.context = context;
@@ -293,6 +294,7 @@ public class PlayerInfo {
 
 	public void addScore(long value) {
 		currentHighscore += value * currentScoreFactor;
+		lastHighscore = currentHighscore;
 	}
 
 	public long getCurrentHighscore() {
@@ -316,5 +318,9 @@ public class PlayerInfo {
 
 	public void incerementScoreFactor() {
 		currentScoreFactor++;
+	}
+
+	public long getLastHighscore() {
+		return lastHighscore;
 	}
 }
