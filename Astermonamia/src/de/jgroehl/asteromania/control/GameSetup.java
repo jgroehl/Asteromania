@@ -10,6 +10,7 @@ import de.jgroehl.asteromania.graphics.starfield.GameOverDisplay;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
+import de.jgroehl.asteromania.graphics.ui.Highscore;
 import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.player.PlayerInfoDisplay;
 
@@ -109,6 +110,8 @@ public class GameSetup {
 				gameHandler.getContext(), gameHandler.getPlayerInfo()),
 				GameState.SHOP2);
 
+		gameHandler.update();
+
 		gameHandler.add(new PlayerInfoDisplay(gameHandler.getContext(),
 				gameHandler.getPlayerInfo(), true), GameState.SHOP);
 
@@ -124,5 +127,6 @@ public class GameSetup {
 				gameHandler.getPlayerInfo(), gameHandler.getHighscore()),
 				GameState.GAME_OVER);
 		gameHandler.update();
+
 	}
 }

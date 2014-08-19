@@ -8,6 +8,7 @@ import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
 import de.jgroehl.asteromania.player.PlayerInfo;
+import de.jgroehl.asteromania.time.Timer;
 
 public class GameOverDisplay extends GraphicsObject {
 
@@ -15,6 +16,7 @@ public class GameOverDisplay extends GraphicsObject {
 	private final Highscore highscore;
 	private Paint gameOverTextPaint;
 	private Paint scorePaint;
+	private final Timer blinkingTimer = new Timer(500);
 
 	public GameOverDisplay(Context context, PlayerInfo playerInfo,
 			Highscore highscore) {
@@ -41,7 +43,8 @@ public class GameOverDisplay extends GraphicsObject {
 				gameOverTextPaint);
 		c.drawText("Your Score: " + playerInfo.getLastHighscore(),
 				c.getWidth() * 0.2f, c.getHeight() * 0.45f, scorePaint);
-		if (highscore.isNewHighscore(playerInfo.getLastHighscore())) {
+		if (highscore.isNewHighscore(playerInfo.getLastHighscore())
+				&& blinkingTimer.isPeriodOver()) {
 			c.drawText("New Highscore!", c.getWidth() * 0.2f,
 					c.getHeight() * 0.6f, scorePaint);
 		}

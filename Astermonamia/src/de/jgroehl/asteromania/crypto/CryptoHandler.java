@@ -18,6 +18,7 @@ import android.util.Log;
 public class CryptoHandler {
 
 	private static final String TAG = CryptoHandler.class.getSimpleName();
+	private static final int CRYPTO_ERROR_CODE = -51637890;
 	private SecretKeySpec secretKeySpec;
 	private SecretKey sK;
 
@@ -40,7 +41,7 @@ public class CryptoHandler {
 				secretKeySpec = new SecretKeySpec(sK.getEncoded(), "AES");
 			} catch (Exception e) {
 				Log.e(TAG, "Fatal: Creating cryptoHandler failed.");
-				System.exit(123);
+				System.exit(CRYPTO_ERROR_CODE);
 			}
 		} catch (FileNotFoundException e) {
 			Log.w(TAG,

@@ -20,7 +20,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private static final int ANIMATION_TIME = 25;
 	private static final int IMAGE_FRAMES = 15;
 	private static final float BASIC_SHOT_SPEED = 0.01f;
-	private static final float MAX_SHIP_SPEED = 0.01f;
+	private static final float MAX_SHIP_SPEED = 0.006f;
 	private static final int BASIC_SHOT_DAMAGE = 1;
 	private int normalFrame = getMaxFrame() / 2;
 	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];

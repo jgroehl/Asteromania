@@ -3,6 +3,7 @@ package de.jgroehl.asteromania.graphics.ui;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,10 +14,12 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.Log;
 import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.GameObject;
+import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.io.FileHandler;
 
-public class Highscore extends GameObject {
+public class Highscore extends GameObject implements Clickable {
 
 	private class HighscoreElement implements Comparable<HighscoreElement> {
 
@@ -130,8 +133,8 @@ public class Highscore extends GameObject {
 	}
 
 	public void addNewHighscore(long highscore) {
-		highscores.add(new HighscoreElement(new SimpleDateFormat("dd.MM.yyyy")
-				.format(new Date()), highscore));
+		highscores.add(new HighscoreElement(new SimpleDateFormat("dd.MM.yyyy",
+				Locale.GERMANY).format(new Date()), highscore));
 		saveHighscores();
 	}
 
@@ -173,6 +176,16 @@ public class Highscore extends GameObject {
 
 	public boolean isNewHighscore(long currentHighscore) {
 		return highscores.toArray(new HighscoreElement[] {})[0].score <= currentHighscore;
+	}
+
+	@Override
+	public boolean isClicked(int x, int y, int screenWidth, int screenHeight) {
+		return true;
+	}
+
+	@Override
+	public void performAction(GameHandler gameHandler) {
+		gameHandler.setState(GameState.MAIN);
 	}
 
 }
