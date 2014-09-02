@@ -11,15 +11,18 @@ public class BuyItemCallback implements EventCallback {
 
 	public enum ItemType {
 
-		HP(1, 2), DAMAGE(1, 3), SPEED(0.1f, 1), SHOT_SPEED(0.1f, 2), SHOT_FREQUENCY(
-				0.1f, 2);
+		HP(1, 2, "Lebenspunkt"), DAMAGE(1, 3, "Schaden"), SPEED(0.1f, 1,
+				"Geschwindigkeit"), SHOT_SPEED(0.1f, 2, "Schussgeschwindigkeit"), SHOT_FREQUENCY(
+				0.1f, 2, "Schussfrequenz");
 
 		public final float increaseValue;
 		private final int baseCost;
+		private final String text;
 
-		private ItemType(float increaseValue, int baseCost) {
+		private ItemType(float increaseValue, int baseCost, String text) {
 			this.increaseValue = increaseValue;
 			this.baseCost = baseCost;
+			this.text = text;
 		}
 
 		public int getCost(PlayerInfo playerInfo) {
@@ -44,6 +47,13 @@ public class BuyItemCallback implements EventCallback {
 			default:
 				return DEFAULT_COST;
 			}
+		}
+
+		public String getText() {
+			if (increaseValue < 1)
+				return "+" + increaseValue*100 + "% " + text;
+			else
+				return "+" + increaseValue + " " + text;
 		}
 	}
 

@@ -10,7 +10,6 @@ import de.jgroehl.asteromania.graphics.starfield.GameOverDisplay;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
-import de.jgroehl.asteromania.graphics.ui.Highscore;
 import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.player.PlayerInfoDisplay;
 
@@ -79,33 +78,38 @@ public class GameSetup {
 				GameState.SHOP2);
 		gameHandler.update();
 
-		float shopButtonWidth = 0.5f;
+		float shopButtonWidth = 0.15f;
 		float shopButtonHeight = 0.2f;
 
 		gameHandler.add(
-				new BuyItemShopButton("+1 HP", 0.1f, 0.1f, shopButtonWidth,
-						shopButtonHeight, ItemType.HP,
+				new BuyItemShopButton(
+						de.jgroehl.asteromania.R.drawable.life_upgrade, 0.1f,
+						0.1f, shopButtonWidth, shopButtonHeight, ItemType.HP,
 						gameHandler.getContext(), gameHandler.getPlayerInfo()),
 				GameState.SHOP);
 
 		gameHandler.add(
-				new BuyItemShopButton("+1 DMG", 0.1f, 0.4f, shopButtonWidth,
-						shopButtonHeight, ItemType.DAMAGE, gameHandler
-								.getContext(), gameHandler.getPlayerInfo()),
-				GameState.SHOP);
+				new BuyItemShopButton(
+						de.jgroehl.asteromania.R.drawable.damage_upgrade, 0.1f,
+						0.4f, shopButtonWidth, shopButtonHeight,
+						ItemType.DAMAGE, gameHandler.getContext(), gameHandler
+								.getPlayerInfo()), GameState.SHOP);
 
 		gameHandler.add(
-				new BuyItemShopButton("10% SPD", 0.1f, 0.7f, shopButtonWidth,
-						shopButtonHeight, ItemType.SPEED, gameHandler
-								.getContext(), gameHandler.getPlayerInfo()),
-				GameState.SHOP);
+				new BuyItemShopButton(
+						de.jgroehl.asteromania.R.drawable.speed_upgrade, 0.1f,
+						0.7f, shopButtonWidth, shopButtonHeight,
+						ItemType.SPEED, gameHandler.getContext(), gameHandler
+								.getPlayerInfo()), GameState.SHOP);
 
-		gameHandler.add(new BuyItemShopButton("10% S.SPD", 0.1f, 0.1f,
-				shopButtonWidth, shopButtonHeight, ItemType.SHOT_SPEED,
+		gameHandler.add(new BuyItemShopButton(
+				de.jgroehl.asteromania.R.drawable.shotspeed_upgrade, 0.1f,
+				0.1f, shopButtonWidth, shopButtonHeight, ItemType.SHOT_SPEED,
 				gameHandler.getContext(), gameHandler.getPlayerInfo()),
 				GameState.SHOP2);
 
-		gameHandler.add(new BuyItemShopButton("10% S.FRQ", 0.1f, 0.4f,
+		gameHandler.add(new BuyItemShopButton(
+				de.jgroehl.asteromania.R.drawable.shotfreq_upgrade, 0.1f, 0.4f,
 				shopButtonWidth, shopButtonHeight, ItemType.SHOT_FREQUENCY,
 				gameHandler.getContext(), gameHandler.getPlayerInfo()),
 				GameState.SHOP2);
