@@ -349,7 +349,8 @@ int raw click 0x7f050001
 int raw coin 0x7f050002
 int raw hit 0x7f050003
 int raw hit3 0x7f050004
-int raw shoot 0x7f050005
+int raw paying 0x7f050005
+int raw shoot 0x7f050006
 int string abc_action_bar_home_description 0x7f0b0001
 int string abc_action_bar_up_description 0x7f0b0002
 int string abc_action_menu_overflow_description 0x7f0b0003

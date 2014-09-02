@@ -15,7 +15,7 @@ public class MainThread extends Thread {
 	private final SurfaceHolder surfaceHolder;
 
 	private boolean running;
-	private FpsMeter fpsMeter = new FpsMeter();
+	private final FpsMeter fpsMeter = new FpsMeter();
 
 	public MainThread(SurfaceHolder surfaceHolder, MainGamePanel gamePanel) {
 		this.gamePanel = gamePanel;

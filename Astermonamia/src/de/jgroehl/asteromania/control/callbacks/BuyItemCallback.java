@@ -58,6 +58,7 @@ public class BuyItemCallback implements EventCallback {
 		int cost = type.getCost(gameHandler.getPlayerInfo());
 		if (gameHandler.getPlayerInfo().getCoins() >= cost) {
 			gameHandler.getPlayerInfo().addCoins(-cost);
+			gameHandler.getSoundManager().playPayingSound();
 			switch (type) {
 			case HP:
 				gameHandler.getPlayerInfo().addHealthPoints(

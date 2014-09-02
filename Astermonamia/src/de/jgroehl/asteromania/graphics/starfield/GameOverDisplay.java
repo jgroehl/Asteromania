@@ -17,6 +17,7 @@ public class GameOverDisplay extends GraphicsObject {
 	private Paint gameOverTextPaint;
 	private Paint scorePaint;
 	private final Timer blinkingTimer = new Timer(500);
+	private boolean showText;
 
 	public GameOverDisplay(Context context, PlayerInfo playerInfo,
 			Highscore highscore) {
@@ -43,10 +44,13 @@ public class GameOverDisplay extends GraphicsObject {
 				gameOverTextPaint);
 		c.drawText("Your Score: " + playerInfo.getLastHighscore(),
 				c.getWidth() * 0.2f, c.getHeight() * 0.45f, scorePaint);
-		if (highscore.isNewHighscore(playerInfo.getLastHighscore())
-				&& blinkingTimer.isPeriodOver()) {
+		if (highscore.isNewHighscore(playerInfo.getLastHighscore()) && showText) {
 			c.drawText("New Highscore!", c.getWidth() * 0.2f,
 					c.getHeight() * 0.6f, scorePaint);
+		}
+
+		if (blinkingTimer.isPeriodOver()) {
+			showText = !showText;
 		}
 	}
 

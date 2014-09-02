@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "Executing onCreate of MainActivity...");
 		super.onCreate(savedInstanceState);
-		
+
 		mainGamePanel = new MainGamePanel(this);
 
 		setContentView(mainGamePanel);

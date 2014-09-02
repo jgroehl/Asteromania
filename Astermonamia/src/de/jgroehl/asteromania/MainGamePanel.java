@@ -48,6 +48,7 @@ public class MainGamePanel extends SurfaceView implements
 		thread = new MainThread(this.getHolder(), this);
 
 		setFocusable(true);
+		setDrawingCacheEnabled(true);
 
 		backgroundPaint.setStyle(Paint.Style.FILL);
 		backgroundPaint.setColor(Color.BLACK);
@@ -99,10 +100,6 @@ public class MainGamePanel extends SurfaceView implements
 	public boolean onTouchEvent(MotionEvent event) {
 		gameHandler.handleEvent(event, getContext(), getWidth(), getHeight());
 		return super.onTouchEvent(event);
-	}
-
-	@Override
-	protected void onDraw(Canvas canvas) {
 	}
 
 	public void updateGameState() {
