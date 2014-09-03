@@ -25,7 +25,7 @@ public class MainGamePanel extends SurfaceView implements
 		SurfaceHolder.Callback {
 
 	private static final String TAG = MainGamePanel.class.getSimpleName();
-	private final MainThread thread;
+	private MainThread thread;
 
 	private final Paint backgroundPaint = new Paint();
 
@@ -45,8 +45,6 @@ public class MainGamePanel extends SurfaceView implements
 
 		getHolder().addCallback(this);
 
-		thread = new MainThread(this.getHolder(), this);
-
 		setFocusable(true);
 		setDrawingCacheEnabled(true);
 
@@ -63,13 +61,19 @@ public class MainGamePanel extends SurfaceView implements
 
 	@Override
 	public void onWindowFocusChanged(boolean hasWindowFocus) {
-		Log.d(TAG, "Focus changed called");
+		Log.d(TAG, "Focus changed "
+				+ (hasWindowFocus ? "to Asteromania" : "to another program"));
 		super.onWindowFocusChanged(hasWindowFocus);
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.d(TAG, "Try starting application...");
+		if (thread == null) {
+			Log.d(TAG, "Creating new MainThread...");
+			thread = new MainThread(this.getHolder(), this);
+			Log.d(TAG, "Creating new MainThread...[Done]");
+		}
 		if (!thread.isRunning()) {
 			gameSetup.initializeGameObjects(gameHandler);
 			thread.start();
@@ -82,15 +86,22 @@ public class MainGamePanel extends SurfaceView implements
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.d(TAG, "Try stopping application...");
-		boolean retry = true;
-		while (retry) {
-			try {
-				thread.setRunning(false);
-				thread.join();
-				retry = false;
-			} catch (InterruptedException e) {
-				Log.w(TAG, "Thread was not stopped.");
+		if (!(thread == null)) {
+			boolean retry = true;
+			while (retry) {
+				try {
+					thread.setRunning(false);
+					thread.join();
+					Log.d(TAG, "Releasing MainThread...");
+					thread = null;
+					Log.d(TAG, "Releasing MainThread...[Done]");
+					retry = false;
+				} catch (InterruptedException e) {
+					Log.w(TAG, "Thread was not stopped.");
+				}
 			}
+		} else {
+			Log.d(TAG, "MainThread already released.");
 		}
 		gameHandler.getPlayerInfo().savePlayerInfo();
 		Log.d(TAG, "Try stopping application...[Done]");

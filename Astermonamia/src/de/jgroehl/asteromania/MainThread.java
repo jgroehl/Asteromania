@@ -14,7 +14,7 @@ public class MainThread extends Thread {
 	private final MainGamePanel gamePanel;
 	private final SurfaceHolder surfaceHolder;
 
-	private boolean running;
+	private static boolean running;
 	private final FpsMeter fpsMeter = new FpsMeter();
 
 	public MainThread(SurfaceHolder surfaceHolder, MainGamePanel gamePanel) {
@@ -23,7 +23,7 @@ public class MainThread extends Thread {
 	}
 
 	public void setRunning(boolean running) {
-		this.running = running;
+		MainThread.running = running;
 	}
 
 	@Override
