@@ -12,6 +12,7 @@ import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
 import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.player.PlayerInfoDisplay;
+import de.jgroehl.asteromania.player.PlayerStatsDisplay;
 
 public class GameSetup {
 
@@ -21,21 +22,26 @@ public class GameSetup {
 		gameHandler.update();
 
 		gameHandler.add(
-				new Button("Start", 0.3f, 0.07f, 0.4f, 0.2f,
+				new Button("Start", 0.25f, 0.07f, 0.5f, 0.2f,
 						new MenuButtonCallback(GameState.MAIN), gameHandler
 								.getContext()), GameState.MENU);
 		gameHandler.update();
 		gameHandler.add(
-				new Button("Score", 0.3f, 0.295f, 0.4f, 0.2f,
+				new Button("Score", 0.25f, 0.295f, 0.24f, 0.2f,
 						new MenuButtonCallback(GameState.HIGHSCORE),
 						gameHandler.getContext()), GameState.MENU);
 		gameHandler.update();
 		gameHandler.add(
-				new Button("Shop", 0.3f, 0.52f, 0.4f, 0.2f,
+				new Button("Stats", 0.51f, 0.295f, 0.24f, 0.2f,
+						new MenuButtonCallback(GameState.STATS), gameHandler
+								.getContext()), GameState.MENU);
+		gameHandler.update();
+		gameHandler.add(
+				new Button("Shop", 0.25f, 0.52f, 0.5f, 0.2f,
 						new MenuButtonCallback(GameState.SHOP), gameHandler
 								.getContext()), GameState.MENU);
 		gameHandler.update();
-		gameHandler.add(new Button("Quit", 0.3f, 0.745f, 0.4f, 0.2f,
+		gameHandler.add(new Button("Quit", 0.25f, 0.745f, 0.5f, 0.2f,
 				new EventCallback() {
 
 					@Override
@@ -130,6 +136,10 @@ public class GameSetup {
 		gameHandler.add(new GameOverDisplay(gameHandler.getContext(),
 				gameHandler.getPlayerInfo(), gameHandler.getHighscore()),
 				GameState.GAME_OVER);
+		gameHandler.update();
+
+		gameHandler.add(new PlayerStatsDisplay(gameHandler.getPlayerInfo(),
+				gameHandler.getContext()), GameState.STATS);
 		gameHandler.update();
 
 	}
