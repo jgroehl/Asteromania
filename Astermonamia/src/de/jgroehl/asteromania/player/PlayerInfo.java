@@ -31,7 +31,7 @@ public class PlayerInfo {
 	private static final float HEALTH_Y = 0.90f;
 
 	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 1000000
-			: 0;
+			: 100;
 
 	private final Context context;
 	private final FileHandler fileHandler;
