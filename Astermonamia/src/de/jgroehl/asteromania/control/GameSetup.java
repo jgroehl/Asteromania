@@ -135,12 +135,16 @@ public class GameSetup {
 		gameHandler.add(new PlayerInfoDisplay(gameHandler.getContext(),
 				gameHandler.getPlayerInfo(), true), GameState.SHOP2);
 
-		gameHandler.add(
-				new Button(gameHandler.getContext().getResources()
-						.getString(de.jgroehl.asteromania.R.string.back), 0.3f,
-						0.745f, 0.4f, 0.2f, new MenuButtonCallback(
-								GameState.MENU), gameHandler.getContext()),
-				GameState.GAME_OVER);
+		gameHandler.add(new Button(gameHandler.getContext().getResources()
+				.getString(de.jgroehl.asteromania.R.string.back), 0.3f, 0.745f,
+				0.4f, 0.2f, new EventCallback() {
+
+					@Override
+					public void action(GameHandler gameHandler) {
+						gameHandler.getPlayerInfo().resetLastHighscore();
+						gameHandler.setState(GameState.MENU);
+					}
+				}, gameHandler.getContext()), GameState.GAME_OVER);
 
 		gameHandler.add(new GameOverDisplay(gameHandler.getContext(),
 				gameHandler.getPlayerInfo(), gameHandler.getHighscore()),

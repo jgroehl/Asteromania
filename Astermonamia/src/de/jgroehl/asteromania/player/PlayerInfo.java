@@ -164,12 +164,8 @@ public class PlayerInfo {
 
 	protected void readLevel() {
 		try {
-			// The level needs to be set at $readLevel$-1, because when first
-			// started, the application will increment the level (it is loaded
-			// with NO entities and therefore will be completed, hence the
-			// level-up)
 			level = Integer.parseInt(fileHandler
-					.getDecryptedStringFromFile(LEVEL_FILE_NAME)) - 1;
+					.getDecryptedStringFromFile(LEVEL_FILE_NAME));
 			Log.d(TAG, "Set level to " + level);
 
 		} catch (NumberFormatException e) {
@@ -306,6 +302,10 @@ public class PlayerInfo {
 		level = DEFAULT_LEVEL - 1;
 		currentHighscore = DEFAULT_HIGHSCORE;
 		currentScoreFactor = DEFAULT_SCORE_FACTOR;
+	}
+
+	public void resetLastHighscore() {
+		lastHighscore = 0;
 	}
 
 	public void resetScoreBonus() {
