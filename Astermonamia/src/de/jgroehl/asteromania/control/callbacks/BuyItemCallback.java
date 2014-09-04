@@ -1,5 +1,6 @@
 package de.jgroehl.asteromania.control.callbacks;
 
+import android.content.res.Resources;
 import android.widget.Toast;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
@@ -11,18 +12,21 @@ public class BuyItemCallback implements EventCallback {
 
 	public enum ItemType {
 
-		HP(1, 2, "Lebenspunkt"), DAMAGE(1, 3, "Schaden"), SPEED(0.1f, 1,
-				"Geschwindigkeit"), SHOT_SPEED(0.1f, 2, "Schussgeschwindigkeit"), SHOT_FREQUENCY(
-				0.1f, 2, "Schussfrequenz");
+		HP(1, 2, de.jgroehl.asteromania.R.string.lifepoint), DAMAGE(1, 3,
+
+		de.jgroehl.asteromania.R.string.damage), SPEED(0.1f, 1,
+				de.jgroehl.asteromania.R.string.speed), SHOT_SPEED(0.1f, 2,
+				de.jgroehl.asteromania.R.string.shot_speed), SHOT_FREQUENCY(
+				0.1f, 2, de.jgroehl.asteromania.R.string.shot_frequency);
 
 		public final float increaseValue;
 		private final int baseCost;
-		private final String text;
+		private final int textId;
 
-		private ItemType(float increaseValue, int baseCost, String text) {
+		private ItemType(float increaseValue, int baseCost, int text) {
 			this.increaseValue = increaseValue;
 			this.baseCost = baseCost;
-			this.text = text;
+			this.textId = text;
 		}
 
 		public int getCost(PlayerInfo playerInfo) {
@@ -49,11 +53,13 @@ public class BuyItemCallback implements EventCallback {
 			}
 		}
 
-		public String getText() {
+		public String getText(Resources resources) {
 			if (increaseValue < 1)
-				return "+" + increaseValue*100 + "% " + text;
+				return "+" + (int) (increaseValue * 100) + "% "
+						+ resources.getString(textId);
 			else
-				return "+" + increaseValue + " " + text;
+				return "+" + (int) increaseValue + " "
+						+ resources.getString(textId);
 		}
 	}
 
@@ -92,7 +98,10 @@ public class BuyItemCallback implements EventCallback {
 				break;
 			}
 		} else {
-			Toast.makeText(gameHandler.getContext(), "Nicht genug Gold..",
+			Toast.makeText(
+					gameHandler.getContext(),
+					Resources.getSystem().getString(
+							de.jgroehl.asteromania.R.string.not_enough_gold),
 					Toast.LENGTH_SHORT).show();
 		}
 	}

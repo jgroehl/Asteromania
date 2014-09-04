@@ -85,7 +85,7 @@ public class Highscore extends GameObject implements Clickable {
 		if (bigTextPaint == null) {
 			bigTextPaint = new Paint();
 			bigTextPaint.setColor(Color.WHITE);
-			bigTextPaint.setTextSize(c.getHeight() * 0.26f);
+			bigTextPaint.setTextSize(c.getHeight() * 0.15f);
 		}
 		if (smallTextPaint == null) {
 			smallTextPaint = new Paint();
@@ -100,11 +100,11 @@ public class Highscore extends GameObject implements Clickable {
 		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.62f,
 				c.getWidth() * 0.9f, c.getHeight() * 0.62f, tablePaint);
 
-		c.drawText("1.", c.getWidth() * 0.11f, c.getHeight() * 0.315f,
+		c.drawText("1.", c.getWidth() * 0.11f, c.getHeight() * 0.30f,
 				bigTextPaint);
-		c.drawText("2.", c.getWidth() * 0.11f, c.getHeight() * 0.575f,
+		c.drawText("2.", c.getWidth() * 0.11f, c.getHeight() * 0.56f,
 				bigTextPaint);
-		c.drawText("3.", c.getWidth() * 0.11f, c.getHeight() * 0.835f,
+		c.drawText("3.", c.getWidth() * 0.11f, c.getHeight() * 0.82f,
 				bigTextPaint);
 
 		Iterator<HighscoreElement> iterator = highscores.iterator();

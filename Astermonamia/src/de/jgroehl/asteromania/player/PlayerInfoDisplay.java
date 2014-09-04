@@ -55,21 +55,31 @@ public class PlayerInfoDisplay extends GameObject {
 		if (!drawCoinOnly) {
 
 			textPaint.setColor(Color.rgb(40, 40, 60));
-			c.drawText("Level " + String.valueOf(playerInfo.getLevel()),
+			c.drawText(
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.level)
+							+ " " + String.valueOf(playerInfo.getLevel()),
 					0.45f * c.getWidth() + 1, 0.055f * c.getHeight() + 1,
 					textPaint);
 			c.drawText(
-					"Score "
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.score)
+							+ " "
 							+ String.valueOf(playerInfo.getCurrentHighscore())
 							+ (MainActivity.DEBUG ? " ("
 									+ playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth() + 1, 0.11f * c.getHeight() + 1,
 					textPaint);
 			textPaint.setColor(Color.rgb(190, 190, 220));
-			c.drawText("Level " + String.valueOf(playerInfo.getLevel()),
+			c.drawText(
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.level)
+							+ " " + String.valueOf(playerInfo.getLevel()),
 					0.45f * c.getWidth(), 0.055f * c.getHeight(), textPaint);
 			c.drawText(
-					"Score "
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.score)
+							+ " "
 							+ String.valueOf(playerInfo.getCurrentHighscore())
 							+ (MainActivity.DEBUG ? " ("
 									+ playerInfo.getBonusFactor() + ")" : ""),
@@ -84,13 +94,21 @@ public class PlayerInfoDisplay extends GameObject {
 			textPaint.setTextSize(playerInfo.getHealthPoints()
 					.getRelativeHeight() * 0.8f * c.getHeight());
 			textPaint.setColor(Color.BLACK);
-			c.drawText("HP: " + playerInfo.getHealthPoints().getCurrentValue()
-					+ "/" + playerInfo.getHealthPoints().getMaximum(),
+			c.drawText(
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.hp)
+							+ ": "
+							+ playerInfo.getHealthPoints().getCurrentValue()
+							+ "/" + playerInfo.getHealthPoints().getMaximum(),
 					textX + 1, textY + 1, textPaint);
 			textPaint.setColor(Color.GRAY);
-			c.drawText("HP: " + playerInfo.getHealthPoints().getCurrentValue()
-					+ "/" + playerInfo.getHealthPoints().getMaximum(), textX,
-					textY, textPaint);
+			c.drawText(
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.hp)
+							+ ": "
+							+ playerInfo.getHealthPoints().getCurrentValue()
+							+ "/" + playerInfo.getHealthPoints().getMaximum(),
+					textX, textY, textPaint);
 		}
 	}
 

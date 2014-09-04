@@ -39,24 +39,31 @@ public class PlayerStatsDisplay extends GameObject {
 			textPaint.setTextSize(c.getHeight() / 20);
 		}
 
-		c.drawText("Raumschiff-Statistik", 0.2f * c.getWidth(),
-				0.15f * c.getHeight(), headingPaint);
+		c.drawText(
+				context.getResources().getString(
+						de.jgroehl.asteromania.R.string.spaceship_statistics),
+				0.2f * c.getWidth(), 0.15f * c.getHeight(), headingPaint);
 		spaceship.draw(c);
-		c.drawText("Lebenspunkte: "
+		c.drawText(context.getResources().getString(
+				de.jgroehl.asteromania.R.string.lifepoints)+": "
 				+ playerInfo.getHealthPoints().getCurrentValue() + " / "
 				+ playerInfo.getHealthPoints().getMaximum(),
 				0.4f * c.getWidth(), 0.3f * c.getHeight(), textPaint);
-		c.drawText("Bonus-Schaden: " + playerInfo.getBonusDamage(),
+		c.drawText(context.getResources().getString(
+				de.jgroehl.asteromania.R.string.bonus_damage)+": " + playerInfo.getBonusDamage(),
 				0.4f * c.getWidth(), 0.4f * c.getHeight(), textPaint);
-		c.drawText("Geschwindigkeit: "
+		c.drawText(context.getResources().getString(
+				de.jgroehl.asteromania.R.string.speed)+": "
 				+ (int) (playerInfo.getMaxSpeedFactor() * 100) + "%",
 				0.4f * c.getWidth(), 0.5f * c.getHeight(), textPaint);
 		c.drawText(
-				"Schussgeshwindigkeit: "
+				context.getResources().getString(
+						de.jgroehl.asteromania.R.string.shot_speed)+": "
 						+ (int) (playerInfo.getShotSpeedFactor() * 100) + "%",
 				0.4f * c.getWidth(), 0.6f * c.getHeight(), textPaint);
 		c.drawText(
-				"Schussfrequenz: "
+				context.getResources().getString(
+						de.jgroehl.asteromania.R.string.shot_frequency)+": "
 						+ (int) (playerInfo.getShotFrequencyFactor() * 100)
 						+ "%", 0.4f * c.getWidth(), 0.7f * c.getHeight(),
 				textPaint);

@@ -126,12 +126,16 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 		super.draw(c);
 		if (MainActivity.DEBUG) {
 			c.drawText(
-					"HP:" + life,
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.hp)
+							+ ": " + life,
 					getX() * c.getWidth(),
 					(getY() + getRelativeHeight()) * c.getHeight()
 							+ textPaint.getTextSize(), textPaint);
 			c.drawText(
-					"DMG: " + damage,
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.dmg)
+							+ ": " + damage,
 					getX() * c.getWidth(),
 					(getY() + getRelativeHeight()) * c.getHeight()
 							+ textPaint.getTextSize() * 2, textPaint);

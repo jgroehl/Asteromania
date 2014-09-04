@@ -44,11 +44,16 @@ public class BuyItemShopButton extends Button {
 			textPaint.setColor(Color.rgb(200, 200, 50));
 			textPaint.setTextSize(relativeHeight / 3 * c.getHeight());
 		}
-		c.drawText(itemType.getText(),
+		c.drawText(itemType.getText(context.getResources()),
 				(xPosition + relativeWidth * 1.05f) * c.getWidth(),
 				(yPosition + (relativeHeight * 1.5f / 5)) * c.getHeight(),
 				textPaint);
-		c.drawText("(" + itemType.getCost(playerInfo) + " coins)",
+		c.drawText(
+				"("
+						+ itemType.getCost(playerInfo)
+						+ " "
+						+ context.getResources().getString(
+								de.jgroehl.asteromania.R.string.coins) + ")",
 				(xPosition + relativeWidth * 1.05f) * c.getWidth(),
 				(yPosition + (relativeHeight * 3.5f / 5)) * c.getHeight(),
 				textPaint);

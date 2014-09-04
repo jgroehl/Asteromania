@@ -1274,9 +1274,31 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
-        public static final int action_settings=0x7f0b000f;
+        public static final int action_settings=0x7f0b000e;
         public static final int app_name=0x7f0b000d;
-        public static final int hello_world=0x7f0b000e;
+        public static final int back=0x7f0b001d;
+        public static final int bonus_damage=0x7f0b0014;
+        public static final int coin=0x7f0b000f;
+        public static final int coins=0x7f0b0010;
+        public static final int damage=0x7f0b001e;
+        public static final int dmg=0x7f0b0021;
+        public static final int game_over=0x7f0b0022;
+        public static final int hp=0x7f0b0020;
+        public static final int level=0x7f0b0025;
+        public static final int lifepoint=0x7f0b0013;
+        public static final int lifepoints=0x7f0b0012;
+        public static final int new_highscore=0x7f0b0024;
+        public static final int not_enough_gold=0x7f0b001f;
+        public static final int quit=0x7f0b001c;
+        public static final int score=0x7f0b0019;
+        public static final int shop=0x7f0b001b;
+        public static final int shot_frequency=0x7f0b0017;
+        public static final int shot_speed=0x7f0b0016;
+        public static final int spaceship_statistics=0x7f0b0011;
+        public static final int speed=0x7f0b0015;
+        public static final int start=0x7f0b0018;
+        public static final int statistics=0x7f0b001a;
+        public static final int your_score=0x7f0b0023;
     }
     public static final class style {
         /** 

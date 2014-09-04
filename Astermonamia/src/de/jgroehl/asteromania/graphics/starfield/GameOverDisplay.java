@@ -40,13 +40,21 @@ public class GameOverDisplay extends GraphicsObject {
 			scorePaint.setTextSize(c.getHeight() * 0.05f);
 		}
 
-		c.drawText("Game Over", c.getWidth() * 0.2f, c.getHeight() * 0.3f,
-				gameOverTextPaint);
-		c.drawText("Your Score: " + playerInfo.getLastHighscore(),
+		c.drawText(
+				context.getResources().getString(
+						de.jgroehl.asteromania.R.string.game_over),
+				c.getWidth() * 0.2f, c.getHeight() * 0.3f, gameOverTextPaint);
+		c.drawText(
+				context.getResources().getString(
+						de.jgroehl.asteromania.R.string.your_score)
+						+ ": " + playerInfo.getLastHighscore(),
 				c.getWidth() * 0.2f, c.getHeight() * 0.45f, scorePaint);
 		if (highscore.isNewHighscore(playerInfo.getLastHighscore()) && showText) {
-			c.drawText("New Highscore!", c.getWidth() * 0.2f,
-					c.getHeight() * 0.6f, scorePaint);
+			c.drawText(
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.new_highscore)
+							+ "!", c.getWidth() * 0.2f, c.getHeight() * 0.6f,
+					scorePaint);
 		}
 
 		if (blinkingTimer.isPeriodOver()) {
@@ -56,7 +64,7 @@ public class GameOverDisplay extends GraphicsObject {
 
 	@Override
 	public void update(GameHandler gameHandler) {
-		// TODO Auto-generated method stub
+		// Nothing to do here
 
 	}
 

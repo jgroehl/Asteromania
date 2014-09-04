@@ -102,7 +102,9 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 					(getY() + getRelativeHeight()) * c.getHeight()
 							+ textPaint.getTextSize(), textPaint);
 			c.drawText(
-					"DMG: " + shotDamage,
+					context.getResources().getString(
+							de.jgroehl.asteromania.R.string.dmg)
+							+ ": " + shotDamage,
 					getX() * c.getWidth(),
 					(getY() + getRelativeHeight()) * c.getHeight()
 							+ textPaint.getTextSize() * 2, textPaint);
