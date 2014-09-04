@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Asteromania</string>
+    <string name="action_settings">Settings</string>
+    <string name="coin">Coin</string>
+    <string name="coins">Coins</string>
+    <string name="spaceship_statistics">Spaceship-Statistics</string>
+    <string name="lifepoints">Lifepoints</string>
+    <string name="lifepoint">Lifepoint</string>
+    <string name="bonus_damage">Bonus-Damage</string>
+    <string name="speed">Speed</string>
+    <string name="shot_speed">Shot Speed</string>
+    <string name="shot_frequency">Shot Frequency</string>
+    <string name="start">Start</string>
+    <string name="score">Score</string>
+    <string name="statistics">Stats</string>
+    <string name="shop">Shop</string>
+    <string name="quit">Quit</string>
+    <string name="back">Back</string>
+    <string name="damage">Damage</string>
+    <string name="not_enough_gold">Not enough coins.</string>
+    <string name="hp">HP</string>
+    <string name="dmg">DMG</string>
+    <string name="game_over">Game Over</string>
+    <string name="your_score">Your Score</string>
+    <string name="new_highscore">New Highscore</string>
+    <string name="level">Level</string>
+
+</resources>
