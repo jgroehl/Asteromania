@@ -100,8 +100,11 @@ public class BuyItemCallback implements EventCallback {
 		} else {
 			Toast.makeText(
 					gameHandler.getContext(),
-					Resources.getSystem().getString(
-							de.jgroehl.asteromania.R.string.not_enough_gold),
+					gameHandler
+							.getContext()
+							.getResources()
+							.getString(
+									de.jgroehl.asteromania.R.string.not_enough_gold),
 					Toast.LENGTH_SHORT).show();
 		}
 	}

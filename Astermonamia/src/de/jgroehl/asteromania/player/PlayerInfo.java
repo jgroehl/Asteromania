@@ -323,4 +323,8 @@ public class PlayerInfo {
 	public long getLastHighscore() {
 		return lastHighscore;
 	}
+
+	public boolean isMissingHealth() {
+		return healthPoints.getCurrentValue() < healthPoints.getMaximum();
+	}
 }

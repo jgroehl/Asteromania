@@ -60,13 +60,19 @@ public class StatusBar extends GraphicsObject {
 		this.maximum = maximum;
 	}
 
+	/**
+	 * Sets the current value.
+	 * 
+	 * @param currentValue
+	 *            must be 0 <= currentValue <= maximum else currentValue will be
+	 *            set to 0 or maximum
+	 */
 	public void setCurrentValue(int currentValue) {
-		this.currentValue = currentValue;
-
 		if (currentValue > maximum)
-			maximum = currentValue;
+			currentValue = maximum;
 		if (currentValue < 0)
 			currentValue = 0;
+		this.currentValue = currentValue;
 	}
 
 	public int getCurrentValue() {

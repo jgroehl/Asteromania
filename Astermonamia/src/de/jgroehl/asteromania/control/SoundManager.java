@@ -8,7 +8,7 @@ public class SoundManager {
 
 	private final SoundPool soundPool = new SoundPool(5,
 			AudioManager.STREAM_MUSIC, 100);
-	private static final int NUMBER_OF_SOUNDS = 7;
+	private static final int NUMBER_OF_SOUNDS = 8;
 	private static final double NUMBER_OF_HIT_SOUNDS = 3;
 	private static final int CLICK_ID = 0;
 	private static final int SHOT_ID = 1;
@@ -17,6 +17,7 @@ public class SoundManager {
 	private static final int HIT2_ID = 4;
 	private static final int EXPLOSION_ID = 5;
 	private static final int PAYING_ID = 6;
+	private static final int HEALTH_POWER_UP_ID = 7;
 	private final int[] sounds;
 
 	public SoundManager(Context context) {
@@ -36,6 +37,8 @@ public class SoundManager {
 				de.jgroehl.asteromania.R.raw.boom, 100);
 		sounds[PAYING_ID] = soundPool.load(context,
 				de.jgroehl.asteromania.R.raw.paying, 100);
+		sounds[HEALTH_POWER_UP_ID] = soundPool.load(context,
+				de.jgroehl.asteromania.R.raw.power_up, 100);
 	}
 
 	public void playClickSound() {
@@ -96,6 +99,10 @@ public class SoundManager {
 
 	public void playPayingSound() {
 		playSound(PAYING_ID);
+	}
+
+	public void playHealthPowerUpSound() {
+		playSound(HEALTH_POWER_UP_ID, 1.0f, 0.75f);
 	}
 
 }
