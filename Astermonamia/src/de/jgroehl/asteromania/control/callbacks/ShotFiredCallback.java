@@ -10,7 +10,7 @@ import de.jgroehl.asteromania.time.Timer;
 
 public class ShotFiredCallback implements EventCallback {
 
-	private final int BASIC_SHOOT_FREQUENCY = 500;
+	public static final int BASIC_SHOOT_FREQUENCY = 500;
 	private final Timer shotFrequencyTimer = new Timer(BASIC_SHOOT_FREQUENCY);
 
 	@Override

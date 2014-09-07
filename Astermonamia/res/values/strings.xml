@@ -26,5 +26,6 @@
     <string name="your_score">Deine Punktzahl</string>
     <string name="new_highscore">Neuer Highscore</string>
     <string name="level">Level</string>
+    <string name="dps">Schaden pro Sekunde</string>
 
 </resources>

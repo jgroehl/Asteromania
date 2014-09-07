@@ -1285,6 +1285,7 @@ containing a value of this type.
         public static final int coins=0x7f0b0010;
         public static final int damage=0x7f0b001e;
         public static final int dmg=0x7f0b0021;
+        public static final int dps=0x7f0b0026;
         public static final int game_over=0x7f0b0022;
         public static final int hp=0x7f0b0020;
         public static final int level=0x7f0b0025;

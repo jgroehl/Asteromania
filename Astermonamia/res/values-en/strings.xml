@@ -26,5 +26,6 @@
     <string name="your_score">Your Score</string>
     <string name="new_highscore">New Highscore</string>
     <string name="level">Level</string>
+    <string name="dps">Damage per second</string>
 
 </resources>

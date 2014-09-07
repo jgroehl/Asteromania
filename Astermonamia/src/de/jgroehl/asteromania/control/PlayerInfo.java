@@ -1,4 +1,7 @@
-package de.jgroehl.asteromania.graphics.game.player;
+package de.jgroehl.asteromania.control;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +10,10 @@ import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
 import de.jgroehl.asteromania.io.FileHandler;
 
 public class PlayerInfo {
+
+	private enum Purchase {
+		SHIELD_GENERATOR
+	}
 
 	private static final String TAG = PlayerInfo.class.getSimpleName();
 
@@ -17,6 +24,7 @@ public class PlayerInfo {
 	private static final String HIGHSCORE_FILE_NAME = "currentHighscore";
 	private static final String SCORE_FACTOR_FILE_NAME = "currentScoreFactor";
 	private static final String SHIELD_FILE_NAME = "shieldStats";
+	private static final String PURCHASES_FILE_NAME = "purchases";
 	private static final String SPLIT_CHARACTER = "&";
 
 	private static final int DEFAULT_HEALTH = 3;
@@ -48,6 +56,7 @@ public class PlayerInfo {
 	private long currentScoreFactor;
 	private long lastHighscore;
 	private int shieldSeconds;
+	private final List<Purchase> purchaseList = new ArrayList<Purchase>();
 
 	public PlayerInfo(Context context, FileHandler fileHandler) {
 		this.context = context;
@@ -64,7 +73,42 @@ public class PlayerInfo {
 		readCurrentHighscore();
 		readCurrentScoreFactor();
 		readShieldState();
+		readPurchases();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void readPurchases() {
+		String[] purchases = fileHandler.getDecryptedStringFromFile(
+				PURCHASES_FILE_NAME).split(SPLIT_CHARACTER);
+
+		boolean error = purchases == null ? true : false;
+		for (String s : purchases) {
+			if (error)
+				break;
+			try {
+				Purchase p = Purchase.valueOf(s);
+				if (p == null) {
+					error = true;
+				} else {
+					purchaseList.add(p);
+					Log.d(TAG, "Added " + p + " to purchases.");
+				}
+			} catch (IllegalArgumentException e) {
+				error = true;
+			}
+		}
+
+		if (error) {
+			Log.d(TAG,
+					"Error retrieving purchase files. Try contacting Google Play Services to get Purchases.");
+			purchaseList.clear();
+			// FIXME: Remove
+			purchaseList.add(Purchase.SHIELD_GENERATOR);
+			// TODO: Contact Google Play Services to check for already purchased
+			// items
+		} else {
+			Log.d(TAG, "Reading purchases sucessful.");
+		}
 	}
 
 	private void readShieldState() {
@@ -244,6 +288,14 @@ public class PlayerInfo {
 				String.valueOf(currentScoreFactor));
 		fileHandler.writeAndEncryptString(SHIELD_FILE_NAME,
 				String.valueOf(shieldSeconds));
+		if (purchaseList.size() > 0) {
+			String purchases = "";
+			for (int i = 0; i < purchaseList.size() - 1; i++) {
+				purchases += purchaseList.get(i) + SPLIT_CHARACTER;
+			}
+			purchases += purchaseList.get(purchaseList.size() - 1);
+			fileHandler.writeAndEncryptString(PURCHASES_FILE_NAME, purchases);
+		}
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -355,7 +407,6 @@ public class PlayerInfo {
 	}
 
 	public boolean isShieldGeneratorPresent() {
-		// TODO Auto-generated method stub
-		return true;
+		return purchaseList.contains(Purchase.SHIELD_GENERATOR);
 	}
 }

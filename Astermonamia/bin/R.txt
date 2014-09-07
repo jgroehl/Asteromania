@@ -381,6 +381,7 @@ int string coin 0x7f0b000f
 int string coins 0x7f0b0010
 int string damage 0x7f0b001e
 int string dmg 0x7f0b0021
+int string dps 0x7f0b0026
 int string game_over 0x7f0b0022
 int string hp 0x7f0b0020
 int string level 0x7f0b0025

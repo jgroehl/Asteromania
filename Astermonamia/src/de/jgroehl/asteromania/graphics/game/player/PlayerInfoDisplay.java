@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import de.jgroehl.asteromania.MainActivity;
 import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.PlayerInfo;
 import de.jgroehl.asteromania.graphics.GameObject;
 
 public class PlayerInfoDisplay extends GameObject {

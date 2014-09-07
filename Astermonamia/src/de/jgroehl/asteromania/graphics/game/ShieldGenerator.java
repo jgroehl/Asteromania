@@ -6,8 +6,8 @@ import android.util.Log;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameState;
+import de.jgroehl.asteromania.control.PlayerInfo;
 import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
-import de.jgroehl.asteromania.graphics.game.player.PlayerInfo;
 import de.jgroehl.asteromania.time.Timer;
 
 public class ShieldGenerator extends SimpleAnimatedObject {

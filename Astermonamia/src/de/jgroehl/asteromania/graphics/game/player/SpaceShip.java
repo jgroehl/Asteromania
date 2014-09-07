@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.PlayerInfo;
 import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
 import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
 import de.jgroehl.asteromania.graphics.game.ShieldGenerator;
@@ -23,7 +24,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private static final int IMAGE_FRAMES = 15;
 	private static final float BASIC_SHOT_SPEED = 0.01f;
 	private static final float MAX_SHIP_SPEED = 0.006f;
-	private static final int BASIC_SHOT_DAMAGE = 1;
+	public static final int BASIC_SHOT_DAMAGE = 1;
 	private int normalFrame = getMaxFrame() / 2;
 	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];
 	private final ShieldGenerator shield;
