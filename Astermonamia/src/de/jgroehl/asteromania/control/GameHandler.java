@@ -27,6 +27,8 @@ import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
 public class GameHandler implements GraphicsHandler, EventHandler {
 
+	private static final int NEW_LEVEL_SHIELD_SECONDS = 4;
+
 	private final Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
 
 	private final Map<GameState, List<Clickable>> clickableObjects = new HashMap<GameState, List<Clickable>>();
@@ -128,13 +130,14 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 				if (!transition.isInitialized()) {
 					transition.initialize();
 					playerInfo.incerementScoreFactor();
-					playerInfo.nextLevel();
 					playerInfo.addCoins(playerInfo.getLevel());
+					playerInfo.nextLevel();
 				}
 				if (transition.isFinished()) {
 					transition.reset();
 					addKillables(levelHandler.getLevelObjects(context,
 							playerInfo.getLevel()));
+					player.addShieldSeconds(NEW_LEVEL_SHIELD_SECONDS);
 				}
 			} else {
 				addKillables(levelHandler.getLevelObjects(context,

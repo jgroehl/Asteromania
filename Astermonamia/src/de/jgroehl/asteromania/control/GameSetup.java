@@ -95,11 +95,10 @@ public class GameSetup {
 		float shopButtonHeight = 0.2f;
 
 		gameHandler.add(
-				new BuyItemShopButton(
-						de.jgroehl.asteromania.R.drawable.life_upgrade, 0.1f,
-						0.1f, shopButtonWidth, shopButtonHeight, ItemType.HP,
-						gameHandler.getContext(), gameHandler.getPlayerInfo()),
-				GameState.SHOP);
+				new BuyItemShopButton(de.jgroehl.asteromania.R.drawable.life_upgrade,
+						0.1f, 0.1f, shopButtonWidth, shopButtonHeight,
+						ItemType.HP, gameHandler.getContext(), gameHandler
+								.getPlayerInfo()), GameState.SHOP);
 
 		gameHandler.add(
 				new BuyItemShopButton(

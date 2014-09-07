@@ -16,7 +16,7 @@ import de.jgroehl.asteromania.time.Timer;
 
 public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
-	private static final double HEALTH_DROP_CHANCE = 1.0;
+	private static final double HEALTH_DROP_CHANCE = 0.5;
 	private static final float BASIC_NORMAL_SPEED = 0.01f;
 	private static final int BASIC_NORMAL_SHOT_RATE = 2000;
 	private static final float BASIC_NORMAL_SHOT_SPEED = 0.02f;
@@ -124,7 +124,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 					Coin.addToHandler(gameHandler, this);
 				if (gameHandler.getPlayerInfo().isMissingHealth()
 						&& Math.random() < HEALTH_DROP_CHANCE) {
-					Heart.addToHandler(shotDamage / 4, gameHandler, this);
+					Heart.addToHandler(shotDamage / 2, gameHandler, this);
 				}
 				gameHandler.getPlayerInfo().addScore(shotDamage);
 				gameHandler.getSoundManager().playExplosionSound();

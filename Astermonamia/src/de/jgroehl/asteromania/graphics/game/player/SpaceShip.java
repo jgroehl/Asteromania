@@ -171,4 +171,8 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		return BASIC_SHOT_DAMAGE;
 	}
 
+	public void addShieldSeconds(int newLevelShieldSeconds) {
+		shield.addShieldSeconds(newLevelShieldSeconds);
+	}
+
 }

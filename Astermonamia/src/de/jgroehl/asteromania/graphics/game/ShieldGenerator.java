@@ -41,14 +41,13 @@ public class ShieldGenerator extends SimpleAnimatedObject {
 	public void update(GameHandler gameHandler) {
 		super.update(gameHandler);
 
-		if (state == ShieldState.ACTIVE
-				&& gameHandler.getGameState() == GameState.MAIN
+		if (isActive() && gameHandler.getGameState() == GameState.MAIN
 				&& playerInfo.getShieldSeconds() > 0
 				&& secondTimer.isPeriodOver()) {
 			playerInfo.setShieldSeconds(playerInfo.getShieldSeconds() - 1);
 		}
 
-		if (state == ShieldState.ACTIVE && playerInfo.getShieldSeconds() <= 0)
+		if (isActive() && playerInfo.getShieldSeconds() <= 0)
 			state = ShieldState.INACTIVE;
 	}
 
@@ -74,18 +73,22 @@ public class ShieldGenerator extends SimpleAnimatedObject {
 	}
 
 	public void majorHit() {
-		if (state == ShieldState.ACTIVE || state == ShieldState.DAMAGED) {
+		if (isActive()) {
 			playerInfo.setShieldSeconds(0);
 			state = ShieldState.INACTIVE;
 		}
 	}
 
 	public void addShieldSeconds(int seconds) {
-		if (seconds < 0)
-			throw new IllegalArgumentException(
-					"Added shield seconds must be positive");
-		state = ShieldState.ACTIVE;
-		playerInfo.setShieldSeconds(playerInfo.getShieldSeconds() + seconds);
+		if (state != ShieldState.UNAVAILABLE) {
+			if (seconds < 0)
+				throw new IllegalArgumentException(
+						"Added shield seconds must be positive");
+			state = ShieldState.ACTIVE;
+			playerInfo
+					.setShieldSeconds(playerInfo.getShieldSeconds() + seconds);
+			Log.d(TAG, "Added " + seconds + " seconds to the shield");
+		}
 	}
 
 	public boolean isActive() {
