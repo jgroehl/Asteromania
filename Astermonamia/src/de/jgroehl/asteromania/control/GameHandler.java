@@ -12,7 +12,9 @@ import de.jgroehl.asteromania.control.interfaces.GraphicsHandler;
 import de.jgroehl.asteromania.graphics.GameObject;
 import de.jgroehl.asteromania.graphics.GameObject.Level;
 import de.jgroehl.asteromania.graphics.game.Explosion;
-import de.jgroehl.asteromania.graphics.game.SpaceShip;
+import de.jgroehl.asteromania.graphics.game.player.PlayerInfo;
+import de.jgroehl.asteromania.graphics.game.player.PlayerInfoDisplay;
+import de.jgroehl.asteromania.graphics.game.player.SpaceShip;
 import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
@@ -21,8 +23,6 @@ import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
 import de.jgroehl.asteromania.io.FileHandler;
-import de.jgroehl.asteromania.player.PlayerInfo;
-import de.jgroehl.asteromania.player.PlayerInfoDisplay;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
 public class GameHandler implements GraphicsHandler, EventHandler {
@@ -73,8 +73,8 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		this.transition = transition;
 		add(transition, GameState.MAIN);
 		add(highscore, GameState.HIGHSCORE);
-		player = new SpaceShip(sensorHandler, context);
 		playerInfo = new PlayerInfo(context, fileHandler);
+		player = new SpaceShip(sensorHandler, context, playerInfo);
 		levelHandler = new LevelHandler();
 		playerInfoDisplay = new PlayerInfoDisplay(context, playerInfo, false);
 	}

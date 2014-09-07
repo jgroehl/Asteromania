@@ -10,6 +10,12 @@ public class Timer {
 		time = System.currentTimeMillis();
 	}
 
+	/**
+	 * Checks if the specified time has elapsed and resets the counter if it
+	 * did.
+	 * 
+	 * @return true if the time period elapsed since last reset.
+	 */
 	public boolean isPeriodOver() {
 		if (System.currentTimeMillis() - time > period) {
 			time = System.currentTimeMillis();

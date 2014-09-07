@@ -35,7 +35,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		Log.d(TAG, "Destroying Application...");
-		mainGamePanel.getGameHandler().getPlayerInfo().savePlayerInfo();
 		super.onDestroy();
 	}
 

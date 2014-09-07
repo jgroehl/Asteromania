@@ -185,7 +185,7 @@ public class Highscore extends GameObject implements Clickable {
 
 	@Override
 	public void performAction(GameHandler gameHandler) {
-		gameHandler.setState(GameState.MAIN);
+		gameHandler.setState(GameState.MENU);
 	}
 
 }

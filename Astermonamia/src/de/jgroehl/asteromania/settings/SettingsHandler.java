@@ -46,7 +46,7 @@ public class SettingsHandler {
 		this.playSounds = playSounds;
 	}
 
-	public boolean isPlaySounds() {
+	public boolean playSounds() {
 		return playSounds;
 	}
 

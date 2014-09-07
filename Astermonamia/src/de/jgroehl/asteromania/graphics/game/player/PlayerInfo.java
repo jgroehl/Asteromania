@@ -1,4 +1,4 @@
-package de.jgroehl.asteromania.player;
+package de.jgroehl.asteromania.graphics.game.player;
 
 import android.content.Context;
 import android.util.Log;
@@ -16,22 +16,23 @@ public class PlayerInfo {
 	private static final String STATS_FILE_NAME = "stats";
 	private static final String HIGHSCORE_FILE_NAME = "currentHighscore";
 	private static final String SCORE_FACTOR_FILE_NAME = "currentScoreFactor";
+	private static final String SHIELD_FILE_NAME = "shieldStats";
 	private static final String SPLIT_CHARACTER = "&";
 
 	private static final int DEFAULT_HEALTH = 3;
 	private static final int DEFAULT_LEVEL = 1;
 	private static final float DEFAULT_STAT_FACTOR = 1.0f;
 	private static final int DEFAULT_BONUS_DAMAGE = 0;
+	private static final int DEFAULT_SHIELD_SECONDS = 0;
 	private static final long DEFAULT_HIGHSCORE = 0;
 	private static final long DEFAULT_SCORE_FACTOR = 1;
+	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 1000000
+			: 100;
 
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
 	private static final float HEALTH_X = 0.025f;
 	private static final float HEALTH_Y = 0.90f;
-
-	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 1000000
-			: 100;
 
 	private final Context context;
 	private final FileHandler fileHandler;
@@ -46,6 +47,7 @@ public class PlayerInfo {
 	private long currentHighscore;
 	private long currentScoreFactor;
 	private long lastHighscore;
+	private int shieldSeconds;
 
 	public PlayerInfo(Context context, FileHandler fileHandler) {
 		this.context = context;
@@ -61,7 +63,21 @@ public class PlayerInfo {
 		readStats();
 		readCurrentHighscore();
 		readCurrentScoreFactor();
+		readShieldState();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void readShieldState() {
+		try {
+			shieldSeconds = Integer.parseInt(fileHandler
+					.getDecryptedStringFromFile(SHIELD_FILE_NAME));
+			Log.d(TAG, "Set current shieldSeconds to " + shieldSeconds);
+
+		} catch (NumberFormatException e) {
+			Log.w(TAG, "shieldSeconds not readable. Setting shieldSeconds to "
+					+ DEFAULT_SHIELD_SECONDS);
+			shieldSeconds = DEFAULT_SHIELD_SECONDS;
+		}
 	}
 
 	private void readCurrentScoreFactor() {
@@ -226,6 +242,8 @@ public class PlayerInfo {
 				String.valueOf(currentHighscore));
 		fileHandler.writeAndEncryptString(SCORE_FACTOR_FILE_NAME,
 				String.valueOf(currentScoreFactor));
+		fileHandler.writeAndEncryptString(SHIELD_FILE_NAME,
+				String.valueOf(shieldSeconds));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -326,5 +344,18 @@ public class PlayerInfo {
 
 	public boolean isMissingHealth() {
 		return healthPoints.getCurrentValue() < healthPoints.getMaximum();
+	}
+
+	public int getShieldSeconds() {
+		return shieldSeconds;
+	}
+
+	public void setShieldSeconds(int shieldSeconds) {
+		this.shieldSeconds = shieldSeconds;
+	}
+
+	public boolean isShieldGeneratorPresent() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }

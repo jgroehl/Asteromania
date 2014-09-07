@@ -1,4 +1,4 @@
-package de.jgroehl.asteromania.graphics.game;
+package de.jgroehl.asteromania.graphics.game.player;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +7,8 @@ import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
 import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
+import de.jgroehl.asteromania.graphics.game.ShieldGenerator;
+import de.jgroehl.asteromania.graphics.game.Shot;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
@@ -24,8 +26,10 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private static final int BASIC_SHOT_DAMAGE = 1;
 	private int normalFrame = getMaxFrame() / 2;
 	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];
+	private final ShieldGenerator shield;
 
-	public SpaceShip(SensorHandler sensorHandler, Context context) {
+	public SpaceShip(SensorHandler sensorHandler, Context context,
+			PlayerInfo playerInfo) {
 		super(0.6f, 0.7f, R.drawable.spaceship2, IMAGE_FRAMES, ANIMATION_TIME,
 				context);
 		this.sensorHandler = sensorHandler;
@@ -33,6 +37,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 				R.drawable.fire, 6, 75, context);
 		flames[1] = new SimpleAnimatedObject(xPosition, yPosition,
 				R.drawable.fire, 6, 75, context);
+		shield = new ShieldGenerator(xPosition, xPosition, context, playerInfo);
 		Log.d(TAG, "Player Object created.");
 	}
 
@@ -55,6 +60,12 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 				- flames[1].getRelativeWidth() / 2, yPosition
 				+ getRelativeHeight() - flames[1].getRelativeHeight() / 5);
 		flames[1].update(handler);
+		shield.setPosition(
+				xPosition + getRelativeWidth() / 2 - shield.getRelativeWidth()
+						/ 2,
+				yPosition + getRelativeHeight() / 2
+						- shield.getRelativeHeight() / 2);
+		shield.update(handler);
 
 	}
 
@@ -63,6 +74,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		super.draw(c);
 		flames[0].draw(c);
 		flames[1].draw(c);
+		shield.draw(c);
 	};
 
 	private void normalizePlayerFrame() {
@@ -115,7 +127,33 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	@Override
 	public void getShot(GameHandler gameHandler, Shot shot) {
 		if (shot.getTarget() == Target.PLAYER) {
-			gameHandler.getSoundManager().playerPlayerHitSound();
+			if (shield.isActive()) {
+				gameHandler.getSoundManager().playShieldHitSound();
+				shield.minorHit();
+			} else {
+				gameHandler.getSoundManager().playPlayerHitSound();
+				gameHandler.getPlayerInfo().resetScoreBonus();
+				gameHandler
+						.getPlayerInfo()
+						.getHealthPoints()
+						.setCurrentValue(
+								gameHandler.getPlayerInfo().getHealthPoints()
+										.getCurrentValue()
+										- shot.getDamage());
+				if (gameHandler.getPlayerInfo().getHealthPoints()
+						.getCurrentValue() <= 0)
+					gameHandler.gameLost();
+			}
+			gameHandler.remove(shot);
+		}
+	}
+
+	public void getHitByAsteroid(GameHandler gameHandler, int damage) {
+		if (shield.isActive()) {
+			gameHandler.getSoundManager().playShieldHitSound();
+			shield.majorHit();
+		} else {
+			gameHandler.getSoundManager().playPlayerHitSound();
 			gameHandler.getPlayerInfo().resetScoreBonus();
 			gameHandler
 					.getPlayerInfo()
@@ -123,25 +161,10 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 					.setCurrentValue(
 							gameHandler.getPlayerInfo().getHealthPoints()
 									.getCurrentValue()
-									- shot.getDamage());
+									- damage);
 			if (gameHandler.getPlayerInfo().getHealthPoints().getCurrentValue() <= 0)
 				gameHandler.gameLost();
-			gameHandler.remove(shot);
 		}
-	}
-
-	public void getHitByAsteroid(GameHandler gameHandler, int damage) {
-		gameHandler.getSoundManager().playerPlayerHitSound();
-		gameHandler.getPlayerInfo().resetScoreBonus();
-		gameHandler
-				.getPlayerInfo()
-				.getHealthPoints()
-				.setCurrentValue(
-						gameHandler.getPlayerInfo().getHealthPoints()
-								.getCurrentValue()
-								- damage);
-		if (gameHandler.getPlayerInfo().getHealthPoints().getCurrentValue() <= 0)
-			gameHandler.gameLost();
 	}
 
 	public int getShotDamage() {

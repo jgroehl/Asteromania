@@ -26,10 +26,10 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 	private float speed;
 
 	public enum AsteroidType {
-		SMALL(0.5f, de.jgroehl.asteromania.R.drawable.rock3), MEDIUM(0.67f,
-				de.jgroehl.asteromania.R.drawable.rock5), LARGE(1f,
-				de.jgroehl.asteromania.R.drawable.rock4), HUGE(1.5f,
-				de.jgroehl.asteromania.R.drawable.rock2), EXTREME(2f,
+		SMALL(0.4f, de.jgroehl.asteromania.R.drawable.rock3), MEDIUM(0.8f,
+				de.jgroehl.asteromania.R.drawable.rock5), LARGE(1.2f,
+				de.jgroehl.asteromania.R.drawable.rock4), HUGE(1.7f,
+				de.jgroehl.asteromania.R.drawable.rock2), EXTREME(2.8f,
 				de.jgroehl.asteromania.R.drawable.rock1);
 
 		private final float modifyer;
@@ -79,7 +79,7 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 	public static Asteroid createAsteroid(Context context, int level) {
 		AsteroidType type = getRandomAsteroidType();
 		return new Asteroid((float) Math.random(),
-				(float) (Math.random() * (-Math.sqrt(level))), type.getImage(),
+				(float) (Math.random() * (-(level / 5.0))), type.getImage(),
 				context, (int) Math.round(BASIC_LIFE * type.getModifyer()
 						* Math.sqrt(level)), (int) Math.round(BASIC_DAMAGE
 						* type.getModifyer() * Math.sqrt(level)), BASIC_SPEED
@@ -103,7 +103,7 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 						* Math.sqrt(damage)) + 1;
 				for (int i = 0; i < amountCoins; i++)
 					Coin.addToHandler(gameHandler, this);
-				gameHandler.getPlayerInfo().addScore((damage + 1) / 2);
+				gameHandler.getPlayerInfo().addScore((damage + 3) / 4);
 				gameHandler.getSoundManager().playExplosionSound();
 				gameHandler.add(new Explosion(xPosition, yPosition, context),
 						GameState.MAIN);

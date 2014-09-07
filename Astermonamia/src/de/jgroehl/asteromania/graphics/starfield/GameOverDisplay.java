@@ -6,8 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
+import de.jgroehl.asteromania.graphics.game.player.PlayerInfo;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
-import de.jgroehl.asteromania.player.PlayerInfo;
 import de.jgroehl.asteromania.time.Timer;
 
 public class GameOverDisplay extends GraphicsObject {

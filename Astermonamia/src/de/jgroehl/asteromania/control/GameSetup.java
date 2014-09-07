@@ -6,13 +6,13 @@ import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
+import de.jgroehl.asteromania.graphics.game.player.PlayerInfoDisplay;
+import de.jgroehl.asteromania.graphics.game.player.PlayerStatsDisplay;
 import de.jgroehl.asteromania.graphics.starfield.GameOverDisplay;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
 import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
-import de.jgroehl.asteromania.player.PlayerInfoDisplay;
-import de.jgroehl.asteromania.player.PlayerStatsDisplay;
 
 public class GameSetup {
 

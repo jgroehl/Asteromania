@@ -4,7 +4,7 @@ import android.content.res.Resources;
 import android.widget.Toast;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
-import de.jgroehl.asteromania.player.PlayerInfo;
+import de.jgroehl.asteromania.graphics.game.player.PlayerInfo;
 
 public class BuyItemCallback implements EventCallback {
 
