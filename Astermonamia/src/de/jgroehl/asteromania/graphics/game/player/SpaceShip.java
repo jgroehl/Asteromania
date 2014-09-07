@@ -176,4 +176,9 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		shield.addShieldSeconds(newLevelShieldSeconds);
 	}
 
+	@Override
+	public boolean isAlive() {
+		return true;
+	}
+
 }

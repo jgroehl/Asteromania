@@ -2,6 +2,7 @@ package de.jgroehl.asteromania.control.callbacks;
 
 import android.content.res.Resources;
 import android.widget.Toast;
+import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.PlayerInfo;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
@@ -12,12 +13,11 @@ public class BuyItemCallback implements EventCallback {
 
 	public enum ItemType {
 
-		HP(1, 2, de.jgroehl.asteromania.R.string.lifepoint), DAMAGE(1, 3,
+		HP(1, 2, R.string.lifepoint), DAMAGE(1, 3,
 
-		de.jgroehl.asteromania.R.string.damage), SPEED(0.1f, 1,
-				de.jgroehl.asteromania.R.string.speed), SHOT_SPEED(0.1f, 2,
-				de.jgroehl.asteromania.R.string.shot_speed), SHOT_FREQUENCY(
-				0.1f, 2, de.jgroehl.asteromania.R.string.shot_frequency);
+		R.string.damage), SPEED(0.1f, 1, R.string.speed), SHOT_SPEED(0.1f, 2,
+				R.string.shot_speed), SHOT_FREQUENCY(0.1f, 2,
+				R.string.shot_frequency), SHIELD_SECONDS(5, 2, R.string.shield);
 
 		public final float increaseValue;
 		private final int baseCost;
@@ -48,12 +48,19 @@ public class BuyItemCallback implements EventCallback {
 				return (int) Math
 						.pow((((playerInfo.getShotSpeedFactor() - 1) * 9) + baseCost),
 								3);
+			case SHIELD_SECONDS:
+				return (int) (baseCost * increaseValue * increaseValue);
 			default:
 				return DEFAULT_COST;
 			}
 		}
 
 		public String getText(Resources resources) {
+			if (this == ItemType.SHIELD_SECONDS) {
+				return "+" + (int) increaseValue + " "
+						+ resources.getString(R.string.seconds) + " "
+						+ resources.getString(textId);
+			}
 			if (increaseValue < 1)
 				return "+" + (int) (increaseValue * 100) + "% "
 						+ resources.getString(textId);
@@ -72,6 +79,19 @@ public class BuyItemCallback implements EventCallback {
 	@Override
 	public void action(GameHandler gameHandler) {
 		int cost = type.getCost(gameHandler.getPlayerInfo());
+		if (type == ItemType.SHIELD_SECONDS) {
+			if (!gameHandler.getPlayerInfo().isShieldGeneratorPresent()) {
+				Toast.makeText(
+						gameHandler.getContext(),
+						gameHandler
+								.getContext()
+								.getResources()
+								.getString(
+										de.jgroehl.asteromania.R.string.purchase_shield_generator_first),
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+		}
 		if (gameHandler.getPlayerInfo().getCoins() >= cost) {
 			gameHandler.getPlayerInfo().addCoins(-cost);
 			gameHandler.getSoundManager().playPayingSound();
@@ -95,6 +115,10 @@ public class BuyItemCallback implements EventCallback {
 			case SPEED:
 				gameHandler.getPlayerInfo().addMaxSpeedFactor(
 						type.increaseValue);
+				break;
+			case SHIELD_SECONDS:
+				gameHandler.getPlayer().addShieldSeconds(
+						(int) type.increaseValue);
 				break;
 			}
 		} else {

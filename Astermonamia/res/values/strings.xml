@@ -27,5 +27,8 @@
     <string name="new_highscore">Neuer Highscore</string>
     <string name="level">Level</string>
     <string name="dps">Schaden pro Sekunde</string>
+    <string name="shield">Schutzschuld</string>
+    <string name="seconds">Sekunden</string>
+    <string name="purchase_shield_generator_first">Kaufe zuerst den Schildgenerator.</string>
 
 </resources>

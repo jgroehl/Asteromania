@@ -87,9 +87,16 @@ public class PlayerStatsDisplay extends GameObject {
 	}
 
 	private int calculateDps() {
+		double factor = 1;
+		if (playerInfo.purchasedTripleShot())
+			factor = 3;
+		else if (playerInfo.purchasedDoubleShot()) {
+			factor = 2;
+		}
 		return (int) ((SpaceShip.BASIC_SHOT_DAMAGE + playerInfo
-				.getBonusDamage()) / (ShotFiredCallback.BASIC_SHOOT_FREQUENCY
-				/ playerInfo.getShotFrequencyFactor() / 1000));
+				.getBonusDamage())
+				/ (ShotFiredCallback.BASIC_SHOOT_FREQUENCY
+						/ playerInfo.getShotFrequencyFactor() / 1000) * factor);
 	}
 
 	@Override

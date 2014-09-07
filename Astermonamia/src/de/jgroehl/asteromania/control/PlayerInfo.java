@@ -1,6 +1,7 @@
 package de.jgroehl.asteromania.control;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
@@ -12,7 +13,7 @@ import de.jgroehl.asteromania.io.FileHandler;
 public class PlayerInfo {
 
 	private enum Purchase {
-		SHIELD_GENERATOR
+		SHIELD_GENERATOR, DOUBLE_SHOT, TRIPLE_SHOT
 	}
 
 	private static final String TAG = PlayerInfo.class.getSimpleName();
@@ -103,7 +104,7 @@ public class PlayerInfo {
 					"Error retrieving purchase files. Try contacting Google Play Services to get Purchases.");
 			purchaseList.clear();
 			// FIXME: Remove
-			purchaseList.add(Purchase.SHIELD_GENERATOR);
+			purchaseList.addAll(Arrays.asList(Purchase.values()));
 			// TODO: Contact Google Play Services to check for already purchased
 			// items
 		} else {
@@ -408,5 +409,13 @@ public class PlayerInfo {
 
 	public boolean isShieldGeneratorPresent() {
 		return purchaseList.contains(Purchase.SHIELD_GENERATOR);
+	}
+
+	public boolean purchasedDoubleShot() {
+		return purchaseList.contains(Purchase.DOUBLE_SHOT);
+	}
+
+	public boolean purchasedTripleShot() {
+		return purchaseList.contains(Purchase.TRIPLE_SHOT);
 	}
 }

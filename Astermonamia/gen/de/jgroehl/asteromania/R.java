@@ -1101,11 +1101,12 @@ containing a value of this type.
         public static final int rotating_spaceship=0x7f02006c;
         public static final int settings=0x7f02006d;
         public static final int shield_small=0x7f02006e;
-        public static final int shotfreq_upgrade=0x7f02006f;
-        public static final int shotspeed_upgrade=0x7f020070;
-        public static final int spaceship2=0x7f020071;
-        public static final int speed_upgrade=0x7f020072;
-        public static final int start=0x7f020073;
+        public static final int shield_upgrade=0x7f02006f;
+        public static final int shotfreq_upgrade=0x7f020070;
+        public static final int shotspeed_upgrade=0x7f020071;
+        public static final int spaceship2=0x7f020072;
+        public static final int speed_upgrade=0x7f020073;
+        public static final int start=0x7f020074;
     }
     public static final class id {
         public static final int action_bar=0x7f06001c;
@@ -1293,8 +1294,11 @@ containing a value of this type.
         public static final int lifepoints=0x7f0b0012;
         public static final int new_highscore=0x7f0b0024;
         public static final int not_enough_gold=0x7f0b001f;
+        public static final int purchase_shield_generator_first=0x7f0b0029;
         public static final int quit=0x7f0b001c;
         public static final int score=0x7f0b0019;
+        public static final int seconds=0x7f0b0028;
+        public static final int shield=0x7f0b0027;
         public static final int shop=0x7f0b001b;
         public static final int shot_frequency=0x7f0b0017;
         public static final int shot_speed=0x7f0b0016;

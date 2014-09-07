@@ -95,10 +95,11 @@ public class GameSetup {
 		float shopButtonHeight = 0.2f;
 
 		gameHandler.add(
-				new BuyItemShopButton(de.jgroehl.asteromania.R.drawable.life_upgrade,
-						0.1f, 0.1f, shopButtonWidth, shopButtonHeight,
-						ItemType.HP, gameHandler.getContext(), gameHandler
-								.getPlayerInfo()), GameState.SHOP);
+				new BuyItemShopButton(
+						de.jgroehl.asteromania.R.drawable.life_upgrade, 0.1f,
+						0.1f, shopButtonWidth, shopButtonHeight, ItemType.HP,
+						gameHandler.getContext(), gameHandler.getPlayerInfo()),
+				GameState.SHOP);
 
 		gameHandler.add(
 				new BuyItemShopButton(
@@ -123,6 +124,12 @@ public class GameSetup {
 		gameHandler.add(new BuyItemShopButton(
 				de.jgroehl.asteromania.R.drawable.shotfreq_upgrade, 0.1f, 0.4f,
 				shopButtonWidth, shopButtonHeight, ItemType.SHOT_FREQUENCY,
+				gameHandler.getContext(), gameHandler.getPlayerInfo()),
+				GameState.SHOP2);
+
+		gameHandler.add(new BuyItemShopButton(
+				de.jgroehl.asteromania.R.drawable.shield_upgrade, 0.1f, 0.7f,
+				shopButtonWidth, shopButtonHeight, ItemType.SHIELD_SECONDS,
 				gameHandler.getContext(), gameHandler.getPlayerInfo()),
 				GameState.SHOP2);
 

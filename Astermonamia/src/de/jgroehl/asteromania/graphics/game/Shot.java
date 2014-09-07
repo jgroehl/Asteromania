@@ -43,7 +43,8 @@ public class Shot extends GraphicsObject {
 			if (imagesOverlap(getX(), getY(), getRelativeWidth(),
 					getRelativeHeight(), go.getX(), go.getY(),
 					go.getRelativeWidth(), go.getRelativeHeight())) {
-				hitable.getShot(handler, this);
+				if (hitable.isAlive())
+					hitable.getShot(handler, this);
 			}
 		}
 

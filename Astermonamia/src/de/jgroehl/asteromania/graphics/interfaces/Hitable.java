@@ -7,4 +7,6 @@ public interface Hitable {
 
 	void getShot(GameHandler gameHandler, Shot shot);
 
+	boolean isAlive();
+
 }

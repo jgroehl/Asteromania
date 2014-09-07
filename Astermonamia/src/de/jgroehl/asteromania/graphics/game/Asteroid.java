@@ -17,7 +17,7 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 		Killable {
 
 	private static final int BASIC_LIFE = 4;
-	private static final int BASIC_DAMAGE = 7;
+	private static final int BASIC_DAMAGE = 8;
 	private static final float BASIC_SPEED = 0.01f;
 	private static final Paint textPaint = new Paint();
 

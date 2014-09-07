@@ -27,5 +27,8 @@
     <string name="new_highscore">New Highscore</string>
     <string name="level">Level</string>
     <string name="dps">Damage per second</string>
+    <string name="shield">Rayshield</string>
+    <string name="seconds">Seconds</string>
+    <string name="purchase_shield_generator_first">Purchase Shieldgenerator first.</string>
 
 </resources>

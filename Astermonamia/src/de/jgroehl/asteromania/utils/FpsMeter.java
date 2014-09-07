@@ -68,13 +68,9 @@ public class FpsMeter implements Drawable {
 		}
 	}
 
-	public int getFps() {
-		return lastFpsCount;
-	}
-
 	@Override
 	public void draw(Canvas c) {
-		c.drawText("FPS: " + getFps(), 5, 50, whitePaint);
+		c.drawText("FPS: " + lastFpsCount, 5, 50, whitePaint);
 		c.drawText("SLP: " + lastSleepTime + " / " + FRAME_PERIOD, 5, 70,
 				whitePaint);
 		c.drawText("RAM: " + (runtime.maxMemory() - runtime.freeMemory())
