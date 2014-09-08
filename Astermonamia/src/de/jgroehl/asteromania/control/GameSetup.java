@@ -152,14 +152,14 @@ public class GameSetup {
 				gameHandler.getPlayerInfo()), GameState.SHOP3);
 
 		gameHandler.add(
-				new BuyItemShopButton(R.drawable.shield_upgrade, 0.1f, 0.4f,
-						shopButtonWidth, shopButtonHeight,
+				new BuyItemShopButton(R.drawable.doubleshot_upgrade, 0.1f,
+						0.4f, shopButtonWidth, shopButtonHeight,
 						PurchaseType.DOUBLE_SHOT, gameHandler.getContext(),
 						gameHandler.getPlayerInfo()), GameState.SHOP3);
 
 		gameHandler.add(
-				new BuyItemShopButton(R.drawable.shield_upgrade, 0.1f, 0.7f,
-						shopButtonWidth, shopButtonHeight,
+				new BuyItemShopButton(R.drawable.tripleshot_upgrade, 0.1f,
+						0.7f, shopButtonWidth, shopButtonHeight,
 						PurchaseType.TRIPLE_SHOT, gameHandler.getContext(),
 						gameHandler.getPlayerInfo()), GameState.SHOP3);
 
