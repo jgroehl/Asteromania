@@ -1279,6 +1279,7 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
         public static final int action_settings=0x7f0b000e;
+        public static final int already_purchased_item=0x7f0b002a;
         public static final int app_name=0x7f0b000d;
         public static final int back=0x7f0b001d;
         public static final int bonus_damage=0x7f0b0014;
@@ -1286,6 +1287,7 @@ containing a value of this type.
         public static final int coins=0x7f0b0010;
         public static final int damage=0x7f0b001e;
         public static final int dmg=0x7f0b0021;
+        public static final int double_shot=0x7f0b002c;
         public static final int dps=0x7f0b0026;
         public static final int game_over=0x7f0b0022;
         public static final int hp=0x7f0b0020;
@@ -1294,11 +1296,13 @@ containing a value of this type.
         public static final int lifepoints=0x7f0b0012;
         public static final int new_highscore=0x7f0b0024;
         public static final int not_enough_gold=0x7f0b001f;
+        public static final int purchase_doubleshot_first=0x7f0b002e;
         public static final int purchase_shield_generator_first=0x7f0b0029;
         public static final int quit=0x7f0b001c;
         public static final int score=0x7f0b0019;
         public static final int seconds=0x7f0b0028;
         public static final int shield=0x7f0b0027;
+        public static final int shield_generator=0x7f0b002b;
         public static final int shop=0x7f0b001b;
         public static final int shot_frequency=0x7f0b0017;
         public static final int shot_speed=0x7f0b0016;
@@ -1306,6 +1310,7 @@ containing a value of this type.
         public static final int speed=0x7f0b0015;
         public static final int start=0x7f0b0018;
         public static final int statistics=0x7f0b001a;
+        public static final int triple_shot=0x7f0b002d;
         public static final int your_score=0x7f0b0023;
     }
     public static final class style {

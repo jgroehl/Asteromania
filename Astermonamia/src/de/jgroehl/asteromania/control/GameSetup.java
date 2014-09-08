@@ -3,6 +3,7 @@ package de.jgroehl.asteromania.control;
 import android.graphics.BitmapFactory;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
+import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
@@ -89,6 +90,18 @@ public class GameSetup {
 						0.875f, 0.07f, 0.125f, new MenuButtonCallback(
 								GameState.SHOP), gameHandler.getContext()),
 				GameState.SHOP2);
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler
+						.getContext().getResources(), R.drawable.right), 0.93f,
+						0.875f, 0.07f, 0.125f, new MenuButtonCallback(
+								GameState.SHOP3), gameHandler.getContext()),
+				GameState.SHOP2);
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler
+						.getContext().getResources(), R.drawable.left), 0f,
+						0.875f, 0.07f, 0.125f, new MenuButtonCallback(
+								GameState.SHOP2), gameHandler.getContext()),
+				GameState.SHOP3);
 		gameHandler.update();
 
 		float shopButtonWidth = 0.15f;
@@ -133,13 +146,28 @@ public class GameSetup {
 				gameHandler.getContext(), gameHandler.getPlayerInfo()),
 				GameState.SHOP2);
 
+		gameHandler.add(new BuyItemShopButton(R.drawable.shield_upgrade, 0.1f,
+				0.1f, shopButtonWidth, shopButtonHeight,
+				PurchaseType.SHIELD_GENERATOR, gameHandler.getContext(),
+				gameHandler.getPlayerInfo()), GameState.SHOP3);
+
+		gameHandler.add(
+				new BuyItemShopButton(R.drawable.shield_upgrade, 0.1f, 0.4f,
+						shopButtonWidth, shopButtonHeight,
+						PurchaseType.DOUBLE_SHOT, gameHandler.getContext(),
+						gameHandler.getPlayerInfo()), GameState.SHOP3);
+
+		gameHandler.add(
+				new BuyItemShopButton(R.drawable.shield_upgrade, 0.1f, 0.7f,
+						shopButtonWidth, shopButtonHeight,
+						PurchaseType.TRIPLE_SHOT, gameHandler.getContext(),
+						gameHandler.getPlayerInfo()), GameState.SHOP3);
+
 		gameHandler.update();
 
 		gameHandler.add(new PlayerInfoDisplay(gameHandler.getContext(),
-				gameHandler.getPlayerInfo(), true), GameState.SHOP);
-
-		gameHandler.add(new PlayerInfoDisplay(gameHandler.getContext(),
-				gameHandler.getPlayerInfo(), true), GameState.SHOP2);
+				gameHandler.getPlayerInfo(), true), GameState.SHOP,
+				GameState.SHOP2, GameState.SHOP3);
 
 		gameHandler.add(new Button(gameHandler.getContext().getResources()
 				.getString(de.jgroehl.asteromania.R.string.back), 0.3f, 0.745f,

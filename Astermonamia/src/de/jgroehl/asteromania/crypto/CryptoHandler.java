@@ -6,12 +6,11 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.SecureRandom;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -50,6 +49,7 @@ public class CryptoHandler {
 		}
 	}
 
+	@SuppressLint("TrulyRandom")
 	private void createCryptoKey(Context context) {
 		try {
 			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -63,8 +63,8 @@ public class CryptoHandler {
 			oos.close();
 			secretKeySpec = new SecretKeySpec(sK.getEncoded(), "AES");
 		} catch (Exception e) {
-			Log.e(TAG,
-					"Creating Crypto Key failed. Progress will not be saved.");
+			Log.e(TAG, "Fatal: Creating Crypto Key failed.");
+			System.exit(CRYPTO_ERROR_CODE);
 		}
 	}
 

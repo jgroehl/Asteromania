@@ -88,6 +88,11 @@ public class ShieldGenerator extends SimpleAnimatedObject {
 			playerInfo
 					.setShieldSeconds(playerInfo.getShieldSeconds() + seconds);
 			Log.d(TAG, "Added " + seconds + " seconds to the shield");
+		} else {
+			if (playerInfo.isShieldGeneratorPresent()) {
+				state = ShieldState.INACTIVE;
+				addShieldSeconds(seconds);
+			}
 		}
 	}
 

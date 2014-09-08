@@ -1,20 +1,16 @@
 package de.jgroehl.asteromania.control;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
 import de.jgroehl.asteromania.MainActivity;
+import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
 import de.jgroehl.asteromania.io.FileHandler;
 
 public class PlayerInfo {
-
-	private enum Purchase {
-		SHIELD_GENERATOR, DOUBLE_SHOT, TRIPLE_SHOT
-	}
 
 	private static final String TAG = PlayerInfo.class.getSimpleName();
 
@@ -57,7 +53,7 @@ public class PlayerInfo {
 	private long currentScoreFactor;
 	private long lastHighscore;
 	private int shieldSeconds;
-	private final List<Purchase> purchaseList = new ArrayList<Purchase>();
+	private final List<PurchaseType> purchaseList = new ArrayList<PurchaseType>();
 
 	public PlayerInfo(Context context, FileHandler fileHandler) {
 		this.context = context;
@@ -87,7 +83,7 @@ public class PlayerInfo {
 			if (error)
 				break;
 			try {
-				Purchase p = Purchase.valueOf(s);
+				PurchaseType p = PurchaseType.valueOf(s);
 				if (p == null) {
 					error = true;
 				} else {
@@ -103,8 +99,6 @@ public class PlayerInfo {
 			Log.d(TAG,
 					"Error retrieving purchase files. Try contacting Google Play Services to get Purchases.");
 			purchaseList.clear();
-			// FIXME: Remove
-			purchaseList.addAll(Arrays.asList(Purchase.values()));
 			// TODO: Contact Google Play Services to check for already purchased
 			// items
 		} else {
@@ -408,14 +402,23 @@ public class PlayerInfo {
 	}
 
 	public boolean isShieldGeneratorPresent() {
-		return purchaseList.contains(Purchase.SHIELD_GENERATOR);
+		return purchaseList.contains(PurchaseType.SHIELD_GENERATOR);
 	}
 
 	public boolean purchasedDoubleShot() {
-		return purchaseList.contains(Purchase.DOUBLE_SHOT);
+		return purchaseList.contains(PurchaseType.DOUBLE_SHOT);
 	}
 
 	public boolean purchasedTripleShot() {
-		return purchaseList.contains(Purchase.TRIPLE_SHOT);
+		return purchaseList.contains(PurchaseType.TRIPLE_SHOT);
+	}
+
+	public boolean purchasedItem(PurchaseType type) {
+		return purchaseList.contains(type);
+	}
+
+	public void addPurchase(PurchaseType type) {
+		purchaseList.add(type);
+		savePlayerInfo();
 	}
 }

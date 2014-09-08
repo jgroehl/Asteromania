@@ -30,5 +30,10 @@
     <string name="shield">Rayshield</string>
     <string name="seconds">Seconds</string>
     <string name="purchase_shield_generator_first">Purchase Shieldgenerator first.</string>
+    <string name="already_purchased_item">Item already purchased.</string>
+    <string name="shield_generator">Schild generator</string>
+    <string name="double_shot">Double Shot</string>
+    <string name="triple_shot">Triple Shot</string>
+    <string name="purchase_doubleshot_first">Purchase double shot first.</string>
 
 </resources>

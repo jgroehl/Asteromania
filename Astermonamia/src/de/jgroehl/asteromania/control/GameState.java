@@ -2,6 +2,6 @@ package de.jgroehl.asteromania.control;
 
 public enum GameState {
 
-	MAIN, MENU, HIGHSCORE, GAME_OVER, SHOP, SHOP2, STATS;
+	MAIN, MENU, HIGHSCORE, GAME_OVER, SHOP, SHOP2, SHOP3, STATS;
 
 }

@@ -375,6 +375,7 @@ int string abc_searchview_description_voice 0x7f0b0008
 int string abc_shareactionprovider_share_with 0x7f0b000c
 int string abc_shareactionprovider_share_with_application 0x7f0b000b
 int string action_settings 0x7f0b000e
+int string already_purchased_item 0x7f0b002a
 int string app_name 0x7f0b000d
 int string back 0x7f0b001d
 int string bonus_damage 0x7f0b0014
@@ -382,6 +383,7 @@ int string coin 0x7f0b000f
 int string coins 0x7f0b0010
 int string damage 0x7f0b001e
 int string dmg 0x7f0b0021
+int string double_shot 0x7f0b002c
 int string dps 0x7f0b0026
 int string game_over 0x7f0b0022
 int string hp 0x7f0b0020
@@ -390,11 +392,13 @@ int string lifepoint 0x7f0b0013
 int string lifepoints 0x7f0b0012
 int string new_highscore 0x7f0b0024
 int string not_enough_gold 0x7f0b001f
+int string purchase_doubleshot_first 0x7f0b002e
 int string purchase_shield_generator_first 0x7f0b0029
 int string quit 0x7f0b001c
 int string score 0x7f0b0019
 int string seconds 0x7f0b0028
 int string shield 0x7f0b0027
+int string shield_generator 0x7f0b002b
 int string shop 0x7f0b001b
 int string shot_frequency 0x7f0b0017
 int string shot_speed 0x7f0b0016
@@ -402,6 +406,7 @@ int string spaceship_statistics 0x7f0b0011
 int string speed 0x7f0b0015
 int string start 0x7f0b0018
 int string statistics 0x7f0b001a
+int string triple_shot 0x7f0b002d
 int string your_score 0x7f0b0023
 int style AppBaseTheme 0x7f0c008b
 int style AppTheme 0x7f0c008c
