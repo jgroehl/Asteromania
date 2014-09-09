@@ -9,8 +9,8 @@ import de.jgroehl.asteromania.control.interfaces.EventCallback;
 public class PurchaseItemCallback implements EventCallback {
 
 	public enum PurchaseType {
-		SHIELD_GENERATOR(1000, R.string.shield_generator), DOUBLE_SHOT(3000,
-				R.string.double_shot), TRIPLE_SHOT(10000, R.string.triple_shot);
+		SHIELD_GENERATOR(750, R.string.shield_generator), DOUBLE_SHOT(2000,
+				R.string.double_shot), TRIPLE_SHOT(5000, R.string.triple_shot);
 
 		public final int cost;
 		public final int textId;
