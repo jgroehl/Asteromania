@@ -1100,15 +1100,13 @@ containing a value of this type.
         public static final int rock5=0x7f02006b;
         public static final int rotating_coin=0x7f02006c;
         public static final int rotating_spaceship=0x7f02006d;
-        public static final int settings=0x7f02006e;
-        public static final int shield_small=0x7f02006f;
-        public static final int shield_upgrade=0x7f020070;
-        public static final int shotfreq_upgrade=0x7f020071;
-        public static final int shotspeed_upgrade=0x7f020072;
-        public static final int spaceship2=0x7f020073;
-        public static final int speed_upgrade=0x7f020074;
-        public static final int start=0x7f020075;
-        public static final int tripleshot_upgrade=0x7f020076;
+        public static final int shield_small=0x7f02006e;
+        public static final int shield_upgrade=0x7f02006f;
+        public static final int shotfreq_upgrade=0x7f020070;
+        public static final int shotspeed_upgrade=0x7f020071;
+        public static final int spaceship2=0x7f020072;
+        public static final int speed_upgrade=0x7f020073;
+        public static final int tripleshot_upgrade=0x7f020074;
     }
     public static final class id {
         public static final int action_bar=0x7f06001c;

@@ -43,7 +43,8 @@ public class PurchaseItemCallback implements EventCallback {
 									R.string.purchase_doubleshot_first),
 							Toast.LENGTH_LONG).show();
 				} else {
-					gameHandler.getSoundManager().playCoinSound();
+					gameHandler.getPlayerInfo().addCoins(-type.cost);
+					gameHandler.getSoundManager().playPayingSound();
 					gameHandler.getPlayerInfo().addPurchase(type);
 				}
 			} else {
