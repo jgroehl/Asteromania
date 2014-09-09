@@ -49,7 +49,7 @@ public class BuyItemCallback implements EventCallback {
 						.pow((((playerInfo.getShotSpeedFactor() - 1) * 9) + baseCost),
 								3);
 			case SHIELD_SECONDS:
-				return (int) (baseCost * increaseValue * increaseValue);
+				return (int) (baseCost * playerInfo.getLevel());
 			default:
 				return DEFAULT_COST;
 			}

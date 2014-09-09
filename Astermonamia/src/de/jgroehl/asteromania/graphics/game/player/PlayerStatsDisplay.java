@@ -88,9 +88,9 @@ public class PlayerStatsDisplay extends GameObject {
 
 	private int calculateDps() {
 		double factor = 1;
-		if (playerInfo.purchasedTripleShot())
+		if (playerInfo.purchasedTripleShot()) {
 			factor = 3;
-		else if (playerInfo.purchasedDoubleShot()) {
+		} else if (playerInfo.purchasedDoubleShot()) {
 			factor = 2;
 		}
 		return (int) ((SpaceShip.BASIC_SHOT_DAMAGE + playerInfo
