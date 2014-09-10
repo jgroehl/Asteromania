@@ -43,7 +43,7 @@ public class GameOverDisplay extends GraphicsObject {
 		c.drawText(
 				context.getResources().getString(
 						de.jgroehl.asteromania.R.string.game_over),
-				c.getWidth() * 0.2f, c.getHeight() * 0.3f, gameOverTextPaint);
+				c.getWidth() * 0.1f, c.getHeight() * 0.3f, gameOverTextPaint);
 		c.drawText(
 				context.getResources().getString(
 						de.jgroehl.asteromania.R.string.your_score)

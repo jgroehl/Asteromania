@@ -6,9 +6,10 @@ import de.jgroehl.asteromania.control.GameHandler;
 public class SimpleAnimatedObject extends AnimatedGraphicsObject {
 
 	public SimpleAnimatedObject(float xPosition, float yPosition,
-			int imageResource, int frameCount, int animationPeriod, Context context) {
-		super(xPosition, yPosition, imageResource, frameCount, animationPeriod, context);
-
+			int imageResource, float relativeWidth, int frameCount,
+			int animationPeriod, Context context) {
+		super(xPosition, yPosition, imageResource, relativeWidth, frameCount,
+				animationPeriod, context);
 	}
 
 	@Override

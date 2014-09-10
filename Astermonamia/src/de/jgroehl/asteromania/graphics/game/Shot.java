@@ -11,6 +11,8 @@ public class Shot extends GraphicsObject {
 		ENEMY, PLAYER
 	}
 
+	private static final float RELATIVE_WIDTH = 0.01f;
+
 	private final float direction;
 	private final float shotSpeed;
 	private int damage;
@@ -22,9 +24,9 @@ public class Shot extends GraphicsObject {
 		super(
 				xPosition,
 				yPosition,
-				target.equals(Target.PLAYER) ? de.jgroehl.asteromania.R.drawable.normal_shot_down
-						: de.jgroehl.asteromania.R.drawable.normal_shot_up,
-				context);
+				(target.equals(Target.PLAYER) ? de.jgroehl.asteromania.R.drawable.normal_shot_down
+						: de.jgroehl.asteromania.R.drawable.normal_shot_up),
+				RELATIVE_WIDTH, context);
 		this.target = target;
 		direction = target.equals(Target.PLAYER) ? 1.0f : -1.0f;
 		this.shotSpeed = shotSpeed;

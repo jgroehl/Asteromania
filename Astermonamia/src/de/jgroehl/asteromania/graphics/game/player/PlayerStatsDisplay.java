@@ -24,8 +24,8 @@ public class PlayerStatsDisplay extends GameObject {
 		this.playerInfo = playerInfo;
 
 		spaceship = new SimpleAnimatedObject(0.05f, 0.3f,
-				de.jgroehl.asteromania.R.drawable.rotating_spaceship, 15, 100,
-				context);
+				de.jgroehl.asteromania.R.drawable.rotating_spaceship, 0.3f,
+				15, 100, context);
 	}
 
 	@Override

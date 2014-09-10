@@ -16,6 +16,7 @@ import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
 public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
+	private static final float RELATIVE_WIDTH = 0.12f;
 	private static final String TAG = SpaceShip.class.getSimpleName();
 	private final SensorHandler sensorHandler;
 	private static final int MAX_DEGREE = 90;
@@ -31,13 +32,13 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 	public SpaceShip(SensorHandler sensorHandler, Context context,
 			PlayerInfo playerInfo) {
-		super(0.6f, 0.7f, R.drawable.spaceship2, IMAGE_FRAMES, ANIMATION_TIME,
-				context);
+		super(0.6f, 0.7f, R.drawable.spaceship2, RELATIVE_WIDTH, IMAGE_FRAMES,
+				ANIMATION_TIME, context);
 		this.sensorHandler = sensorHandler;
 		flames[0] = new SimpleAnimatedObject(xPosition, yPosition,
-				R.drawable.fire, 6, 75, context);
+				R.drawable.fire, 0.02f, 6, 75, context);
 		flames[1] = new SimpleAnimatedObject(xPosition, yPosition,
-				R.drawable.fire, 6, 75, context);
+				R.drawable.fire, 0.02f, 6, 75, context);
 		shield = new ShieldGenerator(xPosition, xPosition, context, playerInfo);
 		Log.d(TAG, "Player Object created.");
 	}

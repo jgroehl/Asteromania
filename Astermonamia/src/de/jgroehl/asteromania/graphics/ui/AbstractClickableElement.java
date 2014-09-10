@@ -18,8 +18,8 @@ public abstract class AbstractClickableElement extends GraphicsObject implements
 	}
 
 	public AbstractClickableElement(float xPosition, float yPosition,
-			int graphicsId, EventCallback callback, Context context) {
-		super(xPosition, yPosition, graphicsId, context);
+			int graphicsId, float relativeWidth, EventCallback callback, Context context) {
+		super(xPosition, yPosition, graphicsId, relativeWidth, context);
 		this.callback = callback;
 	}
 

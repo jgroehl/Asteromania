@@ -18,6 +18,7 @@ public class ShieldGenerator extends SimpleAnimatedObject {
 
 	private static final String TAG = ShieldGenerator.class.getSimpleName();
 
+	private static final float RELATIVE_WIDTH = 0.15f;
 	private final PlayerInfo playerInfo;
 	private ShieldState state;
 	private final Timer secondTimer = new Timer(1000);
@@ -26,7 +27,8 @@ public class ShieldGenerator extends SimpleAnimatedObject {
 
 	public ShieldGenerator(float xPosition, float yPosition, Context context,
 			PlayerInfo playerInfo) {
-		super(xPosition, yPosition, R.drawable.shield_small, 9, 100, context);
+		super(xPosition, yPosition, R.drawable.shield_small, RELATIVE_WIDTH, 9,
+				100, context);
 
 		this.playerInfo = playerInfo;
 

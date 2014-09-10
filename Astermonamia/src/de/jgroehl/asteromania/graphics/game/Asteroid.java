@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import de.jgroehl.asteromania.MainActivity;
 import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.GraphicsObject;
 import de.jgroehl.asteromania.graphics.game.Shot.Target;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
@@ -26,18 +25,20 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 	private float speed;
 
 	public enum AsteroidType {
-		SMALL(0.4f, de.jgroehl.asteromania.R.drawable.rock3), MEDIUM(0.8f,
-				de.jgroehl.asteromania.R.drawable.rock5), LARGE(1.2f,
-				de.jgroehl.asteromania.R.drawable.rock4), HUGE(1.7f,
-				de.jgroehl.asteromania.R.drawable.rock2), EXTREME(2.8f,
-				de.jgroehl.asteromania.R.drawable.rock1);
+		SMALL(0.4f, de.jgroehl.asteromania.R.drawable.rock3, 0.05f), MEDIUM(
+				0.8f, de.jgroehl.asteromania.R.drawable.rock5, 0.07f), LARGE(
+				1.2f, de.jgroehl.asteromania.R.drawable.rock4, 0.09f), HUGE(
+				1.7f, de.jgroehl.asteromania.R.drawable.rock2, 0.11f), EXTREME(
+				2.8f, de.jgroehl.asteromania.R.drawable.rock1, 0.13f);
 
 		private final float modifyer;
+		private final float width;
 		private final int image;
 
-		private AsteroidType(float modifyer, int image) {
+		private AsteroidType(float modifyer, int image, float width) {
 			this.modifyer = modifyer;
 			this.image = image;
+			this.width = width;
 		}
 
 		public float getModifyer() {
@@ -47,11 +48,16 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 		public int getImage() {
 			return image;
 		}
+
+		public float getWidth() {
+			return width;
+		}
 	}
 
-	public Asteroid(float xPosition, float yPosition, int graphicsId,
-			Context context, int life, int damage, float speed) {
-		super(xPosition, yPosition, graphicsId, context);
+	private Asteroid(float xPosition, float yPosition, int graphicsId,
+			float relativeWidth, Context context, int life, int damage,
+			float speed) {
+		super(xPosition, yPosition, graphicsId, relativeWidth, context);
 		this.life = life;
 		this.damage = damage;
 		this.speed = speed;
@@ -80,9 +86,10 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 		AsteroidType type = getRandomAsteroidType();
 		return new Asteroid((float) Math.random(),
 				(float) (Math.random() * (-(level / 5.0))), type.getImage(),
-				context, (int) Math.round(BASIC_LIFE * type.getModifyer()
-						* Math.sqrt(level)), (int) Math.round(BASIC_DAMAGE
-						* type.getModifyer() * Math.sqrt(level)), BASIC_SPEED
+				type.getWidth(), context, (int) Math.round(BASIC_LIFE
+						* type.getModifyer() * Math.sqrt(level)),
+				(int) Math.round(BASIC_DAMAGE * type.getModifyer()
+						* Math.sqrt(level)), BASIC_SPEED
 						/ (float) Math.cbrt(type.getModifyer()));
 	}
 
@@ -105,8 +112,7 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 					Coin.addToHandler(gameHandler, this);
 				gameHandler.getPlayerInfo().addScore((damage + 3) / 4);
 				gameHandler.getSoundManager().playExplosionSound();
-				gameHandler.add(new Explosion(xPosition, yPosition, context),
-						GameState.MAIN);
+				Explosion.addExplosion(gameHandler, this);
 			}
 		}
 	}

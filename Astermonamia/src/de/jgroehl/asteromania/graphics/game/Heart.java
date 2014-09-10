@@ -8,6 +8,7 @@ import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
 
 public class Heart extends AnimatedGraphicsObject {
 
+	private static final float RELATIVE_WIDTH = 0.09f;
 	private static final int FRAME_COUNT = 15;
 	private static final int ANIMATION_PERIOD = 50;
 	private static final float V_SPEED = 0.02f;
@@ -16,8 +17,8 @@ public class Heart extends AnimatedGraphicsObject {
 	public Heart(int healAmount, float xPosition, float yPosition,
 			Context context) {
 		super(xPosition, yPosition,
-				de.jgroehl.asteromania.R.drawable.heart_small, FRAME_COUNT,
-				ANIMATION_PERIOD, context);
+				de.jgroehl.asteromania.R.drawable.heart_small, RELATIVE_WIDTH,
+				FRAME_COUNT, ANIMATION_PERIOD, context);
 		this.healAmount = healAmount;
 	}
 

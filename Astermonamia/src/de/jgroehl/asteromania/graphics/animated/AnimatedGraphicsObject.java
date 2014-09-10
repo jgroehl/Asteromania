@@ -10,22 +10,27 @@ import de.jgroehl.asteromania.time.Timer;
 
 public abstract class AnimatedGraphicsObject extends GraphicsObject {
 
-	private final Paint imagePaint = new Paint();
-	private int currentFrame;
-	private final int maxFrames;
 	protected final Timer animationTimer;
 
+	private final Paint imagePaint = new Paint();
+	private final int maxFrames;
+	private int currentFrame;
+	private int frameCount;
+
 	public AnimatedGraphicsObject(float xPosition, float yPosition,
-			int graphicsId, int frameCount, int animationPeriod,
-			Context context) {
-		super(xPosition, yPosition, INVALID_GRAPHICS_ID, context);
+			int graphicsId, float relativeWidth, int frameCount,
+			int animationPeriod, Context context) {
+		super(xPosition, yPosition, INVALID_GRAPHICS_ID, relativeWidth, context);
 
 		this.graphicsId = graphicsId;
+		this.frameCount = frameCount;
+		maxFrames = frameCount;
 		animationTimer = new Timer(animationPeriod);
 		imagePaint.setStyle(Paint.Style.FILL);
+	}
 
-		maxFrames = frameCount;
-
+	@Override
+	public void draw(Canvas c) {
 		if (imageCache.get(graphicsId) == null) {
 			Bitmap graphics = BitmapFactory.decodeResource(
 					context.getResources(), graphicsId);
@@ -34,19 +39,21 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject {
 			Bitmap[] imageFrames = new Bitmap[frameCount];
 
 			for (int i = 0; i < maxFrames; i++) {
-				imageFrames[i] = Bitmap.createBitmap(graphics, i * width, 0,
-						width, height);
+				imageFrames[i] = Bitmap
+						.createScaledBitmap(
+								Bitmap.createBitmap(graphics, i * width, 0,
+										width, height),
+								(int) (relativeWidth * c.getWidth()),
+								(int) (height * ((relativeWidth * c.getWidth()) / width)),
+								true);
 			}
 			imageCache.put(graphicsId, imageFrames);
+
+		} else {
+			determineRelativeSize(c, imageCache.get(graphicsId)[currentFrame]);
+			c.drawBitmap(imageCache.get(graphicsId)[currentFrame], xPosition
+					* c.getWidth(), yPosition * c.getHeight(), imagePaint);
 		}
-
-	}
-
-	@Override
-	public void draw(Canvas c) {
-		determineRelativeSize(c, imageCache.get(graphicsId)[currentFrame]);
-		c.drawBitmap(imageCache.get(graphicsId)[currentFrame],
-				xPosition * c.getWidth(), yPosition * c.getHeight(), imagePaint);
 	}
 
 	protected void setFrame(int frame) {

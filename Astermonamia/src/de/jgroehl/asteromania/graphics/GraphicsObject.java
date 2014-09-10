@@ -7,54 +7,67 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 import android.util.SparseArray;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
-import de.jgroehl.asteromania.graphics.game.Explosion;
 
 public abstract class GraphicsObject extends GameObject {
 
 	protected static final SparseArray<Bitmap[]> imageCache = new SparseArray<Bitmap[]>();
 
+	private enum DisplayType {
+		AUTOSCALE, NONE;
+	}
+
 	private static final float DEFAULT_RELATIVE_SIZE = 0.0f;
 
 	public static final int INVALID_GRAPHICS_ID = -1;
 	private final Paint imagePaint = new Paint();
+	private final DisplayType displayType;
 	protected float relativeWidth = DEFAULT_RELATIVE_SIZE;
 	protected float relativeHeight = DEFAULT_RELATIVE_SIZE;
-
 	protected int graphicsId;
 
 	public GraphicsObject(float xPosition, float yPosition, float width,
 			float height, Context context) {
-		this(xPosition, yPosition, INVALID_GRAPHICS_ID, context);
+		super(xPosition, yPosition, context);
 		relativeWidth = width;
 		relativeHeight = height;
+		displayType = DisplayType.NONE;
+		graphicsId = INVALID_GRAPHICS_ID;
 	}
 
 	public GraphicsObject(float xPosition, float yPosition, int graphicsId,
-			Context context) {
+			float relativeWidth, Context context) {
 		super(xPosition, yPosition, context);
-
 		imagePaint.setStyle(Paint.Style.FILL);
 		this.graphicsId = graphicsId;
-		if (graphicsId != INVALID_GRAPHICS_ID
-				&& imageCache.get(graphicsId) == null) {
-			imageCache.put(
-					graphicsId,
-					new Bitmap[] { BitmapFactory.decodeResource(
-							context.getResources(), graphicsId) });
-		}
+		this.relativeWidth = relativeWidth;
+		displayType = DisplayType.AUTOSCALE;
 	}
 
 	@Override
 	public void draw(Canvas c) {
 
-		if (graphicsId != INVALID_GRAPHICS_ID
-				&& imageCache.get(graphicsId) != null) {
-			determineRelativeSize(c, imageCache.get(graphicsId)[0]);
-			c.drawBitmap(imageCache.get(graphicsId)[0],
-					xPosition * c.getWidth(), yPosition * c.getHeight(),
-					imagePaint);
+		if (displayType != DisplayType.NONE) {
+			if (imageCache.get(graphicsId) != null) {
+				determineRelativeSize(c, imageCache.get(graphicsId)[0]);
+				c.drawBitmap(imageCache.get(graphicsId)[0],
+						xPosition * c.getWidth(), yPosition * c.getHeight(),
+						imagePaint);
+			} else {
+				if (displayType == DisplayType.AUTOSCALE) {
+					Bitmap tmpBitmap = BitmapFactory.decodeResource(
+							context.getResources(), graphicsId);
+					imageCache
+							.put(graphicsId,
+									new Bitmap[] { Bitmap.createScaledBitmap(
+											tmpBitmap,
+											(int) (relativeWidth * c.getWidth()),
+											(int) (tmpBitmap.getHeight() * ((relativeWidth * c
+													.getWidth()) / tmpBitmap
+													.getWidth())), true) });
+				} else {
+					throw new IllegalStateException("Wrong displayType...");
+				}
+			}
 		}
 
 	}
@@ -103,11 +116,6 @@ public abstract class GraphicsObject extends GameObject {
 
 	public void setRelativeWidth(float relativeWidth) {
 		this.relativeWidth = relativeWidth;
-	}
-
-	protected void addExplosion(GameHandler gameHandler) {
-		gameHandler.add(new Explosion(xPosition, yPosition, context),
-				GameState.MAIN);
 	}
 
 }

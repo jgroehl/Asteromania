@@ -38,7 +38,8 @@ public class Button extends AbstractClickableElement {
 
 	public Button(String buttonText, float xPosition, float yPosition,
 			float width, float height, EventCallback callback, Context context) {
-		super(xPosition, yPosition, INVALID_GRAPHICS_ID, callback, context);
+		super(xPosition, yPosition, INVALID_GRAPHICS_ID, width, callback,
+				context);
 
 		ninePatch = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.button);
@@ -51,7 +52,8 @@ public class Button extends AbstractClickableElement {
 
 	public Button(Bitmap icon, float xPosition, float yPosition, float width,
 			float height, EventCallback callback, Context context) {
-		super(xPosition, yPosition, INVALID_GRAPHICS_ID, callback, context);
+		super(xPosition, yPosition, INVALID_GRAPHICS_ID, width, callback,
+				context);
 
 		this.rawIcon = icon;
 

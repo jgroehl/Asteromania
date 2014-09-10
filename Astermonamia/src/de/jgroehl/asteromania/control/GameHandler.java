@@ -226,7 +226,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		highscore.addNewHighscore(playerInfo.getCurrentHighscore());
 		playerInfo.reset();
 		soundManager.playExplosionSound();
-		add(new Explosion(0.45f, 0.45f, context), GameState.GAME_OVER);
+		Explosion.createGameOver(this);
 		state = GameState.GAME_OVER;
 	}
 

@@ -35,13 +35,15 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	private final float shotSpeed;
 	private final int shotDamage;
 	private static final Paint textPaint = new Paint();
+	private static final float NORMAL_ENEMY_WIDTH = 0.12f;
+	private static final float BOSS_ENEMY_WIDTH = 0.1f;
 
-	public Enemy(float xPosition, float yPosition, int graphicsId,
-			int frameCount, int animationPeriod, Context context,
-			int lifepoints, float shotSpeed, int basicShootFrequency,
-			float basicSpeed, float basicDamage) {
-		super(xPosition, yPosition, graphicsId, frameCount, animationPeriod,
-				context);
+	private Enemy(float xPosition, float yPosition, int graphicsId,
+			float relativeWidth, int frameCount, int animationPeriod,
+			Context context, int lifepoints, float shotSpeed,
+			int basicShootFrequency, float basicSpeed, float basicDamage) {
+		super(xPosition, yPosition, graphicsId, relativeWidth, frameCount,
+				animationPeriod, context);
 		hpBar = new HpBar(lifepoints, 0.05f, 0.85f, 0.3f, 0.01f, context);
 		this.shotSpeed = (float) (shotSpeed * getPlusMinusTwentyPercent());
 		shootTimer = new Timer(
@@ -128,7 +130,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 				}
 				gameHandler.getPlayerInfo().addScore(shotDamage);
 				gameHandler.getSoundManager().playExplosionSound();
-				addExplosion(gameHandler);
+				Explosion.addExplosion(gameHandler, this);
 				gameHandler.remove(this);
 			}
 			gameHandler.remove(shot);
@@ -137,7 +139,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
 	public static Enemy createNormalEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
-				de.jgroehl.asteromania.R.drawable.enemy, 15, 100, context,
+				de.jgroehl.asteromania.R.drawable.enemy, NORMAL_ENEMY_WIDTH,
+				15, 100, context,
 				(int) (BASIC_NORMAL_LIFEPOINTS * 2 * ((level + 1) / 2.0)),
 				BASIC_NORMAL_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
 				(int) (BASIC_NORMAL_SHOT_RATE / 1.5), BASIC_NORMAL_SPEED,
@@ -146,7 +149,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
 	public static Enemy createBossEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
-				de.jgroehl.asteromania.R.drawable.enemy2, 6, 100, context,
+				de.jgroehl.asteromania.R.drawable.enemy2, BOSS_ENEMY_WIDTH, 6,
+				100, context,
 				(int) (BASIC_NORMAL_LIFEPOINTS * 5 * (level + 1) / 2.0),
 				BASIC_NORMAL_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
 				(int) (BASIC_NORMAL_SHOT_RATE / 3.0), (BASIC_NORMAL_SPEED / 2),
