@@ -48,6 +48,7 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject {
 								true);
 			}
 			imageCache.put(graphicsId, imageFrames);
+			determineRelativeSize(c, imageCache.get(graphicsId)[0]);
 
 		} else {
 			determineRelativeSize(c, imageCache.get(graphicsId)[currentFrame]);

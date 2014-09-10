@@ -64,6 +64,7 @@ public abstract class GraphicsObject extends GameObject {
 											(int) (tmpBitmap.getHeight() * ((relativeWidth * c
 													.getWidth()) / tmpBitmap
 													.getWidth())), true) });
+					determineRelativeSize(c, imageCache.get(graphicsId)[0]);
 				} else {
 					throw new IllegalStateException("Wrong displayType...");
 				}
