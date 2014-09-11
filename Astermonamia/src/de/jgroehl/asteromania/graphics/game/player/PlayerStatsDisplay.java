@@ -24,8 +24,8 @@ public class PlayerStatsDisplay extends GameObject {
 		this.playerInfo = playerInfo;
 
 		spaceship = new SimpleAnimatedObject(0.05f, 0.3f,
-				de.jgroehl.asteromania.R.drawable.rotating_spaceship, 0.3f,
-				15, 100, context);
+				de.jgroehl.asteromania.R.drawable.rotating_spaceship, 0.3f, 15,
+				100, context);
 	}
 
 	@Override
@@ -83,6 +83,10 @@ public class PlayerStatsDisplay extends GameObject {
 		c.drawText(context.getResources().getString(R.string.dps) + ": "
 				+ calculateDps(), 0.05f * c.getWidth(), 0.8f * c.getHeight(),
 				textPaint);
+		c.drawText(context.getResources().getString(R.string.ship_value) + ": "
+				+ playerInfo.getAccumulatedWorth() + " "
+				+ context.getResources().getString(R.string.coins),
+				0.05f * c.getWidth(), 0.9f * c.getHeight(), textPaint);
 
 	}
 

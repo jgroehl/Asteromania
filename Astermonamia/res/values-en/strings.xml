@@ -35,5 +35,6 @@
     <string name="double_shot">Double Shot</string>
     <string name="triple_shot">Triple Shot</string>
     <string name="purchase_doubleshot_first">Purchase double shot first.</string>
+    <string name="ship_value">Ship value</string>
 
 </resources>

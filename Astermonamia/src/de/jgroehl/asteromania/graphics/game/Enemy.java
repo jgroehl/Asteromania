@@ -35,8 +35,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	private final float shotSpeed;
 	private final int shotDamage;
 	private static final Paint textPaint = new Paint();
-	private static final float NORMAL_ENEMY_WIDTH = 0.12f;
-	private static final float BOSS_ENEMY_WIDTH = 0.1f;
+	private static final float NORMAL_ENEMY_WIDTH = 0.14f;
+	private static final float BOSS_ENEMY_WIDTH = 0.12f;
 
 	private Enemy(float xPosition, float yPosition, int graphicsId,
 			float relativeWidth, int frameCount, int animationPeriod,

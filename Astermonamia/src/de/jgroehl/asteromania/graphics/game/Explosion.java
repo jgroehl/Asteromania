@@ -1,6 +1,7 @@
 package de.jgroehl.asteromania.graphics.game;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameState;
@@ -27,13 +28,17 @@ public class Explosion extends AnimatedGraphicsObject {
 			GraphicsObject graphicsObject) {
 		gameHandler.add(
 				new Explosion(graphicsObject.getX(), graphicsObject.getY(),
-						graphicsObject.getRelativeWidth(), gameHandler
-								.getContext()), GameState.MAIN);
+						0.15f, gameHandler.getContext()), GameState.MAIN);
 	}
 
 	public static void createGameOver(GameHandler gameHandler) {
 		gameHandler.add(
-				new Explosion(0.4f, 0.4f, 0.2f, gameHandler.getContext()),
+				new Explosion(0.38f, 0.38f, 0.15f, gameHandler.getContext()),
 				GameState.GAME_OVER);
+	}
+
+	@Override
+	public void draw(Canvas c) {
+		super.draw(c);
 	}
 }

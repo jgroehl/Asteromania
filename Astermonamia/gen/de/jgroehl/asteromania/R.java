@@ -1303,6 +1303,7 @@ containing a value of this type.
         public static final int seconds=0x7f0b0028;
         public static final int shield=0x7f0b0027;
         public static final int shield_generator=0x7f0b002b;
+        public static final int ship_value=0x7f0b002f;
         public static final int shop=0x7f0b001b;
         public static final int shot_frequency=0x7f0b0017;
         public static final int shot_speed=0x7f0b0016;

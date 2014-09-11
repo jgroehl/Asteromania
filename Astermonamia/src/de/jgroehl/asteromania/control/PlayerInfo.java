@@ -22,6 +22,7 @@ public class PlayerInfo {
 	private static final String SCORE_FACTOR_FILE_NAME = "currentScoreFactor";
 	private static final String SHIELD_FILE_NAME = "shieldStats";
 	private static final String PURCHASES_FILE_NAME = "purchases";
+	private static final String ACCUMULATED_WORTH_FILE_NAME = "accumulatedWorth";
 	private static final String SPLIT_CHARACTER = "&";
 
 	private static final int DEFAULT_HEALTH = 3;
@@ -33,6 +34,7 @@ public class PlayerInfo {
 	private static final long DEFAULT_SCORE_FACTOR = 1;
 	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 1000000
 			: 100;
+	private static final long DEFAULT_ACCUMULATED_PURCHASES = 0;
 
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
@@ -54,6 +56,7 @@ public class PlayerInfo {
 	private long currentHighscore;
 	private long currentBonusFactor;
 	private long lastHighscore;
+	private long accumulatedWorth;
 	private int shieldSeconds;
 	private final List<PurchaseType> purchaseList = new ArrayList<PurchaseType>();
 
@@ -73,7 +76,23 @@ public class PlayerInfo {
 		readCurrentScoreFactor();
 		readShieldState();
 		readPurchases();
+		readAccumulatedPurchaseValue();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void readAccumulatedPurchaseValue() {
+		try {
+			accumulatedWorth = Long.parseLong(fileHandler
+					.getDecryptedStringFromFile(ACCUMULATED_WORTH_FILE_NAME));
+			Log.d(TAG, "Set current accumulatedPurchases to "
+					+ accumulatedWorth);
+
+		} catch (NumberFormatException e) {
+			Log.w(TAG,
+					"accumulatedPurchases not readable. Setting accumulatedPurchases to "
+							+ DEFAULT_ACCUMULATED_PURCHASES);
+			accumulatedWorth = DEFAULT_ACCUMULATED_PURCHASES;
+		}
 	}
 
 	private void readPurchases() {
@@ -295,12 +314,17 @@ public class PlayerInfo {
 			purchases += purchaseList.get(purchaseList.size() - 1);
 			fileHandler.writeAndEncryptString(PURCHASES_FILE_NAME, purchases);
 		}
+		fileHandler.writeAndEncryptString(ACCUMULATED_WORTH_FILE_NAME,
+				String.valueOf(accumulatedWorth));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
 
 	public void addCoins(int amount) {
 		coins += amount;
+		if (amount < 0) {
+			accumulatedWorth -= amount;
+		}
 	}
 
 	public long getCoins() {
@@ -425,5 +449,9 @@ public class PlayerInfo {
 	public void addPurchase(PurchaseType type) {
 		purchaseList.add(type);
 		savePlayerInfo();
+	}
+
+	public long getAccumulatedWorth() {
+		return accumulatedWorth;
 	}
 }

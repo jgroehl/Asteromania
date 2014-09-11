@@ -35,5 +35,6 @@
     <string name="double_shot">Doppelschuss</string>
     <string name="triple_shot">Dreifachschuss</string>
     <string name="purchase_doubleshot_first">Kaufe zuerst den Doppelschuss.</string>
+    <string name="ship_value">Gesamtwert</string>
 
 </resources>

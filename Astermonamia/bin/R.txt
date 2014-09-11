@@ -399,6 +399,7 @@ int string score 0x7f0b0019
 int string seconds 0x7f0b0028
 int string shield 0x7f0b0027
 int string shield_generator 0x7f0b002b
+int string ship_value 0x7f0b002f
 int string shop 0x7f0b001b
 int string shot_frequency 0x7f0b0017
 int string shot_speed 0x7f0b0016

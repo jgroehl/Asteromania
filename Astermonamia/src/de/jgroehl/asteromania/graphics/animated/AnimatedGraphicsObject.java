@@ -44,7 +44,7 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject {
 								Bitmap.createBitmap(graphics, i * width, 0,
 										width, height),
 								(int) (relativeWidth * c.getWidth()),
-								(int) (height * ((relativeWidth * c.getWidth()) / width)),
+								(int) (height * ((relativeWidth * c.getWidth()) / (float) width)),
 								true);
 			}
 			imageCache.put(graphicsId, imageFrames);
