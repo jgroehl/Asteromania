@@ -128,7 +128,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 			if (playerInfo.getLevel() > 0) {
 				if (!transition.isInitialized()) {
 					transition.initialize();
-					playerInfo.incerementScoreFactor();
+					playerInfo.incerementBonusFactor();
 					playerInfo.addCoins(playerInfo.getLevel());
 					playerInfo.nextLevel();
 				}

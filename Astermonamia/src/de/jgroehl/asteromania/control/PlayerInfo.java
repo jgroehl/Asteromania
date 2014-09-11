@@ -39,6 +39,8 @@ public class PlayerInfo {
 	private static final float HEALTH_X = 0.025f;
 	private static final float HEALTH_Y = 0.90f;
 
+	private static final long MAX_BONUS_FACTOR = 10;
+
 	private final Context context;
 	private final FileHandler fileHandler;
 
@@ -50,7 +52,7 @@ public class PlayerInfo {
 	private float shotFrequencyFactor;
 	private int bonusDamage;
 	private long currentHighscore;
-	private long currentScoreFactor;
+	private long currentBonusFactor;
 	private long lastHighscore;
 	private int shieldSeconds;
 	private final List<PurchaseType> purchaseList = new ArrayList<PurchaseType>();
@@ -101,6 +103,8 @@ public class PlayerInfo {
 			purchaseList.clear();
 			// TODO: Contact Google Play Services to check for already purchased
 			// items
+			Log.w(TAG,
+					"Google services not implemented yet. No purchased items found");
 		} else {
 			Log.d(TAG, "Reading purchases sucessful.");
 		}
@@ -121,14 +125,14 @@ public class PlayerInfo {
 
 	private void readCurrentScoreFactor() {
 		try {
-			currentScoreFactor = Long.parseLong(fileHandler
+			currentBonusFactor = Long.parseLong(fileHandler
 					.getDecryptedStringFromFile(SCORE_FACTOR_FILE_NAME));
-			Log.d(TAG, "Set current Score Factor to " + currentScoreFactor);
+			Log.d(TAG, "Set current Score Factor to " + currentBonusFactor);
 
 		} catch (NumberFormatException e) {
 			Log.w(TAG, "currentScoreFactor not readable. Setting level to "
 					+ DEFAULT_SCORE_FACTOR);
-			currentScoreFactor = DEFAULT_SCORE_FACTOR;
+			currentBonusFactor = DEFAULT_SCORE_FACTOR;
 		}
 	}
 
@@ -280,7 +284,7 @@ public class PlayerInfo {
 		fileHandler.writeAndEncryptString(HIGHSCORE_FILE_NAME,
 				String.valueOf(currentHighscore));
 		fileHandler.writeAndEncryptString(SCORE_FACTOR_FILE_NAME,
-				String.valueOf(currentScoreFactor));
+				String.valueOf(currentBonusFactor));
 		fileHandler.writeAndEncryptString(SHIELD_FILE_NAME,
 				String.valueOf(shieldSeconds));
 		if (purchaseList.size() > 0) {
@@ -354,7 +358,7 @@ public class PlayerInfo {
 	}
 
 	public void addScore(long value) {
-		currentHighscore += value * currentScoreFactor;
+		currentHighscore += value * currentBonusFactor;
 		lastHighscore = currentHighscore;
 	}
 
@@ -366,7 +370,7 @@ public class PlayerInfo {
 		healthPoints.reset();
 		level = DEFAULT_LEVEL - 1;
 		currentHighscore = DEFAULT_HIGHSCORE;
-		currentScoreFactor = DEFAULT_SCORE_FACTOR;
+		currentBonusFactor = DEFAULT_SCORE_FACTOR;
 	}
 
 	public void resetLastHighscore() {
@@ -374,15 +378,16 @@ public class PlayerInfo {
 	}
 
 	public void resetScoreBonus() {
-		currentScoreFactor = DEFAULT_SCORE_FACTOR;
+		currentBonusFactor = DEFAULT_SCORE_FACTOR;
 	}
 
 	public String getBonusFactor() {
-		return String.valueOf(currentScoreFactor);
+		return String.valueOf(currentBonusFactor);
 	}
 
-	public void incerementScoreFactor() {
-		currentScoreFactor++;
+	public void incerementBonusFactor() {
+		if (currentBonusFactor < MAX_BONUS_FACTOR)
+			currentBonusFactor++;
 	}
 
 	public long getLastHighscore() {
