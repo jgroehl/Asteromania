@@ -13,9 +13,9 @@ public class Starfield extends GameObject implements Drawable, Updatable {
 	private static final float SMALL_STAR_SPEED = 0.002f;
 	private static final float MEDIUM_STAR_SPEED = 0.004f;
 	private static final float BIG_STAR_SPEED = 0.008f;
-	private static final int SMALL_STAR_RADIUS = 2;
-	private static final int MEDIUM_STAR_RADIUS = 3;
-	private static final int BIG_STAR_RADIUS = 4;
+	private static final float SMALL_STAR_RADIUS = 0.01f;
+	private static final float MEDIUM_STAR_RADIUS = 0.025f;
+	private static final float BIG_STAR_RADIUS = 0.05f;
 	private static final int AMOUNT_OF_SMALL_STARS = 50;
 	private static final int AMOUNT_OF_MEDIUM_STARS = 30;
 	private static final int AMOUNT_OF_BIG_STARS = 15;
@@ -70,8 +70,8 @@ public class Starfield extends GameObject implements Drawable, Updatable {
 			star.accelerate(factor);
 		}
 	}
-	
-	public float getAcceleration(){
+
+	public float getAcceleration() {
 		return stars[0].getAcceleration();
 	}
 

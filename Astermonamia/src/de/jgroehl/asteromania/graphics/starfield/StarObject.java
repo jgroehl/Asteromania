@@ -11,17 +11,17 @@ import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 public class StarObject extends GameObject implements Updatable {
 
 	private final Paint starColor;
-	private final int diameter;
+	private final float relativeDiameter;
 	private final RectF starRect;
 	private final float speed;
 	private float speedFactor = 1.0f;
 
-	public StarObject(float xPosition, float yPosition, int diameter,
+	public StarObject(float xPosition, float yPosition, float relativeDiameter,
 			int paintColor, float speed, Context context) {
 		super(xPosition, yPosition, context);
 
 		this.speed = speed;
-		this.diameter = diameter;
+		this.relativeDiameter = relativeDiameter;
 		this.starColor = new Paint();
 		starColor.setColor(paintColor);
 		this.starRect = new RectF();
@@ -29,6 +29,8 @@ public class StarObject extends GameObject implements Updatable {
 
 	@Override
 	public void draw(Canvas c) {
+		int diameter = (int) (relativeDiameter * c.getWidth());
+
 		starRect.set((xPosition * c.getWidth() - diameter),
 				(yPosition * c.getHeight() - diameter),
 				(xPosition * c.getWidth() + diameter),
