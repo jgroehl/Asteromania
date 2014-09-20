@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+  <string name="app_id">827299913608</string>
+  <string name="achievement_getting_started.">CgkIiL-r94kYEAIQHg</string>
+  <string name="achievement_warmed_up_yet">CgkIiL-r94kYEAIQHw</string>
+  <string name="achievement_uber_leet">CgkIiL-r94kYEAIQIA</string>
+  <string name="achievement_this_is_what_im_talking_about.">CgkIiL-r94kYEAIQIQ</string>
+  <string name="achievement_getting_pro.">CgkIiL-r94kYEAIQIg</string>
+  <string name="achievement_nothing_to_do_all_day_long...">CgkIiL-r94kYEAIQIw</string>
+  <string name="achievement_feeling_protected">CgkIiL-r94kYEAIQJQ</string>
+  <string name="achievement_double_your_deeps.">CgkIiL-r94kYEAIQJg</string>
+  <string name="achievement_boom_boom_baby">CgkIiL-r94kYEAIQJw</string>
+  <string name="leaderboard_highscore">CgkIiL-r94kYEAIQFw</string>
+</resources>

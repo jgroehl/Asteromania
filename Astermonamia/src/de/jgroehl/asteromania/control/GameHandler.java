@@ -58,10 +58,12 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	private Starfield starfield;
 
+	private GoogleApiHandler apiHandler;
+
 	public GameHandler(GameState state, SoundManager soundManager,
 			Context context, FileHandler fileHandler,
 			SensorHandler sensorHandler, Transition transition,
-			Highscore highscore) {
+			Highscore highscore, GoogleApiHandler apiHandler) {
 		this.state = state;
 		for (GameState s : GameState.values()) {
 			gameObjects.put(s, new ArrayList<GameObject>());
@@ -72,6 +74,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		this.soundManager = soundManager;
 		this.context = context;
 		this.transition = transition;
+		this.apiHandler = apiHandler;
 		add(transition, GameState.MAIN);
 		add(highscore, GameState.HIGHSCORE);
 		playerInfo = new PlayerInfo(context, fileHandler);
@@ -224,6 +227,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 	public void gameLost() {
 		levelHandler.killAllEntities(this);
 		highscore.addNewHighscore(playerInfo.getCurrentHighscore());
+		apiHandler.addToLeaderBoard(playerInfo.getCurrentHighscore());
 		playerInfo.reset();
 		soundManager.playExplosionSound();
 		Explosion.createGameOver(this);
@@ -236,6 +240,10 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 
 	public Highscore getHighscore() {
 		return highscore;
+	}
+
+	public GoogleApiHandler getApiHandler() {
+		return apiHandler;
 	}
 
 }

@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.GameSetup;
 import de.jgroehl.asteromania.control.GameState;
+import de.jgroehl.asteromania.control.GoogleApiHandler;
 import de.jgroehl.asteromania.control.SoundManager;
 import de.jgroehl.asteromania.control.Transition;
 import de.jgroehl.asteromania.crypto.CryptoHandler;
@@ -32,7 +33,7 @@ public class MainGamePanel extends SurfaceView implements
 	private final GameHandler gameHandler;
 	private GameSetup gameSetup = new GameSetup();
 
-	public MainGamePanel(Context context) {
+	public MainGamePanel(Context context, GoogleApiHandler handler) {
 
 		super(context);
 
@@ -41,7 +42,7 @@ public class MainGamePanel extends SurfaceView implements
 		gameHandler = new GameHandler(GameState.MENU, new SoundManager(
 				getContext()), getContext(), fileHandler, new SensorHandler(
 				context, Context.SENSOR_SERVICE), new Transition(context),
-				new Highscore(context, fileHandler));
+				new Highscore(context, fileHandler), handler);
 
 		getHolder().addCallback(this);
 
@@ -92,7 +93,7 @@ public class MainGamePanel extends SurfaceView implements
 		Log.d(TAG, "Try stopping application...[Done]");
 	}
 
-	public void shutDown() {
+	private void shutDown() {
 		if (!(thread == null)) {
 			boolean retry = true;
 			while (retry) {
