@@ -10,18 +10,18 @@ import de.jgroehl.asteromania.graphics.interfaces.Drawable;
 
 public class Starfield extends GameObject implements Drawable, Updatable {
 
-	private static final float SMALL_STAR_SPEED = 0.002f;
+	private static final float SMALL_STAR_SPEED = 0.001f;
 	private static final float MEDIUM_STAR_SPEED = 0.004f;
 	private static final float BIG_STAR_SPEED = 0.008f;
-	private static final float SMALL_STAR_RADIUS = 0.01f;
-	private static final float MEDIUM_STAR_RADIUS = 0.025f;
-	private static final float BIG_STAR_RADIUS = 0.05f;
+	private static final float SMALL_STAR_RADIUS = 0.004f;
+	private static final float MEDIUM_STAR_RADIUS = 0.005f;
+	private static final float BIG_STAR_RADIUS = 0.0075f;
 	private static final int AMOUNT_OF_SMALL_STARS = 50;
 	private static final int AMOUNT_OF_MEDIUM_STARS = 30;
 	private static final int AMOUNT_OF_BIG_STARS = 15;
-	private static final int SMALL_STAR_COLOR = Color.rgb(50, 50, 0);
-	private static final int MEDIUM_STAR_COLOR = Color.rgb(100, 100, 0);
-	private static final int BIG_STAR_COLOR = Color.rgb(150, 150, 0);
+	private static final int SMALL_STAR_COLOR = Color.rgb(25, 25, 75);
+	private static final int MEDIUM_STAR_COLOR = Color.rgb(75, 75, 125);
+	private static final int BIG_STAR_COLOR = Color.rgb(125, 125, 175);
 
 	private final StarObject[] stars = new StarObject[AMOUNT_OF_SMALL_STARS
 			+ AMOUNT_OF_MEDIUM_STARS + AMOUNT_OF_BIG_STARS];
@@ -58,11 +58,9 @@ public class Starfield extends GameObject implements Drawable, Updatable {
 
 	@Override
 	public void update(GameHandler gameHandler) {
-
 		for (StarObject star : stars) {
 			star.update(gameHandler);
 		}
-
 	}
 
 	public void accelerate(float factor) {

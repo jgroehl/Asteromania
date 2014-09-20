@@ -17,6 +17,8 @@ import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
 
 public class GameSetup {
 
+	private boolean initialized = false;
+
 	public void initializeGameObjects(GameHandler gameHandler) {
 		gameHandler.add(new Starfield(gameHandler.getContext()),
 				GameState.values());
@@ -188,6 +190,11 @@ public class GameSetup {
 		gameHandler.add(new PlayerStatsDisplay(gameHandler.getPlayerInfo(),
 				gameHandler.getContext()), GameState.STATS);
 		gameHandler.update();
+		initialized = true;
 
+	}
+
+	public boolean alreadyInitialized() {
+		return initialized;
 	}
 }

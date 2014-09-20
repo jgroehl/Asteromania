@@ -75,7 +75,9 @@ public class MainGamePanel extends SurfaceView implements
 			Log.d(TAG, "Creating new MainThread...[Done]");
 		}
 		if (!thread.isRunning()) {
-			gameSetup.initializeGameObjects(gameHandler);
+			if (!gameSetup.alreadyInitialized()) {
+				gameSetup.initializeGameObjects(gameHandler);
+			}
 			thread.start();
 		} else {
 			Log.d(TAG, "Application already running.");
@@ -86,6 +88,11 @@ public class MainGamePanel extends SurfaceView implements
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.d(TAG, "Try stopping application...");
+		shutDown();
+		Log.d(TAG, "Try stopping application...[Done]");
+	}
+
+	public void shutDown() {
 		if (!(thread == null)) {
 			boolean retry = true;
 			while (retry) {
@@ -104,7 +111,6 @@ public class MainGamePanel extends SurfaceView implements
 			Log.d(TAG, "MainThread already released.");
 		}
 		gameHandler.getPlayerInfo().savePlayerInfo();
-		Log.d(TAG, "Try stopping application...[Done]");
 	}
 
 	@Override
