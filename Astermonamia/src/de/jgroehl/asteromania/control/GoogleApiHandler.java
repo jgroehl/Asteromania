@@ -1,6 +1,7 @@
 package de.jgroehl.asteromania.control;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -19,8 +20,11 @@ public class GoogleApiHandler {
 	}
 
 	public void addToLeaderBoard(long score) {
-		if (!apiClient.isConnected())
+		if (!apiClient.isConnected()) {
+			Toast.makeText(context, R.string.highscore_not_commited,
+					Toast.LENGTH_LONG).show();
 			return;
+		}
 		Games.Leaderboards.submitScore(apiClient, context.getResources()
 				.getString(R.string.leaderboard_highscore), score);
 		checkForHighscoreAchievement(score);
@@ -56,7 +60,7 @@ public class GoogleApiHandler {
 
 	}
 
-	public void unlockPurchase(PurchaseType type) {
+	public void unlockPurchaseAchievement(PurchaseType type) {
 
 		if (!apiClient.isConnected())
 			return;
@@ -65,15 +69,15 @@ public class GoogleApiHandler {
 
 		switch (type) {
 		case SHIELD_GENERATOR:
-			context.getResources().getString(
+			achievement = context.getResources().getString(
 					R.string.achievement_feeling_protected);
 			break;
 		case DOUBLE_SHOT:
-			context.getResources().getString(
+			achievement = context.getResources().getString(
 					R.string.achievement_double_your_deeps_);
 			break;
 		case TRIPLE_SHOT:
-			context.getResources().getString(
+			achievement = context.getResources().getString(
 					R.string.achievement_boom_boom_baby);
 			break;
 		default:
@@ -81,6 +85,60 @@ public class GoogleApiHandler {
 		}
 		Games.Achievements.unlock(apiClient, achievement);
 
+	}
+
+	public GoogleApiClient getApiClient() {
+		return apiClient;
+	}
+
+	public void checkForSpendingAchievement(long amount) {
+
+		if (!apiClient.isConnected())
+			return;
+
+		try {
+			String achievement = "";
+
+			if (amount >= 1000000) {
+				achievement = context.getResources().getString(
+						R.string.achievement_millionaire);
+			} else if (amount >= 250000) {
+				achievement = context.getResources().getString(
+						R.string.achievement_shopping_frenzy);
+			} else if (amount >= 50000) {
+				achievement = context.getResources().getString(
+						R.string.achievement_being_on_a_shopping_binge);
+			} else if (amount >= 1000) {
+				achievement = context.getResources().getString(
+						R.string.achievement_welcome_to_value_town_);
+			} else if (amount >= 250) {
+				achievement = context.getResources().getString(
+						R.string.achievement_upgrade_time_);
+			} else if (amount >= 1) {
+				achievement = context.getResources().getString(
+						R.string.achievement_shopping_time);
+			}
+			Games.Achievements.unlock(apiClient, achievement);
+		} catch (Exception e) {
+			Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+	}
+
+	public void killedEnemy() {
+		if (!apiClient.isConnected())
+			return;
+		Games.Events.increment(apiClient,
+				context.getResources().getString(R.string.event_aliens_killed),
+				1);
+	}
+
+	public void destroyedAsteroid() {
+		if (!apiClient.isConnected())
+			return;
+		Games.Events.increment(
+				apiClient,
+				context.getResources().getString(
+						R.string.event_asteroids_destroyed), 1);
 	}
 
 }

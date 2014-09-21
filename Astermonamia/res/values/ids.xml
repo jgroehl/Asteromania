@@ -14,5 +14,13 @@ Save this file as res/values/games-ids.xml in your project.
   <string name="achievement_feeling_protected">CgkIiL-r94kYEAIQJQ</string>
   <string name="achievement_double_your_deeps.">CgkIiL-r94kYEAIQJg</string>
   <string name="achievement_boom_boom_baby">CgkIiL-r94kYEAIQJw</string>
+  <string name="achievement_shopping_time">CgkIiL-r94kYEAIQKA</string>
+  <string name="achievement_upgrade_time.">CgkIiL-r94kYEAIQKQ</string>
+  <string name="achievement_welcome_to_value_town.">CgkIiL-r94kYEAIQKg</string>
+  <string name="achievement_being_on_a_shopping_binge">CgkIiL-r94kYEAIQKw</string>
+  <string name="achievement_shopping_frenzy">CgkIiL-r94kYEAIQLA</string>
+  <string name="achievement_millionaire">CgkIiL-r94kYEAIQLQ</string>
   <string name="leaderboard_highscore">CgkIiL-r94kYEAIQFw</string>
+  <string name="event_aliens_killed">CgkIiL-r94kYEAIQLg</string>
+  <string name="event_asteroids_destroyed">CgkIiL-r94kYEAIQLw</string>
 </resources>

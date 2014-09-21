@@ -3,13 +3,14 @@ package de.jgroehl.asteromania.control;
 import android.graphics.BitmapFactory;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
-import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
+import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
+import de.jgroehl.asteromania.control.callbacks.ShowLeaderboardCallback;
 import de.jgroehl.asteromania.control.interfaces.EventCallback;
+import de.jgroehl.asteromania.graphics.game.GameOverDisplay;
 import de.jgroehl.asteromania.graphics.game.player.PlayerInfoDisplay;
 import de.jgroehl.asteromania.graphics.game.player.PlayerStatsDisplay;
-import de.jgroehl.asteromania.graphics.starfield.GameOverDisplay;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
@@ -76,6 +77,12 @@ public class GameSetup {
 				gameHandler.add(button, state);
 				gameHandler.update();
 			}
+
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler
+						.getContext().getResources(), R.drawable.score_icon),
+						0.4f, 0.8f, 0.2f, 0.2f, new ShowLeaderboardCallback(),
+						gameHandler.getContext()), GameState.HIGHSCORE);
 
 		gameHandler.add(gameHandler.getPlayer(), GameState.MAIN);
 		gameHandler.update();
@@ -172,8 +179,8 @@ public class GameSetup {
 				GameState.SHOP2, GameState.SHOP3);
 
 		gameHandler.add(new Button(gameHandler.getContext().getResources()
-				.getString(de.jgroehl.asteromania.R.string.back), 0.3f, 0.745f,
-				0.4f, 0.2f, new EventCallback() {
+				.getString(de.jgroehl.asteromania.R.string.back), 0.4f, 0.75f,
+				0.5f, 0.2f, new EventCallback() {
 
 					@Override
 					public void action(GameHandler gameHandler) {
@@ -181,6 +188,12 @@ public class GameSetup {
 						gameHandler.setState(GameState.MENU);
 					}
 				}, gameHandler.getContext()), GameState.GAME_OVER);
+
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler
+						.getContext().getResources(), R.drawable.score_icon),
+						0.1f, 0.75f, 0.2f, 0.2f, new ShowLeaderboardCallback(),
+						gameHandler.getContext()), GameState.GAME_OVER);
 
 		gameHandler.add(new GameOverDisplay(gameHandler.getContext(),
 				gameHandler.getPlayerInfo(), gameHandler.getHighscore()),

@@ -36,5 +36,7 @@
     <string name="triple_shot">Dreifachschuss</string>
     <string name="purchase_doubleshot_first">Kaufe zuerst den Doppelschuss.</string>
     <string name="ship_value">Gesamtwert</string>
+    <string name="no_connection_to_play_services">Konnte nicht zu Google Play Verbinden.</string>
+    <string name="highscore_not_commited">Der Highscore wurde nicht in die Rangliste aufgenommen, da die Verbindung zu Google Play fehlschlug.</string>
 
 </resources>

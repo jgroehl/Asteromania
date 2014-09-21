@@ -14,12 +14,10 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.Log;
 import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.graphics.GameObject;
-import de.jgroehl.asteromania.graphics.interfaces.Clickable;
 import de.jgroehl.asteromania.io.FileHandler;
 
-public class Highscore extends GameObject implements Clickable {
+public class Highscore extends GameObject {
 
 	private class HighscoreElement implements Comparable<HighscoreElement> {
 
@@ -85,7 +83,7 @@ public class Highscore extends GameObject implements Clickable {
 		if (bigTextPaint == null) {
 			bigTextPaint = new Paint();
 			bigTextPaint.setColor(Color.WHITE);
-			bigTextPaint.setTextSize(c.getHeight() * 0.15f);
+			bigTextPaint.setTextSize(c.getHeight() * 0.13f);
 		}
 		if (smallTextPaint == null) {
 			smallTextPaint = new Paint();
@@ -93,41 +91,41 @@ public class Highscore extends GameObject implements Clickable {
 			smallTextPaint.setTextSize(c.getHeight() * 0.08f);
 		}
 
-		c.drawRect(c.getWidth() * 0.1f, c.getHeight() * 0.1f,
-				c.getWidth() * 0.9f, c.getHeight() * 0.9f, tablePaint);
-		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.36f,
-				c.getWidth() * 0.9f, c.getHeight() * 0.36f, tablePaint);
-		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.62f,
-				c.getWidth() * 0.9f, c.getHeight() * 0.62f, tablePaint);
+		c.drawRect(c.getWidth() * 0.1f, c.getHeight() * 0.0f,
+				c.getWidth() * 0.9f, c.getHeight() * 0.8f, tablePaint);
+		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.26f,
+				c.getWidth() * 0.9f, c.getHeight() * 0.26f, tablePaint);
+		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.52f,
+				c.getWidth() * 0.9f, c.getHeight() * 0.52f, tablePaint);
 
-		c.drawText("1.", c.getWidth() * 0.11f, c.getHeight() * 0.30f,
+		c.drawText("1.", c.getWidth() * 0.11f, c.getHeight() * 0.20f,
 				bigTextPaint);
-		c.drawText("2.", c.getWidth() * 0.11f, c.getHeight() * 0.56f,
+		c.drawText("2.", c.getWidth() * 0.11f, c.getHeight() * 0.46f,
 				bigTextPaint);
-		c.drawText("3.", c.getWidth() * 0.11f, c.getHeight() * 0.82f,
+		c.drawText("3.", c.getWidth() * 0.11f, c.getHeight() * 0.72f,
 				bigTextPaint);
 
 		Iterator<HighscoreElement> iterator = highscores.iterator();
 		if (highscores.size() >= 1) {
 			HighscoreElement highscoreElement = iterator.next();
-			c.drawText(highscoreElement.date, c.getWidth() * 0.25f,
-					c.getHeight() * 0.27f, smallTextPaint);
+			c.drawText(highscoreElement.date, c.getWidth() * 0.2f,
+					c.getHeight() * 0.17f, smallTextPaint);
 			c.drawText(String.valueOf(highscoreElement.score),
-					c.getWidth() * 0.55f, c.getHeight() * 0.27f, smallTextPaint);
+					c.getWidth() * 0.55f, c.getHeight() * 0.17f, smallTextPaint);
 		}
 		if (highscores.size() >= 2) {
 			HighscoreElement highscoreElement = iterator.next();
-			c.drawText(highscoreElement.date, c.getWidth() * 0.25f,
-					c.getHeight() * 0.53f, smallTextPaint);
+			c.drawText(highscoreElement.date, c.getWidth() * 0.2f,
+					c.getHeight() * 0.43f, smallTextPaint);
 			c.drawText(String.valueOf(highscoreElement.score),
-					c.getWidth() * 0.55f, c.getHeight() * 0.53f, smallTextPaint);
+					c.getWidth() * 0.55f, c.getHeight() * 0.43f, smallTextPaint);
 		}
 		if (highscores.size() >= 3) {
 			HighscoreElement highscoreElement = iterator.next();
-			c.drawText(highscoreElement.date, c.getWidth() * 0.25f,
-					c.getHeight() * 0.79f, smallTextPaint);
+			c.drawText(highscoreElement.date, c.getWidth() * 0.2f,
+					c.getHeight() * 0.69f, smallTextPaint);
 			c.drawText(String.valueOf(highscoreElement.score),
-					c.getWidth() * 0.55f, c.getHeight() * 0.79f, smallTextPaint);
+					c.getWidth() * 0.55f, c.getHeight() * 0.69f, smallTextPaint);
 		}
 
 	}
@@ -175,17 +173,9 @@ public class Highscore extends GameObject implements Clickable {
 	}
 
 	public boolean isNewHighscore(long currentHighscore) {
-		return highscores.toArray(new HighscoreElement[] {})[0].score <= currentHighscore;
+		HighscoreElement[] highscoreArray = highscores
+				.toArray(new HighscoreElement[] {});
+		return highscoreArray.length < 2
+				|| highscoreArray[1].score < currentHighscore;
 	}
-
-	@Override
-	public boolean isClicked(int x, int y, int screenWidth, int screenHeight) {
-		return true;
-	}
-
-	@Override
-	public void performAction(GameHandler gameHandler) {
-		gameHandler.setState(GameState.MENU);
-	}
-
 }

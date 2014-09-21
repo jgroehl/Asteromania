@@ -60,8 +60,12 @@ public class PlayerInfo {
 	private int shieldSeconds;
 	private final List<PurchaseType> purchaseList = new ArrayList<PurchaseType>();
 
-	public PlayerInfo(Context context, FileHandler fileHandler) {
+	private final GoogleApiHandler apiHandler;
+
+	public PlayerInfo(Context context, FileHandler fileHandler,
+			GoogleApiHandler apiHandler) {
 		this.context = context;
+		this.apiHandler = apiHandler;
 		this.fileHandler = fileHandler;
 		setUpPlayerInfo();
 	}
@@ -324,6 +328,7 @@ public class PlayerInfo {
 		coins += amount;
 		if (amount < 0) {
 			accumulatedWorth -= amount;
+			apiHandler.checkForSpendingAchievement(accumulatedWorth);
 		}
 	}
 

@@ -110,6 +110,7 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 						* Math.sqrt(damage)) + 1;
 				for (int i = 0; i < amountCoins; i++)
 					Coin.addToHandler(gameHandler, this);
+				gameHandler.getApiHandler().destroyedAsteroid();
 				gameHandler.getPlayerInfo().addScore((damage + 3) / 4);
 				gameHandler.getSoundManager().playExplosionSound();
 				Explosion.addExplosion(gameHandler, this);

@@ -46,7 +46,7 @@ public class PurchaseItemCallback implements EventCallback {
 					gameHandler.getPlayerInfo().addCoins(-type.cost);
 					gameHandler.getSoundManager().playPayingSound();
 					gameHandler.getPlayerInfo().addPurchase(type);
-					gameHandler.getApiHandler().unlockPurchase(type);
+					gameHandler.getApiHandler().unlockPurchaseAchievement(type);
 				}
 			} else {
 				Toast.makeText(

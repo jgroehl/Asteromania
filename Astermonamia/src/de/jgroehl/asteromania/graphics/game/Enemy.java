@@ -128,6 +128,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 						&& Math.random() < HEALTH_DROP_CHANCE) {
 					Heart.addToHandler(shotDamage / 2, gameHandler, this);
 				}
+				gameHandler.getApiHandler().killedEnemy();
 				gameHandler.getPlayerInfo().addScore(shotDamage);
 				gameHandler.getSoundManager().playExplosionSound();
 				Explosion.addExplosion(gameHandler, this);

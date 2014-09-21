@@ -77,7 +77,7 @@ public class GameHandler implements GraphicsHandler, EventHandler {
 		this.apiHandler = apiHandler;
 		add(transition, GameState.MAIN);
 		add(highscore, GameState.HIGHSCORE);
-		playerInfo = new PlayerInfo(context, fileHandler);
+		playerInfo = new PlayerInfo(context, fileHandler, apiHandler);
 		player = new SpaceShip(sensorHandler, context, playerInfo);
 		levelHandler = new LevelHandler();
 		playerInfoDisplay = new PlayerInfoDisplay(context, playerInfo, false);

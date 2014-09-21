@@ -36,5 +36,7 @@
     <string name="triple_shot">Triple Shot</string>
     <string name="purchase_doubleshot_first">Purchase double shot first.</string>
     <string name="ship_value">Ship value</string>
+    <string name="no_connection_to_play_services">Unable to conect to Google Play Services.</string>
+    <string name="highscore_not_commited">Highscore was no commited to Google Play due to a connection error.</string>
 
 </resources>
