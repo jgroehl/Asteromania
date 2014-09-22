@@ -4,13 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.GameObject;
+import de.jgroehl.api.graphics.animated.AnimatedGraphicsObject;
+import de.jgroehl.api.graphics.animated.SimpleAnimatedObject;
 import de.jgroehl.asteromania.R;
-import de.jgroehl.asteromania.control.GameHandler;
 import de.jgroehl.asteromania.control.PlayerInfo;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
-import de.jgroehl.asteromania.graphics.GameObject;
-import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
-import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
 
 public class PlayerStatsDisplay extends GameObject {
 
@@ -104,7 +104,7 @@ public class PlayerStatsDisplay extends GameObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 		spaceship.update(gameHandler);
 	}
 

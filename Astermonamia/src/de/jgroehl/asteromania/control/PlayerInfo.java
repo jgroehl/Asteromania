@@ -5,10 +5,10 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
-import de.jgroehl.asteromania.MainActivity;
+import de.jgroehl.api.io.FileHandler;
+import de.jgroehl.asteromania.AsteromaniaMainActivity;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
-import de.jgroehl.asteromania.io.FileHandler;
 
 public class PlayerInfo {
 
@@ -32,7 +32,7 @@ public class PlayerInfo {
 	private static final int DEFAULT_SHIELD_SECONDS = 0;
 	private static final long DEFAULT_HIGHSCORE = 0;
 	private static final long DEFAULT_SCORE_FACTOR = 1;
-	private static final int DEFAULT_COIN_VALUE = MainActivity.DEBUG ? 1000000
+	private static final int DEFAULT_COIN_VALUE = AsteromaniaMainActivity.DEBUG ? 1000000
 			: 100;
 	private static final long DEFAULT_ACCUMULATED_PURCHASES = 0;
 

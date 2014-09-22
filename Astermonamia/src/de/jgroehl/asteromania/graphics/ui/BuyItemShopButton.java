@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import de.jgroehl.api.graphics.ui.Button;
 import de.jgroehl.asteromania.control.PlayerInfo;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;

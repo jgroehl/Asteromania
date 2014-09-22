@@ -1,10 +1,11 @@
 package de.jgroehl.asteromania.graphics.game;
 
 import android.content.Context;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
-import de.jgroehl.asteromania.graphics.GraphicsObject;
-import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.graphics.GraphicsObject;
+import de.jgroehl.api.graphics.animated.AnimatedGraphicsObject;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 
 public class Coin extends AnimatedGraphicsObject {
 
@@ -20,27 +21,33 @@ public class Coin extends AnimatedGraphicsObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 
-		yPosition += V_SPEED;
-		if (yPosition > GraphicsObject.SCREEN_MAXIMUM)
-			gameHandler.remove(this);
+		if (gameHandler instanceof AsteromaniaGameHandler) {
 
-		if (imagesOverlap(this.xPosition, this.yPosition, this.relativeWidth,
-				this.relativeHeight, gameHandler.getPlayer().getX(),
-				gameHandler.getPlayer().getY(), gameHandler.getPlayer()
-						.getRelativeWidth(), gameHandler.getPlayer()
-						.getRelativeHeight())) {
-			gameHandler.getSoundManager().playCoinSound();
-			gameHandler.getPlayerInfo().addCoins(1);
-			gameHandler.remove(this);
+			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
+
+			yPosition += V_SPEED;
+			if (yPosition > GraphicsObject.SCREEN_MAXIMUM)
+				asteromaniaGameHandler.remove(this);
+
+			if (imagesOverlap(this.xPosition, this.yPosition,
+					this.relativeWidth, this.relativeHeight,
+					asteromaniaGameHandler.getPlayer().getX(),
+					asteromaniaGameHandler.getPlayer().getY(),
+					asteromaniaGameHandler.getPlayer().getRelativeWidth(),
+					asteromaniaGameHandler.getPlayer().getRelativeHeight())) {
+				asteromaniaGameHandler.getSoundManager().playCoinSound();
+				asteromaniaGameHandler.getPlayerInfo().addCoins(1);
+				asteromaniaGameHandler.remove(this);
+			}
+
+			setFrame((getFrame() + 1) % getMaxFrame());
 		}
-
-		setFrame((getFrame() + 1) % getMaxFrame());
 
 	}
 
-	public static void addToHandler(GameHandler gameHandler,
+	public static void addToHandler(AsteromaniaGameHandler gameHandler,
 			GraphicsObject parent) {
 		gameHandler.add(
 				new Coin(parent.getX() + (parent.getRelativeWidth() / 2)

@@ -8,46 +8,42 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.api.AbstractGamePanel;
+import de.jgroehl.api.AbstractMainActivity;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.crypto.CryptoHandler;
+import de.jgroehl.api.graphics.interfaces.Drawable;
+import de.jgroehl.api.graphics.interfaces.Updatable;
+import de.jgroehl.api.io.FileHandler;
+import de.jgroehl.api.utils.SensorHandler;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.control.GameSetup;
-import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.control.GoogleApiHandler;
 import de.jgroehl.asteromania.control.SoundManager;
 import de.jgroehl.asteromania.control.Transition;
-import de.jgroehl.asteromania.crypto.CryptoHandler;
-import de.jgroehl.asteromania.graphics.interfaces.Drawable;
-import de.jgroehl.asteromania.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
-import de.jgroehl.asteromania.io.FileHandler;
-import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
-public class MainGamePanel extends SurfaceView implements
-		SurfaceHolder.Callback {
+public class MainGamePanel extends AbstractGamePanel {
 
 	private static final String TAG = MainGamePanel.class.getSimpleName();
-	private MainThread thread;
 
 	private final Paint backgroundPaint = new Paint();
 
-	private final GameHandler gameHandler;
+	private final AsteromaniaGameHandler gameHandler;
 	private GameSetup gameSetup = new GameSetup();
 
-	public MainGamePanel(Context context, GoogleApiHandler handler) {
+	public MainGamePanel(Context context, GoogleApiHandler handler,
+			AbstractMainActivity abstractMainActivity) {
 
-		super(context);
+		super(context, abstractMainActivity);
 
 		FileHandler fileHandler = new FileHandler(new CryptoHandler(
 				getContext()), getContext());
-		gameHandler = new GameHandler(GameState.MENU, new SoundManager(
-				getContext()), getContext(), fileHandler, new SensorHandler(
-				context, Context.SENSOR_SERVICE), new Transition(context),
-				new Highscore(context, fileHandler), handler);
-
-		getHolder().addCallback(this);
-
-		setFocusable(true);
-		setDrawingCacheEnabled(true);
+		gameHandler = new AsteromaniaGameHandler(GameState.MENU,
+				new SoundManager(getContext()), getContext(), fileHandler,
+				new SensorHandler(context, Context.SENSOR_SERVICE),
+				new Transition(context), new Highscore(context, fileHandler),
+				handler);
 
 		backgroundPaint.setStyle(Paint.Style.FILL);
 		backgroundPaint.setColor(Color.BLACK);
@@ -55,62 +51,8 @@ public class MainGamePanel extends SurfaceView implements
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		Log.d(TAG, "Surface changed called...");
-	}
-
-	@Override
-	public void onWindowFocusChanged(boolean hasWindowFocus) {
-		Log.d(TAG, "Focus changed "
-				+ (hasWindowFocus ? "to Asteromania" : "to another program"));
-		super.onWindowFocusChanged(hasWindowFocus);
-	}
-
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		Log.d(TAG, "Try starting application...");
-		if (thread == null) {
-			Log.d(TAG, "Creating new MainThread...");
-			thread = new MainThread(this.getHolder(), this);
-			Log.d(TAG, "Creating new MainThread...[Done]");
-		}
-		if (!thread.isRunning()) {
-			if (!gameSetup.alreadyInitialized()) {
-				gameSetup.initializeGameObjects(gameHandler);
-			}
-			thread.start();
-		} else {
-			Log.d(TAG, "Application already running.");
-		}
-		Log.d(TAG, "Try starting application...[Done]");
-	}
-
-	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.d(TAG, "Try stopping application...");
-		shutDown();
-		Log.d(TAG, "Try stopping application...[Done]");
-	}
-
-	private void shutDown() {
-		if (!(thread == null)) {
-			boolean retry = true;
-			while (retry) {
-				try {
-					thread.setRunning(false);
-					thread.join();
-					Log.d(TAG, "Releasing MainThread...");
-					thread = null;
-					Log.d(TAG, "Releasing MainThread...[Done]");
-					retry = false;
-				} catch (InterruptedException e) {
-					Log.w(TAG, "Thread was not stopped.");
-				}
-			}
-		} else {
-			Log.d(TAG, "MainThread already released.");
-		}
+		super.surfaceDestroyed(holder);
 		gameHandler.getPlayerInfo().savePlayerInfo();
 	}
 
@@ -120,12 +62,14 @@ public class MainGamePanel extends SurfaceView implements
 		return super.onTouchEvent(event);
 	}
 
+	@Override
 	public void updateGameState() {
 		for (Updatable u : gameHandler.getAllUpdatableObjects()) {
 			u.update(gameHandler);
 		}
 	}
 
+	@Override
 	public void displayGameState(Canvas c) {
 
 		if (c != null) {
@@ -149,12 +93,31 @@ public class MainGamePanel extends SurfaceView implements
 		c.drawRect(new Rect(0, 0, c.getWidth(), c.getHeight()), backgroundPaint);
 	}
 
+	@Override
 	public void update() {
 		gameHandler.update();
 	}
 
-	public GameHandler getGameHandler() {
+	public AsteromaniaGameHandler getGameHandler() {
 		return gameHandler;
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+		super.surfaceChanged(arg0, arg1, arg2, arg3);
+
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder arg0) {
+		super.surfaceCreated(arg0);
+
+	}
+
+	@Override
+	public void initializeGameObjects() {
+		gameSetup.initializeGameObjects(gameHandler);
+
 	}
 
 }

@@ -1,8 +1,9 @@
 package de.jgroehl.asteromania.control.callbacks;
 
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
-import de.jgroehl.asteromania.control.interfaces.EventCallback;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.control.interfaces.EventCallback;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 
 public class MenuButtonCallback implements EventCallback {
 
@@ -13,9 +14,12 @@ public class MenuButtonCallback implements EventCallback {
 	}
 
 	@Override
-	public void action(GameHandler gameHandler) {
-		gameHandler.getSoundManager().playClickSound();
-		gameHandler.setState(state);
-	}
+	public void action(BaseGameHandler gameHandler) {
+		if (gameHandler instanceof AsteromaniaGameHandler) {
 
+			((AsteromaniaGameHandler) gameHandler).getSoundManager()
+					.playClickSound();
+			gameHandler.setState(state);
+		}
+	}
 }

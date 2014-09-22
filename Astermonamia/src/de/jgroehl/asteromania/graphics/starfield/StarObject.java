@@ -4,9 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.graphics.GameObject;
-import de.jgroehl.asteromania.graphics.interfaces.Updatable;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.GameObject;
+import de.jgroehl.api.graphics.interfaces.Updatable;
 
 public class StarObject extends GameObject implements Updatable {
 
@@ -39,7 +39,7 @@ public class StarObject extends GameObject implements Updatable {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 
 		yPosition = yPosition + speed * speedFactor;
 		if (yPosition >= 1) {

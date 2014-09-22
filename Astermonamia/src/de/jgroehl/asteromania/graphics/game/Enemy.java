@@ -4,15 +4,17 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import de.jgroehl.asteromania.MainActivity;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
-import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
-import de.jgroehl.asteromania.graphics.game.Shot.Target;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.graphics.AbstractDamagingAbility;
+import de.jgroehl.api.graphics.Target;
+import de.jgroehl.api.graphics.animated.SimpleAnimatedObject;
+import de.jgroehl.api.graphics.interfaces.Hitable;
+import de.jgroehl.api.graphics.interfaces.Killable;
+import de.jgroehl.api.time.Timer;
+import de.jgroehl.asteromania.AsteromaniaMainActivity;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
-import de.jgroehl.asteromania.graphics.interfaces.Hitable;
-import de.jgroehl.asteromania.graphics.interfaces.Killable;
-import de.jgroehl.asteromania.time.Timer;
 
 public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
@@ -60,45 +62,49 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	}
 
 	@Override
-	public void update(GameHandler handler) {
-		if (moveRight) {
-			xPosition = xPosition + speed;
-			if (xPosition > SCREEN_MAXIMUM - getRelativeWidth() / 2)
-				moveRight = false;
-		} else {
-			xPosition = xPosition - speed;
-			if (xPosition < SCREEN_MINIMUM - getRelativeWidth() / 2)
-				moveRight = true;
+	public void update(BaseGameHandler handler) {
+		if (handler instanceof AsteromaniaGameHandler) {
+
+			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) handler;
+			if (moveRight) {
+				xPosition = xPosition + speed;
+				if (xPosition > SCREEN_MAXIMUM - getRelativeWidth() / 2)
+					moveRight = false;
+			} else {
+				xPosition = xPosition - speed;
+				if (xPosition < SCREEN_MINIMUM - getRelativeWidth() / 2)
+					moveRight = true;
+			}
+
+			if (moveTop) {
+				yPosition = yPosition - speed / 2;
+				if (yPosition < UPPER_BOUND)
+					moveTop = false;
+			} else {
+				yPosition = yPosition + speed / 2;
+				if (yPosition > LOWER_BOUND)
+					moveTop = true;
+			}
+
+			if (shootTimer.isPeriodOver()) {
+				asteromaniaGameHandler.getSoundManager().playEnemyShotSound();
+				handler.add(new Shot(xPosition + relativeWidth / 2, yPosition
+						+ relativeHeight * 0.4f, Target.PLAYER, shotSpeed,
+						context, shotDamage, this), GameState.MAIN);
+			}
+
+			hpBar.setPosition(xPosition, yPosition + relativeHeight);
+			hpBar.setRelativeWidth(relativeWidth);
+
+			super.update(handler);
 		}
-
-		if (moveTop) {
-			yPosition = yPosition - speed / 2;
-			if (yPosition < UPPER_BOUND)
-				moveTop = false;
-		} else {
-			yPosition = yPosition + speed / 2;
-			if (yPosition > LOWER_BOUND)
-				moveTop = true;
-		}
-
-		if (shootTimer.isPeriodOver()) {
-			handler.getSoundManager().playEnemyShotSound();
-			handler.add(new Shot(xPosition + relativeWidth / 2, yPosition
-					+ relativeHeight * 0.4f, Target.PLAYER, shotSpeed, context,
-					shotDamage, this), GameState.MAIN);
-		}
-
-		hpBar.setPosition(xPosition, yPosition + relativeHeight);
-		hpBar.setRelativeWidth(relativeWidth);
-
-		super.update(handler);
 	}
 
 	@Override
 	public void draw(Canvas c) {
 		hpBar.draw(c);
 		super.draw(c);
-		if (MainActivity.DEBUG) {
+		if (AsteromaniaMainActivity.DEBUG) {
 			c.drawText(
 					hpBar.getCurrentValue() + "/" + hpBar.getMaximum(),
 					getX() * c.getWidth(),
@@ -115,26 +121,35 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	}
 
 	@Override
-	public void getShot(GameHandler gameHandler, Shot shot) {
-		if (shot.getTarget() == Target.ENEMY) {
-			gameHandler.getSoundManager().playEnemyHitSound();
-			hpBar.setCurrentValue(hpBar.getCurrentValue() - shot.getDamage());
-			if (hpBar.getCurrentValue() <= 0) {
-				int amountCoins = (int) ((0.25 + Math.random() * 0.5)
-						* shotDamage + MINIMUM_AMOUNT_COINS_DROPPED);
-				for (int i = 0; i < amountCoins; i++)
-					Coin.addToHandler(gameHandler, this);
-				if (gameHandler.getPlayerInfo().isMissingHealth()
-						&& Math.random() < HEALTH_DROP_CHANCE) {
-					Heart.addToHandler(shotDamage / 2, gameHandler, this);
+	public void getShot(BaseGameHandler gameHandler,
+			AbstractDamagingAbility shot) {
+		if (gameHandler instanceof AsteromaniaGameHandler) {
+
+			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
+			if (shot.getTarget() == Target.ENEMY) {
+				asteromaniaGameHandler.getSoundManager().playEnemyHitSound();
+				hpBar.setCurrentValue(hpBar.getCurrentValue()
+						- shot.getDamage());
+				if (hpBar.getCurrentValue() <= 0) {
+					int amountCoins = (int) ((0.25 + Math.random() * 0.5)
+							* shotDamage + MINIMUM_AMOUNT_COINS_DROPPED);
+					for (int i = 0; i < amountCoins; i++)
+						Coin.addToHandler(asteromaniaGameHandler, this);
+					if (asteromaniaGameHandler.getPlayerInfo()
+							.isMissingHealth()
+							&& Math.random() < HEALTH_DROP_CHANCE) {
+						Heart.addToHandler(shotDamage / 2,
+								asteromaniaGameHandler, this);
+					}
+					asteromaniaGameHandler.getApiHandler().killedEnemy();
+					asteromaniaGameHandler.getPlayerInfo().addScore(shotDamage);
+					asteromaniaGameHandler.getSoundManager()
+							.playExplosionSound();
+					Explosion.addExplosion(asteromaniaGameHandler, this);
+					gameHandler.remove(this);
 				}
-				gameHandler.getApiHandler().killedEnemy();
-				gameHandler.getPlayerInfo().addScore(shotDamage);
-				gameHandler.getSoundManager().playExplosionSound();
-				Explosion.addExplosion(gameHandler, this);
-				gameHandler.remove(this);
+				gameHandler.remove(shot);
 			}
-			gameHandler.remove(shot);
 		}
 	}
 

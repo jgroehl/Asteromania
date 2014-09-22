@@ -3,16 +3,17 @@ package de.jgroehl.asteromania.graphics.game.player;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.AbstractDamagingAbility;
+import de.jgroehl.api.graphics.Target;
+import de.jgroehl.api.graphics.animated.AnimatedGraphicsObject;
+import de.jgroehl.api.graphics.animated.SimpleAnimatedObject;
+import de.jgroehl.api.graphics.interfaces.Hitable;
+import de.jgroehl.api.utils.SensorHandler;
 import de.jgroehl.asteromania.R;
-import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.control.PlayerInfo;
-import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
-import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
 import de.jgroehl.asteromania.graphics.game.ShieldGenerator;
-import de.jgroehl.asteromania.graphics.game.Shot;
-import de.jgroehl.asteromania.graphics.game.Shot.Target;
-import de.jgroehl.asteromania.graphics.interfaces.Hitable;
-import de.jgroehl.asteromania.sensoryInfo.SensorHandler;
 
 public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
@@ -44,7 +45,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	}
 
 	@Override
-	public void update(GameHandler handler) {
+	public void update(BaseGameHandler handler) {
 
 		float pitch = sensorHandler.getPitchAngle();
 
@@ -68,7 +69,6 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 				yPosition + getRelativeHeight() / 2
 						- shield.getRelativeHeight() / 2);
 		shield.update(handler);
-
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 	}
 
-	private void movePlayerAccordingToPitch(float pitch, GameHandler handler) {
+	private void movePlayerAccordingToPitch(float pitch, BaseGameHandler handler) {
 		float sign = Math.signum(pitch);
 
 		if (Math.abs(pitch) > MAX_DEGREE) {
@@ -108,10 +108,16 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
 		float value = (float) (Math.pow(Math.abs(pitch) / MAX_DEGREE, 1.4f));
 
-		if (value > MAX_SHIP_SPEED
-				* handler.getPlayerInfo().getMaxSpeedFactor())
-			value = MAX_SHIP_SPEED
-					* handler.getPlayerInfo().getMaxSpeedFactor();
+		if (handler instanceof AsteromaniaGameHandler) {
+			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) handler;
+
+			if (value > MAX_SHIP_SPEED
+					* asteromaniaGameHandler.getPlayerInfo()
+							.getMaxSpeedFactor())
+				value = MAX_SHIP_SPEED
+						* asteromaniaGameHandler.getPlayerInfo()
+								.getMaxSpeedFactor();
+		}
 
 		xPosition -= value * sign;
 
@@ -127,30 +133,39 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	}
 
 	@Override
-	public void getShot(GameHandler gameHandler, Shot shot) {
-		if (shot.getTarget() == Target.PLAYER) {
-			if (shield.isActive()) {
-				gameHandler.getSoundManager().playShieldHitSound();
-				shield.minorHit();
-			} else {
-				gameHandler.getSoundManager().playPlayerHitSound();
-				gameHandler.getPlayerInfo().resetScoreBonus();
-				gameHandler
-						.getPlayerInfo()
-						.getHealthPoints()
-						.setCurrentValue(
-								gameHandler.getPlayerInfo().getHealthPoints()
-										.getCurrentValue()
-										- shot.getDamage());
-				if (gameHandler.getPlayerInfo().getHealthPoints()
-						.getCurrentValue() <= 0)
-					gameHandler.gameLost();
+	public void getShot(BaseGameHandler gameHandler,
+			AbstractDamagingAbility shot) {
+
+		if (gameHandler instanceof AsteromaniaGameHandler) {
+			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
+
+			if (shot.getTarget() == Target.PLAYER) {
+				if (shield.isActive()) {
+					asteromaniaGameHandler.getSoundManager()
+							.playShieldHitSound();
+					shield.minorHit();
+				} else {
+					asteromaniaGameHandler.getSoundManager()
+							.playPlayerHitSound();
+					asteromaniaGameHandler.getPlayerInfo().resetScoreBonus();
+					asteromaniaGameHandler
+							.getPlayerInfo()
+							.getHealthPoints()
+							.setCurrentValue(
+									asteromaniaGameHandler.getPlayerInfo()
+											.getHealthPoints()
+											.getCurrentValue()
+											- shot.getDamage());
+					if (asteromaniaGameHandler.getPlayerInfo()
+							.getHealthPoints().getCurrentValue() <= 0)
+						asteromaniaGameHandler.gameLost();
+				}
+				gameHandler.remove(shot);
 			}
-			gameHandler.remove(shot);
 		}
 	}
 
-	public void getHitByAsteroid(GameHandler gameHandler, int damage) {
+	public void getHitByAsteroid(AsteromaniaGameHandler gameHandler, int damage) {
 		if (shield.isActive()) {
 			gameHandler.getSoundManager().playShieldHitSound();
 			shield.majorHit();

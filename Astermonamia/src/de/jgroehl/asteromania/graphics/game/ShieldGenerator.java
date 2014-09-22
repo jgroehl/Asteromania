@@ -3,12 +3,12 @@ package de.jgroehl.asteromania.graphics.game;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.graphics.animated.SimpleAnimatedObject;
+import de.jgroehl.api.time.Timer;
 import de.jgroehl.asteromania.R;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
 import de.jgroehl.asteromania.control.PlayerInfo;
-import de.jgroehl.asteromania.graphics.animated.SimpleAnimatedObject;
-import de.jgroehl.asteromania.time.Timer;
 
 public class ShieldGenerator extends SimpleAnimatedObject {
 
@@ -40,7 +40,7 @@ public class ShieldGenerator extends SimpleAnimatedObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 		super.update(gameHandler);
 
 		if (isActive() && gameHandler.getGameState() == GameState.MAIN

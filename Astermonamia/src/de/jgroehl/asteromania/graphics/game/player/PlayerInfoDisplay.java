@@ -9,10 +9,10 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import de.jgroehl.asteromania.MainActivity;
-import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.GameObject;
+import de.jgroehl.asteromania.AsteromaniaMainActivity;
 import de.jgroehl.asteromania.control.PlayerInfo;
-import de.jgroehl.asteromania.graphics.GameObject;
 
 public class PlayerInfoDisplay extends GameObject {
 
@@ -67,7 +67,7 @@ public class PlayerInfoDisplay extends GameObject {
 							de.jgroehl.asteromania.R.string.score)
 							+ " "
 							+ String.valueOf(playerInfo.getCurrentHighscore())
-							+ (MainActivity.DEBUG ? " ("
+							+ (AsteromaniaMainActivity.DEBUG ? " ("
 									+ playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth() + 1, 0.11f * c.getHeight() + 1,
 					textPaint);
@@ -82,7 +82,7 @@ public class PlayerInfoDisplay extends GameObject {
 							de.jgroehl.asteromania.R.string.score)
 							+ " "
 							+ String.valueOf(playerInfo.getCurrentHighscore())
-							+ (MainActivity.DEBUG ? " ("
+							+ (AsteromaniaMainActivity.DEBUG ? " ("
 									+ playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth(), 0.11f * c.getHeight(), textPaint);
 
@@ -114,7 +114,7 @@ public class PlayerInfoDisplay extends GameObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 	}
 
 }

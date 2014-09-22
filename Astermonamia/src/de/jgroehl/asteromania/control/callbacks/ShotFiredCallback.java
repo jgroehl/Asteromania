@@ -1,12 +1,13 @@
 package de.jgroehl.asteromania.control.callbacks;
 
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
-import de.jgroehl.asteromania.control.interfaces.EventCallback;
-import de.jgroehl.asteromania.graphics.GameObject.Level;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.control.interfaces.EventCallback;
+import de.jgroehl.api.graphics.GameObject.Level;
+import de.jgroehl.api.graphics.Target;
+import de.jgroehl.api.time.Timer;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.graphics.game.Shot;
-import de.jgroehl.asteromania.graphics.game.Shot.Target;
-import de.jgroehl.asteromania.time.Timer;
 
 public class ShotFiredCallback implements EventCallback {
 
@@ -14,102 +15,128 @@ public class ShotFiredCallback implements EventCallback {
 	private final Timer shotFrequencyTimer = new Timer(BASIC_SHOOT_FREQUENCY);
 
 	@Override
-	public void action(GameHandler gameHandler) {
-		if (shotFrequencyTimer.isPeriodOver()) {
-			gameHandler.getSoundManager().playNormalShotSound();
-			if (gameHandler.getPlayerInfo().purchasedTripleShot()) {
+	public void action(BaseGameHandler gameHandler) {
+		if (gameHandler instanceof AsteromaniaGameHandler) {
 
-				Shot shot = new Shot(gameHandler.getPlayer().getX()
-						+ gameHandler.getPlayer().getRelativeWidth() * 0.08f,
-						gameHandler.getPlayer().getY()
-								+ gameHandler.getPlayer().getRelativeHeight()
-								* 0.4f, Target.ENEMY, gameHandler.getPlayer()
-								.getShotSpeed()
-								* gameHandler.getPlayerInfo()
-										.getShotSpeedFactor(),
-						gameHandler.getContext(), gameHandler.getPlayer()
-								.getShotDamage()
-								+ gameHandler.getPlayerInfo().getBonusDamage(),
-						null);
-				shot.setLevel(Level.BOTTOM);
-				gameHandler.add(shot, GameState.MAIN);
+			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
 
-				Shot shot2 = new Shot(gameHandler.getPlayer().getX()
-						+ gameHandler.getPlayer().getRelativeWidth() * 0.48f,
-						gameHandler.getPlayer().getY(), Target.ENEMY,
-						gameHandler.getPlayer().getShotSpeed()
-								* gameHandler.getPlayerInfo()
-										.getShotSpeedFactor(),
-						gameHandler.getContext(), gameHandler.getPlayer()
-								.getShotDamage()
-								+ gameHandler.getPlayerInfo().getBonusDamage(),
-						null);
-				shot2.setLevel(Level.BOTTOM);
-				gameHandler.add(shot2, GameState.MAIN);
+			if (shotFrequencyTimer.isPeriodOver()) {
+				asteromaniaGameHandler.getSoundManager().playNormalShotSound();
+				if (asteromaniaGameHandler.getPlayerInfo()
+						.purchasedTripleShot()) {
 
-				Shot shot3 = new Shot(gameHandler.getPlayer().getX()
-						+ gameHandler.getPlayer().getRelativeWidth() * 0.88f,
-						gameHandler.getPlayer().getY()
-								+ gameHandler.getPlayer().getRelativeHeight()
-								* 0.4f, Target.ENEMY, gameHandler.getPlayer()
-								.getShotSpeed()
-								* gameHandler.getPlayerInfo()
-										.getShotSpeedFactor(),
-						gameHandler.getContext(), gameHandler.getPlayer()
-								.getShotDamage()
-								+ gameHandler.getPlayerInfo().getBonusDamage(),
-						null);
-				shot3.setLevel(Level.BOTTOM);
-				gameHandler.add(shot3, GameState.MAIN);
+					Shot shot = new Shot(asteromaniaGameHandler.getPlayer()
+							.getX()
+							+ asteromaniaGameHandler.getPlayer()
+									.getRelativeWidth() * 0.08f,
+							asteromaniaGameHandler.getPlayer().getY()
+									+ asteromaniaGameHandler.getPlayer()
+											.getRelativeHeight() * 0.4f,
+							Target.ENEMY, asteromaniaGameHandler.getPlayer()
+									.getShotSpeed()
+									* asteromaniaGameHandler.getPlayerInfo()
+											.getShotSpeedFactor(),
+							asteromaniaGameHandler.getContext(),
+							asteromaniaGameHandler.getPlayer().getShotDamage()
+									+ asteromaniaGameHandler.getPlayerInfo()
+											.getBonusDamage(), null);
+					shot.setLevel(Level.BOTTOM);
+					asteromaniaGameHandler.add(shot, GameState.MAIN);
 
-			} else if (gameHandler.getPlayerInfo().purchasedDoubleShot()) {
+					Shot shot2 = new Shot(asteromaniaGameHandler.getPlayer()
+							.getX()
+							+ asteromaniaGameHandler.getPlayer()
+									.getRelativeWidth() * 0.48f,
+							asteromaniaGameHandler.getPlayer().getY(),
+							Target.ENEMY, asteromaniaGameHandler.getPlayer()
+									.getShotSpeed()
+									* asteromaniaGameHandler.getPlayerInfo()
+											.getShotSpeedFactor(),
+							asteromaniaGameHandler.getContext(),
+							asteromaniaGameHandler.getPlayer().getShotDamage()
+									+ asteromaniaGameHandler.getPlayerInfo()
+											.getBonusDamage(), null);
+					shot2.setLevel(Level.BOTTOM);
+					asteromaniaGameHandler.add(shot2, GameState.MAIN);
 
-				Shot shot = new Shot(gameHandler.getPlayer().getX()
-						+ gameHandler.getPlayer().getRelativeWidth() * 0.28f,
-						gameHandler.getPlayer().getY()
-								+ gameHandler.getPlayer().getRelativeHeight()
-								* 0.2f, Target.ENEMY, gameHandler.getPlayer()
-								.getShotSpeed()
-								* gameHandler.getPlayerInfo()
-										.getShotSpeedFactor(),
-						gameHandler.getContext(), gameHandler.getPlayer()
-								.getShotDamage()
-								+ gameHandler.getPlayerInfo().getBonusDamage(),
-						null);
-				shot.setLevel(Level.BOTTOM);
-				gameHandler.add(shot, GameState.MAIN);
+					Shot shot3 = new Shot(asteromaniaGameHandler.getPlayer()
+							.getX()
+							+ asteromaniaGameHandler.getPlayer()
+									.getRelativeWidth() * 0.88f,
+							asteromaniaGameHandler.getPlayer().getY()
+									+ asteromaniaGameHandler.getPlayer()
+											.getRelativeHeight() * 0.4f,
+							Target.ENEMY, asteromaniaGameHandler.getPlayer()
+									.getShotSpeed()
+									* asteromaniaGameHandler.getPlayerInfo()
+											.getShotSpeedFactor(),
+							asteromaniaGameHandler.getContext(),
+							asteromaniaGameHandler.getPlayer().getShotDamage()
+									+ asteromaniaGameHandler.getPlayerInfo()
+											.getBonusDamage(), null);
+					shot3.setLevel(Level.BOTTOM);
+					asteromaniaGameHandler.add(shot3, GameState.MAIN);
 
-				Shot shot2 = new Shot(gameHandler.getPlayer().getX()
-						+ gameHandler.getPlayer().getRelativeWidth() * 0.58f,
-						gameHandler.getPlayer().getY()
-								+ gameHandler.getPlayer().getRelativeHeight()
-								* 0.2f, Target.ENEMY, gameHandler.getPlayer()
-								.getShotSpeed()
-								* gameHandler.getPlayerInfo()
-										.getShotSpeedFactor(),
-						gameHandler.getContext(), gameHandler.getPlayer()
-								.getShotDamage()
-								+ gameHandler.getPlayerInfo().getBonusDamage(),
-						null);
-				shot2.setLevel(Level.BOTTOM);
-				gameHandler.add(shot2, GameState.MAIN);
+				} else if (asteromaniaGameHandler.getPlayerInfo()
+						.purchasedDoubleShot()) {
 
-			} else {
-				Shot shot = new Shot(gameHandler.getPlayer().getX()
-						+ gameHandler.getPlayer().getRelativeWidth() * 0.48f,
-						gameHandler.getPlayer().getY(), Target.ENEMY,
-						gameHandler.getPlayer().getShotSpeed()
-								* gameHandler.getPlayerInfo()
-										.getShotSpeedFactor(),
-						gameHandler.getContext(), gameHandler.getPlayer()
-								.getShotDamage()
-								+ gameHandler.getPlayerInfo().getBonusDamage(),
-						null);
-				shot.setLevel(Level.BOTTOM);
-				gameHandler.add(shot, GameState.MAIN);
+					Shot shot = new Shot(asteromaniaGameHandler.getPlayer()
+							.getX()
+							+ asteromaniaGameHandler.getPlayer()
+									.getRelativeWidth() * 0.28f,
+							asteromaniaGameHandler.getPlayer().getY()
+									+ asteromaniaGameHandler.getPlayer()
+											.getRelativeHeight() * 0.2f,
+							Target.ENEMY, asteromaniaGameHandler.getPlayer()
+									.getShotSpeed()
+									* asteromaniaGameHandler.getPlayerInfo()
+											.getShotSpeedFactor(),
+							asteromaniaGameHandler.getContext(),
+							asteromaniaGameHandler.getPlayer().getShotDamage()
+									+ asteromaniaGameHandler.getPlayerInfo()
+											.getBonusDamage(), null);
+					shot.setLevel(Level.BOTTOM);
+					asteromaniaGameHandler.add(shot, GameState.MAIN);
+
+					Shot shot2 = new Shot(asteromaniaGameHandler.getPlayer()
+							.getX()
+							+ asteromaniaGameHandler.getPlayer()
+									.getRelativeWidth() * 0.58f,
+							asteromaniaGameHandler.getPlayer().getY()
+									+ asteromaniaGameHandler.getPlayer()
+											.getRelativeHeight() * 0.2f,
+							Target.ENEMY, asteromaniaGameHandler.getPlayer()
+									.getShotSpeed()
+									* asteromaniaGameHandler.getPlayerInfo()
+											.getShotSpeedFactor(),
+							asteromaniaGameHandler.getContext(),
+							asteromaniaGameHandler.getPlayer().getShotDamage()
+									+ asteromaniaGameHandler.getPlayerInfo()
+											.getBonusDamage(), null);
+					shot2.setLevel(Level.BOTTOM);
+					asteromaniaGameHandler.add(shot2, GameState.MAIN);
+
+				} else {
+					Shot shot = new Shot(asteromaniaGameHandler.getPlayer()
+							.getX()
+							+ asteromaniaGameHandler.getPlayer()
+									.getRelativeWidth() * 0.48f,
+							asteromaniaGameHandler.getPlayer().getY(),
+							Target.ENEMY, asteromaniaGameHandler.getPlayer()
+									.getShotSpeed()
+									* asteromaniaGameHandler.getPlayerInfo()
+											.getShotSpeedFactor(),
+							asteromaniaGameHandler.getContext(),
+							asteromaniaGameHandler.getPlayer().getShotDamage()
+									+ asteromaniaGameHandler.getPlayerInfo()
+											.getBonusDamage(), null);
+					shot.setLevel(Level.BOTTOM);
+					asteromaniaGameHandler.add(shot, GameState.MAIN);
+				}
+				shotFrequencyTimer
+						.reset((int) (BASIC_SHOOT_FREQUENCY / asteromaniaGameHandler
+								.getPlayerInfo().getShotFrequencyFactor()));
 			}
-			shotFrequencyTimer.reset((int) (BASIC_SHOOT_FREQUENCY / gameHandler
-					.getPlayerInfo().getShotFrequencyFactor()));
 		}
 	}
 }

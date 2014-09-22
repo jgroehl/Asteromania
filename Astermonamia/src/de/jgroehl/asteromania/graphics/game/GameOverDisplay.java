@@ -3,13 +3,13 @@ package de.jgroehl.asteromania.graphics.game;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.GraphicsObject;
+import de.jgroehl.api.graphics.ui.Alignment;
+import de.jgroehl.api.graphics.ui.Label;
+import de.jgroehl.api.time.Timer;
 import de.jgroehl.asteromania.control.PlayerInfo;
-import de.jgroehl.asteromania.graphics.GraphicsObject;
-import de.jgroehl.asteromania.graphics.ui.Alignment;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
-import de.jgroehl.asteromania.graphics.ui.Label;
-import de.jgroehl.asteromania.time.Timer;
 
 public class GameOverDisplay extends GraphicsObject {
 
@@ -63,7 +63,7 @@ public class GameOverDisplay extends GraphicsObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 		// Nothing to do here
 
 	}

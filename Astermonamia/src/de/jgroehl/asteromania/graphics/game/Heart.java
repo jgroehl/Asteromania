@@ -1,10 +1,11 @@
 package de.jgroehl.asteromania.graphics.game;
 
 import android.content.Context;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.control.GameState;
-import de.jgroehl.asteromania.graphics.GraphicsObject;
-import de.jgroehl.asteromania.graphics.animated.AnimatedGraphicsObject;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.graphics.GraphicsObject;
+import de.jgroehl.api.graphics.animated.AnimatedGraphicsObject;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 
 public class Heart extends AnimatedGraphicsObject {
 
@@ -23,36 +24,43 @@ public class Heart extends AnimatedGraphicsObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 
-		yPosition += V_SPEED;
-		if (yPosition > GraphicsObject.SCREEN_MAXIMUM)
-			gameHandler.remove(this);
+		if (gameHandler instanceof AsteromaniaGameHandler) {
 
-		if (imagesOverlap(this.xPosition, this.yPosition, this.relativeWidth,
-				this.relativeHeight, gameHandler.getPlayer().getX(),
-				gameHandler.getPlayer().getY(), gameHandler.getPlayer()
-						.getRelativeWidth(), gameHandler.getPlayer()
-						.getRelativeHeight())) {
-			if (gameHandler.getPlayerInfo().isMissingHealth()) {
-				gameHandler.getSoundManager().playHealthPowerUpSound();
-				gameHandler
-						.getPlayerInfo()
-						.getHealthPoints()
-						.setCurrentValue(
-								gameHandler.getPlayerInfo().getHealthPoints()
-										.getCurrentValue()
-										+ healAmount);
+			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
+			yPosition += V_SPEED;
+			if (yPosition > GraphicsObject.SCREEN_MAXIMUM)
+				gameHandler.remove(this);
+
+			if (imagesOverlap(this.xPosition, this.yPosition,
+					this.relativeWidth, this.relativeHeight,
+					asteromaniaGameHandler.getPlayer().getX(),
+					asteromaniaGameHandler.getPlayer().getY(),
+					asteromaniaGameHandler.getPlayer().getRelativeWidth(),
+					asteromaniaGameHandler.getPlayer().getRelativeHeight())) {
+				if (asteromaniaGameHandler.getPlayerInfo().isMissingHealth()) {
+					asteromaniaGameHandler.getSoundManager()
+							.playHealthPowerUpSound();
+					asteromaniaGameHandler
+							.getPlayerInfo()
+							.getHealthPoints()
+							.setCurrentValue(
+									asteromaniaGameHandler.getPlayerInfo()
+											.getHealthPoints()
+											.getCurrentValue()
+											+ healAmount);
+				}
+				asteromaniaGameHandler.remove(this);
 			}
-			gameHandler.remove(this);
-		}
 
-		setFrame((getFrame() + 1) % getMaxFrame());
+			setFrame((getFrame() + 1) % getMaxFrame());
+		}
 
 	}
 
-	public static void addToHandler(int healAmount, GameHandler gameHandler,
-			GraphicsObject parent) {
+	public static void addToHandler(int healAmount,
+			AsteromaniaGameHandler gameHandler, GraphicsObject parent) {
 		gameHandler.add(
 				new Heart(healAmount < 1 ? 1 : healAmount, parent.getX()
 						+ (parent.getRelativeWidth() / 2)

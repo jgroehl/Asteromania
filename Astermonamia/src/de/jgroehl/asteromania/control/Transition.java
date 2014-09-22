@@ -2,7 +2,8 @@ package de.jgroehl.asteromania.control;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import de.jgroehl.asteromania.graphics.GameObject;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.GameObject;
 
 public class Transition extends GameObject {
 
@@ -27,22 +28,25 @@ public class Transition extends GameObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 
-		switch (state) {
-		case ACCELERATE:
-			gameHandler.getStarfield().accelerate(ACCELERATION_VALUE);
-			if (gameHandler.getStarfield().getAcceleration() >= MAX_ACCELERATION)
-				state = State.BRAKE;
-			break;
-		case BRAKE:
-			gameHandler.getStarfield().accelerate(-ACCELERATION_VALUE);
-			if (gameHandler.getStarfield().getAcceleration() <= MIN_ACCELERATION)
-				state = State.FINISHED;
-			break;
-		default:
-			break;
+		if (gameHandler instanceof AsteromaniaGameHandler) {
+			AsteromaniaGameHandler handler = (AsteromaniaGameHandler) gameHandler;
+			switch (state) {
+			case ACCELERATE:
+				handler.getStarfield().accelerate(ACCELERATION_VALUE);
+				if (handler.getStarfield().getAcceleration() >= MAX_ACCELERATION)
+					state = State.BRAKE;
+				break;
+			case BRAKE:
+				handler.getStarfield().accelerate(-ACCELERATION_VALUE);
+				if (handler.getStarfield().getAcceleration() <= MIN_ACCELERATION)
+					state = State.FINISHED;
+				break;
+			default:
+				break;
 
+			}
 		}
 	}
 

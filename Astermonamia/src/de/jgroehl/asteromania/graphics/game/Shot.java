@@ -1,22 +1,18 @@
 package de.jgroehl.asteromania.graphics.game;
 
 import android.content.Context;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.graphics.GraphicsObject;
-import de.jgroehl.asteromania.graphics.interfaces.Hitable;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.AbstractDamagingAbility;
+import de.jgroehl.api.graphics.GraphicsObject;
+import de.jgroehl.api.graphics.Target;
+import de.jgroehl.api.graphics.interfaces.Hitable;
 
-public class Shot extends GraphicsObject {
-
-	public enum Target {
-		ENEMY, PLAYER
-	}
+public class Shot extends AbstractDamagingAbility {
 
 	private static final float RELATIVE_WIDTH = 0.01f;
 
 	private final float direction;
 	private final float shotSpeed;
-	private int damage;
-	private Target target;
 	private Enemy source;
 
 	public Shot(float xPosition, float yPosition, Target target,
@@ -26,16 +22,15 @@ public class Shot extends GraphicsObject {
 				yPosition,
 				(target.equals(Target.PLAYER) ? de.jgroehl.asteromania.R.drawable.normal_shot_down
 						: de.jgroehl.asteromania.R.drawable.normal_shot_up),
-				RELATIVE_WIDTH, context);
-		this.target = target;
+				RELATIVE_WIDTH, target, damage, context);
+
 		direction = target.equals(Target.PLAYER) ? 1.0f : -1.0f;
 		this.shotSpeed = shotSpeed;
-		this.damage = damage;
 		this.source = source;
 	}
 
 	@Override
-	public void update(GameHandler handler) {
+	public void update(BaseGameHandler handler) {
 
 		if (source != null && !source.isAlive())
 			handler.remove(this);
@@ -55,13 +50,5 @@ public class Shot extends GraphicsObject {
 			handler.remove(this);
 		}
 
-	}
-
-	public int getDamage() {
-		return damage;
-	}
-
-	public Target getTarget() {
-		return target;
 	}
 }

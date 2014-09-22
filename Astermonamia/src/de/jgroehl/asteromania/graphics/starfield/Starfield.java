@@ -3,10 +3,10 @@ package de.jgroehl.asteromania.graphics.starfield;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.graphics.GameObject;
-import de.jgroehl.asteromania.graphics.interfaces.Updatable;
-import de.jgroehl.asteromania.graphics.interfaces.Drawable;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.GameObject;
+import de.jgroehl.api.graphics.interfaces.Drawable;
+import de.jgroehl.api.graphics.interfaces.Updatable;
 
 public class Starfield extends GameObject implements Drawable, Updatable {
 
@@ -57,7 +57,7 @@ public class Starfield extends GameObject implements Drawable, Updatable {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 		for (StarObject star : stars) {
 			star.update(gameHandler);
 		}

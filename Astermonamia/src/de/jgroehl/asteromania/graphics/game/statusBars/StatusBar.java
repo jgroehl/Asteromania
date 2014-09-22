@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.graphics.GraphicsObject;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.GraphicsObject;
 
 public class StatusBar extends GraphicsObject {
 
@@ -38,7 +38,7 @@ public class StatusBar extends GraphicsObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 	}
 
 	@Override

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import de.jgroehl.asteromania.graphics.GameObject;
+import de.jgroehl.api.graphics.GameObject;
+import de.jgroehl.api.graphics.interfaces.Killable;
 import de.jgroehl.asteromania.graphics.game.Asteroid;
 import de.jgroehl.asteromania.graphics.game.Enemy;
-import de.jgroehl.asteromania.graphics.interfaces.Killable;
 
 public class LevelHandler {
 
@@ -76,7 +76,7 @@ public class LevelHandler {
 		return LevelType.values()[(int) (Math.random() * LevelType.values().length)];
 	}
 
-	public void killAllEntities(GameHandler gameHandler) {
+	public void killAllEntities(AsteromaniaGameHandler gameHandler) {
 		for (Killable k : enemies) {
 			k.kill();
 			if (k instanceof GameObject)

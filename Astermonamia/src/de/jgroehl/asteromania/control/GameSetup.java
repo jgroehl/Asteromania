@@ -1,28 +1,31 @@
 package de.jgroehl.asteromania.control;
 
 import android.graphics.BitmapFactory;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.control.interfaces.EventCallback;
+import de.jgroehl.api.graphics.ui.Button;
+import de.jgroehl.api.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.callbacks.ShowLeaderboardCallback;
-import de.jgroehl.asteromania.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.graphics.game.GameOverDisplay;
 import de.jgroehl.asteromania.graphics.game.player.PlayerInfoDisplay;
 import de.jgroehl.asteromania.graphics.game.player.PlayerStatsDisplay;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
-import de.jgroehl.asteromania.graphics.ui.Button;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
-import de.jgroehl.asteromania.graphics.ui.SimpleClickableElement;
 
 public class GameSetup {
 
 	private boolean initialized = false;
 
-	public void initializeGameObjects(GameHandler gameHandler) {
-		gameHandler.add(new Starfield(gameHandler.getContext()),
-				GameState.values());
+	public void initializeGameObjects(AsteromaniaGameHandler gameHandler) {
+		Starfield starfield = new Starfield(gameHandler.getContext());
+		gameHandler.add(starfield, GameState.values());
+		gameHandler.setStarfield(starfield);
 		gameHandler.update();
 
 		gameHandler.add(
@@ -56,9 +59,12 @@ public class GameSetup {
 				0.6f, 0.2f, new EventCallback() {
 
 					@Override
-					public void action(GameHandler gamehandler) {
-						gamehandler.getPlayerInfo().savePlayerInfo();
-						System.exit(0);
+					public void action(BaseGameHandler gamehandler) {
+						if (gamehandler instanceof AsteromaniaGameHandler) {
+							((AsteromaniaGameHandler) gamehandler)
+									.getPlayerInfo().savePlayerInfo();
+							System.exit(0);
+						}
 					}
 				}, gameHandler.getContext()), GameState.MENU);
 		gameHandler.update();
@@ -183,9 +189,12 @@ public class GameSetup {
 				0.5f, 0.2f, new EventCallback() {
 
 					@Override
-					public void action(GameHandler gameHandler) {
-						gameHandler.getPlayerInfo().resetLastHighscore();
-						gameHandler.setState(GameState.MENU);
+					public void action(BaseGameHandler gameHandler) {
+						if (gameHandler instanceof AsteromaniaGameHandler) {
+							((AsteromaniaGameHandler) gameHandler)
+									.getPlayerInfo().resetLastHighscore();
+							gameHandler.setState(GameState.MENU);
+						}
 					}
 				}, gameHandler.getContext()), GameState.GAME_OVER);
 

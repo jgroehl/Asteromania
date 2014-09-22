@@ -2,10 +2,11 @@ package de.jgroehl.asteromania.control.callbacks;
 
 import android.content.res.Resources;
 import android.widget.Toast;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.R;
-import de.jgroehl.asteromania.control.GameHandler;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.control.PlayerInfo;
-import de.jgroehl.asteromania.control.interfaces.EventCallback;
 
 public class BuyItemCallback implements EventCallback {
 
@@ -77,59 +78,65 @@ public class BuyItemCallback implements EventCallback {
 	}
 
 	@Override
-	public void action(GameHandler gameHandler) {
-		int cost = type.getCost(gameHandler.getPlayerInfo());
-		if (type == ItemType.SHIELD_SECONDS) {
-			if (!gameHandler.getPlayerInfo().isShieldGeneratorPresent()) {
+	public void action(BaseGameHandler gameHandler) {
+
+		if (gameHandler instanceof AsteromaniaGameHandler) {
+
+			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
+			int cost = type.getCost(asteromaniaGameHandler.getPlayerInfo());
+			if (type == ItemType.SHIELD_SECONDS) {
+				if (!asteromaniaGameHandler.getPlayerInfo()
+						.isShieldGeneratorPresent()) {
+					Toast.makeText(
+							asteromaniaGameHandler.getContext(),
+							asteromaniaGameHandler
+									.getContext()
+									.getResources()
+									.getString(
+											de.jgroehl.asteromania.R.string.purchase_shield_generator_first),
+							Toast.LENGTH_SHORT).show();
+					return;
+				}
+			}
+			if (asteromaniaGameHandler.getPlayerInfo().getCoins() >= cost) {
+				asteromaniaGameHandler.getPlayerInfo().addCoins(-cost);
+				asteromaniaGameHandler.getSoundManager().playPayingSound();
+				switch (type) {
+				case HP:
+					asteromaniaGameHandler.getPlayerInfo().addHealthPoints(
+							(int) (type.increaseValue));
+					break;
+				case DAMAGE:
+					asteromaniaGameHandler.getPlayerInfo().addBonusDamage(
+							(int) type.increaseValue);
+					break;
+				case SHOT_FREQUENCY:
+					asteromaniaGameHandler.getPlayerInfo()
+							.addShotFrequencyFactor(type.increaseValue);
+					break;
+				case SHOT_SPEED:
+					asteromaniaGameHandler.getPlayerInfo().addShotSpeedFactor(
+							type.increaseValue);
+					break;
+				case SPEED:
+					asteromaniaGameHandler.getPlayerInfo().addMaxSpeedFactor(
+							type.increaseValue);
+					break;
+				case SHIELD_SECONDS:
+					asteromaniaGameHandler.getPlayer().addShieldSeconds(
+							(int) type.increaseValue);
+					break;
+				}
+			} else {
 				Toast.makeText(
-						gameHandler.getContext(),
-						gameHandler
+						asteromaniaGameHandler.getContext(),
+						asteromaniaGameHandler
 								.getContext()
 								.getResources()
 								.getString(
-										de.jgroehl.asteromania.R.string.purchase_shield_generator_first),
+										de.jgroehl.asteromania.R.string.not_enough_gold),
 						Toast.LENGTH_SHORT).show();
-				return;
 			}
-		}
-		if (gameHandler.getPlayerInfo().getCoins() >= cost) {
-			gameHandler.getPlayerInfo().addCoins(-cost);
-			gameHandler.getSoundManager().playPayingSound();
-			switch (type) {
-			case HP:
-				gameHandler.getPlayerInfo().addHealthPoints(
-						(int) (type.increaseValue));
-				break;
-			case DAMAGE:
-				gameHandler.getPlayerInfo().addBonusDamage(
-						(int) type.increaseValue);
-				break;
-			case SHOT_FREQUENCY:
-				gameHandler.getPlayerInfo().addShotFrequencyFactor(
-						type.increaseValue);
-				break;
-			case SHOT_SPEED:
-				gameHandler.getPlayerInfo().addShotSpeedFactor(
-						type.increaseValue);
-				break;
-			case SPEED:
-				gameHandler.getPlayerInfo().addMaxSpeedFactor(
-						type.increaseValue);
-				break;
-			case SHIELD_SECONDS:
-				gameHandler.getPlayer().addShieldSeconds(
-						(int) type.increaseValue);
-				break;
-			}
-		} else {
-			Toast.makeText(
-					gameHandler.getContext(),
-					gameHandler
-							.getContext()
-							.getResources()
-							.getString(
-									de.jgroehl.asteromania.R.string.not_enough_gold),
-					Toast.LENGTH_SHORT).show();
 		}
 	}
 

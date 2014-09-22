@@ -13,9 +13,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.Log;
-import de.jgroehl.asteromania.control.GameHandler;
-import de.jgroehl.asteromania.graphics.GameObject;
-import de.jgroehl.asteromania.io.FileHandler;
+import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.graphics.GameObject;
+import de.jgroehl.api.io.FileHandler;
 
 public class Highscore extends GameObject {
 
@@ -74,7 +74,7 @@ public class Highscore extends GameObject {
 	}
 
 	@Override
-	public void update(GameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler) {
 	}
 
 	@Override
