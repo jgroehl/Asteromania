@@ -21,8 +21,6 @@ public class GoogleApiHandler {
 
 	public void addToLeaderBoard(long score) {
 		if (!apiClient.isConnected()) {
-			Toast.makeText(context, R.string.highscore_not_commited,
-					Toast.LENGTH_LONG).show();
 			return;
 		}
 		Games.Leaderboards.submitScore(apiClient, context.getResources()
