@@ -9,9 +9,9 @@ import de.jgroehl.api.graphics.GameObject;
 import de.jgroehl.api.graphics.interfaces.Killable;
 import de.jgroehl.api.io.FileHandler;
 import de.jgroehl.api.utils.SensorHandler;
-import de.jgroehl.asteromania.graphics.game.Explosion;
-import de.jgroehl.asteromania.graphics.game.player.PlayerInfoDisplay;
-import de.jgroehl.asteromania.graphics.game.player.SpaceShip;
+import de.jgroehl.asteromania.graphics.Explosion;
+import de.jgroehl.asteromania.graphics.player.PlayerInfoDisplay;
+import de.jgroehl.asteromania.graphics.player.SpaceShip;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
 

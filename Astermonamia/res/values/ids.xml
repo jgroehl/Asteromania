@@ -20,6 +20,12 @@ Save this file as res/values/games-ids.xml in your project.
   <string name="achievement_being_on_a_shopping_binge">CgkIiL-r94kYEAIQKw</string>
   <string name="achievement_shopping_frenzy">CgkIiL-r94kYEAIQLA</string>
   <string name="achievement_millionaire">CgkIiL-r94kYEAIQLQ</string>
+  <string name="achievement_bulking_up">CgkIiL-r94kYEAIQMA</string>
+  <string name="achievement_being_a_tank.">CgkIiL-r94kYEAIQMQ</string>
+  <string name="achievement_indestructable">CgkIiL-r94kYEAIQMg</string>
+  <string name="achievement_strength_is_power">CgkIiL-r94kYEAIQMw</string>
+  <string name="achievement_feel_the_pain">CgkIiL-r94kYEAIQNA</string>
+  <string name="achievement_there_is_nothing_in_your_way">CgkIiL-r94kYEAIQNQ</string>
   <string name="leaderboard_highscore">CgkIiL-r94kYEAIQFw</string>
   <string name="event_aliens_killed">CgkIiL-r94kYEAIQLg</string>
   <string name="event_asteroids_destroyed">CgkIiL-r94kYEAIQLw</string>

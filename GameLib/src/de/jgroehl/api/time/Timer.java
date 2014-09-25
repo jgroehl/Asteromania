@@ -32,4 +32,12 @@ public class Timer {
 		this.period = period;
 		reset();
 	}
+
+	/**
+	 * 
+	 * @return the remaining time of this timer.
+	 */
+	public long getRemainingTime() {
+		return period - (System.currentTimeMillis() - time);
+	}
 }

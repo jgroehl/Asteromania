@@ -6,8 +6,8 @@ import java.util.List;
 import android.content.Context;
 import de.jgroehl.api.graphics.GameObject;
 import de.jgroehl.api.graphics.interfaces.Killable;
-import de.jgroehl.asteromania.graphics.game.Asteroid;
-import de.jgroehl.asteromania.graphics.game.Enemy;
+import de.jgroehl.asteromania.graphics.Asteroid;
+import de.jgroehl.asteromania.graphics.Enemy;
 
 public class LevelHandler {
 
@@ -29,36 +29,41 @@ public class LevelHandler {
 
 		enemies.clear();
 		int numberOfEnemies;
-		switch (getRandomLevelType()) {
+		switch (getLevelType(level)) {
 		case ASTEROIDS:
-			numberOfEnemies = random((level + 1.0) / 2.0, level);
+			numberOfEnemies = random(level * 0.9, level * 0.1);
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Asteroid.createAsteroid(context, level));
 			}
 			break;
 		case BOSS:
-			numberOfEnemies = random(1, Math.cbrt(level));
+			numberOfEnemies = random(Math.cbrt(level) * 0.9,
+					Math.cbrt(level) * 1.1);
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Enemy.createBossEnemy(context, level));
 			}
 			break;
 		case MIXED:
-			numberOfEnemies = random((level + 3.0) / 4.0, (level + 1.0) / 2.0);
+			numberOfEnemies = random((level + 1.0) / 2.0 * 0.9,
+					(level + 1.0) / 2.0 * 1.1);
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Asteroid.createAsteroid(context, level));
 			}
-			numberOfEnemies = random(1, Math.cbrt(level));
+			numberOfEnemies = random(Math.cbrt(level) * 0.9,
+					Math.cbrt(level) * 1.1);
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Enemy.createNormalEnemy(context, level));
 			}
-			numberOfEnemies = random(0, Math.sqrt(Math.sqrt(level)));
+			numberOfEnemies = random(Math.pow(level, 0.2) * 0.9,
+					Math.pow(level, 0.2) * 1.1);
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Enemy.createBossEnemy(context, level));
 			}
 			break;
 		case NORMAL:
 		default:
-			numberOfEnemies = random(1, Math.sqrt(level));
+			numberOfEnemies = random(Math.sqrt(level) * 0.9,
+					Math.sqrt(level) * 1.1);
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Enemy.createNormalEnemy(context, level));
 			}
@@ -72,8 +77,22 @@ public class LevelHandler {
 		return (int) Math.round(lower + Math.random() * (upper - lower));
 	}
 
-	public LevelType getRandomLevelType() {
-		return LevelType.values()[(int) (Math.random() * LevelType.values().length)];
+	public LevelType getLevelType(int level) {
+		if (level < 5)
+			return LevelType.NORMAL;
+		else {
+			switch (level % 5) {
+			case 0:
+				return LevelType.BOSS;
+			case 1:
+				return LevelType.NORMAL;
+			default:
+				if (Math.random() <= 0.5)
+					return LevelType.MIXED;
+				else
+					return LevelType.ASTEROIDS;
+			}
+		}
 	}
 
 	public void killAllEntities(AsteromaniaGameHandler gameHandler) {

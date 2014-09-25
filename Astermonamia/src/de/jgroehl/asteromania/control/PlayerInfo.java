@@ -5,10 +5,11 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
+import de.jgroehl.api.graphics.statusBars.FramedHpBar;
+import de.jgroehl.api.graphics.statusBars.HpBar;
 import de.jgroehl.api.io.FileHandler;
 import de.jgroehl.asteromania.AsteromaniaMainActivity;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
-import de.jgroehl.asteromania.graphics.game.statusBars.HpBar;
 
 public class PlayerInfo {
 
@@ -46,7 +47,7 @@ public class PlayerInfo {
 	private final Context context;
 	private final FileHandler fileHandler;
 
-	private HpBar healthPoints;
+	private FramedHpBar healthPoints;
 	private long coins;
 	private int level;
 	private float maxSpeedFactor;
@@ -264,15 +265,17 @@ public class PlayerInfo {
 			int currentValue = Integer.parseInt(health[0]);
 			int maximum = Integer.parseInt(health[1]);
 
-			healthPoints = new HpBar(maximum, currentValue, HEALTH_X, HEALTH_Y,
-					HEALTH_WIDTH, HEALTH_HEIGHT, context);
+			healthPoints = new FramedHpBar(maximum, currentValue, HEALTH_X,
+					HEALTH_Y, HEALTH_WIDTH, HEALTH_HEIGHT, context,
+					de.jgroehl.asteromania.R.drawable.hp_bar_frame);
 			Log.d(TAG, "Set HP to: " + currentValue + "/" + maximum);
 		} catch (NumberFormatException e) {
 			Log.w(TAG,
 					"Amount of health not readable. Setting to default value "
 							+ DEFAULT_HEALTH);
-			healthPoints = new HpBar(DEFAULT_HEALTH, DEFAULT_HEALTH, HEALTH_X,
-					HEALTH_Y, HEALTH_WIDTH, HEALTH_HEIGHT, context);
+			healthPoints = new FramedHpBar(DEFAULT_HEALTH, DEFAULT_HEALTH,
+					HEALTH_X, HEALTH_Y, HEALTH_WIDTH, HEALTH_HEIGHT, context,
+					de.jgroehl.asteromania.R.drawable.hp_bar_frame);
 		}
 	}
 
@@ -343,6 +346,7 @@ public class PlayerInfo {
 	public void addHealthPoints(int value) {
 		healthPoints.setMaximum(healthPoints.getMaximum() + value);
 		healthPoints.setCurrentValue(healthPoints.getCurrentValue() + value);
+		apiHandler.checkForHealthAchievement(healthPoints.getMaximum());
 	}
 
 	public int getLevel() {
@@ -375,6 +379,7 @@ public class PlayerInfo {
 
 	public void addBonusDamage(int increaseValue) {
 		bonusDamage += increaseValue;
+		apiHandler.checkForDamageAchievement(bonusDamage);
 	}
 
 	public void addShotFrequencyFactor(float increaseValue) {

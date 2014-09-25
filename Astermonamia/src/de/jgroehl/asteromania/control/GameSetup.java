@@ -12,9 +12,9 @@ import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.callbacks.ShowLeaderboardCallback;
-import de.jgroehl.asteromania.graphics.game.GameOverDisplay;
-import de.jgroehl.asteromania.graphics.game.player.PlayerInfoDisplay;
-import de.jgroehl.asteromania.graphics.game.player.PlayerStatsDisplay;
+import de.jgroehl.asteromania.graphics.GameOverDisplay;
+import de.jgroehl.asteromania.graphics.player.PlayerInfoDisplay;
+import de.jgroehl.asteromania.graphics.player.PlayerStatsDisplay;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
 
@@ -69,9 +69,9 @@ public class GameSetup {
 				}, gameHandler.getContext()), GameState.MENU);
 		gameHandler.update();
 
-		gameHandler.add(new SimpleClickableElement(0.7f, 0.7f, 0.3f, 0.3f,
-				new ShotFiredCallback(), gameHandler.getContext()),
-				GameState.MAIN);
+		gameHandler.add(new SimpleClickableElement(0.68f, 0.75f,
+				R.drawable.shotfield, 0.3f, new ShotFiredCallback(),
+				gameHandler.getContext()), GameState.MAIN);
 		gameHandler.update();
 
 		Button button = new Button(BitmapFactory.decodeResource(gameHandler

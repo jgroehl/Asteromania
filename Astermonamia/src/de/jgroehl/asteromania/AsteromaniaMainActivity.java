@@ -6,13 +6,13 @@ import de.jgroehl.asteromania.control.GoogleApiHandler;
 
 public class AsteromaniaMainActivity extends AbstractMainActivity {
 
-	private MainGamePanel mainGamePanel;
+	private AsteromaniaGamePanel mainGamePanel;
 	public static final boolean DEBUG = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mainGamePanel = new MainGamePanel(this, new GoogleApiHandler(getApiClient(), this), this);
+		mainGamePanel = new AsteromaniaGamePanel(this, new GoogleApiHandler(getApiClient(), this), this);
 
 		setContentView(mainGamePanel);
 	}

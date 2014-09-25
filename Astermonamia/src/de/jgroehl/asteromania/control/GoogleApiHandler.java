@@ -139,4 +139,42 @@ public class GoogleApiHandler {
 						R.string.event_asteroids_destroyed), 1);
 	}
 
+	public void checkForHealthAchievement(int maximum) {
+		if (!apiClient.isConnected())
+			return;
+
+		String achievement = "empty";
+		if (maximum >= 250) {
+			achievement = context.getResources().getString(
+					R.string.achievement_indestructable);
+		} else if (maximum >= 50) {
+			achievement = context.getResources().getString(
+					R.string.achievement_being_a_tank_);
+		} else if (maximum >= 10) {
+			achievement = context.getResources().getString(
+					R.string.achievement_bulking_up);
+		}
+		Games.Achievements.unlock(apiClient, achievement);
+
+	}
+
+	public void checkForDamageAchievement(int bonusDamage) {
+		if (!apiClient.isConnected())
+			return;
+
+		String achievement = "empty";
+		if (bonusDamage >= 50) {
+			achievement = context.getResources().getString(
+					R.string.achievement_there_is_nothing_in_your_way);
+		} else if (bonusDamage >= 15) {
+			achievement = context.getResources().getString(
+					R.string.achievement_feel_the_pain);
+		} else if (bonusDamage >= 5) {
+			achievement = context.getResources().getString(
+					R.string.achievement_strength_is_power);
+		}
+		Games.Achievements.unlock(apiClient, achievement);
+
+	}
+
 }
