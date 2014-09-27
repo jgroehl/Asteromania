@@ -37,33 +37,33 @@ public class LevelHandler {
 			}
 			break;
 		case BOSS:
-			numberOfEnemies = random(Math.cbrt(level) * 0.9,
-					Math.cbrt(level) * 1.1);
+			numberOfEnemies = random(level / 10, level / 10);
+			if (numberOfEnemies > 5)
+				numberOfEnemies = 5;
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Enemy.createBossEnemy(context, level));
 			}
 			break;
 		case MIXED:
-			numberOfEnemies = random((level + 1.0) / 2.0 * 0.9,
-					(level + 1.0) / 2.0 * 1.1);
+			numberOfEnemies = random((level + 1.0) / 1.6 * 0.9,
+					(level + 1.0) / 1.6 * 1.1);
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Asteroid.createAsteroid(context, level));
 			}
 			numberOfEnemies = random(Math.cbrt(level) * 0.9,
 					Math.cbrt(level) * 1.1);
+			if (numberOfEnemies > 8)
+				numberOfEnemies = 8;
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Enemy.createNormalEnemy(context, level));
-			}
-			numberOfEnemies = random(Math.pow(level, 0.2) * 0.9,
-					Math.pow(level, 0.2) * 1.1);
-			for (int i = 0; i < numberOfEnemies; i++) {
-				enemies.add(Enemy.createBossEnemy(context, level));
 			}
 			break;
 		case NORMAL:
 		default:
 			numberOfEnemies = random(Math.sqrt(level) * 0.9,
 					Math.sqrt(level) * 1.1);
+			if (numberOfEnemies > 15)
+				numberOfEnemies = 15;
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Enemy.createNormalEnemy(context, level));
 			}
@@ -81,16 +81,20 @@ public class LevelHandler {
 		if (level < 5)
 			return LevelType.NORMAL;
 		else {
-			switch (level % 5) {
+			switch (level % 10) {
 			case 0:
+				// TODO: Include Super boss mode!
 				return LevelType.BOSS;
-			case 1:
-				return LevelType.NORMAL;
+			case 5:
+				return LevelType.BOSS;
 			default:
-				if (Math.random() <= 0.5)
+				double random = Math.random();
+				if (random < 0.2)
 					return LevelType.MIXED;
-				else
+				else if (random < 0.6)
 					return LevelType.ASTEROIDS;
+				else
+					return LevelType.NORMAL;
 			}
 		}
 	}

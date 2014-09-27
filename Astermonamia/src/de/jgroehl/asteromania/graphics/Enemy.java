@@ -19,13 +19,13 @@ import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 
 	private static final double HEALTH_DROP_CHANCE = 0.5;
-	private static final float BASIC_NORMAL_SPEED = 0.01f;
-	private static final int BASIC_NORMAL_SHOT_RATE = 2000;
-	private static final float BASIC_NORMAL_SHOT_SPEED = 0.02f;
+	private static final float BASIC_SPEED = 0.01f;
+	private static final int BASIC_SHOT_RATE = 2000;
+	private static final float BASIC_SHOT_SPEED = 0.02f;
 	private static final float UPPER_BOUND = 0.1f;
 	private static final float LOWER_BOUND = 0.2f;
-	private static final int BASIC_NORMAL_LIFEPOINTS = 3;
-	private static final float BASIC_NORMAL_DAMAGE = 1;
+	private static final int BASIC_LIFEPOINTS = 3;
+	private static final float BASIC_DAMAGE = 1;
 	private static final int MINIMUM_AMOUNT_COINS_DROPPED = 1;
 	private final float speed;
 	private final Timer shootTimer;
@@ -159,20 +159,19 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 		return new Enemy((float) Math.random(), 0.2f,
 				de.jgroehl.asteromania.R.drawable.enemy, NORMAL_ENEMY_WIDTH,
 				15, 100, context,
-				(int) (BASIC_NORMAL_LIFEPOINTS * 2 * ((level + 1) / 2.0)),
-				BASIC_NORMAL_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
-				(int) (BASIC_NORMAL_SHOT_RATE / 1.5), BASIC_NORMAL_SPEED,
-				(int) (BASIC_NORMAL_DAMAGE * Math.sqrt(level)));
+				(int) (BASIC_LIFEPOINTS * 2 * ((level + 1) / 2.0)),
+				BASIC_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
+				(int) (BASIC_SHOT_RATE / 1.5), BASIC_SPEED,
+				(int) (BASIC_DAMAGE * Math.sqrt(level)));
 	}
 
 	public static Enemy createBossEnemy(Context context, int level) {
 		return new Enemy((float) Math.random(), 0.2f,
 				de.jgroehl.asteromania.R.drawable.enemy2, BOSS_ENEMY_WIDTH, 6,
-				100, context,
-				(int) (BASIC_NORMAL_LIFEPOINTS * 5 * (level + 1) / 2.0),
-				BASIC_NORMAL_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
-				(int) (BASIC_NORMAL_SHOT_RATE / 3.0), (BASIC_NORMAL_SPEED / 2),
-				(int) (BASIC_NORMAL_DAMAGE * 3 * Math.sqrt(level)));
+				100, context, (int) (BASIC_LIFEPOINTS * 5 * (level + 1) / 2.0),
+				BASIC_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
+				(int) (BASIC_SHOT_RATE / 2.75), (BASIC_SPEED / 2),
+				(int) (BASIC_DAMAGE * level));
 	}
 
 	@Override
