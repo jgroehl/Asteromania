@@ -6,6 +6,7 @@ import de.jgroehl.api.graphics.AbstractDamagingAbility;
 import de.jgroehl.api.graphics.GraphicsObject;
 import de.jgroehl.api.graphics.Target;
 import de.jgroehl.api.graphics.interfaces.Hitable;
+import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 
 public class Shot extends AbstractDamagingAbility {
 
@@ -48,6 +49,9 @@ public class Shot extends AbstractDamagingAbility {
 		yPosition = yPosition + (shotSpeed * direction);
 		if (yPosition > 1.1f || yPosition < -0.1f) {
 			handler.remove(this);
+			if (getTarget().equals(Target.ENEMY))
+				((AsteromaniaGameHandler) handler).getPlayerInfo()
+						.incrementMisses();
 		}
 
 	}

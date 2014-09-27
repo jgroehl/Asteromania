@@ -83,10 +83,13 @@ public class PlayerStatsDisplay extends GameObject {
 		c.drawText(context.getResources().getString(R.string.dps) + ": "
 				+ calculateDps(), 0.05f * c.getWidth(), 0.8f * c.getHeight(),
 				textPaint);
+		c.drawText(context.getResources().getString(R.string.accuracy) + ": "
+				+ playerInfo.getAccuracy() * 100 + "%", 0.05f * c.getWidth(),
+				0.9f * c.getHeight(), textPaint);
 		c.drawText(context.getResources().getString(R.string.ship_value) + ": "
 				+ playerInfo.getAccumulatedWorth() + " "
 				+ context.getResources().getString(R.string.coins),
-				0.05f * c.getWidth(), 0.9f * c.getHeight(), textPaint);
+				0.05f * c.getWidth(), c.getHeight(), textPaint);
 
 	}
 

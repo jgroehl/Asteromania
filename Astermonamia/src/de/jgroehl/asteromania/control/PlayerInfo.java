@@ -15,15 +15,16 @@ public class PlayerInfo {
 
 	private static final String TAG = PlayerInfo.class.getSimpleName();
 
-	private static final String COIN_FILE_NAME = "coins";
-	private static final String HP_FILE_NAME = "health";
-	private static final String LEVEL_FILE_NAME = "level";
-	private static final String STATS_FILE_NAME = "stats";
-	private static final String HIGHSCORE_FILE_NAME = "currentHighscore";
-	private static final String SCORE_FACTOR_FILE_NAME = "currentScoreFactor";
-	private static final String SHIELD_FILE_NAME = "shieldStats";
-	private static final String PURCHASES_FILE_NAME = "purchases";
-	private static final String ACCUMULATED_WORTH_FILE_NAME = "accumulatedWorth";
+	private static final String FILE_NAME_COINS = "coins";
+	private static final String FILE_NAME_HP = "health";
+	private static final String FILE_NAME_LEVEL = "level";
+	private static final String FILE_NAME_STATS = "stats";
+	private static final String FILE_NAME_HIGHSCORE = "currentHighscore";
+	private static final String FILE_NAME_SCORE_FACTOR = "currentScoreFactor";
+	private static final String FILE_NAME_SHIELD = "shieldStats";
+	private static final String FILE_NAME_PURCHASES = "purchases";
+	private static final String FILE_NAME_ACCUMULATED_WORTH = "accumulatedWorth";
+	private static final String FILE_NAME_ACCURACY = "accuracy";
 	private static final String SPLIT_CHARACTER = "&";
 
 	private static final int DEFAULT_HEALTH = 3;
@@ -33,6 +34,7 @@ public class PlayerInfo {
 	private static final int DEFAULT_SHIELD_SECONDS = 0;
 	private static final long DEFAULT_HIGHSCORE = 0;
 	private static final long DEFAULT_SCORE_FACTOR = 1;
+	private static final long DEFAULT_HITS_AND_MISSES = 0;
 	private static final int DEFAULT_COIN_VALUE = AsteromaniaMainActivity.DEBUG ? 1000000
 			: 100;
 	private static final long DEFAULT_ACCUMULATED_PURCHASES = 0;
@@ -59,6 +61,8 @@ public class PlayerInfo {
 	private long lastHighscore;
 	private long accumulatedWorth;
 	private int shieldSeconds;
+	private long hits;
+	private long misses;
 	private final List<PurchaseType> purchaseList = new ArrayList<PurchaseType>();
 
 	private final GoogleApiHandler apiHandler;
@@ -82,13 +86,38 @@ public class PlayerInfo {
 		readShieldState();
 		readPurchases();
 		readAccumulatedPurchaseValue();
+		readAccuracy();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void readAccuracy() {
+		try {
+			String[] values = fileHandler.getDecryptedStringFromFile(
+					FILE_NAME_ACCURACY).split(SPLIT_CHARACTER);
+			if (values.length < 2) {
+				hits = DEFAULT_HITS_AND_MISSES;
+				misses = DEFAULT_HITS_AND_MISSES;
+				return;
+			}
+			hits = Long.parseLong(values[0]);
+			misses = Long.parseLong(values[1]);
+			Log.d(TAG, "Set current accumulatedPurchases to "
+					+ accumulatedWorth);
+
+		} catch (NumberFormatException e) {
+			Log.w(TAG,
+					"hits and misses not readable. Setting hits and misses to "
+							+ DEFAULT_HITS_AND_MISSES);
+			hits = DEFAULT_HITS_AND_MISSES;
+			misses = DEFAULT_HITS_AND_MISSES;
+		}
+
 	}
 
 	private void readAccumulatedPurchaseValue() {
 		try {
 			accumulatedWorth = Long.parseLong(fileHandler
-					.getDecryptedStringFromFile(ACCUMULATED_WORTH_FILE_NAME));
+					.getDecryptedStringFromFile(FILE_NAME_ACCUMULATED_WORTH));
 			Log.d(TAG, "Set current accumulatedPurchases to "
 					+ accumulatedWorth);
 
@@ -102,7 +131,7 @@ public class PlayerInfo {
 
 	private void readPurchases() {
 		String[] purchases = fileHandler.getDecryptedStringFromFile(
-				PURCHASES_FILE_NAME).split(SPLIT_CHARACTER);
+				FILE_NAME_PURCHASES).split(SPLIT_CHARACTER);
 
 		boolean error = purchases == null ? true : false;
 		for (String s : purchases) {
@@ -137,7 +166,7 @@ public class PlayerInfo {
 	private void readShieldState() {
 		try {
 			shieldSeconds = Integer.parseInt(fileHandler
-					.getDecryptedStringFromFile(SHIELD_FILE_NAME));
+					.getDecryptedStringFromFile(FILE_NAME_SHIELD));
 			Log.d(TAG, "Set current shieldSeconds to " + shieldSeconds);
 
 		} catch (NumberFormatException e) {
@@ -150,7 +179,7 @@ public class PlayerInfo {
 	private void readCurrentScoreFactor() {
 		try {
 			currentBonusFactor = Long.parseLong(fileHandler
-					.getDecryptedStringFromFile(SCORE_FACTOR_FILE_NAME));
+					.getDecryptedStringFromFile(FILE_NAME_SCORE_FACTOR));
 			Log.d(TAG, "Set current Score Factor to " + currentBonusFactor);
 
 		} catch (NumberFormatException e) {
@@ -163,7 +192,7 @@ public class PlayerInfo {
 	private void readCurrentHighscore() {
 		try {
 			currentHighscore = Long.parseLong(fileHandler
-					.getDecryptedStringFromFile(HIGHSCORE_FILE_NAME));
+					.getDecryptedStringFromFile(FILE_NAME_HIGHSCORE));
 			Log.d(TAG, "Set current Highscore to " + currentHighscore);
 
 		} catch (NumberFormatException e) {
@@ -177,7 +206,7 @@ public class PlayerInfo {
 	private void readStats() {
 
 		String[] stats = fileHandler
-				.getDecryptedStringFromFile(STATS_FILE_NAME).split(
+				.getDecryptedStringFromFile(FILE_NAME_STATS).split(
 						SPLIT_CHARACTER);
 
 		try {
@@ -248,7 +277,7 @@ public class PlayerInfo {
 	protected void readLevel() {
 		try {
 			level = Integer.parseInt(fileHandler
-					.getDecryptedStringFromFile(LEVEL_FILE_NAME));
+					.getDecryptedStringFromFile(FILE_NAME_LEVEL));
 			Log.d(TAG, "Set level to " + level);
 
 		} catch (NumberFormatException e) {
@@ -261,7 +290,7 @@ public class PlayerInfo {
 	protected void readHealth() {
 		try {
 			String[] health = fileHandler.getDecryptedStringFromFile(
-					HP_FILE_NAME).split(SPLIT_CHARACTER);
+					FILE_NAME_HP).split(SPLIT_CHARACTER);
 			int currentValue = Integer.parseInt(health[0]);
 			int maximum = Integer.parseInt(health[1]);
 
@@ -282,7 +311,7 @@ public class PlayerInfo {
 	protected void readCoins() {
 		try {
 			coins = Integer.parseInt(fileHandler
-					.getDecryptedStringFromFile(COIN_FILE_NAME));
+					.getDecryptedStringFromFile(FILE_NAME_COINS));
 			Log.d(TAG, "Set coins to " + coins);
 
 		} catch (NumberFormatException e) {
@@ -293,35 +322,38 @@ public class PlayerInfo {
 
 	public void savePlayerInfo() {
 		Log.d(TAG, "Saving PlayerInfo...");
-		fileHandler
-				.writeAndEncryptString(COIN_FILE_NAME, String.valueOf(coins));
+		fileHandler.writeAndEncryptString(FILE_NAME_COINS,
+				String.valueOf(coins));
 		fileHandler.writeAndEncryptString(
-				HP_FILE_NAME,
+				FILE_NAME_HP,
 				String.valueOf(healthPoints.getCurrentValue() + SPLIT_CHARACTER
 						+ healthPoints.getMaximum()));
-		fileHandler.writeAndEncryptString(LEVEL_FILE_NAME,
+		fileHandler.writeAndEncryptString(FILE_NAME_LEVEL,
 				String.valueOf(level));
 		fileHandler.writeAndEncryptString(
-				STATS_FILE_NAME,
+				FILE_NAME_STATS,
 				String.valueOf(maxSpeedFactor) + SPLIT_CHARACTER
 						+ String.valueOf(shotSpeedFactor) + SPLIT_CHARACTER
 						+ String.valueOf(shotFrequencyFactor) + SPLIT_CHARACTER
 						+ String.valueOf(bonusDamage));
-		fileHandler.writeAndEncryptString(HIGHSCORE_FILE_NAME,
+		fileHandler.writeAndEncryptString(FILE_NAME_HIGHSCORE,
 				String.valueOf(currentHighscore));
-		fileHandler.writeAndEncryptString(SCORE_FACTOR_FILE_NAME,
+		fileHandler.writeAndEncryptString(FILE_NAME_SCORE_FACTOR,
 				String.valueOf(currentBonusFactor));
-		fileHandler.writeAndEncryptString(SHIELD_FILE_NAME,
+		fileHandler.writeAndEncryptString(FILE_NAME_SHIELD,
 				String.valueOf(shieldSeconds));
+		fileHandler
+				.writeAndEncryptString(FILE_NAME_ACCURACY, String.valueOf(hits)
+						+ SPLIT_CHARACTER + String.valueOf(misses));
 		if (purchaseList.size() > 0) {
 			String purchases = "";
 			for (int i = 0; i < purchaseList.size() - 1; i++) {
 				purchases += purchaseList.get(i) + SPLIT_CHARACTER;
 			}
 			purchases += purchaseList.get(purchaseList.size() - 1);
-			fileHandler.writeAndEncryptString(PURCHASES_FILE_NAME, purchases);
+			fileHandler.writeAndEncryptString(FILE_NAME_PURCHASES, purchases);
 		}
-		fileHandler.writeAndEncryptString(ACCUMULATED_WORTH_FILE_NAME,
+		fileHandler.writeAndEncryptString(FILE_NAME_ACCUMULATED_WORTH,
 				String.valueOf(accumulatedWorth));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
@@ -463,5 +495,17 @@ public class PlayerInfo {
 
 	public long getAccumulatedWorth() {
 		return accumulatedWorth;
+	}
+
+	public void incrementHits() {
+		hits++;
+	}
+
+	public void incrementMisses() {
+		misses++;
+	}
+
+	public float getAccuracy() {
+		return ((float) hits) / ((float) (hits + misses));
 	}
 }

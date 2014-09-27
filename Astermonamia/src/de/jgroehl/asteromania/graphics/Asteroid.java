@@ -116,7 +116,6 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 			if (shot.getTarget() == Target.ENEMY) {
 				asteromaniaGameHandler.getSoundManager().playEnemyHitSound();
 				life -= shot.getDamage();
-				gameHandler.remove(shot);
 				if (life <= 0) {
 					asteromaniaGameHandler.remove(this);
 					int amountCoins = (int) Math
@@ -131,6 +130,9 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 							.playExplosionSound();
 					Explosion.addExplosion(asteromaniaGameHandler, this);
 				}
+				((AsteromaniaGameHandler) gameHandler).getPlayerInfo()
+						.incrementHits();
+				gameHandler.remove(shot);
 			}
 		}
 	}

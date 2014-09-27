@@ -485,6 +485,7 @@ int string abc_searchview_description_submit 0x7f0b0007
 int string abc_searchview_description_voice 0x7f0b0008
 int string abc_shareactionprovider_share_with 0x7f0b000c
 int string abc_shareactionprovider_share_with_application 0x7f0b000b
+int string accuracy 0x7f0b0065
 int string achievement_being_a_tank_ 0x7f0b0039
 int string achievement_being_on_a_shopping_binge 0x7f0b0035
 int string achievement_boom_boom_baby 0x7f0b0031

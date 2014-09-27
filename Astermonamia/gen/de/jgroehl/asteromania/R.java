@@ -1680,6 +1680,7 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
+        public static final int accuracy=0x7f0b0065;
         public static final int achievement_being_a_tank_=0x7f0b0039;
         public static final int achievement_being_on_a_shopping_binge=0x7f0b0035;
         public static final int achievement_boom_boom_baby=0x7f0b0031;

@@ -148,6 +148,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 					Explosion.addExplosion(asteromaniaGameHandler, this);
 					gameHandler.remove(this);
 				}
+				((AsteromaniaGameHandler) gameHandler).getPlayerInfo()
+						.incrementHits();
 				gameHandler.remove(shot);
 			}
 		}
