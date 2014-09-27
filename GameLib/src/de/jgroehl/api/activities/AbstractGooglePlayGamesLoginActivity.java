@@ -38,9 +38,6 @@ public abstract class AbstractGooglePlayGamesLoginActivity extends Activity impl
 
 		Log.d(TAG, "Resolving error set to: " + resolvingError);
 
-		Toast.makeText(this, "Welcome to Asteromania", Toast.LENGTH_SHORT)
-				.show();
-
 		Log.d(TAG, "Executing onCreate of MainActivity...[Done]");
 	}
 
