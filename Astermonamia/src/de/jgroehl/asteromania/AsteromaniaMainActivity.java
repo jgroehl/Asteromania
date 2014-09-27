@@ -1,10 +1,10 @@
 package de.jgroehl.asteromania;
 
 import android.os.Bundle;
-import de.jgroehl.api.AbstractMainActivity;
+import de.jgroehl.api.activities.AbstractGooglePlayGamesLoginActivity;
 import de.jgroehl.asteromania.control.GoogleApiHandler;
 
-public class AsteromaniaMainActivity extends AbstractMainActivity {
+public class AsteromaniaMainActivity extends AbstractGooglePlayGamesLoginActivity {
 
 	private AsteromaniaGamePanel mainGamePanel;
 	public static final boolean DEBUG = false;

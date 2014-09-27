@@ -3,6 +3,7 @@ package de.jgroehl.api;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import de.jgroehl.api.activities.AbstractGooglePlayGamesLoginActivity;
 import de.jgroehl.api.utils.FpsMeter;
 
 public class GameThread extends Thread {
@@ -13,13 +14,13 @@ public class GameThread extends Thread {
 
 	private final AbstractGamePanel gamePanel;
 	private final SurfaceHolder surfaceHolder;
-	private final AbstractMainActivity abstractMainActivity;
+	private final AbstractGooglePlayGamesLoginActivity abstractMainActivity;
 
 	private static boolean running;
 	private final FpsMeter fpsMeter = new FpsMeter();
 
 	public GameThread(SurfaceHolder surfaceHolder, AbstractGamePanel gamePanel,
-			AbstractMainActivity abstractMainActivity) {
+			AbstractGooglePlayGamesLoginActivity abstractMainActivity) {
 		this.gamePanel = gamePanel;
 		this.surfaceHolder = surfaceHolder;
 		this.abstractMainActivity = abstractMainActivity;

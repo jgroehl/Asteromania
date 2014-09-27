@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import de.jgroehl.api.AbstractGamePanel;
-import de.jgroehl.api.AbstractMainActivity;
+import de.jgroehl.api.activities.AbstractGooglePlayGamesLoginActivity;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.crypto.CryptoHandler;
 import de.jgroehl.api.graphics.interfaces.Drawable;
@@ -33,7 +33,7 @@ public class AsteromaniaGamePanel extends AbstractGamePanel {
 	private GameSetup gameSetup = new GameSetup();
 
 	public AsteromaniaGamePanel(Context context, GoogleApiHandler handler,
-			AbstractMainActivity abstractMainActivity) {
+			AbstractGooglePlayGamesLoginActivity abstractMainActivity) {
 
 		super(context, abstractMainActivity);
 

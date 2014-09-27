@@ -1,4 +1,4 @@
-package de.jgroehl.api;
+package de.jgroehl.api.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,10 +14,10 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.games.Games;
 
-public abstract class AbstractMainActivity extends Activity implements
+public abstract class AbstractGooglePlayGamesLoginActivity extends Activity implements
 		ConnectionCallbacks, OnConnectionFailedListener {
 
-	private static final String TAG = AbstractMainActivity.class
+	private static final String TAG = AbstractGooglePlayGamesLoginActivity.class
 			.getSimpleName();
 	private static final int REQUEST_RESOLVE_ERROR = 1001;
 	private static final String STATE_RESOLVING_ERROR = "resolving_error";

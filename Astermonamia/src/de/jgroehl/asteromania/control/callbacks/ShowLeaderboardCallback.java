@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.games.Games;
 
-import de.jgroehl.api.AbstractMainActivity;
+import de.jgroehl.api.activities.AbstractGooglePlayGamesLoginActivity;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.R;
@@ -21,9 +21,9 @@ public class ShowLeaderboardCallback implements EventCallback {
 			
 			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
 			
-			if (asteromaniaGameHandler.getContext() instanceof AbstractMainActivity) {
+			if (asteromaniaGameHandler.getContext() instanceof AbstractGooglePlayGamesLoginActivity) {
 				if (asteromaniaGameHandler.getApiHandler().getApiClient().isConnected()) {
-					((AbstractMainActivity) asteromaniaGameHandler.getContext())
+					((AbstractGooglePlayGamesLoginActivity) asteromaniaGameHandler.getContext())
 							.startActivityForResult(
 									Games.Leaderboards
 											.getLeaderboardIntent(

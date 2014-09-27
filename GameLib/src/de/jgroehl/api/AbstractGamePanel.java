@@ -1,5 +1,6 @@
 package de.jgroehl.api;
 
+import de.jgroehl.api.activities.AbstractGooglePlayGamesLoginActivity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
@@ -10,11 +11,11 @@ public abstract class AbstractGamePanel extends SurfaceView implements
 		SurfaceHolder.Callback {
 
 	private static final String TAG = null;
-	private final AbstractMainActivity abstractMainActivity;
+	private final AbstractGooglePlayGamesLoginActivity abstractMainActivity;
 	private GameThread thread;
 
 	public AbstractGamePanel(Context context,
-			AbstractMainActivity abstractMainActivity) {
+			AbstractGooglePlayGamesLoginActivity abstractMainActivity) {
 		super(context);
 
 		this.abstractMainActivity = abstractMainActivity;
