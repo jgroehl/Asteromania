@@ -1708,6 +1708,7 @@ containing a value of this type.
         public static final int app_name=0x7f0b0027;
         public static final int back=0x7f0b0050;
         public static final int bonus_damage=0x7f0b0047;
+        public static final int checkpoint=0x7f0b0066;
         public static final int coin=0x7f0b0042;
         public static final int coins=0x7f0b0043;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it

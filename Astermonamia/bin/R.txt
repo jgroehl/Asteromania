@@ -513,6 +513,7 @@ int string app_id 0x7f0b0028
 int string app_name 0x7f0b0027
 int string back 0x7f0b0050
 int string bonus_damage 0x7f0b0047
+int string checkpoint 0x7f0b0066
 int string coin 0x7f0b0042
 int string coins 0x7f0b0043
 int string common_google_play_services_enable_button 0x7f0b0018

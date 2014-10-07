@@ -530,4 +530,8 @@ public class PlayerInfo {
 	public int getCheckpointLevel() {
 		return checkpointLevel;
 	}
+
+	public void resetToCheckpoint() {
+		level = checkpointLevel;
+	}
 }
