@@ -9,9 +9,9 @@ import android.content.Context;
 public class BossEnemy extends BaseEnemy {
 
 	private static final float BOSS_ENEMY_WIDTH = 0.12f;
-	private static final float BOSS_SPEED = 0.01f;
-	private static final int BOSS_SHOT_RATE = 800;
-	private static final float BOSS_SHOT_SPEED = 0.035f;
+	private static final float BOSS_SPEED = 0.005f;
+	private static final int BOSS_SHOT_RATE = 780;
+	private static final float BOSS_SHOT_SPEED = 0.019f;
 	private static final int BOSS_LIFEPOINTS = 5;
 	private static final int BOSS_DAMAGE = 3;
 

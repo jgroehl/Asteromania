@@ -41,13 +41,17 @@ public class LevelHandler {
 			numberOfEnemies = random(level / 10, level / 10);
 			if (numberOfEnemies > 5)
 				numberOfEnemies = 5;
+			else if (numberOfEnemies < 1)
+				numberOfEnemies = 1;
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(BossEnemy.createBossEnemy(context, level));
 			}
 			break;
 		case MIXED:
-			numberOfEnemies = random((level + 1.0) / 1.6 * 0.9,
-					(level + 1.0) / 1.6 * 1.1);
+			numberOfEnemies = random((level + 1.0) / 1.5 * 0.9,
+					(level + 1.0) / 1.5 * 1.1);
+			if (numberOfEnemies < 1)
+				numberOfEnemies = 1;
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(Asteroid.createAsteroid(context, level));
 			}
@@ -55,6 +59,8 @@ public class LevelHandler {
 					Math.cbrt(level) * 1.1);
 			if (numberOfEnemies > 8)
 				numberOfEnemies = 8;
+			else if (numberOfEnemies < 1)
+				numberOfEnemies = 1;
 			for (int i = 0; i < numberOfEnemies; i++) {
 				enemies.add(NormalEnemy.createNormalEnemy(context, level));
 			}
@@ -63,6 +69,8 @@ public class LevelHandler {
 		default:
 			numberOfEnemies = random(Math.sqrt(level) * 0.9,
 					Math.sqrt(level) * 1.1);
+			if (numberOfEnemies < 1)
+				numberOfEnemies = 1;
 			if (numberOfEnemies > 15)
 				numberOfEnemies = 15;
 			for (int i = 0; i < numberOfEnemies; i++) {
@@ -79,7 +87,7 @@ public class LevelHandler {
 	}
 
 	public LevelType getLevelType(int level) {
-		if (level < 5)
+		if (level < 3)
 			return LevelType.NORMAL;
 		else {
 			switch (level % 10) {

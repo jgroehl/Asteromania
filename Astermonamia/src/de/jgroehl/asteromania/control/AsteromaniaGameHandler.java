@@ -110,13 +110,17 @@ public class AsteromaniaGameHandler extends BaseGameHandler {
 	}
 
 	public void gameLost() {
+		resetGame();
+		soundManager.playExplosionSound();
+		Explosion.createGameOver(this);
+		setState(GameState.GAME_OVER);
+	}
+
+	public void resetGame() {
 		levelHandler.killAllEntities(this);
 		highscore.addNewHighscore(playerInfo.getCurrentHighscore());
 		apiHandler.addToLeaderBoard(playerInfo.getCurrentHighscore());
 		playerInfo.reset();
-		soundManager.playExplosionSound();
-		Explosion.createGameOver(this);
-		setState(GameState.GAME_OVER);
 	}
 
 	public void setStarfield(Starfield starfield) {
