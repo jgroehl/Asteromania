@@ -74,6 +74,7 @@ public class AsteromaniaGameHandler extends BaseGameHandler {
 							playerInfo.getLevel()));
 					player.addShieldSeconds(NEW_LEVEL_SHIELD_SECONDS);
 				}
+				playerInfo.checkForCheckpoint();
 			} else {
 				addKillables(levelHandler.getLevelObjects(context,
 						playerInfo.nextLevel()));

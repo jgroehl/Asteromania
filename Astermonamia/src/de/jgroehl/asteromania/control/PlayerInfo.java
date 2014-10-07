@@ -373,6 +373,8 @@ public class PlayerInfo {
 		}
 		fileHandler.writeAndEncryptString(FILE_NAME_ACCUMULATED_WORTH,
 				String.valueOf(accumulatedWorth));
+		fileHandler.writeAndEncryptString(FILE_NAME_CHECKPOINT_LEVEL,
+				String.valueOf(checkpointLevel));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -533,5 +535,12 @@ public class PlayerInfo {
 
 	public void resetToCheckpoint() {
 		level = checkpointLevel;
+	}
+
+	public void checkForCheckpoint() {
+		if (level % 10 == 1) {
+			checkpointLevel = level;
+		}
+
 	}
 }
