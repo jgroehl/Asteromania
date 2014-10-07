@@ -1,11 +1,24 @@
 package de.jgroehl.api.time;
 
+/**
+ * This class can be used to keep track of timing events.
+ * 
+ * @author Janek
+ *
+ */
 public class Timer {
 
 	private int period;
 	private long time = System.currentTimeMillis();
 
+	/**
+	 * 
+	 * @param period
+	 *            must not be < 0
+	 */
 	public Timer(int period) {
+		if (period < 0)
+			throw new IllegalArgumentException("The given period was negative.");
 		this.period = period;
 		time = System.currentTimeMillis();
 	}
@@ -24,11 +37,22 @@ public class Timer {
 		return false;
 	}
 
+	/**
+	 * resets the timer to the standard period.
+	 */
 	public void reset() {
 		time = System.currentTimeMillis();
 	}
 
+	/**
+	 * resets the timer and updates the period.
+	 * 
+	 * @param period
+	 *            must not be < 0
+	 */
 	public void reset(int period) {
+		if (period < 0)
+			throw new IllegalArgumentException("The given period was negative.");
 		this.period = period;
 		reset();
 	}

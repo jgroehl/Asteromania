@@ -15,18 +15,58 @@ import android.util.Log;
 import de.jgroehl.api.crypto.CryptoHandler;
 import de.jgroehl.api.crypto.CryptoHandler.CryptoException;
 
+/**
+ * The {@link FileHandler} can be used to write and read strings from files
+ * which are private to the application as specified in {@link Context}
+ * .MODE_PRIVATE.
+ * 
+ * The given strings will not be written directly but will be encrypted and
+ * decrypted with a key only known to the phone holder. For these encryption the
+ * {@link FileHandler} uses the {@link CryptoHandler} class.
+ * 
+ * @author Janek Gröhl
+ *
+ */
 public class FileHandler {
 
 	private static final String TAG = FileHandler.class.getSimpleName();
 	private final CryptoHandler cryptoHandler;
 	private final Context context;
 
+	/**
+	 * 
+	 * @param cryptoHandler
+	 *            not <code>null</code>
+	 * @param context
+	 *            not <code>null</code>
+	 */
 	public FileHandler(CryptoHandler cryptoHandler, Context context) {
+		if (cryptoHandler == null)
+			throw new NullPointerException(
+					"cryptoHandler was null in FileHandler");
+		if (context == null)
+			throw new NullPointerException("Context was null in FileHandler");
+
 		this.cryptoHandler = cryptoHandler;
 		this.context = context;
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 *            not <code>null</code>
+	 * @param value
+	 *            not <code>null</code>
+	 */
 	public void writeAndEncryptString(String fileName, String value) {
+
+		if (fileName == null)
+			throw new NullPointerException(
+					"FileName was null when trying to write: " + value);
+		if (value == null)
+			throw new NullPointerException(
+					"Value field was null when trying to write String.");
+
 		try {
 			FileOutputStream fos = context.openFileOutput(fileName,
 					Context.MODE_PRIVATE);
@@ -50,7 +90,16 @@ public class FileHandler {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 *            not <code>null</code>
+	 * @return the decrypted content of the given file.
+	 */
 	public String getDecryptedStringFromFile(String fileName) {
+		if (fileName == null)
+			throw new NullPointerException(
+					"File name was null when trying to read file contents.");
 		String result = "";
 		try {
 			FileInputStream fis = context.openFileInput(fileName);
@@ -88,7 +137,17 @@ public class FileHandler {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 *            not <code>null</code>
+	 * @return the entire content written to the specified file wrapped in a
+	 *         single String.
+	 */
 	public String readFileContents(String fileName) {
+		if (fileName == null)
+			throw new NullPointerException(
+					"fileName was null when reading file content.");
 		String result = null;
 		FileInputStream fis;
 		try {
