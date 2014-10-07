@@ -1,21 +1,26 @@
 package de.jgroehl.api;
 
-import de.jgroehl.api.activities.AbstractGooglePlayGamesLoginActivity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import de.jgroehl.api.activities.AbstractSimpleActivity;
 
+/**
+ *
+ * @author Janek Gröhl
+ *
+ */
 public abstract class AbstractGamePanel extends SurfaceView implements
 		SurfaceHolder.Callback {
 
 	private static final String TAG = null;
-	private final AbstractGooglePlayGamesLoginActivity abstractMainActivity;
+	private final AbstractSimpleActivity abstractMainActivity;
 	private GameThread thread;
 
 	public AbstractGamePanel(Context context,
-			AbstractGooglePlayGamesLoginActivity abstractMainActivity) {
+			AbstractSimpleActivity abstractMainActivity) {
 		super(context);
 
 		this.abstractMainActivity = abstractMainActivity;
@@ -25,12 +30,26 @@ public abstract class AbstractGamePanel extends SurfaceView implements
 		setDrawingCacheEnabled(true);
 	}
 
+	/**
+	 * Updates the game state.
+	 */
 	public abstract void updateGameState();
 
+	/**
+	 * Displays the game state onto the given canvas object.
+	 * 
+	 * @param c
+	 */
 	public abstract void displayGameState(Canvas c);
 
+	/**
+	 * Does updates necessary before the updateGameState() method is called.
+	 */
 	public abstract void update();
 
+	/**
+	 * Initializes the Game Objects.
+	 */
 	public abstract void initializeGameObjects();
 
 	protected GameThread getThread() {

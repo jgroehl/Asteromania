@@ -3,9 +3,14 @@ package de.jgroehl.api;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import de.jgroehl.api.activities.AbstractGooglePlayGamesLoginActivity;
+import de.jgroehl.api.activities.AbstractSimpleActivity;
 import de.jgroehl.api.utils.FpsMeter;
 
+/**
+ * 
+ * @author Janek Gröhl	
+ *
+ */
 public class GameThread extends Thread {
 
 	private static final String TAG = GameThread.class.getSimpleName();
@@ -14,18 +19,43 @@ public class GameThread extends Thread {
 
 	private final AbstractGamePanel gamePanel;
 	private final SurfaceHolder surfaceHolder;
-	private final AbstractGooglePlayGamesLoginActivity abstractMainActivity;
+	private final AbstractSimpleActivity abstractMainActivity;
 
 	private static boolean running;
 	private final FpsMeter fpsMeter = new FpsMeter();
 
+	/**
+	 * Initializes the thread with the given parameters.
+	 * 
+	 * @param surfaceHolder
+	 *            not <code>null</code>
+	 * @param gamePanel
+	 *            not <code>null</code>
+	 * @param mainActivity
+	 *            not <code>null</code>
+	 */
 	public GameThread(SurfaceHolder surfaceHolder, AbstractGamePanel gamePanel,
-			AbstractGooglePlayGamesLoginActivity abstractMainActivity) {
+			AbstractSimpleActivity mainActivity) {
+
+		if (surfaceHolder == null)
+			throw new NullPointerException(
+					"surfaceHolder was null in GameThread");
+		if (gamePanel == null)
+			throw new NullPointerException("gamePanel was null in GameThread");
+		if (mainActivity == null)
+			throw new NullPointerException(
+					"mainActivity was null in GameThread");
+
 		this.gamePanel = gamePanel;
 		this.surfaceHolder = surfaceHolder;
-		this.abstractMainActivity = abstractMainActivity;
+		this.abstractMainActivity = mainActivity;
 	}
 
+	/**
+	 * If set to false, the thread will stop running.
+	 * 
+	 * @param running
+	 */
 	public void setRunning(boolean running) {
 		GameThread.running = running;
 	}
@@ -80,6 +110,10 @@ public class GameThread extends Thread {
 		fpsMeter.draw(c);
 	}
 
+	/**
+	 * 
+	 * @return true if the {@link GameThread} is still running.
+	 */
 	public boolean isRunning() {
 		return running;
 	}

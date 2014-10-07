@@ -1,11 +1,9 @@
 package de.jgroehl.api.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -14,8 +12,9 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.games.Games;
 
-public abstract class AbstractGooglePlayGamesLoginActivity extends Activity implements
-		ConnectionCallbacks, OnConnectionFailedListener {
+public abstract class AbstractGooglePlayGamesLoginActivity extends
+		AbstractSimpleActivity implements ConnectionCallbacks,
+		OnConnectionFailedListener {
 
 	private static final String TAG = AbstractGooglePlayGamesLoginActivity.class
 			.getSimpleName();
