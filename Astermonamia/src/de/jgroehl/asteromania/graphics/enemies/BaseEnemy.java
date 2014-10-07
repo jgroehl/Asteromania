@@ -1,11 +1,10 @@
-package de.jgroehl.asteromania.graphics;
+package de.jgroehl.asteromania.graphics.enemies;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import de.jgroehl.api.control.BaseGameHandler;
-import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.graphics.AbstractDamagingAbility;
 import de.jgroehl.api.graphics.Target;
 import de.jgroehl.api.graphics.animated.SimpleAnimatedObject;
@@ -15,17 +14,16 @@ import de.jgroehl.api.graphics.statusBars.HpBar;
 import de.jgroehl.api.time.Timer;
 import de.jgroehl.asteromania.AsteromaniaMainActivity;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
+import de.jgroehl.asteromania.graphics.Coin;
+import de.jgroehl.asteromania.graphics.Explosion;
+import de.jgroehl.asteromania.graphics.Heart;
 
-public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
+public abstract class BaseEnemy extends SimpleAnimatedObject implements
+		Hitable, Killable {
 
 	private static final double HEALTH_DROP_CHANCE = 0.5;
-	private static final float BASIC_SPEED = 0.01f;
-	private static final int BASIC_SHOT_RATE = 2000;
-	private static final float BASIC_SHOT_SPEED = 0.02f;
-	private static final float UPPER_BOUND = 0.1f;
-	private static final float LOWER_BOUND = 0.2f;
-	private static final int BASIC_LIFEPOINTS = 3;
-	private static final float BASIC_DAMAGE = 1;
+	private static final float UPPER_BOUND = 0.075f;
+	private static final float LOWER_BOUND = 0.175f;
 	private static final int MINIMUM_AMOUNT_COINS_DROPPED = 1;
 	private final float speed;
 	private final Timer shootTimer;
@@ -37,10 +35,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 	private final float shotSpeed;
 	private final int shotDamage;
 	private static final Paint textPaint = new Paint();
-	private static final float NORMAL_ENEMY_WIDTH = 0.14f;
-	private static final float BOSS_ENEMY_WIDTH = 0.12f;
 
-	private Enemy(float xPosition, float yPosition, int graphicsId,
+	protected BaseEnemy(float xPosition, float yPosition, int graphicsId,
 			float relativeWidth, int frameCount, int animationPeriod,
 			Context context, int lifepoints, float shotSpeed,
 			int basicShootFrequency, float basicSpeed, float basicDamage) {
@@ -61,6 +57,14 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 		return Math.random() * 0.4 + 0.8;
 	}
 
+	public float getShotSpeed() {
+		return shotSpeed;
+	}
+
+	public int getShotDamage() {
+		return shotDamage;
+	}
+
 	@Override
 	public void update(BaseGameHandler handler) {
 		if (handler instanceof AsteromaniaGameHandler) {
@@ -72,7 +76,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 					moveRight = false;
 			} else {
 				xPosition = xPosition - speed;
-				if (xPosition < SCREEN_MINIMUM - getRelativeWidth() / 2)
+				if (xPosition < SCREEN_MINIMUM + getRelativeWidth() / 2)
 					moveRight = true;
 			}
 
@@ -87,10 +91,7 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 			}
 
 			if (shootTimer.isPeriodOver()) {
-				asteromaniaGameHandler.getSoundManager().playEnemyShotSound();
-				handler.add(new Shot(xPosition + relativeWidth / 2, yPosition
-						+ relativeHeight * 0.4f, Target.PLAYER, shotSpeed,
-						context, shotDamage, this), GameState.MAIN);
+				shoot(asteromaniaGameHandler);
 			}
 
 			hpBar.setPosition(xPosition, yPosition + relativeHeight);
@@ -99,6 +100,8 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 			super.update(handler);
 		}
 	}
+
+	protected abstract void shoot(AsteromaniaGameHandler handler);
 
 	@Override
 	public void draw(Canvas c) {
@@ -153,25 +156,6 @@ public class Enemy extends SimpleAnimatedObject implements Hitable, Killable {
 				gameHandler.remove(shot);
 			}
 		}
-	}
-
-	public static Enemy createNormalEnemy(Context context, int level) {
-		return new Enemy((float) Math.random(), 0.2f,
-				de.jgroehl.asteromania.R.drawable.enemy, NORMAL_ENEMY_WIDTH,
-				15, 100, context,
-				(int) (BASIC_LIFEPOINTS * 2 * ((level + 1) / 2.0)),
-				BASIC_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
-				(int) (BASIC_SHOT_RATE / 1.5), BASIC_SPEED,
-				(int) (BASIC_DAMAGE * Math.sqrt(level)));
-	}
-
-	public static Enemy createBossEnemy(Context context, int level) {
-		return new Enemy((float) Math.random(), 0.2f,
-				de.jgroehl.asteromania.R.drawable.enemy2, BOSS_ENEMY_WIDTH, 6,
-				100, context, (int) (BASIC_LIFEPOINTS * 5 * (level + 1) / 2.0),
-				BASIC_SHOT_SPEED / (float) ((Math.cbrt(level) + 2) / 3),
-				(int) (BASIC_SHOT_RATE / 2.75), (BASIC_SPEED / 2),
-				(int) (BASIC_DAMAGE * level));
 	}
 
 	@Override

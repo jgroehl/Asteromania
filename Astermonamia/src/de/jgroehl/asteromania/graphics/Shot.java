@@ -7,6 +7,7 @@ import de.jgroehl.api.graphics.GraphicsObject;
 import de.jgroehl.api.graphics.Target;
 import de.jgroehl.api.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
+import de.jgroehl.asteromania.graphics.enemies.BaseEnemy;
 
 public class Shot extends AbstractDamagingAbility {
 
@@ -14,10 +15,10 @@ public class Shot extends AbstractDamagingAbility {
 
 	private final float direction;
 	private final float shotSpeed;
-	private Enemy source;
+	private BaseEnemy source;
 
 	public Shot(float xPosition, float yPosition, Target target,
-			float shotSpeed, Context context, int damage, Enemy source) {
+			float shotSpeed, Context context, int damage, BaseEnemy source) {
 		super(
 				xPosition,
 				yPosition,

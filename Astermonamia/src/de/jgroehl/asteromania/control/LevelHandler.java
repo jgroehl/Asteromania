@@ -7,7 +7,8 @@ import android.content.Context;
 import de.jgroehl.api.graphics.GameObject;
 import de.jgroehl.api.graphics.interfaces.Killable;
 import de.jgroehl.asteromania.graphics.Asteroid;
-import de.jgroehl.asteromania.graphics.Enemy;
+import de.jgroehl.asteromania.graphics.enemies.BossEnemy;
+import de.jgroehl.asteromania.graphics.enemies.NormalEnemy;
 
 public class LevelHandler {
 
@@ -41,7 +42,7 @@ public class LevelHandler {
 			if (numberOfEnemies > 5)
 				numberOfEnemies = 5;
 			for (int i = 0; i < numberOfEnemies; i++) {
-				enemies.add(Enemy.createBossEnemy(context, level));
+				enemies.add(BossEnemy.createBossEnemy(context, level));
 			}
 			break;
 		case MIXED:
@@ -55,7 +56,7 @@ public class LevelHandler {
 			if (numberOfEnemies > 8)
 				numberOfEnemies = 8;
 			for (int i = 0; i < numberOfEnemies; i++) {
-				enemies.add(Enemy.createNormalEnemy(context, level));
+				enemies.add(NormalEnemy.createNormalEnemy(context, level));
 			}
 			break;
 		case NORMAL:
@@ -65,7 +66,7 @@ public class LevelHandler {
 			if (numberOfEnemies > 15)
 				numberOfEnemies = 15;
 			for (int i = 0; i < numberOfEnemies; i++) {
-				enemies.add(Enemy.createNormalEnemy(context, level));
+				enemies.add(NormalEnemy.createNormalEnemy(context, level));
 			}
 			break;
 		}
