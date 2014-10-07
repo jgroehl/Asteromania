@@ -1816,6 +1816,7 @@ containing a value of this type.
         public static final int new_highscore=0x7f0b0057;
         public static final int no_connection_to_play_services=0x7f0b0063;
         public static final int not_enough_gold=0x7f0b0052;
+        public static final int play=0x7f0b0067;
         public static final int purchase_doubleshot_first=0x7f0b0061;
         public static final int purchase_shield_generator_first=0x7f0b005c;
         public static final int quit=0x7f0b004f;

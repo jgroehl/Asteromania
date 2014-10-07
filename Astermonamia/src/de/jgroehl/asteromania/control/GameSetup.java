@@ -30,15 +30,23 @@ public class GameSetup {
 		gameHandler.update();
 
 		gameHandler.add(new Button(gameHandler.getContext().getResources()
-				.getString(de.jgroehl.asteromania.R.string.start), 0.1f, 0.07f,
-				0.35f, 0.2f, new MenuButtonCallback(GameState.MAIN),
+				.getString(de.jgroehl.asteromania.R.string.play), 0.2f, 0.07f,
+				0.6f, 0.2f, new MenuButtonCallback(GameState.START),
 				gameHandler.getContext()), GameState.MENU);
-		gameHandler
-				.add(new Button(gameHandler.getContext().getResources()
+
+		gameHandler.add(
+				new Button(gameHandler.getContext().getResources()
 						.getString(de.jgroehl.asteromania.R.string.checkpoint),
-						0.55f, 0.07f, 0.35f, 0.2f,
-						new FromCheckpointCallback(), gameHandler.getContext()),
-						GameState.MENU);
+						0.2f, 0.295f, 0.6f, 0.2f, new FromCheckpointCallback(),
+						gameHandler.getContext()), GameState.START);
+
+		gameHandler.add(
+				new Button(gameHandler.getContext().getResources()
+						.getString(de.jgroehl.asteromania.R.string.start),
+						0.2f, 0.52f, 0.6f, 0.2f, new MenuButtonCallback(
+								GameState.MAIN), gameHandler.getContext()),
+				GameState.START);
+
 		gameHandler.update();
 		gameHandler
 				.add(new Button(gameHandler.getContext().getResources()

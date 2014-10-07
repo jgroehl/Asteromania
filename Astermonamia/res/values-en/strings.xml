@@ -40,5 +40,6 @@
     <string name="highscore_not_commited">Highscore was not committed to Google Play due to a connection error.</string>
     <string name="accuracy">Accuracy</string>
     <string name="checkpoint">Checkpoint</string>
+    <string name="play">Play</string>
 
 </resources>

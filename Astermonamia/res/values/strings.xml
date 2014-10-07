@@ -40,5 +40,6 @@
     <string name="highscore_not_commited">Der Highscore wurde nicht in die Rangliste aufgenommen, da die Verbindung zu Google Play fehlschlug.</string>
     <string name="accuracy">Genauigkeit</string>
     <string name="checkpoint">Checkpoint</string>
+    <string name="play">Spielen</string>
 
 </resources>

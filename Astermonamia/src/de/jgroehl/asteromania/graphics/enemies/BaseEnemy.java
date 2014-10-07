@@ -76,7 +76,7 @@ public abstract class BaseEnemy extends SimpleAnimatedObject implements
 					moveRight = false;
 			} else {
 				xPosition = xPosition - speed;
-				if (xPosition < SCREEN_MINIMUM + getRelativeWidth() / 2)
+				if (xPosition < SCREEN_MINIMUM - getRelativeWidth() / 2)
 					moveRight = true;
 			}
 
