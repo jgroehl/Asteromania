@@ -25,6 +25,7 @@ public class PlayerInfo {
 	private static final String FILE_NAME_PURCHASES = "purchases";
 	private static final String FILE_NAME_ACCUMULATED_WORTH = "accumulatedWorth";
 	private static final String FILE_NAME_ACCURACY = "accuracy";
+	private static final String FILE_NAME_CHECKPOINT_LEVEL = "checkpoint";
 	private static final String SPLIT_CHARACTER = "&";
 
 	private static final int DEFAULT_HEALTH = 3;
@@ -38,6 +39,7 @@ public class PlayerInfo {
 	private static final int DEFAULT_COIN_VALUE = AsteromaniaMainActivity.DEBUG ? 1000000
 			: 100;
 	private static final long DEFAULT_ACCUMULATED_PURCHASES = 0;
+	private static final int DEFAULT_CHECKPOINT_LEVEL = 1;
 
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
@@ -52,6 +54,7 @@ public class PlayerInfo {
 	private FramedHpBar healthPoints;
 	private long coins;
 	private int level;
+	private int checkpointLevel;
 	private float maxSpeedFactor;
 	private float shotSpeedFactor;
 	private float shotFrequencyFactor;
@@ -87,7 +90,22 @@ public class PlayerInfo {
 		readPurchases();
 		readAccumulatedPurchaseValue();
 		readAccuracy();
+		readCheckpointLevel();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void readCheckpointLevel() {
+		try {
+			checkpointLevel = Integer.parseInt(fileHandler
+					.getDecryptedStringFromFile(FILE_NAME_CHECKPOINT_LEVEL));
+			Log.d(TAG, "Set current checkpointLevel to " + checkpointLevel);
+
+		} catch (NumberFormatException e) {
+			Log.w(TAG,
+					"checkpointLevel not readable. Setting checkpointLevel to "
+							+ DEFAULT_CHECKPOINT_LEVEL);
+			checkpointLevel = DEFAULT_CHECKPOINT_LEVEL;
+		}
 	}
 
 	private void readAccuracy() {
@@ -507,5 +525,9 @@ public class PlayerInfo {
 
 	public float getAccuracy() {
 		return ((float) hits) / ((float) (hits + misses));
+	}
+
+	public int getCheckpointLevel() {
+		return checkpointLevel;
 	}
 }

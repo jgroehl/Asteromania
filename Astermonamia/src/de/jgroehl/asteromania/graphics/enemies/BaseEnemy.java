@@ -21,7 +21,7 @@ import de.jgroehl.asteromania.graphics.Heart;
 public abstract class BaseEnemy extends SimpleAnimatedObject implements
 		Hitable, Killable {
 
-	private static final double HEALTH_DROP_CHANCE = 0.5;
+	private static final double HEALTH_DROP_CHANCE = 0.6;
 	private static final float UPPER_BOUND = 0.075f;
 	private static final float LOWER_BOUND = 0.175f;
 	private static final int MINIMUM_AMOUNT_COINS_DROPPED = 1;

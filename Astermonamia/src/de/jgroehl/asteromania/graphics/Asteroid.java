@@ -79,13 +79,13 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable,
 					asteromaniaGameHandler.getPlayer().getRelativeHeight())) {
 				asteromaniaGameHandler.getPlayer().getHitByAsteroid(
 						asteromaniaGameHandler, damage);
-				life = 0;
 				asteromaniaGameHandler.remove(this);
+				kill();
 			}
 			yPosition = yPosition + speed;
 			if (yPosition > (1.0 + getRelativeHeight())) {
 				asteromaniaGameHandler.remove(this);
-				life = 0;
+				kill();
 			}
 		}
 	}
