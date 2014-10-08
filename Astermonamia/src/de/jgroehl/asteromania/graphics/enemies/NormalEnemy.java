@@ -29,15 +29,15 @@ public class NormalEnemy extends BaseEnemy {
 				de.jgroehl.asteromania.R.drawable.enemy, NORMAL_ENEMY_WIDTH,
 				15, 100, context, NORMAL_LIFEPOINTS * (level + 1),
 				NORMAL_SHOT_SPEED, NORMAL_SHOT_RATE, NORMAL_SPEED,
-				NORMAL_DAMAGE * level);
+				Math.round(NORMAL_DAMAGE * Math.sqrt(2 * level)));
 	}
 
 	@Override
 	protected void shoot(AsteromaniaGameHandler handler) {
 		handler.getSoundManager().playEnemyShotSound();
 		handler.add(new Shot(xPosition + relativeWidth / 2, yPosition
-				+ relativeHeight * 0.4f, Target.PLAYER, getShotSpeed(), context,
-				getShotDamage(), this), GameState.MAIN);
+				+ relativeHeight * 0.4f, Target.PLAYER, getShotSpeed(),
+				context, getShotDamage(), this), GameState.MAIN);
 	}
 
 }

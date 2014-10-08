@@ -538,9 +538,8 @@ public class PlayerInfo {
 	}
 
 	public void checkForCheckpoint() {
-		if (level % 10 == 1) {
-			checkpointLevel = level;
-		}
-
+		if (level > checkpointLevel)
+			if (level % 10 == 1)
+				checkpointLevel = level;
 	}
 }

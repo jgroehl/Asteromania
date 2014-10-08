@@ -70,14 +70,12 @@ public class AsteromaniaGameHandler extends BaseGameHandler {
 				}
 				if (transition.isFinished()) {
 					transition.reset();
-					addKillables(levelHandler.getLevelObjects(context,
-							playerInfo.getLevel()));
-					player.addShieldSeconds(NEW_LEVEL_SHIELD_SECONDS);
+					fillLevel();
 				}
 				playerInfo.checkForCheckpoint();
 			} else {
-				addKillables(levelHandler.getLevelObjects(context,
-						playerInfo.nextLevel()));
+				playerInfo.nextLevel();
+				fillLevel();
 			}
 		}
 	}
@@ -137,6 +135,12 @@ public class AsteromaniaGameHandler extends BaseGameHandler {
 
 	public GoogleApiHandler getApiHandler() {
 		return apiHandler;
+	}
+
+	public void fillLevel() {
+		player.addShieldSeconds(NEW_LEVEL_SHIELD_SECONDS);
+		addKillables(levelHandler.getLevelObjects(context,
+				playerInfo.getLevel()));
 	}
 
 }

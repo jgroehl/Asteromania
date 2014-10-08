@@ -16,6 +16,7 @@ public class FromCheckpointCallback extends MenuButtonCallback {
 			AsteromaniaGameHandler asteromaniaGameHandler = ((AsteromaniaGameHandler) gameHandler);
 			asteromaniaGameHandler.resetGame();
 			asteromaniaGameHandler.getPlayerInfo().resetToCheckpoint();
+			asteromaniaGameHandler.fillLevel();
 		}
 		super.action(gameHandler);
 	}
