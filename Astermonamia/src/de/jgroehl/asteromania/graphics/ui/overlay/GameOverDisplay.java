@@ -1,4 +1,4 @@
-package de.jgroehl.asteromania.graphics;
+package de.jgroehl.asteromania.graphics.ui.overlay;
 
 import android.content.Context;
 import android.graphics.Canvas;

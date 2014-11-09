@@ -10,10 +10,10 @@ import de.jgroehl.api.graphics.interfaces.Killable;
 import de.jgroehl.api.io.FileHandler;
 import de.jgroehl.api.utils.SensorHandler;
 import de.jgroehl.asteromania.graphics.Explosion;
-import de.jgroehl.asteromania.graphics.player.PlayerInfoDisplay;
 import de.jgroehl.asteromania.graphics.player.SpaceShip;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
+import de.jgroehl.asteromania.graphics.ui.overlay.PlayerInfoDisplay;
 
 public class AsteromaniaGameHandler extends BaseGameHandler {
 
@@ -118,6 +118,7 @@ public class AsteromaniaGameHandler extends BaseGameHandler {
 		levelHandler.killAllEntities(this);
 		highscore.addNewHighscore(playerInfo.getCurrentHighscore());
 		apiHandler.addToLeaderBoard(playerInfo.getCurrentHighscore());
+		starfield.reset();
 		playerInfo.reset();
 	}
 

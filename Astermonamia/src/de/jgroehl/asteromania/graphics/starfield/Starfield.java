@@ -73,4 +73,10 @@ public class Starfield extends GameObject implements Drawable, Updatable {
 		return stars[0].getAcceleration();
 	}
 
+	public void reset() {
+		for (StarObject star : stars) {
+			star.reset();
+		}
+	}
+
 }

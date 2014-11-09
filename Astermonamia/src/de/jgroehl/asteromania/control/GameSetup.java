@@ -13,11 +13,12 @@ import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseTyp
 import de.jgroehl.asteromania.control.callbacks.FromCheckpointCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.callbacks.ShowLeaderboardCallback;
-import de.jgroehl.asteromania.graphics.GameOverDisplay;
-import de.jgroehl.asteromania.graphics.player.PlayerInfoDisplay;
-import de.jgroehl.asteromania.graphics.player.PlayerStatsDisplay;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
+import de.jgroehl.asteromania.graphics.ui.overlay.GameOverDisplay;
+import de.jgroehl.asteromania.graphics.ui.overlay.NewGameDisplay;
+import de.jgroehl.asteromania.graphics.ui.overlay.PlayerInfoDisplay;
+import de.jgroehl.asteromania.graphics.ui.overlay.PlayerStatsDisplay;
 
 public class GameSetup {
 
@@ -37,15 +38,18 @@ public class GameSetup {
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources()
 						.getString(de.jgroehl.asteromania.R.string.checkpoint),
-						0.2f, 0.295f, 0.6f, 0.2f, new FromCheckpointCallback(),
+						0.2f, 0.3f, 0.6f, 0.2f, new FromCheckpointCallback(),
 						gameHandler.getContext()), GameState.START);
 
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources()
 						.getString(de.jgroehl.asteromania.R.string.start),
-						0.2f, 0.52f, 0.6f, 0.2f, new MenuButtonCallback(
+						0.2f, 0.7f, 0.6f, 0.2f, new MenuButtonCallback(
 								GameState.MAIN), gameHandler.getContext()),
 				GameState.START);
+
+		gameHandler.add(new NewGameDisplay(gameHandler.getContext(),
+				gameHandler.getPlayerInfo()), GameState.START);
 
 		gameHandler.update();
 		gameHandler

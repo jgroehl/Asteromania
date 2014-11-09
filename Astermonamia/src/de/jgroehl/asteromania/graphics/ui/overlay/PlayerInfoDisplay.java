@@ -1,4 +1,4 @@
-package de.jgroehl.asteromania.graphics.player;
+package de.jgroehl.asteromania.graphics.ui.overlay;
 
 import android.content.Context;
 import android.graphics.Bitmap;

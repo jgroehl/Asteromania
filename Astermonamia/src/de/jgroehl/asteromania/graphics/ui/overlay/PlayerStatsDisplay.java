@@ -1,4 +1,4 @@
-package de.jgroehl.asteromania.graphics.player;
+package de.jgroehl.asteromania.graphics.ui.overlay;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,6 +11,7 @@ import de.jgroehl.api.graphics.animated.SimpleAnimatedObject;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.PlayerInfo;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
+import de.jgroehl.asteromania.graphics.player.SpaceShip;
 
 public class PlayerStatsDisplay extends GameObject {
 

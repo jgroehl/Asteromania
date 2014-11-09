@@ -56,4 +56,8 @@ public class StarObject extends GameObject implements Updatable {
 	public float getAcceleration() {
 		return speedFactor;
 	}
+
+	public void reset() {
+		speedFactor = 1;
+	}
 }
