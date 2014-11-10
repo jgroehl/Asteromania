@@ -11,6 +11,7 @@ import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.control.callbacks.FromCheckpointCallback;
+import de.jgroehl.asteromania.control.callbacks.OpenWebsiteCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.callbacks.ShowLeaderboardCallback;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
@@ -34,6 +35,18 @@ public class GameSetup {
 				.getString(de.jgroehl.asteromania.R.string.play), 0.2f, 0.07f,
 				0.6f, 0.2f, new MenuButtonCallback(GameState.START),
 				gameHandler.getContext()), GameState.MENU);
+
+		gameHandler
+				.add(new Button(
+						BitmapFactory.decodeResource(gameHandler.getContext()
+								.getResources(), R.drawable.facebook_icon),
+						0.05f,
+						0.05f,
+						0.1f,
+						0.2f,
+						new OpenWebsiteCallback(
+								"https://www.facebook.com/pages/Asteromania/662905770483488"),
+						gameHandler.getContext()), GameState.MENU);
 
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources()
