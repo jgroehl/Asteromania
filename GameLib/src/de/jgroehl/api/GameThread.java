@@ -8,7 +8,7 @@ import de.jgroehl.api.utils.FpsMeter;
 
 /**
  * 
- * @author Janek Gröhl	
+ * @author Janek Gröhl
  *
  */
 public class GameThread extends Thread {
@@ -21,7 +21,8 @@ public class GameThread extends Thread {
 	private final SurfaceHolder surfaceHolder;
 	private final AbstractSimpleActivity abstractMainActivity;
 
-	private static boolean running;
+	private static boolean hasBeenRunningAtLeastOnce = false;
+	private boolean running;
 	private final FpsMeter fpsMeter = new FpsMeter();
 
 	/**
@@ -57,7 +58,7 @@ public class GameThread extends Thread {
 	 * @param running
 	 */
 	public void setRunning(boolean running) {
-		GameThread.running = running;
+		this.running = running;
 	}
 
 	@Override
@@ -65,6 +66,7 @@ public class GameThread extends Thread {
 
 		Log.i(TAG, "Performing gameloop...");
 		running = true;
+		hasBeenRunningAtLeastOnce = true;
 		while (running) {
 
 			long startTime = System.currentTimeMillis();
@@ -116,5 +118,9 @@ public class GameThread extends Thread {
 	 */
 	public boolean isRunning() {
 		return running;
+	}
+
+	public boolean hasBeenRunningAtLeastOnce() {
+		return hasBeenRunningAtLeastOnce;
 	}
 }

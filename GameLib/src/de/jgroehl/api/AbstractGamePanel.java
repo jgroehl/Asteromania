@@ -79,7 +79,8 @@ public abstract class AbstractGamePanel extends SurfaceView implements
 			Log.d(TAG, "Creating new MainThread...[Done]");
 		}
 		if (!getThread().isRunning()) {
-			initializeGameObjects();
+			if (!getThread().hasBeenRunningAtLeastOnce())
+				initializeGameObjects();
 			thread.start();
 		} else {
 			Log.d(TAG, "Application already running.");
