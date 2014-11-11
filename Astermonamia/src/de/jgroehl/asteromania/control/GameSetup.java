@@ -1,10 +1,13 @@
 package de.jgroehl.asteromania.control;
 
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.control.interfaces.EventCallback;
+import de.jgroehl.api.graphics.ui.Alignment;
 import de.jgroehl.api.graphics.ui.Button;
+import de.jgroehl.api.graphics.ui.Label;
 import de.jgroehl.api.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
@@ -30,6 +33,14 @@ public class GameSetup {
 		gameHandler.add(starfield, GameState.values());
 		gameHandler.setStarfield(starfield);
 		gameHandler.update();
+
+		Label label = new Label("AppId: "
+				+ gameHandler.getPlayerInfo().getAppId(), 0, 1,
+				gameHandler.getContext());
+		label.setAlignment(Alignment.CENTER_HORIZONTALLY);
+		label.setTextColor(Color.rgb(250, 250, 150));
+		label.setTextHeight(0.1f);
+		gameHandler.add(label, GameState.MENU);
 
 		gameHandler.add(new Button(gameHandler.getContext().getResources()
 				.getString(de.jgroehl.asteromania.R.string.play), 0.2f, 0.07f,

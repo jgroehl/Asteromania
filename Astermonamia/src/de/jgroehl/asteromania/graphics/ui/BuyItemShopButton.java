@@ -48,7 +48,7 @@ public class BuyItemShopButton extends Button {
 		super.draw(c);
 		if (textPaint == null) {
 			textPaint = new Paint();
-			textPaint.setColor(Color.rgb(200, 200, 50));
+			textPaint.setColor(Color.rgb(250, 250, 150));
 			textPaint.setTextSize(relativeHeight / 3 * c.getHeight());
 		}
 		c.drawText(

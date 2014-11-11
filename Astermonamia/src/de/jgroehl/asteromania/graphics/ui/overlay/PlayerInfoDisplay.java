@@ -71,7 +71,7 @@ public class PlayerInfoDisplay extends GameObject {
 									+ playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth() + 1, 0.11f * c.getHeight() + 1,
 					textPaint);
-			textPaint.setColor(Color.rgb(190, 190, 220));
+			textPaint.setColor(Color.rgb(250, 250, 150));
 			c.drawText(
 					context.getResources().getString(
 							de.jgroehl.asteromania.R.string.level)

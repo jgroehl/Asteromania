@@ -82,12 +82,12 @@ public class Highscore extends GameObject {
 
 		if (bigTextPaint == null) {
 			bigTextPaint = new Paint();
-			bigTextPaint.setColor(Color.WHITE);
+			bigTextPaint.setColor(Color.rgb(250, 250, 150));
 			bigTextPaint.setTextSize(c.getHeight() * 0.13f);
 		}
 		if (smallTextPaint == null) {
 			smallTextPaint = new Paint();
-			smallTextPaint.setColor(Color.WHITE);
+			smallTextPaint.setColor(Color.rgb(250, 250, 150));
 			smallTextPaint.setTextSize(c.getHeight() * 0.08f);
 		}
 
