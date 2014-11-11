@@ -11,7 +11,7 @@ import de.jgroehl.api.io.FileHandler;
  * @author Janek Gröhl
  *
  */
-public class FriendInviteHandler
+public class FriendCodeHandler
 {
 
 	private final FileHandler fileHandler;
@@ -27,7 +27,7 @@ public class FriendInviteHandler
 	 * @param holderAppId
 	 *            not <code>null</code>
 	 */
-	public FriendInviteHandler(FileHandler fileHandler, String holderAppId)
+	public FriendCodeHandler(FileHandler fileHandler, String holderAppId)
 	{
 		if (fileHandler == null)
 			throw new NullPointerException("fileHandler");
