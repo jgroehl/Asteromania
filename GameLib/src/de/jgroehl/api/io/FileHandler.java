@@ -94,7 +94,9 @@ public class FileHandler {
 	 * 
 	 * @param fileName
 	 *            not <code>null</code>
-	 * @return the decrypted content of the given file.
+	 * @return the decrypted content of the given file. Will return an empty
+	 *         String if any errors occur. Will never return <code>null</code>
+	 * 
 	 */
 	public String getDecryptedStringFromFile(String fileName) {
 		if (fileName == null)
