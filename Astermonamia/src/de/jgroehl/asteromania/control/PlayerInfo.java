@@ -2,6 +2,7 @@ package de.jgroehl.asteromania.control;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,6 +16,7 @@ public class PlayerInfo {
 
 	private static final String TAG = PlayerInfo.class.getSimpleName();
 
+	private static final String FILE_NAME_APP_ID = "appId";
 	private static final String FILE_NAME_COINS = "coins";
 	private static final String FILE_NAME_HP = "health";
 	private static final String FILE_NAME_LEVEL = "level";
@@ -38,6 +40,8 @@ public class PlayerInfo {
 	private static final long DEFAULT_HITS_AND_MISSES = 0;
 	private static final int DEFAULT_COIN_VALUE = AsteromaniaMainActivity.DEBUG ? 1000000
 			: 100;
+	private static final String DEFAULT_APP_ID = UUID.randomUUID().toString()
+			.substring(0, 7);
 	private static final long DEFAULT_ACCUMULATED_PURCHASES = 0;
 	private static final int DEFAULT_CHECKPOINT_LEVEL = 1;
 
@@ -51,6 +55,7 @@ public class PlayerInfo {
 	private final Context context;
 	private final FileHandler fileHandler;
 
+	private String appId;
 	private FramedHpBar healthPoints;
 	private long coins;
 	private int level;
@@ -80,6 +85,7 @@ public class PlayerInfo {
 
 	private void setUpPlayerInfo() {
 		Log.d(TAG, "Loading playerInfo from internal memory...");
+		readAppId();
 		readCoins();
 		readHealth();
 		readLevel();
@@ -92,6 +98,16 @@ public class PlayerInfo {
 		readAccuracy();
 		readCheckpointLevel();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void readAppId() {
+		appId = fileHandler.getDecryptedStringFromFile(FILE_NAME_APP_ID);
+
+		if (appId == null || appId.trim().isEmpty())
+			appId = DEFAULT_APP_ID;
+
+		Log.d(TAG, "Set App Id to " + appId);
+
 	}
 
 	private void readCheckpointLevel() {
@@ -375,6 +391,7 @@ public class PlayerInfo {
 				String.valueOf(accumulatedWorth));
 		fileHandler.writeAndEncryptString(FILE_NAME_CHECKPOINT_LEVEL,
 				String.valueOf(checkpointLevel));
+		fileHandler.writeAndEncryptString(FILE_NAME_APP_ID, appId);
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -541,5 +558,9 @@ public class PlayerInfo {
 		if (level > checkpointLevel)
 			if (level % 10 == 1)
 				checkpointLevel = level;
+	}
+
+	public String getAppId() {
+		return appId;
 	}
 }
