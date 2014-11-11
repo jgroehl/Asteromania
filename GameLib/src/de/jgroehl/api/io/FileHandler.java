@@ -21,7 +21,7 @@ import de.jgroehl.api.crypto.CryptoHandler.CryptoException;
  * .MODE_PRIVATE.
  * 
  * The given strings will not be written directly but will be encrypted and
- * decrypted with a key only known to the phone holder. For these encryption the
+ * decrypted with a key only known to the phone holder. For this encryption the
  * {@link FileHandler} uses the {@link CryptoHandler} class.
  * 
  * @author Janek Gröhl
