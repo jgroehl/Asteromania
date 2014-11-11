@@ -41,7 +41,7 @@ public class PlayerInfo {
 	private static final int DEFAULT_COIN_VALUE = AsteromaniaMainActivity.DEBUG ? 1000000
 			: 100;
 	private static final String DEFAULT_APP_ID = UUID.randomUUID().toString()
-			.substring(0, 7);
+			.substring(0, 4);
 	private static final long DEFAULT_ACCUMULATED_PURCHASES = 0;
 	private static final int DEFAULT_CHECKPOINT_LEVEL = 1;
 
