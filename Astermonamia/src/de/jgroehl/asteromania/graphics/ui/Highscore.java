@@ -17,11 +17,14 @@ import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.GameObject;
 import de.jgroehl.api.io.FileHandler;
 
-public class Highscore extends GameObject {
+public class Highscore extends GameObject
+{
 
-	private class HighscoreElement implements Comparable<HighscoreElement> {
+	private class HighscoreElement implements Comparable<HighscoreElement>
+	{
 
-		public HighscoreElement(String date, Long score) {
+		public HighscoreElement(String date, Long score)
+		{
 			this.date = date;
 			this.score = score;
 		}
@@ -30,7 +33,8 @@ public class Highscore extends GameObject {
 		public final Long score;
 
 		@Override
-		public int compareTo(HighscoreElement otherHighscoreElement) {
+		public int compareTo(HighscoreElement otherHighscoreElement)
+		{
 			return -score.compareTo(otherHighscoreElement.score);
 		}
 	}
@@ -46,7 +50,8 @@ public class Highscore extends GameObject {
 	private Paint bigTextPaint;
 	private Paint smallTextPaint;
 
-	public Highscore(Context context, FileHandler fileHandler) {
+	public Highscore(Context context, FileHandler fileHandler)
+	{
 		super(0, 0, context);
 		this.fileHandler = fileHandler;
 		readHighscoreElements();
@@ -54,19 +59,24 @@ public class Highscore extends GameObject {
 		tablePaint.setStyle(Style.STROKE);
 	}
 
-	private void readHighscoreElements() {
-		String highscoreValues = fileHandler
-				.getDecryptedStringFromFile(HIGHSCORE_FILE_NAME);
-		for (String classString : highscoreValues.split(CLASS_SPLIT_CHAR)) {
-			try {
-				highscores.add(new HighscoreElement(classString
-						.split(ELEMENT_SPLIT_CHAR)[0], Long.valueOf(classString
+	private void readHighscoreElements()
+	{
+		String highscoreValues = fileHandler.getDecryptedStringFromFile(HIGHSCORE_FILE_NAME);
+		for (String classString : highscoreValues.split(CLASS_SPLIT_CHAR))
+		{
+			try
+			{
+				highscores.add(new HighscoreElement(classString.split(ELEMENT_SPLIT_CHAR)[0], Long.valueOf(classString
 						.split(ELEMENT_SPLIT_CHAR)[1])));
-			} catch (NumberFormatException e) {
+			}
+			catch (NumberFormatException e)
+			{
 				// Do not add Element to list but ignore. The invalid Element
 				// will be deleted next save.
 				Log.w(TAG, "Format error on retrieved HighscoreElement");
-			} catch (ArrayIndexOutOfBoundsException e) {
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
 				// Same as above..
 				Log.w(TAG, "Too little Data on retrieved HighscoreElement");
 			}
@@ -74,108 +84,100 @@ public class Highscore extends GameObject {
 	}
 
 	@Override
-	public void update(BaseGameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler)
+	{
 	}
 
 	@Override
-	public void draw(Canvas c) {
+	public void draw(Canvas c)
+	{
 
-		if (bigTextPaint == null) {
+		if (bigTextPaint == null)
+		{
 			bigTextPaint = new Paint();
 			bigTextPaint.setColor(Color.rgb(250, 250, 150));
 			bigTextPaint.setTextSize(c.getHeight() * 0.13f);
 		}
-		if (smallTextPaint == null) {
+		if (smallTextPaint == null)
+		{
 			smallTextPaint = new Paint();
 			smallTextPaint.setColor(Color.rgb(250, 250, 150));
 			smallTextPaint.setTextSize(c.getHeight() * 0.08f);
 		}
 
-		c.drawRect(c.getWidth() * 0.1f, c.getHeight() * 0.0f,
-				c.getWidth() * 0.9f, c.getHeight() * 0.8f, tablePaint);
-		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.26f,
-				c.getWidth() * 0.9f, c.getHeight() * 0.26f, tablePaint);
-		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.52f,
-				c.getWidth() * 0.9f, c.getHeight() * 0.52f, tablePaint);
+		c.drawRect(c.getWidth() * 0.1f, c.getHeight() * 0.0f, c.getWidth() * 0.9f, c.getHeight() * 0.8f, tablePaint);
+		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.26f, c.getWidth() * 0.9f, c.getHeight() * 0.26f, tablePaint);
+		c.drawLine(c.getWidth() * 0.1f, c.getHeight() * 0.52f, c.getWidth() * 0.9f, c.getHeight() * 0.52f, tablePaint);
 
-		c.drawText("1.", c.getWidth() * 0.11f, c.getHeight() * 0.20f,
-				bigTextPaint);
-		c.drawText("2.", c.getWidth() * 0.11f, c.getHeight() * 0.46f,
-				bigTextPaint);
-		c.drawText("3.", c.getWidth() * 0.11f, c.getHeight() * 0.72f,
-				bigTextPaint);
+		c.drawText("1.", c.getWidth() * 0.11f, c.getHeight() * 0.20f, bigTextPaint);
+		c.drawText("2.", c.getWidth() * 0.11f, c.getHeight() * 0.46f, bigTextPaint);
+		c.drawText("3.", c.getWidth() * 0.11f, c.getHeight() * 0.72f, bigTextPaint);
 
 		Iterator<HighscoreElement> iterator = highscores.iterator();
-		if (highscores.size() >= 1) {
+		if (highscores.size() >= 1)
+		{
 			HighscoreElement highscoreElement = iterator.next();
-			c.drawText(highscoreElement.date, c.getWidth() * 0.2f,
-					c.getHeight() * 0.17f, smallTextPaint);
-			c.drawText(String.valueOf(highscoreElement.score),
-					c.getWidth() * 0.55f, c.getHeight() * 0.17f, smallTextPaint);
+			c.drawText(highscoreElement.date, c.getWidth() * 0.2f, c.getHeight() * 0.17f, smallTextPaint);
+			c.drawText(String.valueOf(highscoreElement.score), c.getWidth() * 0.55f, c.getHeight() * 0.17f,
+					smallTextPaint);
 		}
-		if (highscores.size() >= 2) {
+		if (highscores.size() >= 2)
+		{
 			HighscoreElement highscoreElement = iterator.next();
-			c.drawText(highscoreElement.date, c.getWidth() * 0.2f,
-					c.getHeight() * 0.43f, smallTextPaint);
-			c.drawText(String.valueOf(highscoreElement.score),
-					c.getWidth() * 0.55f, c.getHeight() * 0.43f, smallTextPaint);
+			c.drawText(highscoreElement.date, c.getWidth() * 0.2f, c.getHeight() * 0.43f, smallTextPaint);
+			c.drawText(String.valueOf(highscoreElement.score), c.getWidth() * 0.55f, c.getHeight() * 0.43f,
+					smallTextPaint);
 		}
-		if (highscores.size() >= 3) {
+		if (highscores.size() >= 3)
+		{
 			HighscoreElement highscoreElement = iterator.next();
-			c.drawText(highscoreElement.date, c.getWidth() * 0.2f,
-					c.getHeight() * 0.69f, smallTextPaint);
-			c.drawText(String.valueOf(highscoreElement.score),
-					c.getWidth() * 0.55f, c.getHeight() * 0.69f, smallTextPaint);
+			c.drawText(highscoreElement.date, c.getWidth() * 0.2f, c.getHeight() * 0.69f, smallTextPaint);
+			c.drawText(String.valueOf(highscoreElement.score), c.getWidth() * 0.55f, c.getHeight() * 0.69f,
+					smallTextPaint);
 		}
 
 	}
 
-	public void addNewHighscore(long highscore) {
-		highscores.add(new HighscoreElement(new SimpleDateFormat("dd.MM.yyyy",
-				Locale.GERMANY).format(new Date()), highscore));
+	public void addNewHighscore(long highscore)
+	{
+		highscores.add(new HighscoreElement(new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY).format(new Date()),
+				highscore));
 		saveHighscores();
 	}
 
-	private void saveHighscores() {
-		if (highscores.size() > 0) {
+	private void saveHighscores()
+	{
+		if (highscores.size() > 0)
+		{
 			String highscoresString = "";
-			if (highscores.size() == 1) {
-				highscoresString = highscoresString
-						+ highscores.toArray(new HighscoreElement[] {})[0].date
-						+ ELEMENT_SPLIT_CHAR
-						+ highscores.toArray(new HighscoreElement[] {})[0].score;
-			} else if (highscores.size() == 2) {
-				highscoresString = highscoresString
-						+ highscores.toArray(new HighscoreElement[] {})[0].date
-						+ ELEMENT_SPLIT_CHAR
-						+ highscores.toArray(new HighscoreElement[] {})[0].score
-						+ CLASS_SPLIT_CHAR
-						+ highscores.toArray(new HighscoreElement[] {})[1].date
-						+ ELEMENT_SPLIT_CHAR
+			if (highscores.size() == 1)
+			{
+				highscoresString = highscoresString + highscores.toArray(new HighscoreElement[] {})[0].date
+						+ ELEMENT_SPLIT_CHAR + highscores.toArray(new HighscoreElement[] {})[0].score;
+			}
+			else if (highscores.size() == 2)
+			{
+				highscoresString = highscoresString + highscores.toArray(new HighscoreElement[] {})[0].date
+						+ ELEMENT_SPLIT_CHAR + highscores.toArray(new HighscoreElement[] {})[0].score
+						+ CLASS_SPLIT_CHAR + highscores.toArray(new HighscoreElement[] {})[1].date + ELEMENT_SPLIT_CHAR
 						+ highscores.toArray(new HighscoreElement[] {})[1].score;
-			} else {
-				highscoresString = highscoresString
-						+ highscores.toArray(new HighscoreElement[] {})[0].date
-						+ ELEMENT_SPLIT_CHAR
-						+ highscores.toArray(new HighscoreElement[] {})[0].score
-						+ CLASS_SPLIT_CHAR
-						+ highscores.toArray(new HighscoreElement[] {})[1].date
-						+ ELEMENT_SPLIT_CHAR
-						+ highscores.toArray(new HighscoreElement[] {})[1].score
-						+ CLASS_SPLIT_CHAR
-						+ highscores.toArray(new HighscoreElement[] {})[2].date
-						+ ELEMENT_SPLIT_CHAR
+			}
+			else
+			{
+				highscoresString = highscoresString + highscores.toArray(new HighscoreElement[] {})[0].date
+						+ ELEMENT_SPLIT_CHAR + highscores.toArray(new HighscoreElement[] {})[0].score
+						+ CLASS_SPLIT_CHAR + highscores.toArray(new HighscoreElement[] {})[1].date + ELEMENT_SPLIT_CHAR
+						+ highscores.toArray(new HighscoreElement[] {})[1].score + CLASS_SPLIT_CHAR
+						+ highscores.toArray(new HighscoreElement[] {})[2].date + ELEMENT_SPLIT_CHAR
 						+ highscores.toArray(new HighscoreElement[] {})[2].score;
 			}
-			fileHandler.writeAndEncryptString(HIGHSCORE_FILE_NAME,
-					highscoresString);
+			fileHandler.writeAndEncryptString(HIGHSCORE_FILE_NAME, highscoresString);
 		}
 	}
 
-	public boolean isNewHighscore(long currentHighscore) {
-		HighscoreElement[] highscoreArray = highscores
-				.toArray(new HighscoreElement[] {});
-		return highscoreArray.length < 2
-				|| highscoreArray[1].score < currentHighscore;
+	public boolean isNewHighscore(long currentHighscore)
+	{
+		HighscoreElement[] highscoreArray = highscores.toArray(new HighscoreElement[] {});
+		return highscoreArray.length < 2 || highscoreArray[1].score < currentHighscore;
 	}
 }

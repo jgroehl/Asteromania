@@ -15,7 +15,8 @@ import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
 import de.jgroehl.asteromania.graphics.ui.overlay.PlayerInfoDisplay;
 
-public class AsteromaniaGameHandler extends BaseGameHandler {
+public class AsteromaniaGameHandler extends BaseGameHandler
+{
 
 	private static final int NEW_LEVEL_SHIELD_SECONDS = 4;
 
@@ -39,10 +40,9 @@ public class AsteromaniaGameHandler extends BaseGameHandler {
 
 	private GoogleApiHandler apiHandler;
 
-	public AsteromaniaGameHandler(GameState state, SoundManager soundManager,
-			Context context, FileHandler fileHandler,
-			SensorHandler sensorHandler, Transition transition,
-			Highscore highscore, GoogleApiHandler apiHandler) {
+	public AsteromaniaGameHandler(GameState state, SoundManager soundManager, Context context, FileHandler fileHandler,
+			SensorHandler sensorHandler, Transition transition, Highscore highscore, GoogleApiHandler apiHandler)
+	{
 		super(state);
 		this.highscore = highscore;
 		this.soundManager = soundManager;
@@ -58,90 +58,111 @@ public class AsteromaniaGameHandler extends BaseGameHandler {
 	}
 
 	@Override
-	public void update() {
+	public void update()
+	{
 		super.update();
-		if (levelHandler.isLevelOver()) {
-			if (playerInfo.getLevel() > 0) {
-				if (!transition.isInitialized()) {
+		if (levelHandler.isLevelOver())
+		{
+			if (playerInfo.getLevel() > 0)
+			{
+				if (!transition.isInitialized())
+				{
 					transition.initialize();
 					playerInfo.incerementBonusFactor();
 					playerInfo.addCoins(playerInfo.getLevel());
 					playerInfo.nextLevel();
 				}
-				if (transition.isFinished()) {
+				if (transition.isFinished())
+				{
 					transition.reset();
 					fillLevel();
 				}
 				playerInfo.checkForCheckpoint();
-			} else {
+			}
+			else
+			{
 				playerInfo.nextLevel();
 				fillLevel();
 			}
 		}
 	}
 
-	private void addKillables(List<Killable> killables) {
-		for (Killable k : killables) {
+	private void addKillables(List<Killable> killables)
+	{
+		for (Killable k : killables)
+		{
 			if (k instanceof GameObject)
 				add((GameObject) k, GameState.MAIN);
 		}
 	}
 
-	public SoundManager getSoundManager() {
+	public SoundManager getSoundManager()
+	{
 		return soundManager;
 	}
 
-	public SpaceShip getPlayer() {
+	public SpaceShip getPlayer()
+	{
 		return player;
 	}
 
-	public Context getContext() {
+	public Context getContext()
+	{
 		return context;
 	}
 
-	public PlayerInfo getPlayerInfo() {
+	public PlayerInfo getPlayerInfo()
+	{
 		return playerInfo;
 	}
 
-	public PlayerInfoDisplay getPlayerInfoDisplay() {
+	public PlayerInfoDisplay getPlayerInfoDisplay()
+	{
 		return playerInfoDisplay;
 	}
 
-	public void gameLost() {
+	public void gameLost()
+	{
 		resetGame();
 		soundManager.playExplosionSound();
 		Explosion.createGameOver(this);
 		setState(GameState.GAME_OVER);
 	}
 
-	public void resetGame() {
+	public void resetGame()
+	{
 		levelHandler.killAllEntities(this);
 		highscore.addNewHighscore(playerInfo.getCurrentHighscore());
 		apiHandler.addToLeaderBoard(playerInfo.getCurrentHighscore());
 		starfield.reset();
 		playerInfo.reset();
+		transition.reset();
 	}
 
-	public void setStarfield(Starfield starfield) {
+	public void setStarfield(Starfield starfield)
+	{
 		this.starfield = starfield;
 	}
 
-	public Starfield getStarfield() {
+	public Starfield getStarfield()
+	{
 		return starfield;
 	}
 
-	public Highscore getHighscore() {
+	public Highscore getHighscore()
+	{
 		return highscore;
 	}
 
-	public GoogleApiHandler getApiHandler() {
+	public GoogleApiHandler getApiHandler()
+	{
 		return apiHandler;
 	}
 
-	public void fillLevel() {
+	public void fillLevel()
+	{
 		player.addShieldSeconds(NEW_LEVEL_SHIELD_SECONDS);
-		addKillables(levelHandler.getLevelObjects(context,
-				playerInfo.getLevel()));
+		addKillables(levelHandler.getLevelObjects(context, playerInfo.getLevel()));
 	}
 
 }
