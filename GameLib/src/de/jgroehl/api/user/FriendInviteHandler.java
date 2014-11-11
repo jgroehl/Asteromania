@@ -17,19 +17,21 @@ public class FriendInviteHandler
 	private final FileHandler fileHandler;
 	private final String holderAppId;
 	private final List<String> acceptedFriendCodes = new ArrayList<String>();
+	private static final String SPLIT_CHARACTER = "&";
+	private static final String FILE_NAME_FRIEND_CODES = "friendCodes";
 
 	/**
 	 * 
 	 * @param fileHandler
 	 *            not <code>null</code>
 	 * @param holderAppId
-	 *            not <code>null</code> and not empty
+	 *            not <code>null</code>
 	 */
 	public FriendInviteHandler(FileHandler fileHandler, String holderAppId)
 	{
 		if (fileHandler == null)
 			throw new NullPointerException("fileHandler");
-		if (holderAppId == null || holderAppId.trim().isEmpty())
+		if (holderAppId == null)
 			throw new NullPointerException("holderAppId");
 
 		this.fileHandler = fileHandler;
@@ -40,13 +42,23 @@ public class FriendInviteHandler
 
 	private void saveAcceptedFriendCodes()
 	{
-		// TODO Auto-generated method stub
+		StringBuilder sb = new StringBuilder();
+		for (String s : acceptedFriendCodes)
+		{
+			sb.append(s + SPLIT_CHARACTER);
+		}
+
+		fileHandler.writeAndEncryptString(FILE_NAME_FRIEND_CODES, sb.toString());
 
 	}
 
 	private void loadAcceptedFriendCodes()
 	{
-		// TODO Auto-generated method stub
+		String s = fileHandler.getDecryptedStringFromFile(FILE_NAME_FRIEND_CODES);
+		String[] codes = s.split(SPLIT_CHARACTER);
+
+		for (String code : codes)
+			acceptedFriendCodes.add(code);
 
 	}
 
@@ -76,9 +88,9 @@ public class FriendInviteHandler
 	/**
 	 * 
 	 * @param friendAppId
-	 *            not <code>null</code> or empty
+	 *            not <code>null</code>
 	 * @param code
-	 *            not <code>null</code> or empty
+	 *            not <code>null</code>
 	 * @return <code>true</code> if the given code is a valid code for this
 	 *         device
 	 */
@@ -88,8 +100,6 @@ public class FriendInviteHandler
 			throw new NullPointerException("friendAppId");
 		if (code == null)
 			throw new NullPointerException("code");
-		if (friendAppId.trim().isEmpty() || code.trim().isEmpty())
-			throw new IllegalArgumentException("friendAppId or code was empty.");
 
 		if (code.equals(getFriendCode(friendAppId)) && !acceptedFriendCodes.contains(code))
 		{
