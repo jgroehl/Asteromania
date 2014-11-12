@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.view.MotionEvent;
+import de.jgroehl.api.AbstractGamePanel;
 import de.jgroehl.api.control.interfaces.EventHandler;
 import de.jgroehl.api.control.interfaces.GraphicsHandler;
 import de.jgroehl.api.graphics.GameObject;
@@ -16,7 +17,8 @@ import de.jgroehl.api.graphics.interfaces.Drawable;
 import de.jgroehl.api.graphics.interfaces.Hitable;
 import de.jgroehl.api.graphics.interfaces.Updatable;
 
-public class BaseGameHandler implements GraphicsHandler, EventHandler {
+public class BaseGameHandler implements GraphicsHandler, EventHandler
+{
 
 	private final Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
 
@@ -30,42 +32,58 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler {
 
 	private GameState state = null;
 
-	public BaseGameHandler(GameState state) {
+	private final Context context;
+
+	private final AbstractGamePanel gamePanel;
+
+	public BaseGameHandler(GameState state, Context context, AbstractGamePanel gamePanel)
+	{
+		this.context = context;
 		this.state = state;
-		for (GameState s : GameState.values()) {
+		this.gamePanel = gamePanel;
+		for (GameState s : GameState.values())
+		{
 			gameObjects.put(s, new ArrayList<GameObject>());
 			clickableObjects.put(s, new ArrayList<Clickable>());
 			hitableObjects.put(s, new ArrayList<Hitable>());
 		}
 	}
 
-	public List<Hitable> getHitableObjects() {
+	public List<Hitable> getHitableObjects()
+	{
 		return hitableObjects.get(state);
 	}
 
-	public GameState getGameState() {
+	public GameState getGameState()
+	{
 		return state;
 	}
 
-	public void setState(GameState state) {
+	public void setState(GameState state)
+	{
 		this.state = state;
 	}
 
-	public void update() {
-		if (addedObjects.size() > 0) {
-			for (GameObject gameObject : addedObjects.keySet()) {
+	public void update()
+	{
+		if (addedObjects.size() > 0)
+		{
+			for (GameObject gameObject : addedObjects.keySet())
+			{
 				for (GameState state : addedObjects.get(gameObject))
 					if (gameObject.getLevel().equals(Level.TOP))
 						gameObjects.get(state).add(gameObject);
 					else
 						gameObjects.get(state).add(0, gameObject);
 
-				if (gameObject instanceof Clickable) {
+				if (gameObject instanceof Clickable)
+				{
 					for (GameState state : addedObjects.get(gameObject))
 						clickableObjects.get(state).add((Clickable) gameObject);
 				}
 
-				if (gameObject instanceof Hitable) {
+				if (gameObject instanceof Hitable)
+				{
 					for (GameState state : addedObjects.get(gameObject))
 						hitableObjects.get(state).add((Hitable) gameObject);
 				}
@@ -73,17 +91,22 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler {
 			addedObjects.clear();
 		}
 
-		if (removedObjects.size() > 0) {
-			for (GameObject gameObject : removedObjects) {
-				for (List<GameObject> l : gameObjects.values()) {
+		if (removedObjects.size() > 0)
+		{
+			for (GameObject gameObject : removedObjects)
+			{
+				for (List<GameObject> l : gameObjects.values())
+				{
 					if (l.contains(gameObject))
 						l.remove(gameObject);
 				}
-				for (List<Clickable> l : clickableObjects.values()) {
+				for (List<Clickable> l : clickableObjects.values())
+				{
 					if (l.contains(gameObject))
 						l.remove(gameObject);
 				}
-				for (List<Hitable> l : hitableObjects.values()) {
+				for (List<Hitable> l : hitableObjects.values())
+				{
 					if (l.contains(gameObject))
 						l.remove(gameObject);
 				}
@@ -93,33 +116,48 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler {
 	}
 
 	@Override
-	public void add(GameObject gameObject, GameState... states) {
+	public void add(GameObject gameObject, GameState... states)
+	{
 		addedObjects.put(gameObject, states);
 	}
 
 	@Override
-	public void remove(GameObject gameObject) {
+	public void remove(GameObject gameObject)
+	{
 		removedObjects.add(gameObject);
 	}
 
 	@Override
-	public List<? extends Drawable> getAllDrawableObjects() {
+	public List<? extends Drawable> getAllDrawableObjects()
+	{
 		return gameObjects.get(state);
 	}
 
 	@Override
-	public List<? extends Updatable> getAllUpdatableObjects() {
+	public List<? extends Updatable> getAllUpdatableObjects()
+	{
 		return gameObjects.get(state);
 	}
 
 	@Override
-	public void handleEvent(MotionEvent event, Context context,
-			int screenWidth, int screenHeight) {
-		for (Clickable c : clickableObjects.get(state)) {
-			if (c.isClicked((int) event.getX(), (int) event.getY(),
-					screenWidth, screenHeight)) {
+	public void handleEvent(MotionEvent event, Context context, int screenWidth, int screenHeight)
+	{
+		for (Clickable c : clickableObjects.get(state))
+		{
+			if (c.isClicked((int) event.getX(), (int) event.getY(), screenWidth, screenHeight))
+			{
 				c.performAction(this);
 			}
 		}
+	}
+
+	public AbstractGamePanel getGamePanel()
+	{
+		return gamePanel;
+	}
+
+	public Context getContext()
+	{
+		return context;
 	}
 }

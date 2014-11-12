@@ -23,7 +23,8 @@ import de.jgroehl.asteromania.control.SoundManager;
 import de.jgroehl.asteromania.control.Transition;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
 
-public class AsteromaniaGamePanel extends AbstractGamePanel {
+public class AsteromaniaGamePanel extends AbstractGamePanel
+{
 
 	private static final String TAG = AsteromaniaGamePanel.class.getSimpleName();
 
@@ -33,17 +34,15 @@ public class AsteromaniaGamePanel extends AbstractGamePanel {
 	private GameSetup gameSetup = new GameSetup();
 
 	public AsteromaniaGamePanel(Context context, GoogleApiHandler handler,
-			AbstractGooglePlayGamesLoginActivity abstractMainActivity) {
+			AbstractGooglePlayGamesLoginActivity abstractMainActivity)
+	{
 
 		super(context, abstractMainActivity);
 
-		FileHandler fileHandler = new FileHandler(new CryptoHandler(
-				getContext()), getContext());
-		gameHandler = new AsteromaniaGameHandler(GameState.MENU,
-				new SoundManager(getContext()), getContext(), fileHandler,
-				new SensorHandler(context, Context.SENSOR_SERVICE),
-				new Transition(context), new Highscore(context, fileHandler),
-				handler);
+		FileHandler fileHandler = new FileHandler(new CryptoHandler(getContext()), getContext());
+		gameHandler = new AsteromaniaGameHandler(GameState.MENU, new SoundManager(getContext()), getContext(),
+				fileHandler, new SensorHandler(context, Context.SENSOR_SERVICE), new Transition(context),
+				new Highscore(context, fileHandler), handler, this);
 
 		backgroundPaint.setStyle(Paint.Style.FILL);
 		backgroundPaint.setColor(Color.BLACK);
@@ -51,71 +50,86 @@ public class AsteromaniaGamePanel extends AbstractGamePanel {
 	}
 
 	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
+	public void surfaceDestroyed(SurfaceHolder holder)
+	{
 		super.surfaceDestroyed(holder);
 		gameHandler.getPlayerInfo().savePlayerInfo();
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouchEvent(MotionEvent event)
+	{
 		gameHandler.handleEvent(event, getContext(), getWidth(), getHeight());
 		return super.onTouchEvent(event);
 	}
 
 	@Override
-	public void updateGameState() {
-		for (Updatable u : gameHandler.getAllUpdatableObjects()) {
+	public void updateGameState()
+	{
+		for (Updatable u : gameHandler.getAllUpdatableObjects())
+		{
 			u.update(gameHandler);
 		}
 	}
 
 	@Override
-	public void displayGameState(Canvas c) {
+	public void displayGameState(Canvas c)
+	{
 
-		if (c != null) {
+		if (c != null)
+		{
 
 			clearScreen(c);
 
-			for (Drawable d : gameHandler.getAllDrawableObjects()) {
+			for (Drawable d : gameHandler.getAllDrawableObjects())
+			{
 				d.draw(c);
 			}
 
 			if (gameHandler.getGameState().equals(GameState.MAIN))
 				gameHandler.getPlayerInfoDisplay().draw(c);
 
-		} else {
+		}
+		else
+		{
 			Log.e(TAG, "Severe error displaying game state: Canvas was null");
 		}
 
 	}
 
-	private void clearScreen(Canvas c) {
+	private void clearScreen(Canvas c)
+	{
 		c.drawRect(new Rect(0, 0, c.getWidth(), c.getHeight()), backgroundPaint);
 	}
 
 	@Override
-	public void update() {
+	public void update()
+	{
 		gameHandler.update();
 	}
 
-	public AsteromaniaGameHandler getGameHandler() {
+	public AsteromaniaGameHandler getGameHandler()
+	{
 		return gameHandler;
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
+	{
 		super.surfaceChanged(arg0, arg1, arg2, arg3);
 
 	}
 
 	@Override
-	public void surfaceCreated(SurfaceHolder arg0) {
+	public void surfaceCreated(SurfaceHolder arg0)
+	{
 		super.surfaceCreated(arg0);
 
 	}
 
 	@Override
-	public void initializeGameObjects() {
+	public void initializeGameObjects()
+	{
 		gameSetup.initializeGameObjects(gameHandler);
 
 	}

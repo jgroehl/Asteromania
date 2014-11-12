@@ -82,7 +82,7 @@ public class FriendCodeHandler
 		{
 			bytes[i] = (byte) (bytes[i] * 2 % Byte.MAX_VALUE);
 		}
-		return new String(Base64.encode(bytes, Base64.URL_SAFE));
+		return new String(Base64.encode(bytes, Base64.URL_SAFE)).substring(0, 4);
 	}
 
 	/**

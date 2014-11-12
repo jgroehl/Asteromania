@@ -74,6 +74,11 @@ public class Transition extends GameObject
 		return state == State.FINISHED;
 	}
 
+	public void setFinished()
+	{
+		state = State.FINISHED;
+	}
+
 	public void reset()
 	{
 		state = State.NOT_INITIALIZED;

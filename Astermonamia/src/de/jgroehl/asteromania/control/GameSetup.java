@@ -6,6 +6,7 @@ import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.control.interfaces.EventCallback;
 import de.jgroehl.api.graphics.ui.Button;
+import de.jgroehl.api.graphics.ui.InputTextField;
 import de.jgroehl.api.graphics.ui.Label;
 import de.jgroehl.api.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.R;
@@ -50,6 +51,11 @@ public class GameSetup
 						R.drawable.facebook_icon), 0.05f, 0.09f, 0.1f, 0.16f, new OpenWebsiteCallback(
 						"https://www.facebook.com/pages/Asteromania/662905770483488"), gameHandler.getContext()),
 				GameState.MENU);
+
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(),
+						R.drawable.friend_request), 0.86f, 0.09f, 0.1f, 0.16f, new MenuButtonCallback(
+						GameState.FRIEND_REQUEST), gameHandler.getContext()), GameState.MENU);
 
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources()
@@ -216,6 +222,45 @@ public class GameSetup
 
 		gameHandler.add(new PlayerStatsDisplay(gameHandler.getPlayerInfo(), gameHandler.getContext()), GameState.STATS);
 		gameHandler.update();
+
+		label = new Label("Lade Freunde ein.", 0.05f, 0.15f, gameHandler.getContext());
+		gameHandler.add(label, GameState.FRIEND_REQUEST);
+
+		label = new Label("Erhalte 200 Münzen pro Freund.", 0.05f, 0.25f, gameHandler.getContext());
+		label.setTextHeight(0.05f);
+		gameHandler.add(label, GameState.FRIEND_REQUEST);
+
+		label = new Label("1. Dein Freund erstellt den Code mit \"Erstellen\".", 0.05f, 0.375f,
+				gameHandler.getContext());
+		label.setTextHeight(0.05f);
+		gameHandler.add(label, GameState.FRIEND_REQUEST);
+
+		label = new Label("2. Du löst ihn ein mit \"Einlösen\".", 0.05f, 0.45f, gameHandler.getContext());
+		label.setTextHeight(0.05f);
+		gameHandler.add(label, GameState.FRIEND_REQUEST);
+
+		label = new Label("3. Du erhälst 200 Münzen.", 0.05f, 0.525f, gameHandler.getContext());
+		label.setTextHeight(0.05f);
+		gameHandler.add(label, GameState.FRIEND_REQUEST);
+
+		label = new Label("4. Lade mehr Freunde ein.", 0.05f, 0.6f, gameHandler.getContext());
+		label.setTextHeight(0.05f);
+		gameHandler.add(label, GameState.FRIEND_REQUEST);
+
+		gameHandler.add(new Button("Erstellen", 0.05f, 0.75f, 0.425f, 0.2f, new MenuButtonCallback(
+				GameState.CODE_GENERATOR), gameHandler.getContext()), GameState.FRIEND_REQUEST);
+		gameHandler.add(new Button("Einlösen", 0.525f, 0.75f, 0.425f, 0.2f, new MenuButtonCallback(
+				GameState.CODE_INPUTTER), gameHandler.getContext()), GameState.FRIEND_REQUEST);
+		gameHandler.update();
+
+		gameHandler.add(new InputTextField(0.5f, 0.1f, 0.4f, 0.1f, 4, gameHandler.getContext()),
+				GameState.CODE_GENERATOR);
+
+		gameHandler.add(new InputTextField(0.5f, 0.1f, 0.4f, 0.1f, 4, gameHandler.getContext()),
+				GameState.CODE_INPUTTER);
+		gameHandler.add(new InputTextField(0.5f, 0.25f, 0.4f, 0.1f, 4, gameHandler.getContext()),
+				GameState.CODE_INPUTTER);
+
 		initialized = true;
 
 	}

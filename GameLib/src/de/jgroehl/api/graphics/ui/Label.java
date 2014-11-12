@@ -9,7 +9,8 @@ import android.graphics.Typeface;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.GameObject;
 
-public class Label extends GameObject {
+public class Label extends GameObject
+{
 
 	private String text;
 	private float textHeight;
@@ -20,8 +21,9 @@ public class Label extends GameObject {
 	private boolean textChanged = false;
 	private Alignment alignment;
 
-	public Label(String text, float textHeight, int textColor, String typeface,
-			float xPosition, float yPosition, Context context) {
+	public Label(String text, float textHeight, int textColor, String typeface, float xPosition, float yPosition,
+			Context context)
+	{
 		this(text, xPosition, yPosition, context);
 
 		this.textHeight = textHeight;
@@ -30,20 +32,23 @@ public class Label extends GameObject {
 		alignment = Alignment.FREE;
 	}
 
-	public Label(String text, float xPosition, float yPosition, Context context) {
+	public Label(String text, float xPosition, float yPosition, Context context)
+	{
 		super(xPosition, yPosition, context);
 
 		this.text = text;
 		textHeight = 0.1f;
-		textColor = Color.WHITE;
+		textColor = Color.rgb(250, 250, 150);
 		typeface = "CALIBRI";
 		alignment = Alignment.FREE;
 	}
 
 	@Override
-	public void draw(Canvas c) {
+	public void draw(Canvas c)
+	{
 
-		if (textPaint == null) {
+		if (textPaint == null)
+		{
 			textPaint = new Paint();
 			textPaint.setTextSize(textHeight * c.getHeight());
 			textPaint.setColor(textColor);
@@ -51,7 +56,8 @@ public class Label extends GameObject {
 			textPaint.getTextBounds(text, 0, text.length(), textBounds);
 		}
 
-		if (textChanged) {
+		if (textChanged)
+		{
 			textPaint.getTextBounds(text, 0, text.length(), textBounds);
 			textChanged = false;
 		}
@@ -59,21 +65,22 @@ public class Label extends GameObject {
 		float x = xPosition * c.getWidth();
 		float y = yPosition * c.getHeight();
 
-		switch (alignment) {
-		case FREE:
-			break;
-		case CENTER_BOTH:
-			x = c.getWidth() / 2 - textBounds.exactCenterX();
-			y = c.getHeight() / 2 - textBounds.exactCenterY();
-			break;
-		case CENTER_HORIZONTALLY:
-			x = c.getWidth() / 2 - textBounds.exactCenterX();
-			break;
-		case CENTER_VERTICALLY:
-			y = c.getHeight() / 2 - textBounds.exactCenterY();
-			break;
-		default:
-			break;
+		switch (alignment)
+		{
+			case FREE:
+				break;
+			case CENTER_BOTH:
+				x = c.getWidth() / 2 - textBounds.exactCenterX();
+				y = c.getHeight() / 2 - textBounds.exactCenterY();
+				break;
+			case CENTER_HORIZONTALLY:
+				x = c.getWidth() / 2 - textBounds.exactCenterX();
+				break;
+			case CENTER_VERTICALLY:
+				y = c.getHeight() / 2 - textBounds.exactCenterY();
+				break;
+			default:
+				break;
 
 		}
 		c.drawText(text, x, y, textPaint);
@@ -81,28 +88,34 @@ public class Label extends GameObject {
 	}
 
 	@Override
-	public void update(BaseGameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler)
+	{
 		// Nothing to do here.
 	}
 
-	public void setAlignment(Alignment alignment) {
+	public void setAlignment(Alignment alignment)
+	{
 		this.alignment = alignment;
 	}
 
-	public void setText(String text) {
+	public void setText(String text)
+	{
 		this.text = text;
 		textChanged = true;
 	}
 
-	public void setTextHeight(float textHeight) {
+	public void setTextHeight(float textHeight)
+	{
 		this.textHeight = textHeight;
 	}
 
-	public void setTextColor(int textColor) {
+	public void setTextColor(int textColor)
+	{
 		this.textColor = textColor;
 	}
 
-	public void setTypeface(String typeface) {
+	public void setTypeface(String typeface)
+	{
 		this.typeface = typeface;
 	}
 

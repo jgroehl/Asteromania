@@ -3,6 +3,7 @@ package de.jgroehl.asteromania.control;
 import java.util.List;
 
 import android.content.Context;
+import de.jgroehl.api.AbstractGamePanel;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.graphics.GameObject;
@@ -24,8 +25,6 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 
 	private final SpaceShip player;
 
-	private final Context context;
-
 	private final PlayerInfo playerInfo;
 
 	private final PlayerInfoDisplay playerInfoDisplay;
@@ -41,12 +40,12 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 	private GoogleApiHandler apiHandler;
 
 	public AsteromaniaGameHandler(GameState state, SoundManager soundManager, Context context, FileHandler fileHandler,
-			SensorHandler sensorHandler, Transition transition, Highscore highscore, GoogleApiHandler apiHandler)
+			SensorHandler sensorHandler, Transition transition, Highscore highscore, GoogleApiHandler apiHandler,
+			AbstractGamePanel gamePanel)
 	{
-		super(state);
+		super(state, context, gamePanel);
 		this.highscore = highscore;
 		this.soundManager = soundManager;
-		this.context = context;
 		this.transition = transition;
 		this.apiHandler = apiHandler;
 		add(transition, GameState.MAIN);
@@ -106,11 +105,6 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 		return player;
 	}
 
-	public Context getContext()
-	{
-		return context;
-	}
-
 	public PlayerInfo getPlayerInfo()
 	{
 		return playerInfo;
@@ -136,7 +130,8 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 		apiHandler.addToLeaderBoard(playerInfo.getCurrentHighscore());
 		starfield.reset();
 		playerInfo.reset();
-		transition.reset();
+		// TODO: Fix this!
+		transition.setFinished();
 	}
 
 	public void setStarfield(Starfield starfield)
@@ -162,7 +157,7 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 	public void fillLevel()
 	{
 		player.addShieldSeconds(NEW_LEVEL_SHIELD_SECONDS);
-		addKillables(levelHandler.getLevelObjects(context, playerInfo.getLevel()));
+		addKillables(levelHandler.getLevelObjects(getContext(), playerInfo.getLevel()));
 	}
 
 }
