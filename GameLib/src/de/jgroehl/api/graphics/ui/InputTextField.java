@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.interfaces.EventCallback;
@@ -59,6 +60,8 @@ public class InputTextField extends AbstractClickableElement
 					if (InputTextField.this.getText().length() > 0)
 						InputTextField.this.setText(InputTextField.this.getText().substring(0,
 								InputTextField.this.getText().length() - 1));
+					else
+						Log.w(KeyEventListener.class.getSimpleName(), "Nothing to delete");
 				}
 			};
 

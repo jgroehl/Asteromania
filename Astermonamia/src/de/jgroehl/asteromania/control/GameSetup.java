@@ -2,6 +2,7 @@ package de.jgroehl.asteromania.control;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Log;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.control.interfaces.EventCallback;
@@ -9,6 +10,7 @@ import de.jgroehl.api.graphics.ui.Button;
 import de.jgroehl.api.graphics.ui.InputTextField;
 import de.jgroehl.api.graphics.ui.Label;
 import de.jgroehl.api.graphics.ui.SimpleClickableElement;
+import de.jgroehl.api.user.FriendCodeHandler;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
 import de.jgroehl.asteromania.control.callbacks.FromCheckpointCallback;
@@ -27,6 +29,7 @@ import de.jgroehl.asteromania.graphics.ui.overlay.PlayerStatsDisplay;
 public class GameSetup
 {
 
+	protected static final String TAG = GameSetup.class.getSimpleName();
 	private boolean initialized = false;
 
 	public void initializeGameObjects(AsteromaniaGameHandler gameHandler)
@@ -253,13 +256,30 @@ public class GameSetup
 				GameState.CODE_INPUTTER), gameHandler.getContext()), GameState.FRIEND_REQUEST);
 		gameHandler.update();
 
-		gameHandler.add(new InputTextField(0.5f, 0.1f, 0.4f, 0.1f, 4, gameHandler.getContext()),
-				GameState.CODE_GENERATOR);
+		final FriendCodeHandler friendCodeHandler = gameHandler.getFriendCodeHandler();
+		final InputTextField inputTextField = new InputTextField(0.5f, 0.1f, 0.4f, 0.1f, 4, gameHandler.getContext());
+		gameHandler.add(inputTextField, GameState.CODE_GENERATOR);
+		gameHandler.add(new Label("Freund AppId:", 0.1f, 0.2f, gameHandler.getContext()), GameState.CODE_GENERATOR);
+		gameHandler.add(new Button("Code erstellen.", 0.5f, 0.7f, 0.4f, 0.2f, new EventCallback()
+		{
+
+			@Override
+			public void action(BaseGameHandler gameHandler)
+			{
+				AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
+				Log.i(TAG,
+						"Generated Code: "
+								+ friendCodeHandler.getFriendCode(inputTextField.getText(), asteromaniaGameHandler
+										.getPlayerInfo().getAppId()));
+			}
+		}, gameHandler.getContext()), GameState.CODE_GENERATOR);
+		gameHandler.update();
 
 		gameHandler.add(new InputTextField(0.5f, 0.1f, 0.4f, 0.1f, 4, gameHandler.getContext()),
 				GameState.CODE_INPUTTER);
 		gameHandler.add(new InputTextField(0.5f, 0.25f, 0.4f, 0.1f, 4, gameHandler.getContext()),
 				GameState.CODE_INPUTTER);
+		gameHandler.update();
 
 		initialized = true;
 
