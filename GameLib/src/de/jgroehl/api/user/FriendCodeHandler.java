@@ -16,7 +16,7 @@ public class FriendCodeHandler
 {
 
 	private final FileHandler fileHandler;
-	private final List<String> acceptedFriendCodes = new ArrayList<String>();
+	private final List<String> usedAppIds = new ArrayList<String>();
 	private static final String SPLIT_CHARACTER = "&";
 	private static final String FILE_NAME_FRIEND_CODES = "friendCodes";
 
@@ -40,7 +40,7 @@ public class FriendCodeHandler
 	private void saveAcceptedFriendCodes()
 	{
 		StringBuilder sb = new StringBuilder();
-		for (String s : acceptedFriendCodes)
+		for (String s : usedAppIds)
 		{
 			sb.append(s + SPLIT_CHARACTER);
 		}
@@ -52,10 +52,10 @@ public class FriendCodeHandler
 	private void loadAcceptedFriendCodes()
 	{
 		String s = fileHandler.getDecryptedStringFromFile(FILE_NAME_FRIEND_CODES);
-		String[] codes = s.split(SPLIT_CHARACTER);
+		String[] ids = s.split(SPLIT_CHARACTER);
 
-		for (String code : codes)
-			acceptedFriendCodes.add(code);
+		for (String id : ids)
+			usedAppIds.add(id);
 
 	}
 
@@ -77,8 +77,16 @@ public class FriendCodeHandler
 		byte[] bytes = (holderAppId + friendAppId).getBytes();
 		for (int i = 0; i < bytes.length / 2; i++)
 		{
-			bytes[i] = (byte) ((bytes[i + 1] + bytes[i * 2 + 1]) % Byte.MAX_VALUE);
+			bytes[i] = (byte) ((bytes[i + 1] * bytes[i * 2 + 1]) % Byte.MAX_VALUE);
 		}
+		for (int x = 0; x < 100; x++)
+			for (int i = 1; i < bytes.length - 1; i++)
+			{
+				bytes[i + 1] = (byte) (bytes[i] + bytes[i - 1] + bytes[i + 1] % Byte.MAX_VALUE);
+			}
+
+		usedAppIds.add(friendAppId);
+
 		return new String(Base64.encode(bytes, Base64.URL_SAFE)).toLowerCase(Locale.GERMAN).substring(2, 6);
 	}
 
@@ -98,9 +106,9 @@ public class FriendCodeHandler
 		if (code == null)
 			throw new NullPointerException("code");
 
-		if (code.equals(getFriendCode(friendAppId, holderAppId)) && !acceptedFriendCodes.contains(code))
+		if (code.equals(getFriendCode(friendAppId, holderAppId)) && !usedAppIds.contains(friendAppId))
 		{
-			acceptedFriendCodes.add(code);
+			usedAppIds.add(friendAppId);
 			saveAcceptedFriendCodes();
 			return true;
 		}

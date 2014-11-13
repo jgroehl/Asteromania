@@ -2,10 +2,10 @@ package de.jgroehl.asteromania.control;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.Log;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.control.interfaces.EventCallback;
+import de.jgroehl.api.graphics.ui.Alignment;
 import de.jgroehl.api.graphics.ui.Button;
 import de.jgroehl.api.graphics.ui.InputTextField;
 import de.jgroehl.api.graphics.ui.Label;
@@ -258,27 +258,59 @@ public class GameSetup
 
 		final FriendCodeHandler friendCodeHandler = gameHandler.getFriendCodeHandler();
 		final InputTextField inputTextField = new InputTextField(0.5f, 0.1f, 0.4f, 0.1f, 4, gameHandler.getContext());
+		final Label generatedCode = new Label("", 0f, 0.6f, gameHandler.getContext());
+		generatedCode.setAlignment(Alignment.CENTER_HORIZONTALLY);
 		gameHandler.add(inputTextField, GameState.CODE_GENERATOR);
 		gameHandler.add(new Label("Freund AppId:", 0.1f, 0.2f, gameHandler.getContext()), GameState.CODE_GENERATOR);
-		gameHandler.add(new Button("Code erstellen.", 0.5f, 0.7f, 0.4f, 0.2f, new EventCallback()
+		gameHandler.add(new Button("Code erstellen", 0.3f, 0.7f, 0.6f, 0.2f, new EventCallback()
 		{
 
 			@Override
 			public void action(BaseGameHandler gameHandler)
 			{
 				AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
-				Log.i(TAG,
-						"Generated Code: "
-								+ friendCodeHandler.getFriendCode(inputTextField.getText(), asteromaniaGameHandler
-										.getPlayerInfo().getAppId()));
+				generatedCode.setText("Code: "
+						+ friendCodeHandler.getFriendCode(inputTextField.getText(), asteromaniaGameHandler
+								.getPlayerInfo().getAppId()));
 			}
 		}, gameHandler.getContext()), GameState.CODE_GENERATOR);
+		gameHandler.add(generatedCode, GameState.CODE_GENERATOR);
 		gameHandler.update();
 
-		gameHandler.add(new InputTextField(0.5f, 0.1f, 0.4f, 0.1f, 4, gameHandler.getContext()),
-				GameState.CODE_INPUTTER);
-		gameHandler.add(new InputTextField(0.5f, 0.25f, 0.4f, 0.1f, 4, gameHandler.getContext()),
-				GameState.CODE_INPUTTER);
+		final InputTextField friendId = new InputTextField(0.6f, 0.1f, 0.3f, 0.1f, 4, gameHandler.getContext());
+		final InputTextField code = new InputTextField(0.6f, 0.25f, 0.3f, 0.1f, 4, gameHandler.getContext());
+		gameHandler.add(new Label("Freund AppId:", 0.1f, 0.2f, gameHandler.getContext()), GameState.CODE_INPUTTER);
+		gameHandler.add(friendId, GameState.CODE_INPUTTER);
+
+		gameHandler.add(new Label("Generierter Code:", 0.1f, 0.35f, gameHandler.getContext()), GameState.CODE_INPUTTER);
+		gameHandler.add(code, GameState.CODE_INPUTTER);
+
+		final Label codeValidationResult = new Label("", 0f, 0.6f, gameHandler.getContext());
+		codeValidationResult.setAlignment(Alignment.CENTER_HORIZONTALLY);
+
+		gameHandler.add(new Button("Code einlösen", 0.3f, 0.7f, 0.6f, 0.2f, new EventCallback()
+		{
+
+			@Override
+			public void action(BaseGameHandler gameHandler)
+			{
+				AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
+				if (friendCodeHandler.isValidFriendCode(friendId.getText(), asteromaniaGameHandler.getPlayerInfo()
+						.getAppId(), code.getText()))
+				{
+					asteromaniaGameHandler.getPlayerInfo().addCoins(200);
+					codeValidationResult.setText("Du hast 200 Münzen bekommen!");
+					codeValidationResult.setTextColor(Color.GREEN);
+				}
+				else
+				{
+					codeValidationResult.setText("Ungültiger Code..");
+					codeValidationResult.setTextColor(Color.RED);
+				}
+			}
+		}, gameHandler.getContext()), GameState.CODE_INPUTTER);
+
+		gameHandler.add(codeValidationResult, GameState.CODE_INPUTTER);
 		gameHandler.update();
 
 		initialized = true;

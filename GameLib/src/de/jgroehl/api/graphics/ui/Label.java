@@ -112,6 +112,8 @@ public class Label extends GameObject
 	public void setTextColor(int textColor)
 	{
 		this.textColor = textColor;
+		if (textPaint != null)
+			textPaint.setColor(textColor);
 	}
 
 	public void setTypeface(String typeface)
