@@ -34,10 +34,10 @@ public class FriendCodeHandler
 
 		this.fileHandler = fileHandler;
 
-		loadAcceptedFriendCodes();
+		loadUsedAppIds();
 	}
 
-	private void saveAcceptedFriendCodes()
+	private void saveUsedAppIds()
 	{
 		StringBuilder sb = new StringBuilder();
 		for (String s : usedAppIds)
@@ -49,7 +49,7 @@ public class FriendCodeHandler
 
 	}
 
-	private void loadAcceptedFriendCodes()
+	private void loadUsedAppIds()
 	{
 		String s = fileHandler.getDecryptedStringFromFile(FILE_NAME_FRIEND_CODES);
 		String[] ids = s.split(SPLIT_CHARACTER);
@@ -86,6 +86,7 @@ public class FriendCodeHandler
 			}
 
 		usedAppIds.add(friendAppId);
+		saveUsedAppIds();
 
 		return new String(Base64.encode(bytes, Base64.URL_SAFE)).toLowerCase(Locale.GERMAN).substring(2, 6);
 	}
@@ -109,7 +110,7 @@ public class FriendCodeHandler
 		if (code.equals(getFriendCode(friendAppId, holderAppId)) && !usedAppIds.contains(friendAppId))
 		{
 			usedAppIds.add(friendAppId);
-			saveAcceptedFriendCodes();
+			saveUsedAppIds();
 			return true;
 		}
 		else
