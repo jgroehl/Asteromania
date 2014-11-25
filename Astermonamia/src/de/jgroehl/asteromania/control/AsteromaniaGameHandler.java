@@ -9,7 +9,6 @@ import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.graphics.GameObject;
 import de.jgroehl.api.graphics.interfaces.Killable;
 import de.jgroehl.api.io.FileHandler;
-import de.jgroehl.api.user.FriendCodeHandler;
 import de.jgroehl.api.utils.SensorHandler;
 import de.jgroehl.asteromania.graphics.Explosion;
 import de.jgroehl.asteromania.graphics.player.SpaceShip;
@@ -36,22 +35,19 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 
 	private final Highscore highscore;
 
-	private final FriendCodeHandler friendCodeHandler;
-
 	private Starfield starfield;
 
 	private GoogleApiHandler apiHandler;
 
 	public AsteromaniaGameHandler(GameState state, SoundManager soundManager, Context context, FileHandler fileHandler,
 			SensorHandler sensorHandler, Transition transition, Highscore highscore, GoogleApiHandler apiHandler,
-			AbstractGamePanel gamePanel, FriendCodeHandler friendCodeHandler)
+			AbstractGamePanel gamePanel)
 	{
 		super(state, context, gamePanel);
 		this.highscore = highscore;
 		this.soundManager = soundManager;
 		this.transition = transition;
 		this.apiHandler = apiHandler;
-		this.friendCodeHandler = friendCodeHandler;
 		add(transition, GameState.MAIN);
 		add(highscore, GameState.HIGHSCORE);
 		playerInfo = new PlayerInfo(context, fileHandler, apiHandler);
@@ -161,11 +157,6 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 	{
 		player.addShieldSeconds(NEW_LEVEL_SHIELD_SECONDS);
 		addKillables(levelHandler.getLevelObjects(getContext(), playerInfo.getLevel()));
-	}
-
-	public FriendCodeHandler getFriendCodeHandler()
-	{
-		return friendCodeHandler;
 	}
 
 }

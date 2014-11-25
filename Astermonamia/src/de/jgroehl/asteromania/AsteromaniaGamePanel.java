@@ -1,5 +1,6 @@
 package de.jgroehl.asteromania;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,7 +16,6 @@ import de.jgroehl.api.crypto.CryptoHandler;
 import de.jgroehl.api.graphics.interfaces.Drawable;
 import de.jgroehl.api.graphics.interfaces.Updatable;
 import de.jgroehl.api.io.FileHandler;
-import de.jgroehl.api.user.FriendCodeHandler;
 import de.jgroehl.api.utils.SensorHandler;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.control.GameSetup;
@@ -43,7 +43,7 @@ public class AsteromaniaGamePanel extends AbstractGamePanel
 		FileHandler fileHandler = new FileHandler(new CryptoHandler(getContext()), getContext());
 		gameHandler = new AsteromaniaGameHandler(GameState.MENU, new SoundManager(getContext()), getContext(),
 				fileHandler, new SensorHandler(context, Context.SENSOR_SERVICE), new Transition(context),
-				new Highscore(context, fileHandler), handler, this, new FriendCodeHandler(fileHandler));
+				new Highscore(context, fileHandler), handler, this);
 
 		backgroundPaint.setStyle(Paint.Style.FILL);
 		backgroundPaint.setColor(Color.BLACK);
@@ -57,6 +57,7 @@ public class AsteromaniaGamePanel extends AbstractGamePanel
 		gameHandler.getPlayerInfo().savePlayerInfo();
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{

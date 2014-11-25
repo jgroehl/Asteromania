@@ -1,7 +1,6 @@
 package de.jgroehl.asteromania;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import de.jgroehl.api.activities.AbstractGooglePlayGamesLoginActivity;
 import de.jgroehl.asteromania.control.GoogleApiHandler;
