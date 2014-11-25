@@ -134,8 +134,7 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 		apiHandler.addToLeaderBoard(playerInfo.getCurrentHighscore());
 		starfield.reset();
 		playerInfo.reset();
-		// TODO: Fix this!
-		transition.setFinished();
+		transition.reset();
 	}
 
 	public void setStarfield(Starfield starfield)
