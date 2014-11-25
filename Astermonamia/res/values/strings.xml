@@ -41,5 +41,10 @@
     <string name="accuracy">Genauigkeit</string>
     <string name="checkpoint">Checkpoint</string>
     <string name="play">Spielen</string>
+    <string name="share_with_friend">Sage es einem Freund weiter.</string>
+    <string name="get_bonus_coins">Erhalte Bonusmünzen.</string>
+    <string name="share">Teilen</string>
+    <string name="facebook_link">https://www.facebook.com/pages/Asteromania/662905770483488</string>
+    <string name="share_ad_text">Ich spiele jetzt Asteromania. Langsam bin ich richtig gut.\n\nDu findest das Spiel unter\nhttps://play.google.com/store/apps/details?id=de.jgroehl.asteromania</string>
 
 </resources>

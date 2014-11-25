@@ -1808,7 +1808,9 @@ containing a value of this type.
         public static final int dps=0x7f0b0059;
         public static final int event_aliens_killed=0x7f0b003f;
         public static final int event_asteroids_destroyed=0x7f0b0040;
+        public static final int facebook_link=0x7f0b006b;
         public static final int game_over=0x7f0b0055;
+        public static final int get_bonus_coins=0x7f0b0069;
         public static final int highscore_not_commited=0x7f0b0064;
         public static final int hp=0x7f0b0053;
         public static final int leaderboard_highscore=0x7f0b003e;
@@ -1824,6 +1826,9 @@ containing a value of this type.
         public static final int quit=0x7f0b004f;
         public static final int score=0x7f0b004c;
         public static final int seconds=0x7f0b005b;
+        public static final int share=0x7f0b006a;
+        public static final int share_ad_text=0x7f0b006c;
+        public static final int share_with_friend=0x7f0b0068;
         public static final int shield=0x7f0b005a;
         public static final int shield_generator=0x7f0b005e;
         public static final int ship_value=0x7f0b0062;

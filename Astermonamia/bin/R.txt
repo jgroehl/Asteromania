@@ -549,7 +549,9 @@ int string double_shot 0x7f0b005f
 int string dps 0x7f0b0059
 int string event_aliens_killed 0x7f0b003f
 int string event_asteroids_destroyed 0x7f0b0040
+int string facebook_link 0x7f0b006b
 int string game_over 0x7f0b0055
+int string get_bonus_coins 0x7f0b0069
 int string highscore_not_commited 0x7f0b0064
 int string hp 0x7f0b0053
 int string leaderboard_highscore 0x7f0b003e
@@ -565,6 +567,9 @@ int string purchase_shield_generator_first 0x7f0b005c
 int string quit 0x7f0b004f
 int string score 0x7f0b004c
 int string seconds 0x7f0b005b
+int string share 0x7f0b006a
+int string share_ad_text 0x7f0b006c
+int string share_with_friend 0x7f0b0068
 int string shield 0x7f0b005a
 int string shield_generator 0x7f0b005e
 int string ship_value 0x7f0b0062

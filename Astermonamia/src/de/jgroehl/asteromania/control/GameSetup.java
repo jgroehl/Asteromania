@@ -5,18 +5,17 @@ import android.graphics.Color;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.control.interfaces.EventCallback;
-import de.jgroehl.api.graphics.ui.Alignment;
 import de.jgroehl.api.graphics.ui.Button;
-import de.jgroehl.api.graphics.ui.InputTextField;
 import de.jgroehl.api.graphics.ui.Label;
 import de.jgroehl.api.graphics.ui.SimpleClickableElement;
-import de.jgroehl.api.user.FriendCodeHandler;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
 import de.jgroehl.asteromania.control.callbacks.FromCheckpointCallback;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.OpenWebsiteCallback;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
+import de.jgroehl.asteromania.control.callbacks.SendTextCallBack;
+import de.jgroehl.asteromania.control.callbacks.SendTextCallBack.GetText;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.callbacks.ShowLeaderboardCallback;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
@@ -32,7 +31,7 @@ public class GameSetup
 	protected static final String TAG = GameSetup.class.getSimpleName();
 	private boolean initialized = false;
 
-	public void initializeGameObjects(AsteromaniaGameHandler gameHandler)
+	public void initializeGameObjects(final AsteromaniaGameHandler gameHandler)
 	{
 		Starfield starfield = new Starfield(gameHandler.getContext());
 		gameHandler.add(starfield, GameState.values());
@@ -51,14 +50,15 @@ public class GameSetup
 
 		gameHandler.add(
 				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(),
-						R.drawable.facebook_icon), 0.05f, 0.09f, 0.1f, 0.16f, new OpenWebsiteCallback(
-						"https://www.facebook.com/pages/Asteromania/662905770483488"), gameHandler.getContext()),
-				GameState.MENU);
+						R.drawable.facebook_icon), 0.05f, 0.09f, 0.1f, 0.16f, new OpenWebsiteCallback(gameHandler
+						.getContext().getResources().getString(de.jgroehl.asteromania.R.string.facebook_link)),
+						gameHandler.getContext()), GameState.MENU);
 
 		gameHandler.add(
 				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(),
-						R.drawable.friend_request), 0.86f, 0.09f, 0.1f, 0.16f, new MenuButtonCallback(
-						GameState.FRIEND_REQUEST), gameHandler.getContext()), GameState.MENU);
+						R.drawable.friend_request), 0.86f, 0.09f, 0.1f, 0.16f, new SendTextCallBack(gameHandler
+						.getContext().getResources().getString(de.jgroehl.asteromania.R.string.share_ad_text)),
+						gameHandler.getContext()), GameState.MENU);
 
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources()
@@ -198,7 +198,7 @@ public class GameSetup
 
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources().getString(de.jgroehl.asteromania.R.string.back),
-						0.4f, 0.75f, 0.5f, 0.2f, new EventCallback()
+						0.53f, 0.75f, 0.37f, 0.2f, new EventCallback()
 						{
 
 							@Override
@@ -221,96 +221,21 @@ public class GameSetup
 		gameHandler.add(
 				new GameOverDisplay(gameHandler.getContext(), gameHandler.getPlayerInfo(), gameHandler.getHighscore()),
 				GameState.GAME_OVER);
+
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(),
+						R.drawable.friend_request), 0.35f, 0.75f, 0.13f, 0.2f, new SendTextCallBack(new GetText()
+				{
+					@Override
+					public String getText()
+					{
+						return "Ich habe " + gameHandler.getPlayerInfo().getLastHighscore()
+								+ " Punkte bei Asteromania erzielt.\n\nKannst du mich schlagen?\n\nhttps://play.google.com/store/apps/details?id=de.jgroehl.asteromania";
+					}
+				}), gameHandler.getContext()), GameState.GAME_OVER);
 		gameHandler.update();
 
 		gameHandler.add(new PlayerStatsDisplay(gameHandler.getPlayerInfo(), gameHandler.getContext()), GameState.STATS);
-		gameHandler.update();
-
-		label = new Label("Lade Freunde ein.", 0.05f, 0.15f, gameHandler.getContext());
-		gameHandler.add(label, GameState.FRIEND_REQUEST);
-
-		label = new Label("Erhalte 200 Münzen pro Freund.", 0.05f, 0.25f, gameHandler.getContext());
-		label.setTextHeight(0.05f);
-		gameHandler.add(label, GameState.FRIEND_REQUEST);
-
-		label = new Label("1. Dein Freund erstellt den Code mit \"Erstellen\".", 0.05f, 0.375f,
-				gameHandler.getContext());
-		label.setTextHeight(0.05f);
-		gameHandler.add(label, GameState.FRIEND_REQUEST);
-
-		label = new Label("2. Du löst ihn ein mit \"Einlösen\".", 0.05f, 0.45f, gameHandler.getContext());
-		label.setTextHeight(0.05f);
-		gameHandler.add(label, GameState.FRIEND_REQUEST);
-
-		label = new Label("3. Du erhälst 200 Münzen.", 0.05f, 0.525f, gameHandler.getContext());
-		label.setTextHeight(0.05f);
-		gameHandler.add(label, GameState.FRIEND_REQUEST);
-
-		label = new Label("4. Lade mehr Freunde ein.", 0.05f, 0.6f, gameHandler.getContext());
-		label.setTextHeight(0.05f);
-		gameHandler.add(label, GameState.FRIEND_REQUEST);
-
-		gameHandler.add(new Button("Erstellen", 0.05f, 0.75f, 0.425f, 0.2f, new MenuButtonCallback(
-				GameState.CODE_GENERATOR), gameHandler.getContext()), GameState.FRIEND_REQUEST);
-		gameHandler.add(new Button("Einlösen", 0.525f, 0.75f, 0.425f, 0.2f, new MenuButtonCallback(
-				GameState.CODE_INPUTTER), gameHandler.getContext()), GameState.FRIEND_REQUEST);
-		gameHandler.update();
-
-		final FriendCodeHandler friendCodeHandler = gameHandler.getFriendCodeHandler();
-		final InputTextField inputTextField = new InputTextField(0.5f, 0.1f, 0.4f, 0.1f, 4, gameHandler.getContext());
-		final Label generatedCode = new Label("", 0f, 0.6f, gameHandler.getContext());
-		generatedCode.setAlignment(Alignment.CENTER_HORIZONTALLY);
-		gameHandler.add(inputTextField, GameState.CODE_GENERATOR);
-		gameHandler.add(new Label("Freund AppId:", 0.1f, 0.2f, gameHandler.getContext()), GameState.CODE_GENERATOR);
-		gameHandler.add(new Button("Code erstellen", 0.3f, 0.7f, 0.6f, 0.2f, new EventCallback()
-		{
-
-			@Override
-			public void action(BaseGameHandler gameHandler)
-			{
-				AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
-				generatedCode.setText("Code: "
-						+ friendCodeHandler.getFriendCode(inputTextField.getText(), asteromaniaGameHandler
-								.getPlayerInfo().getAppId()));
-			}
-		}, gameHandler.getContext()), GameState.CODE_GENERATOR);
-		gameHandler.add(generatedCode, GameState.CODE_GENERATOR);
-		gameHandler.update();
-
-		final InputTextField friendId = new InputTextField(0.6f, 0.1f, 0.3f, 0.1f, 4, gameHandler.getContext());
-		final InputTextField code = new InputTextField(0.6f, 0.25f, 0.3f, 0.1f, 4, gameHandler.getContext());
-		gameHandler.add(new Label("Freund AppId:", 0.1f, 0.2f, gameHandler.getContext()), GameState.CODE_INPUTTER);
-		gameHandler.add(friendId, GameState.CODE_INPUTTER);
-
-		gameHandler.add(new Label("Generierter Code:", 0.1f, 0.35f, gameHandler.getContext()), GameState.CODE_INPUTTER);
-		gameHandler.add(code, GameState.CODE_INPUTTER);
-
-		final Label codeValidationResult = new Label("", 0f, 0.6f, gameHandler.getContext());
-		codeValidationResult.setAlignment(Alignment.CENTER_HORIZONTALLY);
-
-		gameHandler.add(new Button("Code einlösen", 0.3f, 0.7f, 0.6f, 0.2f, new EventCallback()
-		{
-
-			@Override
-			public void action(BaseGameHandler gameHandler)
-			{
-				AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
-				if (friendCodeHandler.isValidFriendCode(friendId.getText(), asteromaniaGameHandler.getPlayerInfo()
-						.getAppId(), code.getText()))
-				{
-					asteromaniaGameHandler.getPlayerInfo().addCoins(200);
-					codeValidationResult.setText("Du hast 200 Münzen bekommen!");
-					codeValidationResult.setTextColor(Color.GREEN);
-				}
-				else
-				{
-					codeValidationResult.setText("Ungültiger Code..");
-					codeValidationResult.setTextColor(Color.RED);
-				}
-			}
-		}, gameHandler.getContext()), GameState.CODE_INPUTTER);
-
-		gameHandler.add(codeValidationResult, GameState.CODE_INPUTTER);
 		gameHandler.update();
 
 		initialized = true;
