@@ -53,7 +53,7 @@ public class PlayerInfo
 
 	private static final long MAX_BONUS_FACTOR = 10;
 
-	private static final int CHECKPOINT_LEVEL_INTERVAL = 2;
+	private static final int CHECKPOINT_LEVEL_INTERVAL = 10;
 
 	private final Context context;
 	private final FileHandler fileHandler;
