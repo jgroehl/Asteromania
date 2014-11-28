@@ -123,4 +123,5 @@ public class GameThread extends Thread {
 	public boolean hasBeenRunningAtLeastOnce() {
 		return hasBeenRunningAtLeastOnce;
 	}
+	
 }

@@ -1,12 +1,10 @@
 package de.jgroehl.asteromania.control;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.control.interfaces.EventCallback;
 import de.jgroehl.api.graphics.ui.Button;
-import de.jgroehl.api.graphics.ui.Label;
 import de.jgroehl.api.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
@@ -38,11 +36,6 @@ public class GameSetup
 		gameHandler.setStarfield(starfield);
 		gameHandler.update();
 
-		Label label = new Label("AppId: " + gameHandler.getPlayerInfo().getAppId(), 0, 0.97f, gameHandler.getContext());
-		label.setTextColor(Color.rgb(250, 250, 150));
-		label.setTextHeight(0.05f);
-		gameHandler.add(label, GameState.MENU);
-
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources().getString(de.jgroehl.asteromania.R.string.play),
 						0.2f, 0.07f, 0.6f, 0.2f, new MenuButtonCallback(GameState.START), gameHandler.getContext()),
@@ -62,12 +55,12 @@ public class GameSetup
 
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources()
-						.getString(de.jgroehl.asteromania.R.string.checkpoint), 0.2f, 0.3f, 0.6f, 0.2f,
+						.getString(de.jgroehl.asteromania.R.string.checkpoint), 0.2f, 0.7f, 0.6f, 0.2f,
 						new FromCheckpointCallback(), gameHandler.getContext()), GameState.START);
 
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources().getString(de.jgroehl.asteromania.R.string.start),
-						0.2f, 0.7f, 0.6f, 0.2f, new MenuButtonCallback(GameState.MAIN), gameHandler.getContext()),
+						0.2f, 0.3f, 0.6f, 0.2f, new MenuButtonCallback(GameState.MAIN), gameHandler.getContext()),
 				GameState.START);
 
 		gameHandler.add(new NewGameDisplay(gameHandler.getContext(), gameHandler.getPlayerInfo()), GameState.START);
@@ -229,7 +222,8 @@ public class GameSetup
 					@Override
 					public String getText()
 					{
-						return "Ich habe " + gameHandler.getPlayerInfo().getLastHighscore()
+						return "Ich habe "
+								+ gameHandler.getPlayerInfo().getLastHighscore()
 								+ " Punkte bei Asteromania erzielt.\n\nKannst du mich schlagen?\n\nhttps://play.google.com/store/apps/details?id=de.jgroehl.asteromania";
 					}
 				}), gameHandler.getContext()), GameState.GAME_OVER);
