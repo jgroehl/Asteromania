@@ -26,8 +26,10 @@ public class NewGameDisplay extends GraphicsObject
 
 		currentLevel = new Label("Level: " + playerInfo.getLevel(), 0.5f, 0.28f, context);
 		currentLevel.setAlignment(Alignment.CENTER_HORIZONTALLY);
+		currentLevel.setTextHeight(0.06f);
 		checkpointLevel = new Label("Checkpoint Level: " + playerInfo.getCheckpointLevel(), 0.5f, 0.68f, context);
 		checkpointLevel.setAlignment(Alignment.CENTER_HORIZONTALLY);
+		checkpointLevel.setTextHeight(0.06f);
 
 	}
 

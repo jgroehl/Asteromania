@@ -8,7 +8,7 @@ public class SoundManager
 {
 
 	private final SoundPool soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 100);
-	private static final int NUMBER_OF_SOUNDS = 9;
+	private static final int NUMBER_OF_SOUNDS = 10;
 	private static final double NUMBER_OF_HIT_SOUNDS = 3;
 	private static final int CLICK_ID = 0;
 	private static final int SHOT_ID = 1;
@@ -19,6 +19,7 @@ public class SoundManager
 	private static final int PAYING_ID = 6;
 	private static final int HEALTH_POWER_UP_ID = 7;
 	private static final int SHIELD_WARD_ID = 8;
+	private static final int CHECKPOINT_ID = 9;
 	private final int[] sounds;
 
 	public SoundManager(Context context)
@@ -34,6 +35,7 @@ public class SoundManager
 		sounds[PAYING_ID] = soundPool.load(context, de.jgroehl.asteromania.R.raw.paying, 100);
 		sounds[HEALTH_POWER_UP_ID] = soundPool.load(context, de.jgroehl.asteromania.R.raw.power_up, 100);
 		sounds[SHIELD_WARD_ID] = soundPool.load(context, de.jgroehl.asteromania.R.raw.shield_ward, 100);
+		sounds[CHECKPOINT_ID] = soundPool.load(context, de.jgroehl.asteromania.R.raw.checkpoint, 100);
 	}
 
 	public void playClickSound()
@@ -117,6 +119,11 @@ public class SoundManager
 	public void playShieldHitSound()
 	{
 		playSound(SHIELD_WARD_ID);
+	}
+
+	public void playCheckpointSound()
+	{
+		playSound(CHECKPOINT_ID);
 	}
 
 }

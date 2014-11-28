@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import android.content.Context;
 import android.util.Log;
+import de.jgroehl.api.control.GameState;
+import de.jgroehl.api.graphics.TimeDependendGraphicsObject;
 import de.jgroehl.api.graphics.statusBars.FramedHpBar;
 import de.jgroehl.api.graphics.statusBars.HpBar;
 import de.jgroehl.api.io.FileHandler;
@@ -50,6 +52,8 @@ public class PlayerInfo
 	private static final float HEALTH_Y = 0.90f;
 
 	private static final long MAX_BONUS_FACTOR = 10;
+
+	private static final int CHECKPOINT_LEVEL_INTERVAL = 2;
 
 	private final Context context;
 	private final FileHandler fileHandler;
@@ -447,9 +451,11 @@ public class PlayerInfo
 		return level;
 	}
 
-	public int nextLevel()
+	public int nextLevel(AsteromaniaGameHandler asteromaniaGameHandler)
 	{
-		return ++level;
+		level += 1;
+		checkForCheckpoint(asteromaniaGameHandler);
+		return level;
 	}
 
 	public float getMaxSpeedFactor()
@@ -610,11 +616,18 @@ public class PlayerInfo
 		level = checkpointLevel;
 	}
 
-	public void checkForCheckpoint()
+	private void checkForCheckpoint(AsteromaniaGameHandler asteromaniaGameHandler)
 	{
-		if (level > checkpointLevel)
-			if (level % 10 == 1)
+		if (level % CHECKPOINT_LEVEL_INTERVAL == 1)
+		{
+			if (level > checkpointLevel)
+			{
+				asteromaniaGameHandler.getSoundManager().playCheckpointSound();
+				asteromaniaGameHandler.add(new TimeDependendGraphicsObject(0.25f, 0.4f,
+						de.jgroehl.asteromania.R.drawable.checkpoint, 0.5f, 2000, context), GameState.MAIN);
 				checkpointLevel = level;
+			}
+		}
 	}
 
 	public String getAppId()

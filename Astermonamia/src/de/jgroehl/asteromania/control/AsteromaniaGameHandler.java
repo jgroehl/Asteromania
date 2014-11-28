@@ -69,18 +69,17 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 					transition.initialize();
 					playerInfo.incerementBonusFactor();
 					playerInfo.addCoins(playerInfo.getLevel());
-					playerInfo.nextLevel();
+					playerInfo.nextLevel(this);
 				}
 				if (transition.isFinished())
 				{
 					transition.reset();
 					fillLevel();
 				}
-				playerInfo.checkForCheckpoint();
 			}
 			else
 			{
-				playerInfo.nextLevel();
+				playerInfo.nextLevel(this);
 				fillLevel();
 			}
 		}
