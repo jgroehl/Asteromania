@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import de.jgroehl.api.AbstractGamePanel;
 import de.jgroehl.api.control.interfaces.EventHandler;
@@ -19,6 +20,8 @@ import de.jgroehl.api.graphics.interfaces.Updatable;
 
 public class BaseGameHandler implements GraphicsHandler, EventHandler
 {
+
+	private static final String TAG = BaseGameHandler.class.getSimpleName();
 
 	private final Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
 
@@ -159,5 +162,21 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler
 	public Context getContext()
 	{
 		return context;
+	}
+
+	public boolean gameObjectsInitialized()
+	{
+		Log.d(TAG, "Game Objects size: " + totalSize(gameObjects));
+		return totalSize(gameObjects) > 0;
+	}
+
+	private int totalSize(Map<GameState, List<GameObject>> gameObjects)
+	{
+		int sum = 0;
+		for (List<?> l : gameObjects.values())
+		{
+			sum += l.size();
+		}
+		return sum;
 	}
 }

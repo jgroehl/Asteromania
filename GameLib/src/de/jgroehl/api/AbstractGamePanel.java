@@ -58,6 +58,8 @@ public abstract class AbstractGamePanel extends SurfaceView implements SurfaceHo
 	 */
 	public abstract void initializeGameObjects();
 
+	public abstract boolean gameObjectsInitialized();
+
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event)
 	{
@@ -145,8 +147,16 @@ public abstract class AbstractGamePanel extends SurfaceView implements SurfaceHo
 		}
 		if (!getThread().isRunning())
 		{
-			if (!getThread().hasBeenRunningAtLeastOnce())
+			if (!gameObjectsInitialized())
+			{
+				Log.d(TAG, "Initializing game objects...");
 				initializeGameObjects();
+				Log.d(TAG, "Initializing game objects...[Done]");
+			}
+			else
+			{
+				Log.d(TAG, "Game objects not initialized...");
+			}
 			thread.start();
 		}
 		else

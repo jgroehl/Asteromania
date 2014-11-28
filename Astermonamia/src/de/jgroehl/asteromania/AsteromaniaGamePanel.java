@@ -119,21 +119,23 @@ public class AsteromaniaGamePanel extends AbstractGamePanel
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
 	{
 		super.surfaceChanged(arg0, arg1, arg2, arg3);
-
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder arg0)
 	{
 		super.surfaceCreated(arg0);
-
 	}
 
 	@Override
 	public void initializeGameObjects()
 	{
 		gameSetup.initializeGameObjects(gameHandler);
-
 	}
 
+	@Override
+	public boolean gameObjectsInitialized()
+	{
+		return gameHandler.gameObjectsInitialized();
+	}
 }
