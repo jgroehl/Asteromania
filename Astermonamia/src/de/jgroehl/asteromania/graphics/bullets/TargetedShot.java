@@ -16,6 +16,8 @@ import de.jgroehl.asteromania.graphics.enemies.BaseEnemy;
 public class TargetedShot extends AbstractDamagingAbility
 {
 
+	private static final float ROCKET_WIDTH = 0.1f;
+	private static final int DAMAGE_FACTOR = 2;
 	private final BaseEnemy targetEnemy;
 	private float rotation = 0;
 	private Paint crosshairsPaint = new Paint();
@@ -32,7 +34,8 @@ public class TargetedShot extends AbstractDamagingAbility
 	 */
 	public TargetedShot(float xPosition, float yPosition, int damage, BaseEnemy targetEnemy, Context context)
 	{
-		super(xPosition, yPosition, de.jgroehl.asteromania.R.drawable.rocket, 0.1f, Target.ENEMY, damage, context);
+		super(xPosition, yPosition, de.jgroehl.asteromania.R.drawable.rocket, ROCKET_WIDTH, Target.ENEMY, damage,
+				context);
 		this.targetEnemy = targetEnemy;
 
 		crosshairsPaint.setColor(Color.RED);
@@ -52,13 +55,6 @@ public class TargetedShot extends AbstractDamagingAbility
 		super.draw(c);
 		c.restore();
 		setPosition(x, y);
-		drawCrossHairs(c);
-	}
-
-	private void drawCrossHairs(Canvas c)
-	{
-		c.drawCircle((targetEnemy.getX() + targetEnemy.getRelativeWidth() / 2) * c.getWidth(),
-				(targetEnemy.getY() + targetEnemy.getRelativeHeight() / 2) * c.getHeight(), 5, crosshairsPaint);
 	}
 
 	@Override
@@ -102,9 +98,10 @@ public class TargetedShot extends AbstractDamagingAbility
 
 	private static TargetedShot createTargetedShot(AsteromaniaGameHandler gameHandler, BaseEnemy target)
 	{
-		return new TargetedShot(gameHandler.getPlayer().getX() + gameHandler.getPlayer().getRelativeWidth() / 2,
-				gameHandler.getPlayer().getY() + gameHandler.getPlayer().getRelativeHeight() / 2, gameHandler
-						.getPlayer().getShotDamage() + gameHandler.getPlayerInfo().getBonusDamage(), target,
-				gameHandler.getContext());
+		return new TargetedShot(gameHandler.getPlayer().getX() - gameHandler.getPlayer().getRelativeWidth() / 2
+				+ ROCKET_WIDTH / 2, gameHandler.getPlayer().getY() + gameHandler.getPlayer().getRelativeHeight() / 2,
+				DAMAGE_FACTOR
+						* (gameHandler.getPlayer().getShotDamage() + gameHandler.getPlayerInfo().getBonusDamage()),
+				target, gameHandler.getContext());
 	}
 }

@@ -88,9 +88,6 @@ public class AsteromaniaGamePanel extends AbstractGamePanel
 				d.draw(c);
 			}
 
-			if (gameHandler.getGameState().equals(GameState.MAIN))
-				gameHandler.getPlayerInfoDisplay().draw(c);
-
 		}
 		else
 		{

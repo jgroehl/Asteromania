@@ -12,6 +12,11 @@ public class RandomTargetCallback implements EventCallback
 	@Override
 	public void action(BaseGameHandler gameHandler)
 	{
-		gameHandler.add(TargetedShot.createShotWithRandomTarget((AsteromaniaGameHandler) gameHandler), GameState.MAIN);
+		TargetedShot shot = TargetedShot.createShotWithRandomTarget((AsteromaniaGameHandler) gameHandler);
+		if (shot != null)
+		{
+			((AsteromaniaGameHandler) gameHandler).getSoundManager().playEnemyShotSound();
+			gameHandler.add(shot, GameState.MAIN);
+		}
 	}
 }

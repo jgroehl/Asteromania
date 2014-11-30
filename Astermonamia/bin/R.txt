@@ -355,11 +355,12 @@ int drawable score_icon 0x7f020091
 int drawable shield_small 0x7f020092
 int drawable shield_upgrade 0x7f020093
 int drawable shotfield 0x7f020094
-int drawable shotfreq_upgrade 0x7f020095
-int drawable shotspeed_upgrade 0x7f020096
-int drawable spaceship2 0x7f020097
-int drawable speed_upgrade 0x7f020098
-int drawable tripleshot_upgrade 0x7f020099
+int drawable shotfield_rocket 0x7f020095
+int drawable shotfreq_upgrade 0x7f020096
+int drawable shotspeed_upgrade 0x7f020097
+int drawable spaceship2 0x7f020098
+int drawable speed_upgrade 0x7f020099
+int drawable tripleshot_upgrade 0x7f02009a
 int id action_bar 0x7f06002e
 int id action_bar_activity_content 0x7f060015
 int id action_bar_container 0x7f06002d

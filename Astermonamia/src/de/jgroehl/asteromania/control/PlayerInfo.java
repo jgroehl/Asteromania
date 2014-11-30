@@ -8,11 +8,11 @@ import android.content.Context;
 import android.util.Log;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.graphics.TimeDependendGraphicsObject;
-import de.jgroehl.api.graphics.statusBars.FramedHpBar;
 import de.jgroehl.api.graphics.statusBars.HpBar;
 import de.jgroehl.api.io.FileHandler;
 import de.jgroehl.asteromania.AsteromaniaMainActivity;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
+import de.jgroehl.asteromania.graphics.player.PlayerHealthPoints;
 
 public class PlayerInfo
 {
@@ -48,7 +48,7 @@ public class PlayerInfo
 
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
-	private static final float HEALTH_X = 0.025f;
+	private static final float HEALTH_X = 0.35f;
 	private static final float HEALTH_Y = 0.90f;
 
 	private static final long MAX_BONUS_FACTOR = 10;
@@ -59,7 +59,7 @@ public class PlayerInfo
 	private final FileHandler fileHandler;
 
 	private String appId;
-	private FramedHpBar healthPoints;
+	private PlayerHealthPoints healthPoints;
 	private long coins;
 	private int level;
 	private int checkpointLevel;
@@ -360,14 +360,14 @@ public class PlayerInfo
 			int currentValue = Integer.parseInt(health[0]);
 			int maximum = Integer.parseInt(health[1]);
 
-			healthPoints = new FramedHpBar(maximum, currentValue, HEALTH_X, HEALTH_Y, HEALTH_WIDTH, HEALTH_HEIGHT,
-					context, de.jgroehl.asteromania.R.drawable.hp_bar_frame);
+			healthPoints = new PlayerHealthPoints(maximum, currentValue, HEALTH_X, HEALTH_Y, HEALTH_WIDTH,
+					HEALTH_HEIGHT, context, de.jgroehl.asteromania.R.drawable.hp_bar_frame);
 			Log.d(TAG, "Set HP to: " + currentValue + "/" + maximum);
 		}
 		catch (NumberFormatException e)
 		{
 			Log.w(TAG, "Amount of health not readable. Setting to default value " + DEFAULT_HEALTH);
-			healthPoints = new FramedHpBar(DEFAULT_HEALTH, DEFAULT_HEALTH, HEALTH_X, HEALTH_Y, HEALTH_WIDTH,
+			healthPoints = new PlayerHealthPoints(DEFAULT_HEALTH, DEFAULT_HEALTH, HEALTH_X, HEALTH_Y, HEALTH_WIDTH,
 					HEALTH_HEIGHT, context, de.jgroehl.asteromania.R.drawable.hp_bar_frame);
 		}
 	}
