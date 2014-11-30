@@ -1,5 +1,6 @@
 package de.jgroehl.asteromania.control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -11,6 +12,7 @@ import de.jgroehl.api.graphics.interfaces.Killable;
 import de.jgroehl.api.io.FileHandler;
 import de.jgroehl.api.utils.SensorHandler;
 import de.jgroehl.asteromania.graphics.Explosion;
+import de.jgroehl.asteromania.graphics.enemies.BaseEnemy;
 import de.jgroehl.asteromania.graphics.player.SpaceShip;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
@@ -38,6 +40,8 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 	private Starfield starfield;
 
 	private GoogleApiHandler apiHandler;
+
+	private final List<BaseEnemy> enemies = new ArrayList<BaseEnemy>();
 
 	public AsteromaniaGameHandler(GameState state, SoundManager soundManager, Context context, FileHandler fileHandler,
 			SensorHandler sensorHandler, Transition transition, Highscore highscore, GoogleApiHandler apiHandler,
@@ -124,6 +128,7 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 
 	public void resetGame()
 	{
+		enemies.clear();
 		levelHandler.killAllEntities(this);
 		highscore.addNewHighscore(playerInfo.getCurrentHighscore());
 		apiHandler.addToLeaderBoard(playerInfo.getCurrentHighscore());
@@ -156,5 +161,29 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 	{
 		player.addShieldSeconds(NEW_LEVEL_SHIELD_SECONDS);
 		addKillables(levelHandler.getLevelObjects(getContext(), playerInfo.getLevel()));
+	}
+
+	public BaseEnemy getRandomEnemy()
+	{
+		if (enemies.size() > 0)
+			return enemies.get((int) (Math.random() * enemies.size()));
+		else
+			return null;
+	}
+
+	@Override
+	public void add(GameObject gameObject, GameState... states)
+	{
+		if (gameObject instanceof BaseEnemy)
+			enemies.add((BaseEnemy) gameObject);
+
+		super.add(gameObject, states);
+	}
+
+	@Override
+	public void remove(GameObject gameObject)
+	{
+		enemies.remove(gameObject);
+		super.remove(gameObject);
 	}
 }

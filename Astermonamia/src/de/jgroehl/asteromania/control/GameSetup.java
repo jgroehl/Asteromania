@@ -11,6 +11,7 @@ import de.jgroehl.asteromania.control.callbacks.BuyItemCallback.ItemType;
 import de.jgroehl.asteromania.control.callbacks.FromCheckpointCallback;
 import de.jgroehl.asteromania.control.callbacks.MenuButtonCallback;
 import de.jgroehl.asteromania.control.callbacks.OpenWebsiteCallback;
+import de.jgroehl.asteromania.control.callbacks.RandomTargetCallback;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.control.callbacks.SendTextCallBack;
 import de.jgroehl.asteromania.control.callbacks.SendTextCallBack.GetText;
@@ -98,8 +99,8 @@ public class GameSetup
 						}, gameHandler.getContext()), GameState.MENU);
 		gameHandler.update();
 
-		gameHandler.add(new SimpleClickableElement(0.68f, 0.75f, R.drawable.shotfield, 0.3f, new ShotFiredCallback(),
-				gameHandler.getContext()), GameState.MAIN);
+		gameHandler.add(new SimpleClickableElement(0.68f, 0.75f, R.drawable.shotfield, 0.3f,
+				new RandomTargetCallback(), gameHandler.getContext()), GameState.MAIN);
 		gameHandler.update();
 
 		Button button = new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(),

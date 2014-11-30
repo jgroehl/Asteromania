@@ -3,7 +3,7 @@ package de.jgroehl.asteromania.graphics.enemies;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.graphics.Target;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
-import de.jgroehl.asteromania.graphics.Shot;
+import de.jgroehl.asteromania.graphics.bullets.Shot;
 import android.content.Context;
 
 public class BossEnemy extends BaseEnemy {

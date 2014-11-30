@@ -7,7 +7,7 @@ import de.jgroehl.api.graphics.GameObject.Level;
 import de.jgroehl.api.graphics.Target;
 import de.jgroehl.api.time.Timer;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
-import de.jgroehl.asteromania.graphics.Shot;
+import de.jgroehl.asteromania.graphics.bullets.Shot;
 
 public class ShotFiredCallback implements EventCallback
 {

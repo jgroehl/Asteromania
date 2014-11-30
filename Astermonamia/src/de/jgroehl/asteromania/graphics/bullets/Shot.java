@@ -1,4 +1,4 @@
-package de.jgroehl.asteromania.graphics;
+package de.jgroehl.asteromania.graphics.bullets;
 
 import android.content.Context;
 import de.jgroehl.api.control.BaseGameHandler;
@@ -15,7 +15,7 @@ public class Shot extends AbstractDamagingAbility {
 
 	private final float direction;
 	private final float shotSpeed;
-	private BaseEnemy source;
+	private final BaseEnemy source;
 
 	public Shot(float xPosition, float yPosition, Target target,
 			float shotSpeed, Context context, int damage, BaseEnemy source) {

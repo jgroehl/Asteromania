@@ -121,7 +121,8 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler
 	@Override
 	public void add(GameObject gameObject, GameState... states)
 	{
-		addedObjects.put(gameObject, states);
+		if (gameObject != null)
+			addedObjects.put(gameObject, states);
 	}
 
 	@Override

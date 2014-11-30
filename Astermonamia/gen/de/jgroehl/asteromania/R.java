@@ -1482,17 +1482,18 @@ containing a value of this type.
         public static final int rock3=0x7f02008b;
         public static final int rock4=0x7f02008c;
         public static final int rock5=0x7f02008d;
-        public static final int rotating_coin=0x7f02008e;
-        public static final int rotating_spaceship=0x7f02008f;
-        public static final int score_icon=0x7f020090;
-        public static final int shield_small=0x7f020091;
-        public static final int shield_upgrade=0x7f020092;
-        public static final int shotfield=0x7f020093;
-        public static final int shotfreq_upgrade=0x7f020094;
-        public static final int shotspeed_upgrade=0x7f020095;
-        public static final int spaceship2=0x7f020096;
-        public static final int speed_upgrade=0x7f020097;
-        public static final int tripleshot_upgrade=0x7f020098;
+        public static final int rocket=0x7f02008e;
+        public static final int rotating_coin=0x7f02008f;
+        public static final int rotating_spaceship=0x7f020090;
+        public static final int score_icon=0x7f020091;
+        public static final int shield_small=0x7f020092;
+        public static final int shield_upgrade=0x7f020093;
+        public static final int shotfield=0x7f020094;
+        public static final int shotfreq_upgrade=0x7f020095;
+        public static final int shotspeed_upgrade=0x7f020096;
+        public static final int spaceship2=0x7f020097;
+        public static final int speed_upgrade=0x7f020098;
+        public static final int tripleshot_upgrade=0x7f020099;
     }
     public static final class id {
         public static final int action_bar=0x7f06002e;

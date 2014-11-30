@@ -4,7 +4,7 @@ import android.content.Context;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.graphics.Target;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
-import de.jgroehl.asteromania.graphics.Shot;
+import de.jgroehl.asteromania.graphics.bullets.Shot;
 
 public class NormalEnemy extends BaseEnemy {
 
