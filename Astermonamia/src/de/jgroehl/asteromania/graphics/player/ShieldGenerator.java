@@ -1,4 +1,4 @@
-package de.jgroehl.asteromania.graphics;
+package de.jgroehl.asteromania.graphics.player;
 
 import android.content.Context;
 import android.graphics.Canvas;

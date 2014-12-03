@@ -13,7 +13,6 @@ import de.jgroehl.api.utils.SensorHandler;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.control.PlayerInfo;
-import de.jgroehl.asteromania.graphics.ShieldGenerator;
 
 public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 
