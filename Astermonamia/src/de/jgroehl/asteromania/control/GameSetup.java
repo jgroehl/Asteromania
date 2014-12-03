@@ -14,8 +14,8 @@ import de.jgroehl.asteromania.control.callbacks.OpenWebsiteCallback;
 import de.jgroehl.asteromania.control.callbacks.ShotFiredCallback;
 import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 import de.jgroehl.asteromania.control.callbacks.RandomTargetCallback;
-import de.jgroehl.asteromania.control.callbacks.SendTextCallBack;
-import de.jgroehl.asteromania.control.callbacks.SendTextCallBack.GetText;
+import de.jgroehl.asteromania.control.callbacks.SendMessageCallback;
+import de.jgroehl.asteromania.control.callbacks.SendMessageCallback.GetText;
 import de.jgroehl.asteromania.control.callbacks.ShowLeaderboardCallback;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.BuyItemShopButton;
@@ -90,7 +90,7 @@ public class GameSetup
 
 		gameHandler.add(
 				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(),
-						R.drawable.friend_request), 0.35f, 0.75f, 0.13f, 0.2f, new SendTextCallBack(new GetText()
+						R.drawable.friend_request), 0.35f, 0.75f, 0.13f, 0.2f, new SendMessageCallback(new GetText()
 				{
 					@Override
 					public String getText()
@@ -99,7 +99,7 @@ public class GameSetup
 								+ gameHandler.getPlayerInfo().getLastHighscore()
 								+ " Punkte bei Asteromania erzielt.\n\nKannst du mich schlagen?\n\nhttps://play.google.com/store/apps/details?id=de.jgroehl.asteromania";
 					}
-				}), gameHandler.getContext()), GameState.GAME_OVER);
+				}, SendMessageCallback.TARGET_WHATSAPP), gameHandler.getContext()), GameState.GAME_OVER);
 		gameHandler.update();
 	}
 
@@ -227,6 +227,10 @@ public class GameSetup
 
 	private void setupGameScreen(AsteromaniaGameHandler gameHandler)
 	{
+		gameHandler.add(gameHandler.getPlayer(), GameState.MAIN);
+
+		gameHandler.update();
+
 		if (gameHandler.getPlayerInfo().purchasedItem(PurchaseType.ROCKET_LAUNCHER))
 			gameHandler.add(new SimpleClickableElement(0.02f, 0.75f, R.drawable.shotfield_rocket, 0.3f,
 					new RandomTargetCallback(), gameHandler.getContext()), GameState.MAIN);
@@ -237,8 +241,6 @@ public class GameSetup
 		gameHandler.add(gameHandler.getPlayerInfoDisplay(), GameState.MAIN);
 
 		gameHandler.add(gameHandler.getPlayerInfo().getHealthPoints(), GameState.MAIN);
-
-		gameHandler.add(gameHandler.getPlayer(), GameState.MAIN);
 
 		gameHandler.update();
 	}
@@ -275,9 +277,9 @@ public class GameSetup
 
 		gameHandler.add(
 				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(),
-						R.drawable.friend_request), 0.86f, 0.09f, 0.1f, 0.16f, new SendTextCallBack(gameHandler
-						.getContext().getResources().getString(de.jgroehl.asteromania.R.string.share_ad_text)),
-						gameHandler.getContext()), GameState.MENU);
+						R.drawable.friend_request), 0.86f, 0.09f, 0.1f, 0.16f, new SendMessageCallback(gameHandler
+						.getContext().getResources().getString(de.jgroehl.asteromania.R.string.share_ad_text),
+						SendMessageCallback.TARGET_WHATSAPP), gameHandler.getContext()), GameState.MENU);
 
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources().getString(de.jgroehl.asteromania.R.string.score),
