@@ -3,7 +3,9 @@ package de.jgroehl.asteromania.control.callbacks;
 import android.content.Context;
 import android.widget.Toast;
 import de.jgroehl.api.control.BaseGameHandler;
+import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.control.interfaces.EventCallback;
+import de.jgroehl.api.graphics.ui.SimpleClickableElement;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 
@@ -12,8 +14,8 @@ public class PurchaseItemCallback implements EventCallback
 
 	public enum PurchaseType
 	{
-		SHIELD_GENERATOR(750, R.string.shield_generator), DOUBLE_SHOT(2000, R.string.double_shot), TRIPLE_SHOT(5000,
-				R.string.triple_shot);
+		SHIELD_GENERATOR(750, R.string.shield_generator), DOUBLE_SHOT(3000, R.string.double_shot), TRIPLE_SHOT(7500,
+				R.string.triple_shot), ROCKET_LAUNCHER(1000, R.string.rocket_launcher);
 
 		public final int cost;
 		public final int textId;
@@ -47,7 +49,6 @@ public class PurchaseItemCallback implements EventCallback
 			{
 				if (asteromaniaGameHandler.getPlayerInfo().getCoins() >= type.cost)
 				{
-					// TODO: Connect to Google Play services to purchase item.
 					if (type == PurchaseType.TRIPLE_SHOT
 							&& !asteromaniaGameHandler.getPlayerInfo().purchasedDoubleShot())
 					{
@@ -59,6 +60,10 @@ public class PurchaseItemCallback implements EventCallback
 						asteromaniaGameHandler.getPlayerInfo().addCoins(-type.cost);
 						asteromaniaGameHandler.getSoundManager().playPayingSound();
 						asteromaniaGameHandler.getPlayerInfo().addPurchase(type);
+						if (type.equals(PurchaseType.ROCKET_LAUNCHER))
+							asteromaniaGameHandler.add(
+									new SimpleClickableElement(0.02f, 0.75f, R.drawable.shotfield_rocket, 0.3f,
+											new RandomTargetCallback(), gameHandler.getContext()), GameState.MAIN);
 						asteromaniaGameHandler.getApiHandler().unlockPurchaseAchievement(type);
 					}
 				}

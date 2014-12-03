@@ -110,7 +110,7 @@ public class GameSetup
 		setupShopBuyableItems(gameHandler);
 
 		gameHandler.add(new PlayerInfoDisplay(gameHandler.getContext(), gameHandler.getPlayerInfo(), true),
-				GameState.SHOP, GameState.SHOP2, GameState.SHOP3);
+				GameState.SHOP, GameState.SHOP2, GameState.SHOP3, GameState.SHOP4);
 
 		gameHandler.update();
 	}
@@ -160,6 +160,13 @@ public class GameSetup
 				shopButtonHeight, PurchaseType.TRIPLE_SHOT, gameHandler.getContext(), gameHandler.getPlayerInfo()),
 				GameState.SHOP3);
 
+		gameHandler.add(new BuyItemShopButton(R.drawable.shop_rocket_launcher, 0.1f, 0.1f, shopButtonWidth,
+				shopButtonHeight, PurchaseType.ROCKET_LAUNCHER, gameHandler.getContext(), gameHandler.getPlayerInfo()),
+				GameState.SHOP4);
+
+		gameHandler.add(new BuyItemShopButton(R.drawable.shop_rocket, 0.1f, 0.4f, shopButtonWidth, shopButtonHeight,
+				ItemType.AMMO, gameHandler.getContext(), gameHandler.getPlayerInfo()), GameState.SHOP4);
+
 		gameHandler.update();
 	}
 
@@ -183,6 +190,15 @@ public class GameSetup
 				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(), R.drawable.left), 0f,
 						0.875f, 0.07f, 0.125f, new MenuButtonCallback(GameState.SHOP2), gameHandler.getContext()),
 				GameState.SHOP3);
+		gameHandler
+				.add(new Button(
+						BitmapFactory.decodeResource(gameHandler.getContext().getResources(), R.drawable.right), 0.93f,
+						0.875f, 0.07f, 0.125f, new MenuButtonCallback(GameState.SHOP4), gameHandler.getContext()),
+						GameState.SHOP3);
+		gameHandler.add(
+				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(), R.drawable.left), 0f,
+						0.875f, 0.07f, 0.125f, new MenuButtonCallback(GameState.SHOP3), gameHandler.getContext()),
+				GameState.SHOP4);
 		gameHandler.update();
 	}
 
@@ -211,8 +227,9 @@ public class GameSetup
 
 	private void setupGameScreen(AsteromaniaGameHandler gameHandler)
 	{
-		gameHandler.add(new SimpleClickableElement(0.02f, 0.75f, R.drawable.shotfield_rocket, 0.3f,
-				new RandomTargetCallback(), gameHandler.getContext()), GameState.MAIN);
+		if (gameHandler.getPlayerInfo().purchasedItem(PurchaseType.ROCKET_LAUNCHER))
+			gameHandler.add(new SimpleClickableElement(0.02f, 0.75f, R.drawable.shotfield_rocket, 0.3f,
+					new RandomTargetCallback(), gameHandler.getContext()), GameState.MAIN);
 
 		gameHandler.add(new SimpleClickableElement(0.68f, 0.75f, R.drawable.shotfield, 0.3f, new ShotFiredCallback(),
 				gameHandler.getContext()), GameState.MAIN);

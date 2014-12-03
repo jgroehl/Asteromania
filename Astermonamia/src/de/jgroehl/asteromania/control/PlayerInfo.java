@@ -20,6 +20,7 @@ public class PlayerInfo
 	private static final String TAG = PlayerInfo.class.getSimpleName();
 
 	private static final String FILE_NAME_APP_ID = "appId";
+	private static final String FILE_NAME_AMMO = "ammo";
 	private static final String FILE_NAME_COINS = "coins";
 	private static final String FILE_NAME_HP = "health";
 	private static final String FILE_NAME_LEVEL = "level";
@@ -45,6 +46,7 @@ public class PlayerInfo
 	private static final String DEFAULT_APP_ID = UUID.randomUUID().toString().substring(0, 4);
 	private static final long DEFAULT_ACCUMULATED_PURCHASES = 0;
 	private static final int DEFAULT_CHECKPOINT_LEVEL = 1;
+	private static final int DEFAULT_AMMO = AsteromaniaMainActivity.DEBUG ? 1000 : 0;
 
 	private static final float HEALTH_HEIGHT = 0.075f;
 	private static final float HEALTH_WIDTH = 0.3f;
@@ -73,6 +75,7 @@ public class PlayerInfo
 	private long accumulatedWorth;
 	private int shieldSeconds;
 	private long hits;
+	private int ammo;
 	private long misses;
 	private final List<PurchaseType> purchaseList = new ArrayList<PurchaseType>();
 
@@ -101,7 +104,23 @@ public class PlayerInfo
 		readAccumulatedPurchaseValue();
 		readAccuracy();
 		readCheckpointLevel();
+		readAmmo();
 		Log.d(TAG, "Loading playerInfo from internal memory...[Done]");
+	}
+
+	private void readAmmo()
+	{
+		try
+		{
+			ammo = Integer.parseInt(fileHandler.getDecryptedStringFromFile(FILE_NAME_AMMO));
+			Log.d(TAG, "Set current ammo to " + ammo);
+
+		}
+		catch (NumberFormatException e)
+		{
+			Log.w(TAG, "ammo not readable. Setting ammo to " + DEFAULT_AMMO);
+			checkpointLevel = DEFAULT_AMMO;
+		}
 	}
 
 	private void readAppId()
@@ -415,6 +434,7 @@ public class PlayerInfo
 		fileHandler.writeAndEncryptString(FILE_NAME_ACCUMULATED_WORTH, String.valueOf(accumulatedWorth));
 		fileHandler.writeAndEncryptString(FILE_NAME_CHECKPOINT_LEVEL, String.valueOf(checkpointLevel));
 		fileHandler.writeAndEncryptString(FILE_NAME_APP_ID, appId);
+		fileHandler.writeAndEncryptString(FILE_NAME_AMMO, String.valueOf(ammo));
 		Log.d(TAG, "Saving PlayerInfo...[Done]");
 
 	}
@@ -427,6 +447,11 @@ public class PlayerInfo
 			accumulatedWorth -= amount;
 			apiHandler.checkForSpendingAchievement(accumulatedWorth);
 		}
+	}
+
+	public void payConsumable(int amount)
+	{
+		coins -= amount;
 	}
 
 	public long getCoins()
@@ -628,6 +653,21 @@ public class PlayerInfo
 				checkpointLevel = level;
 			}
 		}
+	}
+
+	public int getAmmo()
+	{
+		return ammo;
+	}
+
+	public void decrementAmmo()
+	{
+		ammo -= 1;
+	}
+
+	public void incrementAmmo()
+	{
+		ammo += 1;
 	}
 
 	public String getAppId()

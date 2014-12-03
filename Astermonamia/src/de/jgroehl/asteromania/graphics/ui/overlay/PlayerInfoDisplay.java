@@ -11,8 +11,11 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.GameObject;
+import de.jgroehl.api.graphics.GraphicsObject;
 import de.jgroehl.asteromania.AsteromaniaMainActivity;
+import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.PlayerInfo;
+import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 
 public class PlayerInfoDisplay extends GameObject
 {
@@ -24,6 +27,7 @@ public class PlayerInfoDisplay extends GameObject
 	private RectF destRect = new RectF();
 	private Paint textPaint = new Paint();
 	private final boolean drawCoinOnly;
+	private final GraphicsObject rocket;
 
 	public PlayerInfoDisplay(Context context, PlayerInfo playerInfo, boolean drawCoinOnly)
 	{
@@ -34,6 +38,13 @@ public class PlayerInfoDisplay extends GameObject
 		coinRect.set(0, 0, coin.getWidth(), coin.getHeight());
 		destRect.top = 0;
 		destRect.left = 0;
+		rocket = new GraphicsObject(0.33f, 0.83f, R.drawable.rocket, 0.1f, context)
+		{
+			@Override
+			public void update(BaseGameHandler gameHandler)
+			{
+			}
+		};
 
 		textPaint.setStyle(Style.FILL);
 
@@ -76,6 +87,12 @@ public class PlayerInfoDisplay extends GameObject
 							+ String.valueOf(playerInfo.getCurrentHighscore())
 							+ (AsteromaniaMainActivity.DEBUG ? " (" + playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth(), 0.11f * c.getHeight(), textPaint);
+
+			if (playerInfo.purchasedItem(PurchaseType.ROCKET_LAUNCHER))
+			{
+				rocket.draw(c);
+				c.drawText("x" + playerInfo.getAmmo(), 0.45f * c.getWidth(), 0.875f * c.getHeight(), textPaint);
+			}
 		}
 	}
 

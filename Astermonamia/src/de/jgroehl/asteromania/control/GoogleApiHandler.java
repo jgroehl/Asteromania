@@ -84,6 +84,9 @@ public class GoogleApiHandler
 			case TRIPLE_SHOT:
 				achievement = context.getResources().getString(R.string.achievement_boom_boom_baby);
 				break;
+			case ROCKET_LAUNCHER:
+				achievement = context.getResources().getString(R.string.achievement_perfect_aim);
+				break;
 			default:
 				return;
 		}

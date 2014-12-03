@@ -16,20 +16,23 @@ public class BuyItemCallback implements EventCallback
 	public enum ItemType
 	{
 
-		HP(1, 2, R.string.lifepoint), DAMAGE(1, 3,
+		HP(1, 2, R.string.lifepoint, false), DAMAGE(1, 3,
 
-		R.string.damage), SPEED(0.1f, 1, R.string.speed), SHOT_SPEED(0.1f, 2, R.string.shot_speed), SHOT_FREQUENCY(
-				0.1f, 2, R.string.shot_frequency), SHIELD_SECONDS(5, 2, R.string.shield);
+		R.string.damage, false), SPEED(0.1f, 1, R.string.speed, false), SHOT_SPEED(0.1f, 2, R.string.shot_speed, false), SHOT_FREQUENCY(
+				0.1f, 2, R.string.shot_frequency, false), SHIELD_SECONDS(5, 2, R.string.shield, true), AMMO(1, 20,
+				R.string.rocket_ammo, true);
 
 		public final float increaseValue;
 		private final int baseCost;
 		private final int textId;
+		private final boolean consumable;
 
-		private ItemType(float increaseValue, int baseCost, int text)
+		private ItemType(float increaseValue, int baseCost, int text, boolean consumable)
 		{
 			this.increaseValue = increaseValue;
 			this.baseCost = baseCost;
 			this.textId = text;
+			this.consumable = consumable;
 		}
 
 		public int getCost(PlayerInfo playerInfo)
@@ -48,6 +51,8 @@ public class BuyItemCallback implements EventCallback
 					return (int) Math.pow((((playerInfo.getShotSpeedFactor() - 1) * 9) + baseCost), 3);
 				case SHIELD_SECONDS:
 					return (int) (baseCost * playerInfo.getLevel());
+				case AMMO:
+					return baseCost;
 				default:
 					return DEFAULT_COST;
 			}
@@ -97,7 +102,10 @@ public class BuyItemCallback implements EventCallback
 			}
 			if (asteromaniaGameHandler.getPlayerInfo().getCoins() >= cost)
 			{
-				asteromaniaGameHandler.getPlayerInfo().addCoins(-cost);
+				if (type.consumable)
+					asteromaniaGameHandler.getPlayerInfo().payConsumable(cost);
+				else
+					asteromaniaGameHandler.getPlayerInfo().addCoins(-cost);
 				asteromaniaGameHandler.getSoundManager().playPayingSound();
 				switch (type)
 				{
@@ -118,6 +126,8 @@ public class BuyItemCallback implements EventCallback
 						break;
 					case SHIELD_SECONDS:
 						asteromaniaGameHandler.getPlayer().addShieldSeconds((int) type.increaseValue);
+					case AMMO:
+						asteromaniaGameHandler.getPlayerInfo().incrementAmmo();
 						break;
 				}
 			}

@@ -46,5 +46,7 @@
     <string name="share">Share</string>
     <string name="facebook_link">https://www.facebook.com/pages/Asteromania/662905770483488</string>
     <string name="share_ad_text">I am playing Asteromania and slowly getting a hang of it.\n Find the game at https://play.google.com/store/apps/details?id=de.jgroehl.asteromania</string>
+    <string name="rocket_launcher">Rocket Launcher</string>
+    <string name="rocket_ammo">Targeted Missile</string>
 
 </resources>

@@ -46,5 +46,7 @@
     <string name="share">Teilen</string>
     <string name="facebook_link">https://www.facebook.com/pages/Asteromania/662905770483488</string>
     <string name="share_ad_text">Ich spiele jetzt Asteromania. Langsam bin ich richtig gut.\n\nDu findest das Spiel unter\nhttps://play.google.com/store/apps/details?id=de.jgroehl.asteromania</string>
+    <string name="rocket_launcher">Raketenwerfer</string>
+    <string name="rocket_ammo">Suchrakete</string>
 
 </resources>
