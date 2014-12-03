@@ -30,6 +30,7 @@
     <string name="shield">Schutzschuld</string>
     <string name="seconds">Sekunden</string>
     <string name="purchase_shield_generator_first">Kaufe zuerst den Schildgenerator.</string>
+    <string name="purchase_rocket_launcher_first">Kaufe zuerst den Raketenwerfer.</string>
     <string name="already_purchased_item">Der Gegenstand wurde bereits gekauft.</string>
     <string name="shield_generator">Schildgenerator</string>
     <string name="double_shot">Doppelschuss</string>

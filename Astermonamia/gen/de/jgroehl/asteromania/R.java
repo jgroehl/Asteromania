@@ -1688,7 +1688,7 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
-        public static final int accuracy=0x7f0b0066;
+        public static final int accuracy=0x7f0b0067;
         public static final int achievement_being_a_tank_=0x7f0b0039;
         public static final int achievement_being_on_a_shopping_binge=0x7f0b0035;
         public static final int achievement_boom_boom_baby=0x7f0b0031;
@@ -1712,12 +1712,12 @@ containing a value of this type.
         public static final int achievement_warmed_up_yet=0x7f0b002a;
         public static final int achievement_welcome_to_value_town_=0x7f0b0034;
         public static final int action_settings=0x7f0b0042;
-        public static final int already_purchased_item=0x7f0b005e;
+        public static final int already_purchased_item=0x7f0b005f;
         public static final int app_id=0x7f0b0028;
         public static final int app_name=0x7f0b0027;
         public static final int back=0x7f0b0051;
         public static final int bonus_damage=0x7f0b0048;
-        public static final int checkpoint=0x7f0b0067;
+        public static final int checkpoint=0x7f0b0068;
         public static final int coin=0x7f0b0043;
         public static final int coins=0x7f0b0044;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
@@ -1811,36 +1811,37 @@ containing a value of this type.
         public static final int common_signin_button_text_long=0x7f0b0025;
         public static final int damage=0x7f0b0052;
         public static final int dmg=0x7f0b0055;
-        public static final int double_shot=0x7f0b0060;
+        public static final int double_shot=0x7f0b0061;
         public static final int dps=0x7f0b005a;
         public static final int event_aliens_killed=0x7f0b0040;
         public static final int event_asteroids_destroyed=0x7f0b0041;
-        public static final int facebook_link=0x7f0b006c;
+        public static final int facebook_link=0x7f0b006d;
         public static final int game_over=0x7f0b0056;
-        public static final int get_bonus_coins=0x7f0b006a;
-        public static final int highscore_not_commited=0x7f0b0065;
+        public static final int get_bonus_coins=0x7f0b006b;
+        public static final int highscore_not_commited=0x7f0b0066;
         public static final int hp=0x7f0b0054;
         public static final int leaderboard_highscore=0x7f0b003f;
         public static final int level=0x7f0b0059;
         public static final int lifepoint=0x7f0b0047;
         public static final int lifepoints=0x7f0b0046;
         public static final int new_highscore=0x7f0b0058;
-        public static final int no_connection_to_play_services=0x7f0b0064;
+        public static final int no_connection_to_play_services=0x7f0b0065;
         public static final int not_enough_gold=0x7f0b0053;
-        public static final int play=0x7f0b0068;
-        public static final int purchase_doubleshot_first=0x7f0b0062;
+        public static final int play=0x7f0b0069;
+        public static final int purchase_doubleshot_first=0x7f0b0063;
+        public static final int purchase_rocket_launcher_first=0x7f0b005e;
         public static final int purchase_shield_generator_first=0x7f0b005d;
         public static final int quit=0x7f0b0050;
-        public static final int rocket_ammo=0x7f0b006f;
-        public static final int rocket_launcher=0x7f0b006e;
+        public static final int rocket_ammo=0x7f0b0070;
+        public static final int rocket_launcher=0x7f0b006f;
         public static final int score=0x7f0b004d;
         public static final int seconds=0x7f0b005c;
-        public static final int share=0x7f0b006b;
-        public static final int share_ad_text=0x7f0b006d;
-        public static final int share_with_friend=0x7f0b0069;
+        public static final int share=0x7f0b006c;
+        public static final int share_ad_text=0x7f0b006e;
+        public static final int share_with_friend=0x7f0b006a;
         public static final int shield=0x7f0b005b;
-        public static final int shield_generator=0x7f0b005f;
-        public static final int ship_value=0x7f0b0063;
+        public static final int shield_generator=0x7f0b0060;
+        public static final int ship_value=0x7f0b0064;
         public static final int shop=0x7f0b004f;
         public static final int shot_frequency=0x7f0b004b;
         public static final int shot_speed=0x7f0b004a;
@@ -1848,7 +1849,7 @@ containing a value of this type.
         public static final int speed=0x7f0b0049;
         public static final int start=0x7f0b004c;
         public static final int statistics=0x7f0b004e;
-        public static final int triple_shot=0x7f0b0061;
+        public static final int triple_shot=0x7f0b0062;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

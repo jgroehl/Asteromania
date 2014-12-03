@@ -7,6 +7,7 @@ import de.jgroehl.api.control.interfaces.EventCallback;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.control.PlayerInfo;
+import de.jgroehl.asteromania.control.callbacks.PurchaseItemCallback.PurchaseType;
 
 public class BuyItemCallback implements EventCallback
 {
@@ -96,6 +97,18 @@ public class BuyItemCallback implements EventCallback
 							asteromaniaGameHandler.getContext(),
 							asteromaniaGameHandler.getContext().getResources()
 									.getString(de.jgroehl.asteromania.R.string.purchase_shield_generator_first),
+							Toast.LENGTH_SHORT).show();
+					return;
+				}
+			}
+			else if (type == ItemType.AMMO)
+			{
+				if (!asteromaniaGameHandler.getPlayerInfo().purchasedItem(PurchaseType.ROCKET_LAUNCHER))
+				{
+					Toast.makeText(
+							asteromaniaGameHandler.getContext(),
+							asteromaniaGameHandler.getContext().getResources()
+									.getString(de.jgroehl.asteromania.R.string.purchase_rocket_launcher_first),
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
