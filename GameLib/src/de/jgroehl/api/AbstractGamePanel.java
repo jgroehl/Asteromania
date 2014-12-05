@@ -3,14 +3,22 @@ package de.jgroehl.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import de.jgroehl.api.activities.AbstractSimpleActivity;
+import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.interfaces.KeyEventListener;
+import de.jgroehl.api.graphics.interfaces.Drawable;
+import de.jgroehl.api.graphics.interfaces.Updatable;
 
 /**
  *
@@ -20,45 +28,93 @@ import de.jgroehl.api.control.interfaces.KeyEventListener;
 public abstract class AbstractGamePanel extends SurfaceView implements SurfaceHolder.Callback
 {
 
-	private static final String TAG = null;
+	private static final String TAG = AbstractGamePanel.class.getSimpleName();
+	private final Paint backgroundPaint = new Paint();
 	private final AbstractSimpleActivity abstractMainActivity;
 	private final List<KeyEventListener> keyEventListener = new ArrayList<KeyEventListener>();
 	private GameThread thread;
+	private final BaseGameHandler gameHandler;
 
-	public AbstractGamePanel(Context context, AbstractSimpleActivity abstractMainActivity)
+	public AbstractGamePanel(Context context, AbstractSimpleActivity abstractMainActivity, BaseGameHandler gameHandler)
 	{
 		super(context);
 
+		this.gameHandler = gameHandler;
 		this.abstractMainActivity = abstractMainActivity;
 		getHolder().addCallback(this);
 
 		setFocusable(true);
 		setDrawingCacheEnabled(true);
+
+		backgroundPaint.setStyle(Paint.Style.FILL);
+		backgroundPaint.setColor(Color.BLACK);
+	}
+
+	public BaseGameHandler getBaseGameHandler()
+	{
+		return gameHandler;
 	}
 
 	/**
 	 * Updates the game state.
 	 */
-	public abstract void updateGameState();
+	public void updateGameState()
+	{
+		for (Updatable u : gameHandler.getAllUpdatableObjects())
+		{
+			u.update(gameHandler);
+		}
+	}
 
 	/**
 	 * Displays the game state onto the given canvas object.
 	 * 
 	 * @param c
 	 */
-	public abstract void displayGameState(Canvas c);
+	public void displayGameState(Canvas c)
+	{
+		if (c != null)
+		{
+
+			clearScreen(c);
+
+			for (Drawable d : gameHandler.getAllDrawableObjects())
+			{
+				d.draw(c);
+			}
+
+		}
+		else
+		{
+			Log.e(TAG, "Severe error displaying game state: Canvas was null");
+		}
+	}
 
 	/**
 	 * Does updates necessary before the updateGameState() method is called.
 	 */
-	public abstract void update();
+	public void update()
+	{
+		gameHandler.update();
+	}
+
+	@SuppressLint("ClickableViewAccessibility")
+	@Override
+	public boolean onTouchEvent(MotionEvent event)
+	{
+		gameHandler.handleEvent(event, getContext(), getWidth(), getHeight());
+		return super.onTouchEvent(event);
+	}
 
 	/**
 	 * Initializes the Game Objects.
 	 */
 	public abstract void initializeGameObjects();
 
-	public abstract boolean gameObjectsInitialized();
+	public boolean gameObjectsInitialized()
+	{
+		return gameHandler.gameObjectsInitialized();
+	}
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event)
@@ -202,4 +258,8 @@ public abstract class AbstractGamePanel extends SurfaceView implements SurfaceHo
 		Log.d(TAG, "Try stopping application...[Done]");
 	}
 
+	private void clearScreen(Canvas c)
+	{
+		c.drawRect(new Rect(0, 0, c.getWidth(), c.getHeight()), backgroundPaint);
+	}
 }

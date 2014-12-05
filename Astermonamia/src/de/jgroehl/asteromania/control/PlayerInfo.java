@@ -1,6 +1,7 @@
 package de.jgroehl.asteromania.control;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,7 +56,7 @@ public class PlayerInfo
 
 	private static final long MAX_BONUS_FACTOR = 10;
 
-	private static final int CHECKPOINT_LEVEL_INTERVAL = 10;
+	private static final int CHECKPOINT_LEVEL_INTERVAL = 5;
 
 	private final Context context;
 	private final FileHandler fileHandler;
@@ -222,9 +223,15 @@ public class PlayerInfo
 		{
 			Log.d(TAG, "Error retrieving purchase files. Try contacting Google Play Services to get Purchases.");
 			purchaseList.clear();
-			// TODO: Contact Google Play Services to check for already purchased
-			// items
-			Log.w(TAG, "Google services not implemented yet. No purchased items found");
+			if (AsteromaniaMainActivity.DEBUG)
+			{
+				purchaseList.addAll(Arrays.asList(PurchaseType.values()));
+				Log.d(TAG, "Debug mode. All Purchases enabled.");
+			}
+			else
+			{
+				Log.w(TAG, "Google services not implemented yet. No purchased items found");
+			}
 		}
 		else
 		{

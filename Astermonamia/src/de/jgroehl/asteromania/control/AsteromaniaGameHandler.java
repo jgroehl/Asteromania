@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import de.jgroehl.api.AbstractGamePanel;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.graphics.GameObject;
@@ -44,10 +43,9 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 	private final List<BaseEnemy> enemies = new ArrayList<BaseEnemy>();
 
 	public AsteromaniaGameHandler(GameState state, SoundManager soundManager, Context context, FileHandler fileHandler,
-			SensorHandler sensorHandler, Transition transition, Highscore highscore, GoogleApiHandler apiHandler,
-			AbstractGamePanel gamePanel)
+			SensorHandler sensorHandler, Transition transition, Highscore highscore, GoogleApiHandler apiHandler)
 	{
-		super(state, context, gamePanel);
+		super(state, context);
 		this.highscore = highscore;
 		this.soundManager = soundManager;
 		this.transition = transition;
@@ -72,7 +70,8 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 				{
 					transition.initialize();
 					playerInfo.incerementBonusFactor();
-					playerInfo.addCoins(playerInfo.getLevel());
+					if (playerInfo.getCurrentHighscore() > 0)
+						playerInfo.addCoins(playerInfo.getLevel());
 					playerInfo.nextLevel(this);
 				}
 				if (transition.isFinished())

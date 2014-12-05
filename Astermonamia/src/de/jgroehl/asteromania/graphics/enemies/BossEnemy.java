@@ -15,9 +15,9 @@ public class BossEnemy extends BaseEnemy
 
 	private static final float BOSS_ENEMY_WIDTH = 0.12f;
 	private static final float BOSS_SPEED = 0.005f;
-	private static final int BOSS_SHOT_RATE = 780;
-	private static final float BOSS_SHOT_SPEED = 0.019f;
-	private static final int BOSS_LIFEPOINTS = 5;
+	private static final int BOSS_SHOT_RATE = 750;
+	private static final float BOSS_SHOT_SPEED = 0.02f;
+	private static final int BOSS_LIFEPOINTS = 7;
 	private static final int BOSS_DAMAGE = 3;
 
 	public BossEnemy(float xPosition, float yPosition, int graphicsId, float relativeWidth, int frameCount,

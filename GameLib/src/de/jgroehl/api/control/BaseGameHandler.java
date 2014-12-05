@@ -8,7 +8,6 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
-import de.jgroehl.api.AbstractGamePanel;
 import de.jgroehl.api.control.interfaces.EventHandler;
 import de.jgroehl.api.control.interfaces.GraphicsHandler;
 import de.jgroehl.api.graphics.GameObject;
@@ -37,13 +36,10 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler
 
 	private final Context context;
 
-	private final AbstractGamePanel gamePanel;
-
-	public BaseGameHandler(GameState state, Context context, AbstractGamePanel gamePanel)
+	public BaseGameHandler(GameState state, Context context)
 	{
 		this.context = context;
 		this.state = state;
-		this.gamePanel = gamePanel;
 		for (GameState s : GameState.values())
 		{
 			gameObjects.put(s, new ArrayList<GameObject>());
@@ -153,11 +149,6 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler
 				c.performAction(this);
 			}
 		}
-	}
-
-	public AbstractGamePanel getGamePanel()
-	{
-		return gamePanel;
 	}
 
 	public Context getContext()

@@ -15,7 +15,7 @@ public class NormalEnemy extends BaseEnemy
 	private static final float NORMAL_SPEED = 0.01f;
 	private static final int NORMAL_SHOT_RATE = 1500;
 	private static final float NORMAL_SHOT_SPEED = 0.015f;
-	private static final int NORMAL_LIFEPOINTS = 3;
+	private static final int NORMAL_LIFEPOINTS = 4;
 	private static final float NORMAL_DAMAGE = 1;
 
 	private NormalEnemy(float xPosition, float yPosition, int graphicsId, float relativeWidth, int frameCount,
@@ -30,7 +30,7 @@ public class NormalEnemy extends BaseEnemy
 	{
 		return new NormalEnemy((float) Math.random(), 0.2f, de.jgroehl.asteromania.R.drawable.enemy,
 				NORMAL_ENEMY_WIDTH, 15, 100, context, NORMAL_LIFEPOINTS * (level + 1), NORMAL_SHOT_SPEED,
-				NORMAL_SHOT_RATE, NORMAL_SPEED, Math.round(NORMAL_DAMAGE * Math.sqrt(2 * level)));
+				NORMAL_SHOT_RATE, NORMAL_SPEED, Math.round(NORMAL_DAMAGE * (level + 2) / 3));
 	}
 
 	@Override
