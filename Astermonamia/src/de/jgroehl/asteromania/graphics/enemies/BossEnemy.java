@@ -18,7 +18,7 @@ public class BossEnemy extends BaseEnemy
 	private static final int BOSS_SHOT_RATE = 750;
 	private static final float BOSS_SHOT_SPEED = 0.02f;
 	private static final int BOSS_LIFEPOINTS = 7;
-	private static final int BOSS_DAMAGE = 3;
+	private static final int BOSS_DAMAGE = 4;
 
 	public BossEnemy(float xPosition, float yPosition, int graphicsId, float relativeWidth, int frameCount,
 			int animationPeriod, Context context, int lifepoints, float shotSpeed, int basicShootFrequency,
@@ -32,7 +32,7 @@ public class BossEnemy extends BaseEnemy
 	{
 		return new BossEnemy((float) Math.random(), 0.2f, de.jgroehl.asteromania.R.drawable.enemy2, BOSS_ENEMY_WIDTH,
 				6, 100, context, BOSS_LIFEPOINTS * (level + 1), BOSS_SHOT_SPEED, BOSS_SHOT_RATE, BOSS_SPEED,
-				BOSS_DAMAGE * level);
+				BOSS_DAMAGE * (level + 1) / 2);
 	}
 
 	@Override
