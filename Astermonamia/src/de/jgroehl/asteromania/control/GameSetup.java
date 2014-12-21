@@ -64,7 +64,7 @@ public class GameSetup
 	{
 		gameHandler.add(
 				new Button(gameHandler.getContext().getResources().getString(de.jgroehl.asteromania.R.string.back),
-						0.53f, 0.75f, 0.37f, 0.2f, new EventCallback()
+						0.1f, 0.75f, 0.37f, 0.2f, new EventCallback()
 						{
 
 							@Override
@@ -81,7 +81,7 @@ public class GameSetup
 		gameHandler.add(
 				new Button(
 						BitmapFactory.decodeResource(gameHandler.getContext().getResources(), R.drawable.score_icon),
-						0.1f, 0.75f, 0.2f, 0.2f, new ShowLeaderboardCallback(), gameHandler.getContext()),
+						0.53f, 0.75f, 0.2f, 0.2f, new ShowLeaderboardCallback(), gameHandler.getContext()),
 				GameState.GAME_OVER);
 
 		gameHandler.add(
@@ -90,7 +90,7 @@ public class GameSetup
 
 		gameHandler.add(
 				new Button(BitmapFactory.decodeResource(gameHandler.getContext().getResources(),
-						R.drawable.friend_request), 0.35f, 0.75f, 0.13f, 0.2f, new SendMessageCallback(new GetText()
+						R.drawable.friend_request), 0.78f, 0.75f, 0.13f, 0.2f, new SendMessageCallback(new GetText()
 				{
 					@Override
 					public String getText()
