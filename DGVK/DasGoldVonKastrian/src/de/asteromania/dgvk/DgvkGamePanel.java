@@ -36,10 +36,5 @@ public class DgvkGamePanel extends AbstractGamePanel
 				gameHandler.setState(GameState.MAIN);
 			}
 		}, getContext()), GameState.STARTING_SCREEN);
-
-		Armor armor = new Armor(17);
-
-		Toast.makeText(getContext(), armor.toString(), Toast.LENGTH_LONG).show();
-
 	}
 }
