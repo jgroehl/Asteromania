@@ -1,4 +1,4 @@
-package de.asteromania.dgvk;
+package de.asteromania.dgvk.xmlBase;
 
 public interface XmlExportable
 {

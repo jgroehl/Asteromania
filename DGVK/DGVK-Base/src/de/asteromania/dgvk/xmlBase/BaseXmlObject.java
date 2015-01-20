@@ -1,7 +1,9 @@
-package de.asteromania.dgvk;
+package de.asteromania.dgvk.xmlBase;
 
 public abstract class BaseXmlObject implements XmlExportable
 {
+
+	protected static final String XML_PREAMBLE = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 
 	/**
 	 * This constructor may be called to initialize a {@link BaseXmlObject}
@@ -26,6 +28,8 @@ public abstract class BaseXmlObject implements XmlExportable
 	{
 		initialize(xml);
 	};
+
+	protected abstract String getXmlTag();
 
 	protected abstract void initialize(String xml);
 
