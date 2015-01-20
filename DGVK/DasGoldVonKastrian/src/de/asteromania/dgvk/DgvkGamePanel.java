@@ -1,8 +1,6 @@
 package de.asteromania.dgvk;
 
 import android.content.Context;
-import android.widget.Toast;
-import de.asteromania.dgvk.domain.Armor;
 import de.jgroehl.api.AbstractGamePanel;
 import de.jgroehl.api.activities.AbstractSimpleActivity;
 import de.jgroehl.api.control.BaseGameHandler;

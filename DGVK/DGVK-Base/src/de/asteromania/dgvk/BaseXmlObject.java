@@ -1,6 +1,6 @@
 package de.asteromania.dgvk;
 
-public abstract class BaseXmlObject
+public abstract class BaseXmlObject implements XmlExportable
 {
 
 	/**
@@ -26,8 +26,6 @@ public abstract class BaseXmlObject
 	{
 		initialize(xml);
 	};
-
-	public abstract String toXml();
 
 	protected abstract void initialize(String xml);
 
