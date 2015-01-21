@@ -3,6 +3,7 @@
 	<name>DGVK-Server</name>
 	<comment></comment>
 	<projects>
+		<project>DGVK-Base</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
