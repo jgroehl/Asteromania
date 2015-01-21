@@ -8,7 +8,7 @@
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="de.asteromania.dgvk" />
+        android:targetPackage="de.asteromania.dgvk.test" />
 
     <application
         android:icon="@drawable/ic_launcher"

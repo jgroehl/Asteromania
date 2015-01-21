@@ -13,19 +13,11 @@ public class ScoreDtoTest extends AndroidTestCase
 		assertEquals(testScore, scoreDto.getScore());
 	}
 
-	public void testScoreDtoFullXmlConversion()
+	public void testScoreDtoXmlConversion()
 	{
 		ScoreDto scoreDto = new ScoreDto(testScore);
-		String xml = scoreDto.toFullXml();
-		ScoreDto scoreDto2 = new ScoreDto(xml);
-		assertEquals(testScore, scoreDto2.getScore());
-	}
-
-	public void testScoreDtoBodyXmlConversion()
-	{
-		ScoreDto scoreDto = new ScoreDto(testScore);
-		String xml = scoreDto.toXmlBody();
-		ScoreDto scoreDto2 = new ScoreDto(xml);
+		String xml = scoreDto.toXml();
+		ScoreDto scoreDto2 = ScoreDto.fromXml(xml);
 		assertEquals(testScore, scoreDto2.getScore());
 	}
 
