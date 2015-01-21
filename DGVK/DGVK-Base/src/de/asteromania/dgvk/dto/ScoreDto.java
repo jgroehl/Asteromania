@@ -1,23 +1,18 @@
 package de.asteromania.dgvk.dto;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 
-import android.util.Log;
-import android.util.Xml;
-import de.asteromania.dgvk.xmlBase.BaseXmlObject;
+import de.asteromania.dgvk.xmlBase.XmlExportable;
 
-public class ScoreDto extends BaseXmlObject
+@Root(name = "score")
+public class ScoreDto implements XmlExportable
 {
-	private static final String XML_TAG = "score";
-
-	private static final String TAG = ScoreDto.class.getSimpleName();
-
-	private static final long DEFAULT_SCORE = 0;
-
+	@Element
 	private long score;
 
 	public ScoreDto(long score)
@@ -25,66 +20,43 @@ public class ScoreDto extends BaseXmlObject
 		this.score = score;
 	}
 
-	public ScoreDto(String xml)
+	@Deprecated
+	ScoreDto()
 	{
-		super(xml);
+		// Needed for SimpleXml-Framework
+		this(0);
 	}
 
-	@Override
-	public String toFullXml()
+	public static ScoreDto fromXml(String xml)
 	{
-		return XML_PREAMBLE + toXmlBody();
-	}
-
-	@Override
-	public String toXmlBody()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("<" + XML_TAG + ">");
-		sb.append(score);
-		sb.append("</" + XML_TAG + ">");
-		return sb.toString();
-	}
-
-	@Override
-	protected String getXmlTag()
-	{
-		return XML_TAG;
-	}
-
-	@Override
-	protected void initialize(String xml)
-	{
+		Serializer persister = new Persister();
 		try
 		{
-			XmlPullParser parser = Xml.newPullParser();
-			parser.setInput(new ByteArrayInputStream(xml.getBytes()), null);
-			parser.nextTag();
-			parser.require(XmlPullParser.START_TAG, null, XML_TAG);
-					if (parser.next() == XmlPullParser.TEXT)
-					{
-						score = Long.parseLong(parser.getText());
-					}
-					else 
-					{
-						score = DEFAULT_SCORE;
-					}
+			return persister.read(ScoreDto.class, xml);
 		}
-		catch (XmlPullParserException e)
+		catch (Exception e)
 		{
-			Log.w(TAG, "Could not parse xml to create ScoreDto.");
-			setDefault();
-		}
-		catch (IOException e)
-		{
-			Log.w(TAG, "Could not parse xml to create ScoreDto.");
-			setDefault();
+			e.printStackTrace();
+			return null;
 		}
 	}
 
-	private void setDefault()
+	@Override
+	public String toXml()
 	{
-		score = DEFAULT_SCORE;
+		Serializer persister = new Persister();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try
+		{
+			persister.write(this, baos);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return baos.toString();
+
 	}
 
 	public long getScore()
