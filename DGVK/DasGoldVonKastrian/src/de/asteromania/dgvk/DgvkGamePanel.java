@@ -1,10 +1,7 @@
 package de.asteromania.dgvk;
 
-import java.util.Random;
-
 import android.content.Context;
-import android.util.Log;
-import de.asteromania.dgvk.dto.ScoreDto;
+import android.widget.Toast;
 import de.jgroehl.api.AbstractGamePanel;
 import de.jgroehl.api.activities.AbstractSimpleActivity;
 import de.jgroehl.api.control.BaseGameHandler;
@@ -13,12 +10,9 @@ import de.jgroehl.api.control.interfaces.EventCallback;
 import de.jgroehl.api.graphics.GraphicsObject;
 import de.jgroehl.api.graphics.SimpleGraphicsObject;
 import de.jgroehl.api.graphics.ui.Button;
-import de.jgroehl.api.net.HttpPostTask;
 
 public class DgvkGamePanel extends AbstractGamePanel
 {
-
-	private static final String TAG = DgvkGamePanel.class.getSimpleName();
 
 	public DgvkGamePanel(Context context, AbstractSimpleActivity abstractMainActivity, BaseGameHandler gameHandler)
 	{
@@ -38,9 +32,7 @@ public class DgvkGamePanel extends AbstractGamePanel
 			@Override
 			public void action(BaseGameHandler gameHandler)
 			{
-				Log.i(TAG, "Starting HttpPostRequest...");
-				new HttpPostTask("http://192.168.0.2:8080/DGVK-Server/rest/score", new ScoreDto(new Random(
-						System.currentTimeMillis()).nextLong()).toXml()).execute();
+				Toast.makeText(getContext(), "Coming soon!", Toast.LENGTH_LONG).show();
 			}
 		}, getContext()), GameState.STARTING_SCREEN);
 	}
