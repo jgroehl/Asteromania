@@ -1,5 +1,7 @@
 package de.asteromania.dgvk;
 
+import java.util.Random;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -10,6 +12,7 @@ import android.content.Context;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
+import de.asteromania.dgvk.dto.ScoreDto;
 import de.jgroehl.api.AbstractGamePanel;
 import de.jgroehl.api.activities.AbstractSimpleActivity;
 import de.jgroehl.api.control.BaseGameHandler;
@@ -43,12 +46,11 @@ public class DgvkGamePanel extends AbstractGamePanel
 			public void action(BaseGameHandler gameHandler)
 			{
 				Log.i(TAG, "Starting HttpPostRequest...");
-				// new
-				// DoHttpPostTask().execute("http://192.168.0.2:8080/DGVK-Server/rest/score",
-				// new ScoreDto(new Random(
-				// System.currentTimeMillis()).nextLong()).toXml());
+				new DoHttpPostTask().execute("http://192.168.0.2:8080/DGVK-Server/rest/score", new ScoreDto(new Random(
+						System.currentTimeMillis()).nextLong()).toXml());
 
-				new DoHttpGetTask().execute("http://httpbin.org/ip");
+				// new
+				// DoHttpGetTask().execute("http://192.168.0.2:8080/DGVK-Server/rest/score");
 			}
 		}, getContext()), GameState.STARTING_SCREEN);
 	}
@@ -90,6 +92,7 @@ public class DgvkGamePanel extends AbstractGamePanel
 			{
 				AndroidHttpClient client = AndroidHttpClient.newInstance("androidClient", getContext());
 				HttpPost post = new HttpPost(params[0]);
+				post.setHeader("content-type", "application/xml");
 				post.setEntity(new StringEntity(params[1]));
 				return client.execute(post).getStatusLine().getStatusCode();
 			}
