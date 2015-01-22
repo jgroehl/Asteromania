@@ -3,6 +3,7 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test.resources"/>
         <dependent-module archiveName="DGVK-Base.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/DGVK-Base/DGVK-Base">
             <dependency-type>uses</dependency-type>
         </dependent-module>

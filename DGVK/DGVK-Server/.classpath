@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="test.resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_25">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -27,6 +28,8 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jettison-1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsr311-api-1.1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/simple-xml-2.7.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/postgresql-9.3-1102.jdbc41.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-io-2.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DGVK-Base"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/junit.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>

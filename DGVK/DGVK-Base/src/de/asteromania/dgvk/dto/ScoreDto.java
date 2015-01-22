@@ -12,7 +12,7 @@ import de.asteromania.dgvk.xmlBase.XmlExportable;
 @Root(name = "score")
 public class ScoreDto implements XmlExportable
 {
-	@Element
+	@Element(name = "value")
 	private long score;
 
 	public ScoreDto(long score)
@@ -23,7 +23,6 @@ public class ScoreDto implements XmlExportable
 	@Deprecated
 	ScoreDto()
 	{
-		// Needed for SimpleXml-Framework
 		this(0);
 	}
 
@@ -56,7 +55,6 @@ public class ScoreDto implements XmlExportable
 			return null;
 		}
 		return baos.toString();
-
 	}
 
 	public long getScore()
