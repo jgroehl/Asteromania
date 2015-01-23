@@ -12,17 +12,12 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
-
-import de.asteromania.dgvk.dao.ScoreDao;
-import de.asteromania.dgvk.dto.ScoreDto;
 
 public class DaoDatabaseTests
 {
 
 	private static final String TESTDB = "testdb";
 	private static Connection connection;
-	private ScoreDao scoreDao = new ScoreDao();
 
 	@BeforeClass
 	public static void setupClass() throws SQLException
@@ -39,7 +34,6 @@ public class DaoDatabaseTests
 	{
 		connectToDatabase(TESTDB);
 		executeScript("create.sql", connection);
-		scoreDao.setConnection(connection);
 	}
 
 	private static void connectToDatabase(String databaseName)
@@ -66,18 +60,6 @@ public class DaoDatabaseTests
 		}
 
 		Assert.assertNotNull("Connection not successfully established.", connection);
-	}
-
-	@Test
-	public void testScoreDao() throws SQLException
-	{
-		final long testScore = 17;
-		ScoreDto scoreDto = new ScoreDto(testScore);
-		scoreDao.addScore(scoreDto);
-
-		ScoreDto retrievedScore = scoreDao.getScores().getScores().get(0);
-
-		Assert.assertEquals(scoreDto.getScore(), retrievedScore.getScore());
 	}
 
 	@After

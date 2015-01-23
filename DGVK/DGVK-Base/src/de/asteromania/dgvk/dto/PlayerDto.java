@@ -3,23 +3,29 @@ package de.asteromania.dgvk.dto;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import de.asteromania.dgvk.dto.authentication.UserDto;
+
 @Root(name = "player")
-public class PlayerDto
+public class PlayerDto extends BaseDto<PlayerDto>
 {
-	@Element(name = "stats")
-	private BaseStatsDto baseStats;
+	@Element
+	private UserDto associatedUser;
 
 	@Element
-	private int currentHealthPoints;
+	private StatsDto stats;
 
-	public PlayerDto(BaseStatsDto stats, int currentHealthPoints)
+	public PlayerDto(StatsDto stats)
 	{
-		this.baseStats = stats;
-		this.currentHealthPoints = currentHealthPoints;
+		this.stats = stats;
 	}
 
-	public BaseStatsDto getBaseStats()
+	public StatsDto getStats()
 	{
-		return baseStats;
+		return stats;
+	}
+
+	public UserDto getAssociatedUser()
+	{
+		return associatedUser;
 	}
 }
