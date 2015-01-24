@@ -1,1 +1,1 @@
-DROP TABLE Score;
+DROP TABLE users;

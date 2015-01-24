@@ -12,12 +12,17 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
+
+import de.asteromania.dgvk.dao.UserDao;
+import de.asteromania.dgvk.dto.authentication.UserDto;
 
 public class DaoDatabaseTests
 {
 
 	private static final String TESTDB = "testdb";
 	private static Connection connection;
+	private final UserDao userDao = new UserDao();
 
 	@BeforeClass
 	public static void setupClass() throws SQLException
@@ -34,6 +39,7 @@ public class DaoDatabaseTests
 	{
 		connectToDatabase(TESTDB);
 		executeScript("create.sql", connection);
+		userDao.setConnection(connection);
 	}
 
 	private static void connectToDatabase(String databaseName)
@@ -60,6 +66,27 @@ public class DaoDatabaseTests
 		}
 
 		Assert.assertNotNull("Connection not successfully established.", connection);
+	}
+
+	@Test
+	public void testUserDao() throws SQLException
+	{
+		UserDto testUser = new UserDto("testUsername", "testPassword", "testRole");
+
+		userDao.addUser(testUser);
+
+		UserDto retrievedUser = userDao.getUser(testUser.getUsername(), testUser.getPassword());
+
+		Assert.assertNotNull(retrievedUser);
+		Assert.assertEquals(testUser.getUsername(), retrievedUser.getUsername());
+		Assert.assertEquals(testUser.getPassword(), retrievedUser.getPassword());
+		Assert.assertEquals(testUser.getRole(), retrievedUser.getRole());
+
+		UserDto nullUser = userDao.getUser("notPresentUsername", "invalidPassword");
+		Assert.assertNull(nullUser);
+		
+		UserDto invalidPasswordUser = userDao.getUser(testUser.getUsername(), "invalidPassword");
+		Assert.assertNull(invalidPasswordUser);
 	}
 
 	@After

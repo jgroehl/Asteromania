@@ -46,4 +46,18 @@ public class UserDto extends BaseDto<UserDto>
 		return password;
 	}
 
+	public String getRole()
+	{
+		return role;
+	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (o instanceof UserDto)
+			return username.equals(((UserDto) o).getUsername());
+		else
+			return super.equals(o);
+	}
+
 }

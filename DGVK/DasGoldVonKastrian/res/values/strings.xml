@@ -1,5 +1,9 @@
 <resources>
 
-    <string name="app_name">DasGoldVonKastrian</string>
+    <string name="app_name">Das Gold Von Kastrian</string>
+    <string name="username">Nutzername</string>
+    <string name="password">Passwort</string>
+    <string name="login">Login</string>
+    <string name="invalid_credentials">Ungültige Nutzerdaten</string>
 
 </resources>

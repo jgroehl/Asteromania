@@ -4,7 +4,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,6 +24,13 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="de.asteromania.dgvk.activities.LoginActivity" >
+            <intent-filter>
+                <action android:name="de.asteromania.dgvk.LOGIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
