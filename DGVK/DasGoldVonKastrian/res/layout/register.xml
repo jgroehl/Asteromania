@@ -16,7 +16,7 @@
             android:padding="10dip" >
 
             <TextView
-                android:id="@+id/lblLoginError"
+                android:id="@+id/lblRegError"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#FF3300"
@@ -25,10 +25,11 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username" />
+                android:text="@string/username"
+                android:textColor="#372c24" />
 
             <EditText
-                android:id="@+id/edtUsername"
+                android:id="@+id/edtRegUsername"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dip"
@@ -39,10 +40,25 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/password" />
+                android:text="@string/password"
+                android:textColor="#372c24" />
 
             <EditText
-                android:id="@+id/edtPassword"
+                android:id="@+id/edtRegPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:inputType="textPassword"
+                android:singleLine="true" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/edtRegPasswordRep"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
@@ -53,20 +69,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
-                android:onClick="login"
-                android:text="@string/login" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/register_account" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:onClick="switchToRegister"
+                android:onClick="register"
                 android:text="@string/register" />
         </LinearLayout>
     </RelativeLayout>

@@ -1,7 +1,9 @@
 package de.jgroehl.api.net;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.util.EntityUtils;
 
 import android.net.http.AndroidHttpClient;
@@ -35,8 +37,11 @@ public class HttpPostTask extends AbstractHttpTask
 		}
 		catch (Exception e)
 		{
-			Log.e(TAG, "Error on HttpPost:", e);
-			return new HttpResult(0, null);
+			Log.e(TAG, "Error on HttpPost: " + e.getLocalizedMessage());
+			if (e instanceof ConnectTimeoutException)
+				return new HttpResult(HttpStatus.SC_GATEWAY_TIMEOUT, null);
+			else
+				return new HttpResult(0, null);
 		}
 		finally
 		{

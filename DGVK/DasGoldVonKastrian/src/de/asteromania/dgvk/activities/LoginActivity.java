@@ -12,6 +12,8 @@ import de.asteromania.dgvk.R;
 import de.asteromania.dgvk.control.UserDataHandler;
 import de.asteromania.dgvk.dto.authentication.UserDto;
 import de.asteromania.dgvk.net.DgvkUrlProperties;
+import de.asteromania.dgvk.properties.IntentHandler;
+import de.asteromania.dgvk.properties.IntentHandler.Intent;
 import de.jgroehl.api.crypto.CryptoHandler;
 import de.jgroehl.api.net.AbstractHttpTask.OnResponseCallback;
 import de.jgroehl.api.net.HttpPostTask;
@@ -103,9 +105,13 @@ public class LoginActivity extends Activity
 		}
 	}
 
+	public void switchToRegister(View view)
+	{
+		IntentHandler.startIntent(Intent.REGISTER, this);
+	}
+
 	private void showInternalError()
 	{
-		Log.d(TAG, "Show internal Error called");
 		errorText.setVisibility(TextView.VISIBLE);
 		errorText.setText(getString(R.string.internal_error));
 	}

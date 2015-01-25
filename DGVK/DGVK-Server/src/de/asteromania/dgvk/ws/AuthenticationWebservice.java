@@ -29,8 +29,11 @@ public class AuthenticationWebservice
 
 	@POST
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response addUser(String userDtoXml)
+	public Response addUser(@HeaderParam("user-agent") String userAgent, String userDtoXml)
 	{
+		if (!CLIENT_NAME.equals(userAgent))
+			return Response.status(Status.FORBIDDEN).build();
+
 		System.out.println("POST user");
 		UserDto user = new UserDto("", "");
 		try
@@ -40,14 +43,22 @@ public class AuthenticationWebservice
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return Response.serverError().build();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 
 		try
 		{
 			UserDto authUser = new UserDto(user.getUsername(), HashUtils.hashString(
 					user.getPassword() + user.getUsername() + SALT_SECRET, HASH_COUNT), CLIENT_ROLE);
+
+			if (userDao.existsUser(authUser.getUsername()))
+			{
+				System.out.println("Username already in use. Sending 400.");
+				return Response.status(Status.BAD_REQUEST).build();
+			}
+
 			userDao.addUser(authUser);
+			System.out.println("Adding user " + authUser.getUsername() + " to Database.");
 			return Response.status(Status.OK).build();
 		}
 		catch (Exception e)
@@ -61,7 +72,7 @@ public class AuthenticationWebservice
 	@Path("authenticate")
 	@Produces(MediaType.APPLICATION_XML)
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response getScore(@HeaderParam("user-agent") String userAgent, String userDtoXml)
+	public Response authenticateUser(@HeaderParam("user-agent") String userAgent, String userDtoXml)
 	{
 		System.out.println("POST user/authenticate");
 
@@ -79,8 +90,6 @@ public class AuthenticationWebservice
 			return Response.serverError().build();
 		}
 
-		System.out.println("Trying to authenticate user " + user.getUsername());
-
 		try
 		{
 			UserDto dbUser = userDao.getUser(user.getUsername(),
@@ -93,7 +102,8 @@ public class AuthenticationWebservice
 			}
 			else
 			{
-				System.out.println("Sending " + Status.FORBIDDEN);
+				System.out.println("Authentication of user " + user.getUsername() + "failed. Sending "
+						+ Status.FORBIDDEN);
 				return Response.status(Status.FORBIDDEN).build();
 			}
 		}

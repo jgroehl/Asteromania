@@ -35,6 +35,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="de.asteromania.dgvk.activities.RegisterActivity"
+            android:theme="@style/de.asteromania.dgvk.Theme.FullScreen" >
+            <intent-filter>
+                <action android:name="de.asteromania.dgvk.REGISTER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

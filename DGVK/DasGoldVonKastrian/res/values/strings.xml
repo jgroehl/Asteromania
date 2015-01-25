@@ -4,9 +4,13 @@
     <string name="username">Nutzername</string>
     <string name="password">Passwort</string>
     <string name="login">Login</string>
+    <string name="register">Account erstellen</string>
+    <string name="register_account">Noch keinen Account? Hier neuen Account erstellen:</string>
     <string name="invalid_credentials">Ungültige Nutzerdaten</string>
     <string name="internal_error">Interner Fehler. Bitte erneut versuchen.</string>
     <string name="server_unreachable">Der DGVK-Server konnte nicht erreicht werden. Bitte später erneut versuchen.</string>
     <string name="wrong_credentials">Nutzername oder Passwort falsch.</string>
+    <string name="identical_passwords">Die Passwörter müssen identisch sein.</string>
+    <string name="username_not_available">Dieser Nutzername ist leider bereits vergeben.</string>
 
 </resources>

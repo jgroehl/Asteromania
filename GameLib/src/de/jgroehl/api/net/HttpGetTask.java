@@ -1,7 +1,9 @@
 package de.jgroehl.api.net;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.util.EntityUtils;
 
 import android.net.http.AndroidHttpClient;
@@ -21,9 +23,9 @@ public class HttpGetTask extends AbstractHttpTask
 	@Override
 	protected HttpResult doInBackground(String... params)
 	{
+		AndroidHttpClient client = getClient();
 		try
 		{
-			AndroidHttpClient client = getClient();
 			HttpGet get = createGet(url);
 			HttpResponse response = client.execute(get);
 			HttpResult result = new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(response
@@ -33,8 +35,15 @@ public class HttpGetTask extends AbstractHttpTask
 		}
 		catch (Exception e)
 		{
-			Log.e(TAG, "Error on GET Task: ", e);
-			return null;
+			Log.e(TAG, "Error on HttpPost: " + e.getLocalizedMessage());
+			if (e instanceof ConnectTimeoutException)
+				return new HttpResult(HttpStatus.SC_GATEWAY_TIMEOUT, null);
+			else
+				return new HttpResult(0, null);
+		}
+		finally
+		{
+			client.close();
 		}
 	}
 

@@ -20,4 +20,9 @@ public final class DgvkUrlProperties
 		return SERVER_BASE + REST_BASE + "user/logout";
 	}
 
+	public static String userUrl()
+	{
+		return SERVER_BASE + REST_BASE + "user";
+	}
+
 }

@@ -1,6 +1,5 @@
 package de.asteromania.dgvk.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import de.asteromania.dgvk.DgvkGamePanel;
 import de.asteromania.dgvk.control.DgvkGameHandler;
@@ -13,8 +12,6 @@ import de.jgroehl.api.net.HttpPostTask;
 
 public class DgvkMainActivity extends AbstractSimpleActivity
 {
-
-	private static final String INTENT_LOGIN = "de.asteromania.dgvk.LOGIN";
 
 	private DgvkGamePanel mainGamePanel;
 
@@ -41,18 +38,16 @@ public class DgvkMainActivity extends AbstractSimpleActivity
 		return false;
 	}
 
-	public void openLoginScreen()
-	{
-		startActivity(new Intent(INTENT_LOGIN));
-	}
-
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
-		new HttpPostTask(DgvkUrlProperties.logoutUrl(), null, userDataHandler.getLoggedInUser().getUsername(), null)
-				.execute();
-		userDataHandler.logoutUser();
+		if (userDataHandler.getLoggedInUser() != null)
+		{
+			new HttpPostTask(DgvkUrlProperties.logoutUrl(), null, userDataHandler.getLoggedInUser().getUsername(), null)
+					.execute();
+			userDataHandler.logoutUser();
+		}
 	}
 
 	@Override

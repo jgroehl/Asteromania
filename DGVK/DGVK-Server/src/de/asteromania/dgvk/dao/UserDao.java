@@ -41,4 +41,21 @@ public class UserDao extends AbstractDaoBase
 		s.execute();
 	}
 
+	public boolean existsUser(String username) throws SQLException
+	{
+		PreparedStatement s = getConnection().prepareStatement(
+				"SELECT username, password, role FROM users WHERE username = ?");
+		s.setString(1, username);
+		s.execute();
+
+		if (s.getResultSet().next())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 }
