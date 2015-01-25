@@ -1,6 +1,6 @@
 package de.asteromania.dgvk.control;
 
-import de.asteromania.dgvk.DgvkMainActivity;
+import de.asteromania.dgvk.activities.DgvkMainActivity;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 

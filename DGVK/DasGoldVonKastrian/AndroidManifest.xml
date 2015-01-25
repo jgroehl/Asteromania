@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="de.asteromania.dgvk.DgvkMainActivity"
+            android:name="de.asteromania.dgvk.activities.DgvkMainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -26,7 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="de.asteromania.dgvk.activities.LoginActivity" >
+        <activity
+            android:name="de.asteromania.dgvk.activities.LoginActivity"
+            android:theme="@style/de.asteromania.dgvk.Theme.FullScreen" >
             <intent-filter>
                 <action android:name="de.asteromania.dgvk.LOGIN" />
 

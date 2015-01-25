@@ -27,7 +27,8 @@ import de.jgroehl.api.crypto.CryptoHandler.CryptoException;
  * @author Janek Gröhl
  *
  */
-public class FileHandler {
+public class FileHandler
+{
 
 	private static final String TAG = FileHandler.class.getSimpleName();
 	private final CryptoHandler cryptoHandler;
@@ -40,10 +41,10 @@ public class FileHandler {
 	 * @param context
 	 *            not <code>null</code>
 	 */
-	public FileHandler(CryptoHandler cryptoHandler, Context context) {
+	public FileHandler(CryptoHandler cryptoHandler, Context context)
+	{
 		if (cryptoHandler == null)
-			throw new NullPointerException(
-					"cryptoHandler was null in FileHandler");
+			throw new NullPointerException("cryptoHandler was null in FileHandler");
 		if (context == null)
 			throw new NullPointerException("Context was null in FileHandler");
 
@@ -58,35 +59,35 @@ public class FileHandler {
 	 * @param value
 	 *            not <code>null</code>
 	 */
-	public void writeAndEncryptString(String fileName, String value) {
+	public void writeAndEncryptString(String fileName, String value)
+	{
 
 		if (fileName == null)
-			throw new NullPointerException(
-					"FileName was null when trying to write: " + value);
+			throw new NullPointerException("FileName was null when trying to write: " + value);
 		if (value == null)
-			throw new NullPointerException(
-					"Value field was null when trying to write String.");
+			throw new NullPointerException("Value field was null when trying to write String.");
 
-		try {
-			FileOutputStream fos = context.openFileOutput(fileName,
-					Context.MODE_PRIVATE);
+		try
+		{
+			FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
 			BufferedWriter bw = new BufferedWriter(osw);
 
-			String output = new String(Base64.encode(
-					cryptoHandler.encode(value.getBytes()), Base64.URL_SAFE));
+			String output = new String(Base64.encode(cryptoHandler.encode(value.getBytes()), Base64.NO_WRAP));
 			Log.d(TAG, "Saved value [" + output + "] to " + fileName);
 			bw.write(output);
 
 			bw.close();
 			osw.close();
 			fos.close();
-		} catch (IOException e) {
-			Log.e(TAG, "Saving value " + value + " for " + fileName
-					+ " failed because of IO: " + e.getMessage());
-		} catch (CryptoException e) {
-			Log.e(TAG, "Saving value " + value + " for " + fileName
-					+ " failed because of crypto: " + e.getMessage());
+		}
+		catch (IOException e)
+		{
+			Log.e(TAG, "Saving value " + value + " for " + fileName + " failed because of IO: " + e.getMessage());
+		}
+		catch (CryptoException e)
+		{
+			Log.e(TAG, "Saving value " + value + " for " + fileName + " failed because of crypto: " + e.getMessage());
 		}
 	}
 
@@ -98,40 +99,42 @@ public class FileHandler {
 	 *         String if any errors occur. Will never return <code>null</code>
 	 * 
 	 */
-	public String getDecryptedStringFromFile(String fileName) {
+	public String getDecryptedStringFromFile(String fileName)
+	{
 		if (fileName == null)
-			throw new NullPointerException(
-					"File name was null when trying to read file contents.");
+			throw new NullPointerException("File name was null when trying to read file contents.");
 		String result = "";
-		try {
+		try
+		{
 			FileInputStream fis = context.openFileInput(fileName);
-			if (fis == null) {
-				Log.w(TAG, "When opening " + fileName
-						+ " the file was not existing.");
+			if (fis == null)
+			{
+				Log.w(TAG, "When opening " + fileName + " the file was not existing.");
 				return result;
 			}
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader bufferedReader = new BufferedReader(isr);
 
 			String readLine = bufferedReader.readLine();
-			if (readLine == null) {
-				Log.w(TAG, "When reading " + fileName
-						+ " the file was not readable or empty.");
+			if (readLine == null)
+			{
+				Log.w(TAG, "When reading " + fileName + " the file was not readable or empty.");
 				return result;
 			}
 			Log.d(TAG, "Read value [" + readLine + "] from " + fileName);
-			result = new String(cryptoHandler.decode(Base64.decode(
-					readLine.getBytes(), Base64.URL_SAFE)));
+			result = new String(cryptoHandler.decode(Base64.decode(readLine.getBytes(), Base64.NO_WRAP)));
 
 			fis.close();
 			isr.close();
 			bufferedReader.close();
-		} catch (IOException e) {
-			Log.e(TAG,
-					"Error while retrieving input string from file: "
-							+ e.getMessage());
+		}
+		catch (IOException e)
+		{
+			Log.e(TAG, "Error while retrieving input string from file: " + e.getMessage());
 			return "";
-		} catch (CryptoException e) {
+		}
+		catch (CryptoException e)
+		{
 			Log.e(TAG, "Crypto Exception while reading file: " + e.getMessage());
 			return "";
 		}
@@ -146,15 +149,18 @@ public class FileHandler {
 	 * @return the entire content written to the specified file wrapped in a
 	 *         single String.
 	 */
-	public String readFileContents(String fileName) {
+	public String readFileContents(String fileName)
+	{
 		if (fileName == null)
-			throw new NullPointerException(
-					"fileName was null when reading file content.");
+			throw new NullPointerException("fileName was null when reading file content.");
 		String result = null;
 		FileInputStream fis;
-		try {
+		try
+		{
 			fis = context.openFileInput(fileName);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			return result;
 		}
 		if (fis == null)
@@ -166,11 +172,15 @@ public class FileHandler {
 		StringBuilder sb = new StringBuilder();
 
 		String s;
-		try {
-			while ((s = bufferedReader.readLine()) != null) {
+		try
+		{
+			while ((s = bufferedReader.readLine()) != null)
+			{
 				sb.append(s);
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			Log.e(TAG, "Error reading contents from File " + fileName);
 		}
 		return sb.toString();

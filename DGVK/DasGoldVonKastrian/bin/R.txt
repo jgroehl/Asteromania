@@ -472,11 +472,14 @@ int string common_google_play_services_update_text 0x7f0a001a
 int string common_google_play_services_update_title 0x7f0a0019
 int string common_signin_button_text 0x7f0a0024
 int string common_signin_button_text_long 0x7f0a0025
+int string internal_error 0x7f0a002c
 int string invalid_credentials 0x7f0a002b
 int string login 0x7f0a002a
 int string password 0x7f0a0029
+int string server_unreachable 0x7f0a002d
 int string username 0x7f0a0028
 int string wallet_buy_button_place_holder 0x7f0a0026
+int string wrong_credentials 0x7f0a002e
 int style AppBaseTheme 0x7f0b0090
 int style AppTheme 0x7f0b0091
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f0b0063
@@ -623,6 +626,7 @@ int style Widget_AppCompat_PopupMenu 0x7f0b002b
 int style Widget_AppCompat_ProgressBar 0x7f0b000a
 int style Widget_AppCompat_ProgressBar_Horizontal 0x7f0b0009
 int style Widget_AppCompat_Spinner_DropDown_ActionBar 0x7f0b0022
+int style de_asteromania_dgvk_Theme_FullScreen 0x7f0b0092
 int[] styleable ActionBar { 0x7f010025, 0x7f010026, 0x7f010027, 0x7f010028, 0x7f010029, 0x7f01002a, 0x7f01002b, 0x7f01002c, 0x7f01002d, 0x7f01002e, 0x7f01002f, 0x7f010030, 0x7f010031, 0x7f010032, 0x7f010033, 0x7f010034, 0x7f010035, 0x7f010036, 0x7f010037 }
 int styleable ActionBar_background 10
 int styleable ActionBar_backgroundSplit 12

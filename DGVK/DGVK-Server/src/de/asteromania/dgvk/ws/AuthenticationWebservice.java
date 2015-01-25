@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -20,10 +21,11 @@ import de.asteromania.dgvk.utils.HashUtils;
 public class AuthenticationWebservice
 {
 	private static final int HASH_COUNT = 1013;
-	private static final String CLIENT_ROLE = "standard-android-client";
+	private static final String CLIENT_ROLE = "dgvk-android-client-role";
 	private static final String SALT_SECRET = "fb74d31d-cbf7-43e9-8053-66a14395ad17";
+	private static final String CLIENT_NAME = "DGVK-Android-Client";
+	private static final List<String> authenticatedUsers = new ArrayList<>();
 	private final UserDao userDao = new UserDao();
-	private static final List<UserDto> authenticatedUsers = new ArrayList<>();
 
 	@POST
 	@Consumes(MediaType.APPLICATION_XML)
@@ -45,7 +47,7 @@ public class AuthenticationWebservice
 		{
 			UserDto authUser = new UserDto(user.getUsername(), HashUtils.hashString(
 					user.getPassword() + user.getUsername() + SALT_SECRET, HASH_COUNT), CLIENT_ROLE);
-			authenticatedUsers.add(authUser);
+			userDao.addUser(authUser);
 			return Response.status(Status.OK).build();
 		}
 		catch (Exception e)
@@ -59,9 +61,13 @@ public class AuthenticationWebservice
 	@Path("authenticate")
 	@Produces(MediaType.APPLICATION_XML)
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response getScore(String userDtoXml)
+	public Response getScore(@HeaderParam("user-agent") String userAgent, String userDtoXml)
 	{
 		System.out.println("POST user/authenticate");
+
+		if (!CLIENT_NAME.equals(userAgent))
+			return Response.status(Status.FORBIDDEN).build();
+
 		UserDto user = new UserDto("", "");
 		try
 		{
@@ -75,36 +81,43 @@ public class AuthenticationWebservice
 
 		System.out.println("Trying to authenticate user " + user.getUsername());
 
-		if (authenticatedUsers.size() > 0)
-			System.out.println("Chache user: " + authenticatedUsers.get(0).getUsername());
-		if (authenticatedUsers.contains(user))
+		try
 		{
-			System.out.println("Authenticated " + user.getUsername() + " by cache.");
-			return Response.ok().build();
-		}
-		else
-		{
-			try
+			UserDto dbUser = userDao.getUser(user.getUsername(),
+					HashUtils.hashString(user.getPassword() + user.getUsername() + SALT_SECRET, HASH_COUNT));
+			if (dbUser != null)
 			{
-				UserDto dbUser = userDao.getUser(user.getUsername(),
-						HashUtils.hashString(user.getPassword() + user.getUsername() + SALT_SECRET, HASH_COUNT));
-				if (dbUser != null)
-				{
-					System.out.println("Authenticated " + dbUser.getUsername() + " successfully.");
-					authenticatedUsers.add(dbUser);
-					return Response.status(Status.OK).entity(dbUser.toXml()).build();
-				}
-				else
-				{
-					System.out.println("Sending " + Status.FORBIDDEN);
-					return Response.status(Status.FORBIDDEN).build();
-				}
+				System.out.println("Authenticated " + dbUser.getUsername() + " successfully.");
+				authenticatedUsers.add(dbUser.getUsername());
+				return Response.status(Status.OK).entity(dbUser.toXml()).build();
 			}
-			catch (Exception e)
+			else
 			{
-				e.printStackTrace();
-				return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+				System.out.println("Sending " + Status.FORBIDDEN);
+				return Response.status(Status.FORBIDDEN).build();
 			}
 		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@POST
+	@Path("logout")
+	public Response logout(@HeaderParam("user-agent") String userAgent, @HeaderParam("username") String username)
+	{
+		System.out.println("POST user/logout");
+
+		if (!CLIENT_NAME.equals(userAgent))
+			return Response.status(Status.FORBIDDEN).build();
+		if (!authenticatedUsers.contains(username))
+			return Response.status(Status.BAD_REQUEST).build();
+
+		System.out.println("Logging out user " + username);
+		authenticatedUsers.remove(username);
+
+		return Response.ok().build();
 	}
 }

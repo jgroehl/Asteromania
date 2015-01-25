@@ -1,5 +1,7 @@
 package de.asteromania.dgvk.activities;
 
+import org.apache.http.HttpStatus;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +11,10 @@ import android.widget.TextView;
 import de.asteromania.dgvk.R;
 import de.asteromania.dgvk.control.UserDataHandler;
 import de.asteromania.dgvk.dto.authentication.UserDto;
+import de.asteromania.dgvk.net.DgvkUrlProperties;
 import de.jgroehl.api.crypto.CryptoHandler;
+import de.jgroehl.api.net.AbstractHttpTask.OnResponseCallback;
+import de.jgroehl.api.net.HttpPostTask;
 
 public class LoginActivity extends Activity
 {
@@ -39,14 +44,70 @@ public class LoginActivity extends Activity
 
 		if (inputValid(user, pw))
 		{
-			userDataHandler.loginUser(new UserDto(user, pw));
-			finish();
+			try
+			{
+				new HttpPostTask(DgvkUrlProperties.authenticationUrl(), new UserDto(user, pw).toXml(), user,
+						new OnResponseCallback()
+						{
+
+							@Override
+							public void onSuccess(String result)
+							{
+								try
+								{
+									userDataHandler.loginUser(new UserDto("", "").fromXml(result));
+									finish();
+								}
+								catch (Exception e)
+								{
+									Log.e(TAG, "Error with xml: " + result);
+									Log.e(TAG, "Error: ", e);
+									showInternalError();
+								}
+							}
+
+							@Override
+							public void onError(int resultCode)
+							{
+								switch (resultCode)
+								{
+									case HttpStatus.SC_OK:
+										break;
+									case HttpStatus.SC_BAD_GATEWAY:
+									case HttpStatus.SC_GATEWAY_TIMEOUT:
+										errorText.setVisibility(TextView.VISIBLE);
+										errorText.setText(getString(R.string.server_unreachable));
+										break;
+									case HttpStatus.SC_UNAUTHORIZED:
+									case HttpStatus.SC_FORBIDDEN:
+										errorText.setVisibility(TextView.VISIBLE);
+										errorText.setText(getString(R.string.wrong_credentials));
+										break;
+									default:
+										Log.d(TAG, "Showing internal Error message for SC_" + resultCode);
+										showInternalError();
+										break;
+								}
+							}
+						}).execute();
+			}
+			catch (Exception e)
+			{
+				showInternalError();
+			}
 		}
 		else
 		{
 			errorText.setVisibility(TextView.VISIBLE);
 			errorText.setText(getString(R.string.invalid_credentials));
 		}
+	}
+
+	private void showInternalError()
+	{
+		Log.d(TAG, "Show internal Error called");
+		errorText.setVisibility(TextView.VISIBLE);
+		errorText.setText(getString(R.string.internal_error));
 	}
 
 	private boolean inputValid(String user, String pw)

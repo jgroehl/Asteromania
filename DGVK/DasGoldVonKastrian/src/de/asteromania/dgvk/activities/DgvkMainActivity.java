@@ -1,12 +1,15 @@
-package de.asteromania.dgvk;
+package de.asteromania.dgvk.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import de.asteromania.dgvk.DgvkGamePanel;
 import de.asteromania.dgvk.control.DgvkGameHandler;
 import de.asteromania.dgvk.control.UserDataHandler;
+import de.asteromania.dgvk.net.DgvkUrlProperties;
 import de.jgroehl.api.activities.AbstractSimpleActivity;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.crypto.CryptoHandler;
+import de.jgroehl.api.net.HttpPostTask;
 
 public class DgvkMainActivity extends AbstractSimpleActivity
 {
@@ -47,6 +50,8 @@ public class DgvkMainActivity extends AbstractSimpleActivity
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		new HttpPostTask(DgvkUrlProperties.logoutUrl(), null, userDataHandler.getLoggedInUser().getUsername(), null)
+				.execute();
 		userDataHandler.logoutUser();
 	}
 
