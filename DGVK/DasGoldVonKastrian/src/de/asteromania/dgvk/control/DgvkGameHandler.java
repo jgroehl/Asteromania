@@ -7,7 +7,7 @@ import de.jgroehl.api.control.GameState;
 public class DgvkGameHandler extends BaseGameHandler
 {
 
-	public DgvkGameHandler(GameState state, DgvkMainActivity context)
+	public DgvkGameHandler(GameState state, UserDataHandler userDataHandler, DgvkMainActivity context)
 	{
 		super(state, context);
 	}
