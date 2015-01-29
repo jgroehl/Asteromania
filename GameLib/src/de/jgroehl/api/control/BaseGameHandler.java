@@ -8,8 +8,6 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
-import de.jgroehl.api.control.interfaces.EventHandler;
-import de.jgroehl.api.control.interfaces.GraphicsHandler;
 import de.jgroehl.api.graphics.GameObject;
 import de.jgroehl.api.graphics.GameObject.Level;
 import de.jgroehl.api.graphics.interfaces.Clickable;
@@ -17,9 +15,8 @@ import de.jgroehl.api.graphics.interfaces.Drawable;
 import de.jgroehl.api.graphics.interfaces.Hitable;
 import de.jgroehl.api.graphics.interfaces.Updatable;
 
-public class BaseGameHandler implements GraphicsHandler, EventHandler
+public class BaseGameHandler
 {
-
 	private static final String TAG = BaseGameHandler.class.getSimpleName();
 
 	private final Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
@@ -114,32 +111,27 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler
 		}
 	}
 
-	@Override
 	public void add(GameObject gameObject, GameState... states)
 	{
 		if (gameObject != null)
 			addedObjects.put(gameObject, states);
 	}
 
-	@Override
 	public void remove(GameObject gameObject)
 	{
 		removedObjects.add(gameObject);
 	}
 
-	@Override
 	public List<? extends Drawable> getAllDrawableObjects()
 	{
 		return gameObjects.get(state);
 	}
 
-	@Override
 	public List<? extends Updatable> getAllUpdatableObjects()
 	{
 		return gameObjects.get(state);
 	}
 
-	@Override
 	public void handleEvent(MotionEvent event, Context context, int screenWidth, int screenHeight)
 	{
 		for (Clickable c : clickableObjects.get(state))
@@ -170,5 +162,12 @@ public class BaseGameHandler implements GraphicsHandler, EventHandler
 			sum += l.size();
 		}
 		return sum;
+	}
+
+	public void clearGameObjects(GameState state)
+	{
+		gameObjects.get(state).clear();
+		clickableObjects.get(state).clear();
+		hitableObjects.get(state).clear();
 	}
 }
