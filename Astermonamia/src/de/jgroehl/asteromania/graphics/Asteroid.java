@@ -8,12 +8,12 @@ import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.AbstractDamagingAbility;
 import de.jgroehl.api.graphics.GraphicsObject;
 import de.jgroehl.api.graphics.Target;
-import de.jgroehl.api.graphics.interfaces.Hitable;
 import de.jgroehl.api.graphics.interfaces.Killable;
 import de.jgroehl.api.graphics.interfaces.Updatable;
 import de.jgroehl.asteromania.AsteromaniaMainActivity;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.graphics.collectables.Coin;
+import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 
 public class Asteroid extends GraphicsObject implements Updatable, Hitable, Killable
 {

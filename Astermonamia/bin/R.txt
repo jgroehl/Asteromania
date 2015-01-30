@@ -200,8 +200,6 @@ int dimen abc_dropdownitem_text_padding_right 0x7f09000f
 int dimen abc_panel_menu_list_width 0x7f09000b
 int dimen abc_search_view_preferred_width 0x7f09000d
 int dimen abc_search_view_text_min_width 0x7f09000c
-int dimen activity_horizontal_margin 0x7f090015
-int dimen activity_vertical_margin 0x7f090016
 int dimen dialog_fixed_height_major 0x7f090013
 int dimen dialog_fixed_height_minor 0x7f090014
 int dimen dialog_fixed_width_major 0x7f090011
@@ -374,7 +372,6 @@ int id action_context_bar 0x7f06002f
 int id action_menu_divider 0x7f060016
 int id action_menu_presenter 0x7f060017
 int id action_mode_close_button 0x7f060036
-int id action_settings 0x7f06004e
 int id activity_chooser_view_content 0x7f060037
 int id always 0x7f06000b
 int id beginning 0x7f060011
@@ -469,7 +466,6 @@ int layout abc_search_dropdown_item_icons_2line 0x7f030015
 int layout abc_search_view 0x7f030016
 int layout abc_simple_decor 0x7f030017
 int layout support_simple_spinner_dropdown_item 0x7f030018
-int menu main 0x7f0d0000
 int raw boom 0x7f050000
 int raw checkpoint 0x7f050001
 int raw click 0x7f050002

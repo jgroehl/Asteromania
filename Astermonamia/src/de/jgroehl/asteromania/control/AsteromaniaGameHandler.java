@@ -12,6 +12,7 @@ import de.jgroehl.api.io.FileHandler;
 import de.jgroehl.api.utils.SensorHandler;
 import de.jgroehl.asteromania.graphics.Explosion;
 import de.jgroehl.asteromania.graphics.enemies.BaseEnemy;
+import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.graphics.player.SpaceShip;
 import de.jgroehl.asteromania.graphics.starfield.Starfield;
 import de.jgroehl.asteromania.graphics.ui.Highscore;
@@ -36,11 +37,13 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 
 	private final Highscore highscore;
 
+	private final List<BaseEnemy> enemies = new ArrayList<BaseEnemy>();
+
+	private final List<Hitable> hitableObjects = new ArrayList<Hitable>();
+
 	private Starfield starfield;
 
 	private GoogleApiHandler apiHandler;
-
-	private final List<BaseEnemy> enemies = new ArrayList<BaseEnemy>();
 
 	public AsteromaniaGameHandler(GameState state, SoundManager soundManager, Context context, FileHandler fileHandler,
 			SensorHandler sensorHandler, Transition transition, Highscore highscore, GoogleApiHandler apiHandler)
@@ -122,7 +125,7 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 		resetGame();
 		soundManager.playExplosionSound();
 		Explosion.createGameOver(this);
-		setState(GameState.GAME_OVER);
+		setGameState(GameState.GAME_OVER);
 	}
 
 	public void resetGame()
@@ -175,6 +178,8 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 	{
 		if (gameObject instanceof BaseEnemy)
 			enemies.add((BaseEnemy) gameObject);
+		if (gameObject instanceof Hitable)
+			hitableObjects.add((Hitable) gameObject);
 
 		super.add(gameObject, states);
 	}
@@ -183,6 +188,12 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 	public void remove(GameObject gameObject)
 	{
 		enemies.remove(gameObject);
+		hitableObjects.remove(gameObject);
 		super.remove(gameObject);
+	}
+
+	public List<Hitable> getHitableObjects()
+	{
+		return hitableObjects;
 	}
 }

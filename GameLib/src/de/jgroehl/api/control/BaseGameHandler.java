@@ -6,24 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import de.jgroehl.api.graphics.GameObject;
 import de.jgroehl.api.graphics.GameObject.Level;
 import de.jgroehl.api.graphics.interfaces.Clickable;
 import de.jgroehl.api.graphics.interfaces.Drawable;
-import de.jgroehl.api.graphics.interfaces.Hitable;
 import de.jgroehl.api.graphics.interfaces.Updatable;
 
 public class BaseGameHandler
 {
-	private static final String TAG = BaseGameHandler.class.getSimpleName();
-
 	private final Map<GameState, List<GameObject>> gameObjects = new HashMap<GameState, List<GameObject>>();
 
 	private final Map<GameState, List<Clickable>> clickableObjects = new HashMap<GameState, List<Clickable>>();
-
-	private final Map<GameState, List<Hitable>> hitableObjects = new HashMap<GameState, List<Hitable>>();
 
 	private final Map<GameObject, GameState[]> addedObjects = new HashMap<GameObject, GameState[]>();
 
@@ -41,13 +35,7 @@ public class BaseGameHandler
 		{
 			gameObjects.put(s, new ArrayList<GameObject>());
 			clickableObjects.put(s, new ArrayList<Clickable>());
-			hitableObjects.put(s, new ArrayList<Hitable>());
 		}
-	}
-
-	public List<Hitable> getHitableObjects()
-	{
-		return hitableObjects.get(state);
 	}
 
 	public GameState getGameState()
@@ -55,7 +43,7 @@ public class BaseGameHandler
 		return state;
 	}
 
-	public void setState(GameState state)
+	public void setGameState(GameState state)
 	{
 		this.state = state;
 	}
@@ -77,12 +65,6 @@ public class BaseGameHandler
 					for (GameState state : addedObjects.get(gameObject))
 						clickableObjects.get(state).add((Clickable) gameObject);
 				}
-
-				if (gameObject instanceof Hitable)
-				{
-					for (GameState state : addedObjects.get(gameObject))
-						hitableObjects.get(state).add((Hitable) gameObject);
-				}
 			}
 			addedObjects.clear();
 		}
@@ -97,11 +79,6 @@ public class BaseGameHandler
 						l.remove(gameObject);
 				}
 				for (List<Clickable> l : clickableObjects.values())
-				{
-					if (l.contains(gameObject))
-						l.remove(gameObject);
-				}
-				for (List<Hitable> l : hitableObjects.values())
 				{
 					if (l.contains(gameObject))
 						l.remove(gameObject);
@@ -150,7 +127,6 @@ public class BaseGameHandler
 
 	public boolean gameObjectsInitialized()
 	{
-		Log.d(TAG, "Game Objects size: " + totalSize(gameObjects));
 		return totalSize(gameObjects) > 0;
 	}
 
@@ -164,10 +140,4 @@ public class BaseGameHandler
 		return sum;
 	}
 
-	public void clearGameObjects(GameState state)
-	{
-		gameObjects.get(state).clear();
-		clickableObjects.get(state).clear();
-		hitableObjects.get(state).clear();
-	}
 }

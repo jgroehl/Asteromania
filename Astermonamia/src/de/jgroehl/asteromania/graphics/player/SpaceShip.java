@@ -8,11 +8,11 @@ import de.jgroehl.api.graphics.AbstractDamagingAbility;
 import de.jgroehl.api.graphics.Target;
 import de.jgroehl.api.graphics.animated.AnimatedGraphicsObject;
 import de.jgroehl.api.graphics.animated.SimpleAnimatedObject;
-import de.jgroehl.api.graphics.interfaces.Hitable;
 import de.jgroehl.api.utils.SensorHandler;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.control.PlayerInfo;
+import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 
 public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 

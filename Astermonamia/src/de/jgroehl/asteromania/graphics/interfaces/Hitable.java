@@ -1,4 +1,4 @@
-package de.jgroehl.api.graphics.interfaces;
+package de.jgroehl.asteromania.graphics.interfaces;
 
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.AbstractDamagingAbility;

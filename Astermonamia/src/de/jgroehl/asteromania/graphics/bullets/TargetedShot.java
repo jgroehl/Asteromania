@@ -9,9 +9,9 @@ import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.AbstractDamagingAbility;
 import de.jgroehl.api.graphics.GraphicsObject;
 import de.jgroehl.api.graphics.Target;
-import de.jgroehl.api.graphics.interfaces.Hitable;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.graphics.enemies.BaseEnemy;
+import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 
 public class TargetedShot extends AbstractDamagingAbility
 {

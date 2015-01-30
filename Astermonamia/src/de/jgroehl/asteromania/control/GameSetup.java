@@ -73,7 +73,7 @@ public class GameSetup
 								if (gameHandler instanceof AsteromaniaGameHandler)
 								{
 									((AsteromaniaGameHandler) gameHandler).getPlayerInfo().resetLastHighscore();
-									gameHandler.setState(GameState.MENU);
+									gameHandler.setGameState(GameState.MENU);
 								}
 							}
 						}, gameHandler.getContext()), GameState.GAME_OVER);

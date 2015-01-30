@@ -6,7 +6,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
-public class FpsMeter implements Drawable {
+/**
+ * 
+ * @author Janek
+ *
+ */
+public class FpsMeter implements Drawable
+{
 
 	private static final long SECOND = 1000;
 	private static final long TARGET_FPS = 40;
@@ -25,7 +31,8 @@ public class FpsMeter implements Drawable {
 
 	Paint whitePaint = new Paint();
 
-	public FpsMeter() {
+	public FpsMeter()
+	{
 		whitePaint.setTextSize(18);
 		whitePaint.setColor(Color.rgb(255, 255, 255));
 	}
@@ -39,9 +46,11 @@ public class FpsMeter implements Drawable {
 	 * 
 	 *         Will return <code>false</code> if the interval was longer.
 	 */
-	public boolean doFpsCheck(long startTime) {
+	public boolean doFpsCheck(long startTime)
+	{
 
-		if (System.currentTimeMillis() - time >= SECOND) {
+		if (System.currentTimeMillis() - time >= SECOND)
+		{
 			lastFpsCount = frames;
 			if (frames > 0)
 				lastSleepTime = sleepTimes / frames;
@@ -50,32 +59,36 @@ public class FpsMeter implements Drawable {
 			frames = 0;
 		}
 
-		long sleepTime = FRAME_PERIOD
-				- (System.currentTimeMillis() - startTime);
+		long sleepTime = FRAME_PERIOD - (System.currentTimeMillis() - startTime);
 		frames++;
 
-		if (sleepTime >= 0) {
-			try {
+		if (sleepTime >= 0)
+		{
+			try
+			{
 				sleepTimes = sleepTimes + sleepTime;
 				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e)
+			{
 				Log.e(TAG, "Sleeping on FPS Tracking interrupted.");
 			}
 			return true;
-		} else {
+		}
+		else
+		{
 			Log.d(TAG, "Too short sleepTime: " + sleepTime);
 			return false;
 		}
 	}
 
 	@Override
-	public void draw(Canvas c) {
+	public void draw(Canvas c)
+	{
 		c.drawText("FPS: " + lastFpsCount, 5, 50, whitePaint);
-		c.drawText("SLP: " + lastSleepTime + " / " + FRAME_PERIOD, 5, 70,
-				whitePaint);
-		c.drawText("RAM: " + (runtime.maxMemory() - runtime.freeMemory())
-				/ MEGABYTE + " / " + runtime.maxMemory() / MEGABYTE, 5, 90,
-				whitePaint);
+		c.drawText("SLP: " + lastSleepTime + " / " + FRAME_PERIOD, 5, 70, whitePaint);
+		c.drawText("RAM: " + (runtime.maxMemory() - runtime.freeMemory()) / MEGABYTE + " / " + runtime.maxMemory()
+				/ MEGABYTE, 5, 90, whitePaint);
 	}
 
 }

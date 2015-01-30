@@ -22,7 +22,7 @@ public class MenuButtonCallback implements EventCallback
 		{
 
 			((AsteromaniaGameHandler) gameHandler).getSoundManager().playClickSound();
-			gameHandler.setState(state);
+			gameHandler.setGameState(state);
 		}
 	}
 }

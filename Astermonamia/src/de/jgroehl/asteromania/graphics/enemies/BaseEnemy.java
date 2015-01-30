@@ -8,13 +8,13 @@ import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.AbstractDamagingAbility;
 import de.jgroehl.api.graphics.Target;
 import de.jgroehl.api.graphics.animated.SimpleAnimatedObject;
-import de.jgroehl.api.graphics.interfaces.Hitable;
 import de.jgroehl.api.graphics.interfaces.Killable;
 import de.jgroehl.api.graphics.statusBars.HpBar;
 import de.jgroehl.api.time.Timer;
 import de.jgroehl.asteromania.AsteromaniaMainActivity;
 import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.graphics.Explosion;
+import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 
 public abstract class BaseEnemy extends SimpleAnimatedObject implements Hitable, Killable
 {

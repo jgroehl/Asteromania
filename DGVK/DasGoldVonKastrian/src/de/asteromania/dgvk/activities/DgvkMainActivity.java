@@ -27,7 +27,7 @@ public class DgvkMainActivity extends AbstractSimpleActivity
 		super.onCreate(savedInstanceState);
 		cryptoHandler = new CryptoHandler(this);
 		userDataHandler = new UserDataHandler(cryptoHandler, this);
-		gameHandler = new DgvkGameHandler(GameState.STARTING_SCREEN, userDataHandler, this);
+		gameHandler = new DgvkGameHandler(userDataHandler, this);
 		mainGamePanel = new DgvkGamePanel(this, this, gameHandler);
 		setContentView(mainGamePanel);
 	}
@@ -55,7 +55,7 @@ public class DgvkMainActivity extends AbstractSimpleActivity
 	{
 		super.onStart();
 		if (userDataHandler.getLoggedInUser() != null)
-			gameHandler.setState(GameState.MAIN);
+			gameHandler.setGameState(GameState.MAIN);
 	}
 
 }
