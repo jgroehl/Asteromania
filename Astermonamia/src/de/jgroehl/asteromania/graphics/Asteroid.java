@@ -87,8 +87,8 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable, Kill
 				asteromaniaGameHandler.remove(this);
 				kill();
 			}
-			yPosition = yPosition + speed;
-			if (yPosition > (1.0 + getRelativeHeight()))
+			setPosition(getY(), getY() + speed);
+			if (getY() > (1.0 + getRelativeHeight()))
 			{
 				asteromaniaGameHandler.remove(this);
 				kill();
@@ -156,12 +156,11 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable, Kill
 		super.draw(c);
 		if (AsteromaniaMainActivity.DEBUG)
 		{
-			c.drawText(context.getResources().getString(de.jgroehl.asteromania.R.string.hp) + ": " + life,
-					getX() * c.getWidth(), (getY() + getRelativeHeight()) * c.getHeight() + textPaint.getTextSize(),
-					textPaint);
-			c.drawText(context.getResources().getString(de.jgroehl.asteromania.R.string.dmg) + ": " + damage, getX()
-					* c.getWidth(), (getY() + getRelativeHeight()) * c.getHeight() + textPaint.getTextSize() * 2,
-					textPaint);
+			c.drawText(getContext().getResources().getString(de.jgroehl.asteromania.R.string.hp) + ": " + life, getX()
+					* c.getWidth(), (getY() + getRelativeHeight()) * c.getHeight() + textPaint.getTextSize(), textPaint);
+			c.drawText(getContext().getResources().getString(de.jgroehl.asteromania.R.string.dmg) + ": " + damage,
+					getX() * c.getWidth(),
+					(getY() + getRelativeHeight()) * c.getHeight() + textPaint.getTextSize() * 2, textPaint);
 		}
 	}
 }

@@ -322,8 +322,10 @@ int drawable ic_plusone_medium_off_client 0x7f020072
 int drawable ic_plusone_small_off_client 0x7f020073
 int drawable ic_plusone_standard_off_client 0x7f020074
 int drawable ic_plusone_tall_off_client 0x7f020075
-int drawable powered_by_google_dark 0x7f020076
-int drawable powered_by_google_light 0x7f020077
+int drawable map_item_test 0x7f020076
+int drawable player 0x7f020077
+int drawable powered_by_google_dark 0x7f020078
+int drawable powered_by_google_light 0x7f020079
 int id action_bar 0x7f05002e
 int id action_bar_activity_content 0x7f050015
 int id action_bar_container 0x7f05002d

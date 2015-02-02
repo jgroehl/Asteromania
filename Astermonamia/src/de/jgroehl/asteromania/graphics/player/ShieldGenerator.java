@@ -12,9 +12,11 @@ import de.jgroehl.api.time.Timer;
 import de.jgroehl.asteromania.R;
 import de.jgroehl.asteromania.control.PlayerInfo;
 
-public class ShieldGenerator extends SimpleAnimatedObject {
+public class ShieldGenerator extends SimpleAnimatedObject
+{
 
-	private enum ShieldState {
+	private enum ShieldState
+	{
 		ACTIVE, INACTIVE, DAMAGED, UNAVAILABLE
 	}
 
@@ -28,30 +30,29 @@ public class ShieldGenerator extends SimpleAnimatedObject {
 	private final StatusBar statusBar;
 	private boolean showing;
 
-	public ShieldGenerator(float xPosition, float yPosition, Context context,
-			PlayerInfo playerInfo) {
-		super(xPosition, yPosition, R.drawable.shield_small, RELATIVE_WIDTH, 9,
-				100, context);
+	public ShieldGenerator(float xPosition, float yPosition, Context context, PlayerInfo playerInfo)
+	{
+		super(xPosition, yPosition, R.drawable.shield_small, RELATIVE_WIDTH, 9, 100, context);
 
 		this.playerInfo = playerInfo;
 
-		state = playerInfo.isShieldGeneratorPresent() ? (playerInfo
-				.getShieldSeconds() > 0 ? ShieldState.ACTIVE
+		state = playerInfo.isShieldGeneratorPresent() ? (playerInfo.getShieldSeconds() > 0 ? ShieldState.ACTIVE
 				: ShieldState.INACTIVE) : ShieldState.UNAVAILABLE;
 
-		statusBar = new StatusBar(0, xPosition, yPosition, RELATIVE_WIDTH,
-				0.01f, context, StatusBar.FULL, Color.rgb(0, 0, 175));
+		statusBar = new StatusBar(0, xPosition, yPosition, RELATIVE_WIDTH, 0.01f, context, StatusBar.FULL, Color.rgb(0,
+				0, 175));
 
 		Log.d(TAG, "Setting shield to state: " + state);
 	}
 
 	@Override
-	public void update(BaseGameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler)
+	{
 		super.update(gameHandler);
 
-		if (isActive() && gameHandler.getGameState() == GameState.MAIN
-				&& playerInfo.getShieldSeconds() > 0
-				&& secondTimer.isPeriodOver()) {
+		if (isActive() && gameHandler.getGameState() == GameState.MAIN && playerInfo.getShieldSeconds() > 0
+				&& secondTimer.isPeriodOver())
+		{
 			playerInfo.setShieldSeconds(playerInfo.getShieldSeconds() - 1);
 			statusBar.setCurrentValue(playerInfo.getShieldSeconds());
 		}
@@ -61,56 +62,72 @@ public class ShieldGenerator extends SimpleAnimatedObject {
 	}
 
 	@Override
-	public void draw(Canvas c) {
-		statusBar.setPosition(xPosition, yPosition + relativeHeight);
-		if (state == ShieldState.ACTIVE) {
+	public void draw(Canvas c)
+	{
+		statusBar.setPosition(getX(), getY() + relativeHeight);
+		if (state == ShieldState.ACTIVE)
+		{
 			super.draw(c);
 			statusBar.draw(c);
-		} else if (state == ShieldState.DAMAGED) {
-			if (showTimer.isPeriodOver()) {
+		}
+		else if (state == ShieldState.DAMAGED)
+		{
+			if (showTimer.isPeriodOver())
+			{
 				showing = !showing;
 			}
-			if (showing) {
+			if (showing)
+			{
 				super.draw(c);
 			}
 			statusBar.draw(c);
 		}
 	}
 
-	public void minorHit() {
-		if (state == ShieldState.ACTIVE) {
+	public void minorHit()
+	{
+		if (state == ShieldState.ACTIVE)
+		{
 			state = ShieldState.DAMAGED;
-		} else if (state == ShieldState.DAMAGED) {
+		}
+		else if (state == ShieldState.DAMAGED)
+		{
 			majorHit();
 		}
 	}
 
-	public void majorHit() {
-		if (isActive()) {
+	public void majorHit()
+	{
+		if (isActive())
+		{
 			playerInfo.setShieldSeconds(0);
 			state = ShieldState.INACTIVE;
 		}
 	}
 
-	public void addShieldSeconds(int seconds) {
-		if (state != ShieldState.UNAVAILABLE) {
+	public void addShieldSeconds(int seconds)
+	{
+		if (state != ShieldState.UNAVAILABLE)
+		{
 			if (seconds < 0)
-				throw new IllegalArgumentException(
-						"Added shield seconds must be positive");
+				throw new IllegalArgumentException("Added shield seconds must be positive");
 			state = ShieldState.ACTIVE;
-			playerInfo
-					.setShieldSeconds(playerInfo.getShieldSeconds() + seconds);
+			playerInfo.setShieldSeconds(playerInfo.getShieldSeconds() + seconds);
 			statusBar.setMaximum(playerInfo.getShieldSeconds());
 			Log.d(TAG, "Added " + seconds + " seconds to the shield");
-		} else {
-			if (playerInfo.isShieldGeneratorPresent()) {
+		}
+		else
+		{
+			if (playerInfo.isShieldGeneratorPresent())
+			{
 				state = ShieldState.INACTIVE;
 				addShieldSeconds(seconds);
 			}
 		}
 	}
 
-	public boolean isActive() {
+	public boolean isActive()
+	{
 		return state == ShieldState.ACTIVE || state == ShieldState.DAMAGED;
 	}
 

@@ -8,7 +8,8 @@ import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.GameObject;
 import de.jgroehl.api.graphics.interfaces.Updatable;
 
-public class StarObject extends GameObject implements Updatable {
+public class StarObject extends GameObject implements Updatable
+{
 
 	private final Paint starColor;
 	private final float relativeDiameter;
@@ -16,8 +17,9 @@ public class StarObject extends GameObject implements Updatable {
 	private final float speed;
 	private float speedFactor = 1.0f;
 
-	public StarObject(float xPosition, float yPosition, float relativeDiameter,
-			int paintColor, float speed, Context context) {
+	public StarObject(float xPosition, float yPosition, float relativeDiameter, int paintColor, float speed,
+			Context context)
+	{
 		super(xPosition, yPosition, context);
 
 		this.speed = speed;
@@ -28,36 +30,39 @@ public class StarObject extends GameObject implements Updatable {
 	}
 
 	@Override
-	public void draw(Canvas c) {
+	public void draw(Canvas c)
+	{
 		int diameter = (int) (relativeDiameter * c.getWidth());
 
-		starRect.set((xPosition * c.getWidth() - diameter),
-				(yPosition * c.getHeight() - diameter),
-				(xPosition * c.getWidth() + diameter),
-				(yPosition * c.getHeight() + diameter));
+		starRect.set((getX() * c.getWidth() - diameter), (getY() * c.getHeight() - diameter),
+				(getX() * c.getWidth() + diameter), (getY() * c.getHeight() + diameter));
 		c.drawOval(starRect, starColor);
 	}
 
 	@Override
-	public void update(BaseGameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler)
+	{
 
-		yPosition = yPosition + speed * speedFactor;
-		if (yPosition >= 1) {
-			xPosition = (float) Math.random();
-			yPosition = (float) -(Math.random() * 0.1);
+		setPosition(getX(), getY() + speed * speedFactor);
+		if (getX() >= 1)
+		{
+			setPosition((float) Math.random(), (float) -(Math.random() * 0.1));
 		}
 
 	}
 
-	public void accelerate(float factor) {
+	public void accelerate(float factor)
+	{
 		speedFactor += factor;
 	}
 
-	public float getAcceleration() {
+	public float getAcceleration()
+	{
 		return speedFactor;
 	}
 
-	public void reset() {
+	public void reset()
+	{
 		speedFactor = 1;
 	}
 }

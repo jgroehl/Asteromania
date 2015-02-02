@@ -62,8 +62,8 @@ public class Label extends GameObject
 			textChanged = false;
 		}
 
-		float x = xPosition * c.getWidth();
-		float y = yPosition * c.getHeight();
+		float x = getX() * c.getWidth();
+		float y = getY() * c.getHeight();
 
 		switch (alignment)
 		{

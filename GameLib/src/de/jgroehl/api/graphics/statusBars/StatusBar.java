@@ -7,7 +7,8 @@ import android.graphics.RectF;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.GraphicsObject;
 
-public class StatusBar extends GraphicsObject {
+public class StatusBar extends GraphicsObject
+{
 
 	public static final int EMPTY = 0;
 	public static final int FULL = 1;
@@ -19,50 +20,52 @@ public class StatusBar extends GraphicsObject {
 	private final RectF bounds = new RectF();
 	private final int type;
 
-	public StatusBar(int maximum, float xPosition, float yPosition,
-			float relativeWidth, float relativeHeight, Context context,
-			int type, int color) {
+	public StatusBar(int maximum, float xPosition, float yPosition, float relativeWidth, float relativeHeight,
+			Context context, int type, int color)
+	{
 		super(xPosition, yPosition, relativeWidth, relativeHeight, context);
 		contentsPaint.setStyle(Paint.Style.FILL);
 		contentsPaint.setColor(color);
 		this.type = type;
 
 		this.maximum = maximum;
-		switch (type) {
-		case FULL:
-			currentValue = maximum;
-			break;
-		case EMPTY:
-		default:
-			currentValue = 0;
-			break;
+		switch (type)
+		{
+			case FULL:
+				currentValue = maximum;
+				break;
+			case EMPTY:
+			default:
+				currentValue = 0;
+				break;
 
 		}
 	}
 
 	@Override
-	public void update(BaseGameHandler gameHandler) {
+	public void update(BaseGameHandler gameHandler)
+	{
 	}
 
 	@Override
-	public void draw(Canvas c) {
-		fullHpBounds.set(xPosition * c.getWidth(), yPosition * c.getHeight(),
-				xPosition * c.getWidth() + relativeWidth * c.getWidth(),
-				yPosition * c.getHeight() + relativeHeight * c.getHeight());
-		bounds.set(xPosition * c.getWidth(), yPosition * c.getHeight(),
-				xPosition
-						* c.getWidth()
-						+ (relativeWidth * c.getWidth() * (currentValue < 0 ? 0
-								: currentValue)) / maximum,
-				yPosition * c.getHeight() + relativeHeight * c.getHeight());
+	public void draw(Canvas c)
+	{
+		fullHpBounds.set(getX() * c.getWidth(), getY() * c.getHeight(),
+				getX() * c.getWidth() + relativeWidth * c.getWidth(),
+				getY() * c.getHeight() + relativeHeight * c.getHeight());
+		bounds.set(getX() * c.getWidth(), getY() * c.getHeight(), getX() * c.getWidth()
+				+ (relativeWidth * c.getWidth() * (currentValue < 0 ? 0 : currentValue)) / maximum,
+				getY() * c.getHeight() + relativeHeight * c.getHeight());
 		c.drawRect(bounds, contentsPaint);
 	}
 
-	public void setColor(int color) {
+	public void setColor(int color)
+	{
 		contentsPaint.setColor(color);
 	}
 
-	public void setMaximum(int maximum) {
+	public void setMaximum(int maximum)
+	{
 		this.maximum = maximum;
 	}
 
@@ -73,7 +76,8 @@ public class StatusBar extends GraphicsObject {
 	 *            must be 0 <= currentValue <= maximum else currentValue will be
 	 *            set to 0 or maximum
 	 */
-	public void setCurrentValue(int currentValue) {
+	public void setCurrentValue(int currentValue)
+	{
 		if (currentValue > maximum)
 			currentValue = maximum;
 		if (currentValue < 0)
@@ -81,23 +85,27 @@ public class StatusBar extends GraphicsObject {
 		this.currentValue = currentValue;
 	}
 
-	public int getCurrentValue() {
+	public int getCurrentValue()
+	{
 		return currentValue;
 	}
 
-	public int getMaximum() {
+	public int getMaximum()
+	{
 		return maximum;
 	}
 
-	public void reset() {
-		switch (type) {
-		case FULL:
-			currentValue = maximum;
-			break;
-		case EMPTY:
-		default:
-			currentValue = 0;
-			break;
+	public void reset()
+	{
+		switch (type)
+		{
+			case FULL:
+				currentValue = maximum;
+				break;
+			case EMPTY:
+			default:
+				currentValue = 0;
+				break;
 
 		}
 	}

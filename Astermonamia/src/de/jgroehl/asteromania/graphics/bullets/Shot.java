@@ -47,8 +47,8 @@ public class Shot extends AbstractDamagingAbility
 			}
 		}
 
-		yPosition = yPosition + (shotSpeed * direction);
-		if (yPosition > 1.1f || yPosition < -0.1f)
+		setPosition(getX(), getY() + (shotSpeed * direction));
+		if (getY() > 1.1f || getY() < -0.1f)
 		{
 			handler.remove(this);
 			if (getTarget().equals(Target.ENEMY))

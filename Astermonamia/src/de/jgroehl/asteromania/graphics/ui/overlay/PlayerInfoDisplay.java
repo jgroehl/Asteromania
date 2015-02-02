@@ -69,21 +69,21 @@ public class PlayerInfoDisplay extends GameObject
 
 			textPaint.setColor(Color.rgb(40, 40, 60));
 			c.drawText(
-					context.getResources().getString(de.jgroehl.asteromania.R.string.level) + " "
+					getContext().getResources().getString(de.jgroehl.asteromania.R.string.level) + " "
 							+ String.valueOf(playerInfo.getLevel()), 0.45f * c.getWidth() + 1,
 					0.055f * c.getHeight() + 1, textPaint);
 			c.drawText(
-					context.getResources().getString(de.jgroehl.asteromania.R.string.score) + " "
+					getContext().getResources().getString(de.jgroehl.asteromania.R.string.score) + " "
 							+ String.valueOf(playerInfo.getCurrentHighscore())
 							+ (AsteromaniaMainActivity.DEBUG ? " (" + playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth() + 1, 0.11f * c.getHeight() + 1, textPaint);
 			textPaint.setColor(Color.rgb(250, 250, 150));
 			c.drawText(
-					context.getResources().getString(de.jgroehl.asteromania.R.string.level) + " "
+					getContext().getResources().getString(de.jgroehl.asteromania.R.string.level) + " "
 							+ String.valueOf(playerInfo.getLevel()), 0.45f * c.getWidth(), 0.055f * c.getHeight(),
 					textPaint);
 			c.drawText(
-					context.getResources().getString(de.jgroehl.asteromania.R.string.score) + " "
+					getContext().getResources().getString(de.jgroehl.asteromania.R.string.score) + " "
 							+ String.valueOf(playerInfo.getCurrentHighscore())
 							+ (AsteromaniaMainActivity.DEBUG ? " (" + playerInfo.getBonusFactor() + ")" : ""),
 					0.45f * c.getWidth(), 0.11f * c.getHeight(), textPaint);

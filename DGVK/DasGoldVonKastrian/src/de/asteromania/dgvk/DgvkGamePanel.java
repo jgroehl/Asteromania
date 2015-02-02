@@ -1,6 +1,9 @@
 package de.asteromania.dgvk;
 
 import android.content.Context;
+import de.asteromania.dgvk.control.DgvkGameHandler;
+import de.asteromania.dgvk.map.MapGraphicsObject;
+import de.asteromania.dgvk.player.Player;
 import de.asteromania.dgvk.properties.IntentHandler;
 import de.asteromania.dgvk.properties.IntentHandler.Intent;
 import de.jgroehl.api.AbstractGamePanel;
@@ -37,5 +40,9 @@ public class DgvkGamePanel extends AbstractGamePanel
 						IntentHandler.startIntent(Intent.LOGIN, getContext());
 					}
 				}, getContext()), GameState.STARTING_SCREEN);
+		getBaseGameHandler().add(new Player(getContext()), GameState.MAIN);
+		getBaseGameHandler().add(
+				new MapGraphicsObject(((DgvkGameHandler) getBaseGameHandler()).getMap(), 0f, 0f,
+						R.drawable.map_item_test, 0.2f, getContext()), GameState.MAIN);
 	}
 }

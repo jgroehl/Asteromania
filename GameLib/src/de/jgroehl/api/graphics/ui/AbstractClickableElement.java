@@ -28,8 +28,8 @@ public abstract class AbstractClickableElement extends GraphicsObject implements
 	@Override
 	public boolean isClicked(int x, int y, int screenWidth, int screenHeight)
 	{
-		return xPosition * screenWidth < x && xPosition * screenWidth + getRelativeWidth() * screenWidth > x
-				&& yPosition * screenHeight < y && yPosition * screenHeight + getRelativeHeight() * screenHeight > y;
+		return getX() * screenWidth < x && getX() * screenWidth + getRelativeWidth() * screenWidth > x
+				&& getY() * screenHeight < y && getY() * screenHeight + getRelativeHeight() * screenHeight > y;
 	}
 
 	@Override

@@ -70,27 +70,27 @@ public abstract class BaseEnemy extends SimpleAnimatedObject implements Hitable,
 			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) handler;
 			if (moveRight)
 			{
-				xPosition = xPosition + speed;
-				if (xPosition > SCREEN_MAXIMUM - getRelativeWidth() / 2)
+				setPosition(getX() + speed, getY());
+				if (getX() > SCREEN_MAXIMUM - getRelativeWidth() / 2)
 					moveRight = false;
 			}
 			else
 			{
-				xPosition = xPosition - speed;
-				if (xPosition < SCREEN_MINIMUM - getRelativeWidth() / 2)
+				setPosition(getX() - speed, getY());
+				if (getX() < SCREEN_MINIMUM - getRelativeWidth() / 2)
 					moveRight = true;
 			}
 
 			if (moveTop)
 			{
-				yPosition = yPosition - speed / 2;
-				if (yPosition < UPPER_BOUND)
+				setPosition(getX(), getY() - speed / 2);
+				if (getY() < UPPER_BOUND)
 					moveTop = false;
 			}
 			else
 			{
-				yPosition = yPosition + speed / 2;
-				if (yPosition > LOWER_BOUND)
+				setPosition(getX(), getY() + speed / 2);
+				if (getY() > LOWER_BOUND)
 					moveTop = true;
 			}
 
@@ -99,7 +99,7 @@ public abstract class BaseEnemy extends SimpleAnimatedObject implements Hitable,
 				shoot(asteromaniaGameHandler);
 			}
 
-			hpBar.setPosition(xPosition, yPosition + relativeHeight);
+			hpBar.setPosition(getX(), getY() + relativeHeight);
 			hpBar.setRelativeWidth(relativeWidth);
 
 			super.update(handler);
@@ -117,7 +117,7 @@ public abstract class BaseEnemy extends SimpleAnimatedObject implements Hitable,
 		{
 			c.drawText(hpBar.getCurrentValue() + "/" + hpBar.getMaximum(), getX() * c.getWidth(),
 					(getY() + getRelativeHeight()) * c.getHeight() + textPaint.getTextSize(), textPaint);
-			c.drawText(context.getResources().getString(de.jgroehl.asteromania.R.string.dmg) + ": " + shotDamage,
+			c.drawText(getContext().getResources().getString(de.jgroehl.asteromania.R.string.dmg) + ": " + shotDamage,
 					getX() * c.getWidth(),
 					(getY() + getRelativeHeight()) * c.getHeight() + textPaint.getTextSize() * 2, textPaint);
 		}

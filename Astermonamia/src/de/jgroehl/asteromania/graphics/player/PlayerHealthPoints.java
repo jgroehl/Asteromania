@@ -25,10 +25,10 @@ public class PlayerHealthPoints extends FramedHpBar
 		float textY = (getY() + getRelativeHeight() * 0.9f) * c.getHeight();
 		textPaint.setTextSize(getRelativeHeight() * 0.8f * c.getHeight());
 		textPaint.setColor(Color.BLACK);
-		c.drawText(context.getResources().getString(de.jgroehl.asteromania.R.string.hp) + ": " + getCurrentValue()
+		c.drawText(getContext().getResources().getString(de.jgroehl.asteromania.R.string.hp) + ": " + getCurrentValue()
 				+ "/" + getMaximum(), textX + 1, textY + 1, textPaint);
 		textPaint.setColor(Color.GRAY);
-		c.drawText(context.getResources().getString(de.jgroehl.asteromania.R.string.hp) + ": " + getCurrentValue()
+		c.drawText(getContext().getResources().getString(de.jgroehl.asteromania.R.string.hp) + ": " + getCurrentValue()
 				+ "/" + getMaximum(), textX, textY, textPaint);
 	}
 

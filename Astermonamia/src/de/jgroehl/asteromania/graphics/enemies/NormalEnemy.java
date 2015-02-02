@@ -37,8 +37,8 @@ public class NormalEnemy extends BaseEnemy
 	protected void shoot(AsteromaniaGameHandler handler)
 	{
 		handler.getSoundManager().playEnemyShotSound();
-		handler.add(new Shot(xPosition + relativeWidth / 2, yPosition + relativeHeight * 0.4f, Target.PLAYER,
-				getShotSpeed(), context, getShotDamage(), this), GameState.MAIN);
+		handler.add(new Shot(getX() + relativeWidth / 2, getY() + relativeHeight * 0.4f, Target.PLAYER, getShotSpeed(),
+				getContext(), getShotDamage(), this), GameState.MAIN);
 	}
 
 	@Override

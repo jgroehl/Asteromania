@@ -14,7 +14,8 @@ import de.jgroehl.asteromania.control.AsteromaniaGameHandler;
 import de.jgroehl.asteromania.control.PlayerInfo;
 import de.jgroehl.asteromania.graphics.interfaces.Hitable;
 
-public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
+public class SpaceShip extends AnimatedGraphicsObject implements Hitable
+{
 
 	private static final float RELATIVE_WIDTH = 0.12f;
 	private static final String TAG = SpaceShip.class.getSimpleName();
@@ -30,133 +31,138 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 	private final SimpleAnimatedObject[] flames = new SimpleAnimatedObject[2];
 	private final ShieldGenerator shield;
 
-	public SpaceShip(SensorHandler sensorHandler, Context context,
-			PlayerInfo playerInfo) {
-		super(0.6f, 0.7f, R.drawable.spaceship2, RELATIVE_WIDTH, IMAGE_FRAMES,
-				ANIMATION_TIME, context);
+	public SpaceShip(SensorHandler sensorHandler, Context context, PlayerInfo playerInfo)
+	{
+		super(0.6f, 0.7f, R.drawable.spaceship2, RELATIVE_WIDTH, IMAGE_FRAMES, ANIMATION_TIME, context);
 		this.sensorHandler = sensorHandler;
-		flames[0] = new SimpleAnimatedObject(xPosition, yPosition,
-				R.drawable.fire, 0.02f, 6, 75, context);
-		flames[1] = new SimpleAnimatedObject(xPosition, yPosition,
-				R.drawable.fire, 0.02f, 6, 75, context);
-		shield = new ShieldGenerator(xPosition, xPosition, context, playerInfo);
+		flames[0] = new SimpleAnimatedObject(getX(), getY(), R.drawable.fire, 0.02f, 6, 75, context);
+		flames[1] = new SimpleAnimatedObject(getX(), getY(), R.drawable.fire, 0.02f, 6, 75, context);
+		shield = new ShieldGenerator(getX(), getY(), context, playerInfo);
 		Log.d(TAG, "Player Object created.");
 	}
 
 	@Override
-	public void update(BaseGameHandler handler) {
+	public void update(BaseGameHandler handler)
+	{
 
 		float pitch = sensorHandler.getPitchAngle();
 
-		if (Math.abs(pitch) > MINIMUM_PITCH_VALUE) {
+		if (Math.abs(pitch) > MINIMUM_PITCH_VALUE)
+		{
 			movePlayerAccordingToPitch(pitch, handler);
 			updatePlayerFrame(pitch);
-		} else {
+		}
+		else
+		{
 			normalizePlayerFrame();
 		}
-		flames[0].setPosition(xPosition + getRelativeWidth() * 5 / 8
-				- flames[0].getRelativeWidth() / 2, yPosition
+		flames[0].setPosition(getX() + getRelativeWidth() * 5 / 8 - flames[0].getRelativeWidth() / 2, getY()
 				+ getRelativeHeight() - flames[0].getRelativeHeight() / 5);
 		flames[0].update(handler);
-		flames[1].setPosition(xPosition + getRelativeWidth() * 3 / 9
-				- flames[1].getRelativeWidth() / 2, yPosition
+		flames[1].setPosition(getX() + getRelativeWidth() * 3 / 9 - flames[1].getRelativeWidth() / 2, getY()
 				+ getRelativeHeight() - flames[1].getRelativeHeight() / 5);
 		flames[1].update(handler);
-		shield.setPosition(
-				xPosition + getRelativeWidth() / 2 - shield.getRelativeWidth()
-						/ 2,
-				yPosition + getRelativeHeight() / 2
-						- shield.getRelativeHeight() / 2);
+		shield.setPosition(getX() + getRelativeWidth() / 2 - shield.getRelativeWidth() / 2, getY()
+				+ getRelativeHeight() / 2 - shield.getRelativeHeight() / 2);
 		shield.update(handler);
 	}
 
 	@Override
-	public void draw(Canvas c) {
+	public void draw(Canvas c)
+	{
 		super.draw(c);
 		flames[0].draw(c);
 		flames[1].draw(c);
 		shield.draw(c);
 	};
 
-	private void normalizePlayerFrame() {
-		if (getFrame() > normalFrame) {
+	private void normalizePlayerFrame()
+	{
+		if (getFrame() > normalFrame)
+		{
 			setFrame(getFrame() - 1);
-		} else if (getFrame() < normalFrame) {
+		}
+		else if (getFrame() < normalFrame)
+		{
 			setFrame(getFrame() + 1);
 		}
 	}
 
-	private void updatePlayerFrame(float pitch) {
+	private void updatePlayerFrame(float pitch)
+	{
 
-		if (pitch > 0) {
+		if (pitch > 0)
+		{
 			if (getFrame() > 0)
 				setFrame(getFrame() - 1);
-		} else {
+		}
+		else
+		{
 			if (getFrame() < getMaxFrame() - 1)
 				setFrame(getFrame() + 1);
 		}
 
 	}
 
-	private void movePlayerAccordingToPitch(float pitch, BaseGameHandler handler) {
+	private void movePlayerAccordingToPitch(float pitch, BaseGameHandler handler)
+	{
 		float sign = Math.signum(pitch);
 
-		if (Math.abs(pitch) > MAX_DEGREE) {
+		if (Math.abs(pitch) > MAX_DEGREE)
+		{
 			pitch = 2 * MAX_DEGREE - Math.abs(pitch);
 		}
 
 		float value = (float) (Math.pow(Math.abs(pitch) / MAX_DEGREE, 1.4f));
 
-		if (handler instanceof AsteromaniaGameHandler) {
+		if (handler instanceof AsteromaniaGameHandler)
+		{
 			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) handler;
 
-			if (value > MAX_SHIP_SPEED
-					* asteromaniaGameHandler.getPlayerInfo()
-							.getMaxSpeedFactor())
-				value = MAX_SHIP_SPEED
-						* asteromaniaGameHandler.getPlayerInfo()
-								.getMaxSpeedFactor();
+			if (value > MAX_SHIP_SPEED * asteromaniaGameHandler.getPlayerInfo().getMaxSpeedFactor())
+				value = MAX_SHIP_SPEED * asteromaniaGameHandler.getPlayerInfo().getMaxSpeedFactor();
 		}
 
-		xPosition -= value * sign;
+		setPosition(getX() - value * sign, getY());
 
-		if (xPosition <= SCREEN_MINIMUM - getRelativeWidth() / 2)
-			xPosition = SCREEN_MINIMUM - getRelativeWidth() / 2;
-		if (xPosition >= SCREEN_MAXIMUM - getRelativeWidth() / 2)
-			xPosition = SCREEN_MAXIMUM - getRelativeWidth() / 2;
+		if (getX() <= SCREEN_MINIMUM - getRelativeWidth() / 2)
+			setPosition(SCREEN_MINIMUM - getRelativeWidth() / 2, getY());
+		if (getX() >= SCREEN_MAXIMUM - getRelativeWidth() / 2)
+			setPosition(SCREEN_MAXIMUM - getRelativeWidth() / 2, getY());
 
 	}
 
-	public float getShotSpeed() {
+	public float getShotSpeed()
+	{
 		return BASIC_SHOT_SPEED;
 	}
 
 	@Override
-	public void getShot(BaseGameHandler gameHandler,
-			AbstractDamagingAbility shot) {
+	public void getShot(BaseGameHandler gameHandler, AbstractDamagingAbility shot)
+	{
 
-		if (gameHandler instanceof AsteromaniaGameHandler) {
+		if (gameHandler instanceof AsteromaniaGameHandler)
+		{
 			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
 
-			if (shot.getTarget() == Target.PLAYER) {
-				if (shield.isActive()) {
-					asteromaniaGameHandler.getSoundManager()
-							.playShieldHitSound();
+			if (shot.getTarget() == Target.PLAYER)
+			{
+				if (shield.isActive())
+				{
+					asteromaniaGameHandler.getSoundManager().playShieldHitSound();
 					shield.minorHit();
-				} else {
-					asteromaniaGameHandler.getSoundManager()
-							.playPlayerHitSound();
+				}
+				else
+				{
+					asteromaniaGameHandler.getSoundManager().playPlayerHitSound();
 					asteromaniaGameHandler.getPlayerInfo().resetScoreBonus();
 					asteromaniaGameHandler
 							.getPlayerInfo()
 							.getHealthPoints()
 							.setCurrentValue(
-									asteromaniaGameHandler.getPlayerInfo()
-											.getHealthPoints()
-											.getCurrentValue()
+									asteromaniaGameHandler.getPlayerInfo().getHealthPoints().getCurrentValue()
 											- shot.getDamage());
-					if (asteromaniaGameHandler.getPlayerInfo()
-							.getHealthPoints().getCurrentValue() <= 0)
+					if (asteromaniaGameHandler.getPlayerInfo().getHealthPoints().getCurrentValue() <= 0)
 						asteromaniaGameHandler.gameLost();
 				}
 				gameHandler.remove(shot);
@@ -164,35 +170,37 @@ public class SpaceShip extends AnimatedGraphicsObject implements Hitable {
 		}
 	}
 
-	public void getHitByAsteroid(AsteromaniaGameHandler gameHandler, int damage) {
-		if (shield.isActive()) {
+	public void getHitByAsteroid(AsteromaniaGameHandler gameHandler, int damage)
+	{
+		if (shield.isActive())
+		{
 			gameHandler.getSoundManager().playShieldHitSound();
 			shield.majorHit();
-		} else {
+		}
+		else
+		{
 			gameHandler.getSoundManager().playPlayerHitSound();
 			gameHandler.getPlayerInfo().resetScoreBonus();
-			gameHandler
-					.getPlayerInfo()
-					.getHealthPoints()
-					.setCurrentValue(
-							gameHandler.getPlayerInfo().getHealthPoints()
-									.getCurrentValue()
-									- damage);
+			gameHandler.getPlayerInfo().getHealthPoints()
+					.setCurrentValue(gameHandler.getPlayerInfo().getHealthPoints().getCurrentValue() - damage);
 			if (gameHandler.getPlayerInfo().getHealthPoints().getCurrentValue() <= 0)
 				gameHandler.gameLost();
 		}
 	}
 
-	public int getShotDamage() {
+	public int getShotDamage()
+	{
 		return BASIC_SHOT_DAMAGE;
 	}
 
-	public void addShieldSeconds(int newLevelShieldSeconds) {
+	public void addShieldSeconds(int newLevelShieldSeconds)
+	{
 		shield.addShieldSeconds(newLevelShieldSeconds);
 	}
 
 	@Override
-	public boolean isAlive() {
+	public boolean isAlive()
+	{
 		return true;
 	}
 

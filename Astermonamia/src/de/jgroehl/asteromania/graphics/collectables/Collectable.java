@@ -28,15 +28,14 @@ public class Collectable extends AnimatedGraphicsObject
 		{
 
 			AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
-			yPosition += vSpeed;
-			if (yPosition > GraphicsObject.SCREEN_MAXIMUM)
+			setPosition(getX(), getY() + vSpeed);
+			if (getY() > GraphicsObject.SCREEN_MAXIMUM)
 				gameHandler.remove(this);
 
 			if (onCollect != null)
-				if (imagesOverlap(this.xPosition, this.yPosition, this.relativeWidth, this.relativeHeight,
-						asteromaniaGameHandler.getPlayer().getX(), asteromaniaGameHandler.getPlayer().getY(),
-						asteromaniaGameHandler.getPlayer().getRelativeWidth(), asteromaniaGameHandler.getPlayer()
-								.getRelativeHeight()))
+				if (imagesOverlap(getX(), getY(), this.relativeWidth, this.relativeHeight, asteromaniaGameHandler
+						.getPlayer().getX(), asteromaniaGameHandler.getPlayer().getY(), asteromaniaGameHandler
+						.getPlayer().getRelativeWidth(), asteromaniaGameHandler.getPlayer().getRelativeHeight()))
 				{
 					onCollect.action(asteromaniaGameHandler);
 					asteromaniaGameHandler.remove(this);

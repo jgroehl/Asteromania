@@ -1,7 +1,6 @@
 package de.jgroehl.asteromania.graphics.bullets;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
@@ -19,7 +18,6 @@ public class TargetedShot extends AbstractDamagingAbility
 	private static final float ROCKET_WIDTH = 0.1f;
 	private static final int DAMAGE_FACTOR = 2;
 	private final BaseEnemy targetEnemy;
-	private float rotation = 0;
 	private Paint crosshairsPaint = new Paint();
 
 	/**
@@ -43,21 +41,6 @@ public class TargetedShot extends AbstractDamagingAbility
 	}
 
 	@Override
-	public void draw(Canvas c)
-	{
-		c.save(Canvas.MATRIX_SAVE_FLAG);
-		float x = getX();
-		float y = getY();
-		c.translate((getX() + getRelativeWidth() / 2) * c.getWidth(),
-				(getY() + getRelativeHeight() / 2) * c.getHeight());
-		c.rotate(-(float) (rotation * 180 / Math.PI));
-		setPosition(0, 0);
-		super.draw(c);
-		c.restore();
-		setPosition(x, y);
-	}
-
-	@Override
 	public void update(BaseGameHandler gameHandler)
 	{
 		AsteromaniaGameHandler handler = (AsteromaniaGameHandler) gameHandler;
@@ -67,8 +50,8 @@ public class TargetedShot extends AbstractDamagingAbility
 			handler.getPlayerInfo().incrementMisses();
 			return;
 		}
-		rotation = calcRotation();
-		setPosition((float) (getX() + Math.cos(rotation) * 0.01f), (float) (getY() - Math.sin(rotation) * 0.01f));
+		rotateTowardsLocation(targetEnemy.getX(), targetEnemy.getY());
+		moveInDirectionOfRotation(0.01f);
 
 		for (Hitable hitable : handler.getHitableObjects())
 		{
@@ -80,11 +63,6 @@ public class TargetedShot extends AbstractDamagingAbility
 					hitable.getShot(handler, this);
 			}
 		}
-	}
-
-	private float calcRotation()
-	{
-		return (float) Math.atan2(-(targetEnemy.getY() - getY()), (targetEnemy.getX() - getX()));
 	}
 
 	public static TargetedShot createShotWithRandomTarget(AsteromaniaGameHandler gameHandler)
