@@ -44,7 +44,7 @@ public class StarObject extends GameObject implements Updatable
 	{
 
 		setPosition(getX(), getY() + speed * speedFactor);
-		if (getX() >= 1)
+		if (getY() >= SCREEN_MAXIMUM)
 		{
 			setPosition((float) Math.random(), (float) -(Math.random() * 0.1));
 		}

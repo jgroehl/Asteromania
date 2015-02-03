@@ -26,7 +26,8 @@ public class Player extends AnimatedGraphicsObject
 		if (isRelevantDistance(tapPosition, mapPosition))
 		{
 			setFrame((getFrame() + 1) % getMaxFrame());
-			rotateTowardsLocation(tapPosition);
+			rotateTowardsLocation(-mapPosition.getX() + getX() + getRelativeWidth() / 2, -mapPosition.getY() + getY()
+					+ getRelativeHeight() / 2, tapPosition.getX(), tapPosition.getY());
 			dgvkGameHandler.updateMap((float) (-Math.cos(getRotation()) * STEP_WIDTH),
 					(float) (Math.sin(getRotation()) * STEP_WIDTH));
 		}
@@ -35,7 +36,9 @@ public class Player extends AnimatedGraphicsObject
 
 	private boolean isRelevantDistance(Point2d tapPosition, Point2d mapPosition)
 	{
-		return Math.abs(tapPosition.getX() - mapPosition.getX() + tapPosition.getY() - mapPosition.getY()) > 2 * STEP_WIDTH;
+		float x = tapPosition.getX() + mapPosition.getX() - getX() - getRelativeWidth() / 2;
+		float y = tapPosition.getY() + mapPosition.getY() - getY() - getRelativeHeight() / 2;
+		return Math.sqrt(x * x + y * y) >= 2 * STEP_WIDTH;
 	}
 
 }

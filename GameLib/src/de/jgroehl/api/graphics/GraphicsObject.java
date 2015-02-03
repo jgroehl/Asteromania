@@ -1,6 +1,5 @@
 package de.jgroehl.api.graphics;
 
-import de.jgroehl.api.utils.Point2d;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -56,14 +55,14 @@ public abstract class GraphicsObject extends GameObject
 		float x = getX();
 		float y = getY();
 
-		startRotate(c);
-
 		if (displayType != DisplayType.NONE)
 		{
 			if (imageCache.get(graphicsId) != null)
 			{
+				startRotate(c);
 				determineRelativeSize(c, imageCache.get(graphicsId)[0]);
 				c.drawBitmap(imageCache.get(graphicsId)[0], getX() * c.getWidth(), getY() * c.getHeight(), imagePaint);
+				finishRotate(c, x, y);
 			}
 			else
 			{
@@ -82,9 +81,6 @@ public abstract class GraphicsObject extends GameObject
 				}
 			}
 		}
-
-		finishRotate(c, x, y);
-
 	}
 
 	protected final void finishRotate(Canvas c, float x, float y)
@@ -104,7 +100,7 @@ public abstract class GraphicsObject extends GameObject
 			c.translate((getX() + getRelativeWidth() / 2) * c.getWidth(),
 					(getY() + getRelativeHeight() / 2) * c.getHeight());
 			c.rotate(-(float) (rotation * 180 / Math.PI));
-			setPosition(0, 0);
+			setPosition(-relativeWidth / 2, -relativeHeight / 2);
 		}
 	}
 
@@ -159,14 +155,9 @@ public abstract class GraphicsObject extends GameObject
 		this.relativeWidth = relativeWidth;
 	}
 
-	public void rotateTowardsLocation(float locX, float locY)
+	public void rotateTowardsLocation(float srcX, float srcY, float locX, float locY)
 	{
-		rotation = (float) Math.atan2(-(locY - getY()), (locX - getX()));
-	}
-
-	public void rotateTowardsLocation(Point2d p2d)
-	{
-		rotateTowardsLocation(p2d.getX(), p2d.getY());
+		rotation = (float) Math.atan2(-(locY - srcY), (locX - srcX));
 	}
 
 	public void moveInDirectionOfRotation(float stepWidth)

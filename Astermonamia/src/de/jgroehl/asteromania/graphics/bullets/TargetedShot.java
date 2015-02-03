@@ -1,9 +1,6 @@
 package de.jgroehl.asteromania.graphics.bullets;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.graphics.AbstractDamagingAbility;
 import de.jgroehl.api.graphics.GraphicsObject;
@@ -18,7 +15,6 @@ public class TargetedShot extends AbstractDamagingAbility
 	private static final float ROCKET_WIDTH = 0.1f;
 	private static final int DAMAGE_FACTOR = 2;
 	private final BaseEnemy targetEnemy;
-	private Paint crosshairsPaint = new Paint();
 
 	/**
 	 * Fires a targeted shot from the players perspective onto an enemy.
@@ -35,9 +31,6 @@ public class TargetedShot extends AbstractDamagingAbility
 		super(xPosition, yPosition, de.jgroehl.asteromania.R.drawable.rocket, ROCKET_WIDTH, Target.ENEMY, damage,
 				context);
 		this.targetEnemy = targetEnemy;
-
-		crosshairsPaint.setColor(Color.RED);
-		crosshairsPaint.setStyle(Style.FILL_AND_STROKE);
 	}
 
 	@Override
@@ -50,7 +43,7 @@ public class TargetedShot extends AbstractDamagingAbility
 			handler.getPlayerInfo().incrementMisses();
 			return;
 		}
-		rotateTowardsLocation(targetEnemy.getX(), targetEnemy.getY());
+		rotateTowardsLocation(getX(), getY(), targetEnemy.getX(), targetEnemy.getY());
 		moveInDirectionOfRotation(0.01f);
 
 		for (Hitable hitable : handler.getHitableObjects())

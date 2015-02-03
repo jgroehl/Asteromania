@@ -35,7 +35,6 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject
 	{
 		float x = getX();
 		float y = getY();
-		startRotate(c);
 
 		if (imageCache.get(graphicsId) == null)
 		{
@@ -56,12 +55,13 @@ public abstract class AnimatedGraphicsObject extends GraphicsObject
 		}
 		else
 		{
+			startRotate(c);
 			determineRelativeSize(c, imageCache.get(graphicsId)[currentFrame]);
 			c.drawBitmap(imageCache.get(graphicsId)[currentFrame], getX() * c.getWidth(), getY() * c.getHeight(),
 					imagePaint);
+			finishRotate(c, x, y);
 		}
 
-		finishRotate(c, x, y);
 	}
 
 	protected void setFrame(int frame)

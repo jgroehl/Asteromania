@@ -2,7 +2,9 @@ package de.asteromania.dgvk.control;
 
 import android.content.Context;
 import android.view.MotionEvent;
+import de.asteromania.dgvk.R;
 import de.asteromania.dgvk.activities.DgvkMainActivity;
+import de.asteromania.dgvk.map.MapGraphicsObject;
 import de.jgroehl.api.control.BaseGameHandler;
 import de.jgroehl.api.control.GameState;
 import de.jgroehl.api.utils.Point2d;
@@ -27,7 +29,12 @@ public class DgvkGameHandler extends BaseGameHandler
 	@Override
 	public void handleEvent(MotionEvent event, Context context, int screenWidth, int screenHeight)
 	{
-		lastTapPosition = new Point2d(event.getX() / screenWidth, event.getY() / screenHeight);
+		lastTapPosition = new Point2d(-map.getMapPosition().getX() + event.getX() / screenWidth, -map.getMapPosition()
+				.getY() + event.getY() / screenHeight);
+
+		add(new MapGraphicsObject(map, lastTapPosition.getX(), lastTapPosition.getY(), R.drawable.red, 0.01f,
+				getContext()), GameState.MAIN);
+
 		super.handleEvent(event, context, screenWidth, screenHeight);
 	}
 
