@@ -1,5 +1,7 @@
 package de.asteromania.doitlist.activities;
 
+import java.util.Iterator;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 import de.asteromania.doitlist.R;
 import de.asteromania.doitlist.adapter.DoItAdapter;
+import de.asteromania.doitlist.domain.DoItTask;
 import de.asteromania.doitlist.intent.IntentHandler;
 import de.asteromania.doitlist.intent.IntentHandler.Intent;
 
@@ -27,6 +30,17 @@ public class DoItMainActivity extends AbstractDoItActivity
 		ListView listView = (ListView) findViewById(R.id.todo_listview);
 		DoItAdapter adapter = new DoItAdapter(getDoItTasks().getTasks(), this);
 		listView.setAdapter(adapter);
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		Iterator<DoItTask> it = getDoItTasks().getTasks().iterator();
+		while (it.hasNext())
+			if (it.next().isFinished())
+				it.remove();
+		writeTasks();
+		super.onDestroy();
 	}
 
 	@Override

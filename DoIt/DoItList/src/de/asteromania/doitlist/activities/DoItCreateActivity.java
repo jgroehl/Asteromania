@@ -20,6 +20,13 @@ public class DoItCreateActivity extends AbstractDoItActivity
 		editText = (EditText) findViewById(R.id.edittext_create_doittask);
 	}
 
+	@Override
+	protected void onPause()
+	{
+		writeTasks();
+		super.onPause();
+	}
+
 	public void okayClicked(View view)
 	{
 		if (!editText.getText().toString().trim().isEmpty())

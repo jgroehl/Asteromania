@@ -25,15 +25,7 @@ public class AbstractDoItActivity extends ActionBarActivity
 		tasks = readTasks();
 	}
 
-	@Override
-	protected void onPause()
-	{
-		Log.d(TAG, "On Pause called.");
-		writeTasks();
-		super.onPause();
-	}
-
-	private void writeTasks()
+	protected void writeTasks()
 	{
 		FileOutputStream out;
 		try
@@ -48,7 +40,7 @@ public class AbstractDoItActivity extends ActionBarActivity
 		}
 	}
 
-	private DoItTasks readTasks()
+	protected DoItTasks readTasks()
 	{
 		FileInputStream fis = null;
 		try
