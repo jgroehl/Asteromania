@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textview_create_doittask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edittext_create_doittask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_create_doittask"
+        android:hint="@string/create_doittask_hint"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/button_create_doittask_ok"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_create_doittask"
+        android:text="@string/button_ok" 
+        android:onClick="okayClicked"/>
+
+    <Button
+        android:id="@+id/button_create_doittask_cancel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_create_doittask"
+        android:layout_toEndOf="@id/button_create_doittask_ok"
+        android:layout_toRightOf="@id/button_create_doittask_ok"
+        android:text="@string/button_cancel" 
+        android:onClick="cancelClicked"/>
+
+</RelativeLayout>

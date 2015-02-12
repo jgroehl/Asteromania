@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Do It List</string>
+    <string name="action_quit">Quit</string>
+    <string name="add_button">New Entry</string>
+    <string name="create_doittask_hint">Enter the Task Data here.</string>
+    <string name="button_ok">Okay</string>
+    <string name="button_cancel">Cancel</string>
+
+</resources>
