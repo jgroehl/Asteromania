@@ -24,6 +24,13 @@ public class AbstractDoItActivity extends ActionBarActivity
 		super.onResume();
 		tasks = readTasks();
 	}
+	
+	@Override
+	protected void onPause()
+	{
+		writeTasks();
+		super.onPause();
+	}
 
 	protected void writeTasks()
 	{

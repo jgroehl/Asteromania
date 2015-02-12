@@ -1,5 +1,7 @@
 package de.asteromania.doitlist.domain;
 
+import java.util.Date;
+
 import org.simpleframework.xml.Default;
 
 @Default
@@ -7,6 +9,7 @@ public class DoItTask
 {
 	private long id = System.currentTimeMillis();
 	private String text;
+	private Date date;
 	private boolean finished = false;
 
 	@Deprecated
@@ -14,9 +17,10 @@ public class DoItTask
 	{
 	}
 
-	public DoItTask(String text)
+	public DoItTask(String text, Date date)
 	{
 		this.text = text;
+		this.date = date;
 	}
 
 	public String getText()
@@ -42,5 +46,10 @@ public class DoItTask
 	public void setFinished(boolean finished)
 	{
 		this.finished = finished;
+	}
+
+	public Date getDate()
+	{
+		return date;
 	}
 }

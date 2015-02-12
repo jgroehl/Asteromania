@@ -14,24 +14,23 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textview_create_doittask"
         android:hint="@string/create_doittask_hint"
-        android:inputType="text" />
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLength="2000"
+        android:maxLines="4" />
+
+    <DatePicker
+        android:id="@+id/date_picker_create_doittask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_create_doittask"
+        android:calendarViewShown="false" />
 
     <Button
         android:id="@+id/button_create_doittask_ok"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edittext_create_doittask"
-        android:text="@string/button_ok" 
-        android:onClick="okayClicked"/>
-
-    <Button
-        android:id="@+id/button_create_doittask_cancel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edittext_create_doittask"
-        android:layout_toEndOf="@id/button_create_doittask_ok"
-        android:layout_toRightOf="@id/button_create_doittask_ok"
-        android:text="@string/button_cancel" 
-        android:onClick="cancelClicked"/>
+        android:layout_below="@id/date_picker_create_doittask"
+        android:onClick="okayClicked"
+        android:text="@string/button_ok" />
 
 </RelativeLayout>

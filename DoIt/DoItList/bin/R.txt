@@ -251,10 +251,10 @@ int id activity_chooser_view_content 0x7f050025
 int id add_item_button 0x7f050040
 int id always 0x7f05000b
 int id beginning 0x7f050011
-int id button_create_doittask_cancel 0x7f05003f
-int id button_create_doittask_ok 0x7f05003e
+int id button_create_doittask_ok 0x7f05003f
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
+int id date_picker_create_doittask 0x7f05003e
 int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
