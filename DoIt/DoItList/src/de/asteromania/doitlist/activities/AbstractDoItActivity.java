@@ -5,12 +5,12 @@ import java.io.FileOutputStream;
 
 import org.simpleframework.xml.core.Persister;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import de.asteromania.doitlist.domain.DoItTasks;
 
-public class AbstractDoItActivity extends ActionBarActivity
+public class AbstractDoItActivity extends Activity
 {
 
 	private static final String TAG = DoItMainActivity.class.getSimpleName();

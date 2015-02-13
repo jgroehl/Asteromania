@@ -13,12 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_button" 
-        android:onClick="createTask"/>
+        android:onClick="createTask"
+        android:layout_marginBottom="10sp"/>
 
     <ListView
         android:id="@+id/todo_listview"
         android:layout_below="@id/add_item_button"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:background="#FFFCEF" />
 
 </RelativeLayout>

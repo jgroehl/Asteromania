@@ -12,7 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:textSize="18sp">
 
         <TextView
             android:id="@+id/row_dateview"
@@ -20,14 +21,14 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textStyle="bold"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/row_textview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
 </LinearLayout>
