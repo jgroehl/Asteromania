@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="24sp"
-        android:layout_marginBottom="10sp"
-        android:layout_marginTop="10sp"
+        android:layout_marginBottom="20sp"
+        android:layout_marginTop="20sp"
         android:text="@string/create_doittask_heading" />
 
     <EditText
@@ -19,10 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textview_create_doittask"
         android:hint="@string/create_doittask_hint"
+        android:layout_marginLeft="15sp"
+        android:layout_marginRight="15sp"
         android:inputType="text"
         android:imeOptions="actionDone"
         android:maxLines="4" />
-
+    
     <DatePicker
         android:id="@+id/date_picker_create_doittask"
         android:layout_width="fill_parent"

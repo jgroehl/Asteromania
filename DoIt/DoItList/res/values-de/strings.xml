@@ -4,7 +4,7 @@
     <string name="app_name">Do It List</string>
     <string name="action_quit">Beenden</string>
     <string name="add_button">Neue Aufgabe</string>
-    <string name="create_doittask_hint">Geben SIe Ihren Text hier ein.</string>
+    <string name="create_doittask_hint">Geben Sie Ihren Text hier ein.</string>
     <string name="button_ok">Okay</string>
     <string name="create_doittask_heading">Neue Aufgabe erstellen</string>
 

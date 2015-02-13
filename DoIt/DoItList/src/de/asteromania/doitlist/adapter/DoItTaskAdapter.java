@@ -22,14 +22,14 @@ import de.asteromania.doitlist.R;
 import de.asteromania.doitlist.domain.DoItTask;
 
 @SuppressLint("ViewHolder")
-public class DoItAdapter extends BaseAdapter
+public class DoItTaskAdapter extends BaseAdapter
 {
 
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 	private final Context context;
 	private final ArrayList<DoItTask> values = new ArrayList<DoItTask>();
 
-	public DoItAdapter(Collection<? extends DoItTask> values, Context context)
+	public DoItTaskAdapter(Collection<? extends DoItTask> values, Context context)
 	{
 		this.context = context;
 		if (values != null)
@@ -60,8 +60,11 @@ public class DoItAdapter extends BaseAdapter
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
 		final TextView textView = (TextView) rowView.findViewById(R.id.row_textview);
-		textView.setText(dateFormat.format(getItem(position).getDate()) + ": " + getItem(position).getText());
+		final TextView dateView = (TextView) rowView.findViewById(R.id.row_dateview);
+		dateView.setText(dateFormat.format(getItem(position).getDate()) + ":");
+		textView.setText(getItem(position).getText());
 		formatTextView(position, textView);
+		formatTextView(position, dateView);
 
 		final CheckBox checkbox = (CheckBox) rowView.findViewById(R.id.row_checkbox);
 		checkbox.setChecked(getItem(position).isFinished());
@@ -72,6 +75,7 @@ public class DoItAdapter extends BaseAdapter
 			{
 				getItem(position).setFinished(isChecked);
 				formatTextView(position, textView);
+				formatTextView(position, dateView);
 				textView.invalidate();
 			}
 		});
