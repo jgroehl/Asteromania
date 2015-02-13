@@ -40,7 +40,7 @@ public class DoItCreateActivity extends AbstractDoItActivity
 		int year = datePicker.getYear();
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(year, month, day);
+		calendar.set(year, month, day, 23, 59, 59);
 
 		return calendar.getTime();
 	}

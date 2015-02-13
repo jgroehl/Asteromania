@@ -1,7 +1,9 @@
 package de.asteromania.doitlist.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.simpleframework.xml.Default;
 
@@ -9,7 +11,14 @@ import org.simpleframework.xml.Default;
 public class DoItTasks
 {
 
-	private ArrayList<DoItTask> tasks = new ArrayList<DoItTask>();
+	private TreeSet<DoItTask> tasks = new TreeSet<DoItTask>(new Comparator<DoItTask>()
+	{
+		@Override
+		public int compare(DoItTask lhs, DoItTask rhs)
+		{
+			return lhs.getDate().compareTo(rhs.getDate());
+		}
+	});
 
 	@Deprecated
 	DoItTasks()
@@ -22,7 +31,7 @@ public class DoItTasks
 			this.tasks.addAll(tasks);
 	}
 
-	public ArrayList<DoItTask> getTasks()
+	public Set<DoItTask> getTasks()
 	{
 		return tasks;
 	}
