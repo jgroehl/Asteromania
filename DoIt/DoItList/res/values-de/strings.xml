@@ -6,6 +6,7 @@
     <string name="create_doittask_hint">Geben Sie Ihren Text hier ein.</string>
     <string name="button_ok">Okay</string>
     <string name="create_doittask_heading">Neue Aufgabe erstellen</string>
+    <string name="update_doittask_heading">Aufgabe bearbeiten</string>
     <string name="main_doittask_heading">Meine Aufgaben:</string>
 
 </resources>

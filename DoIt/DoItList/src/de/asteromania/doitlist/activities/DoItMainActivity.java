@@ -1,6 +1,8 @@
 package de.asteromania.doitlist.activities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.asteromania.doitlist.R;
 import de.asteromania.doitlist.adapter.DoItTaskAdapter;
+import de.asteromania.doitlist.domain.DoItTask;
 import de.asteromania.doitlist.intent.IntentHandler;
 import de.asteromania.doitlist.intent.IntentHandler.Intent;
 import de.asteromania.doitlist.utils.TasksDao;
@@ -68,6 +71,21 @@ public class DoItMainActivity extends AbstractDoItActivity
 	public void createTask(View view)
 	{
 		IntentHandler.startIntent(Intent.CREATE, this);
+	}
+
+	public void deleteTasks(View view)
+	{
+		List<DoItTask> selectedTasks = new ArrayList<DoItTask>();
+		for (DoItTask task : getDatabase().getTasks(getDataDao().getSelectedDate()))
+		{
+			if (task.isFinished())
+				selectedTasks.add(task);
+		}
+		if (selectedTasks.size() > 0)
+		{
+			getDatabase().deleteTasks(selectedTasks);
+			updateView();
+		}
 	}
 
 	public void nextDay(View view)

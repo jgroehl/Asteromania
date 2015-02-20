@@ -20,4 +20,6 @@ public interface TasksDao
 
 	void storeTask(DoItTask task);
 
+	DoItTask getTask(long selectedTaskId);
+
 }

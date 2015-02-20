@@ -25,9 +25,20 @@
         </activity>
         <activity
             android:name="de.asteromania.doitlist.activities.DoItCreateActivity"
+            android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="de.asteromania.doitlist.CREATE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="de.asteromania.doitlist.activities.DoItUpdateActivity"
+            android:windowSoftInputMode="stateVisible"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="de.asteromania.doitlist.UPDATE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -54,4 +54,9 @@ public class DoItTask
 	{
 		return date;
 	}
+
+	public void setDate(Date date)
+	{
+		this.date = date;
+	}
 }

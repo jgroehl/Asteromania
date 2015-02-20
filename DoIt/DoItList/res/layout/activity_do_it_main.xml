@@ -19,50 +19,80 @@
         android:text="@string/main_doittask_heading"
         android:textSize="24sp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textview_main_doittask"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:layout_below="@id/textview_main_doittask" >
 
         <Button
+            android:id="@+id/button_main_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:onClick="previousDay"
-            android:text="&lt;" />
+            android:text="@string/lesser_than" />
+
+        <Button
+            android:id="@+id/button_main_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:onClick="nextDay"
+            android:text="@string/greater_than" />
 
         <TextView
             android:id="@+id/textview_main_date"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="TODAY"
+            android:layout_toEndOf="@id/button_main_left"
+            android:layout_toLeftOf="@id/button_main_right"
+            android:layout_toRightOf="@id/button_main_left"
+            android:layout_toStartOf="@id/button_main_right"
+            android:gravity="center"
             android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_alignParentBottom="true" >
 
         <Button
+            android:id="@+id/add_item_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="nextDay"
-            android:text=">" />
-    </LinearLayout>
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5sp"
+            android:onClick="createTask"
+            android:text="@string/add_button" />
 
-    <Button
-        android:id="@+id/add_item_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="10sp"
-        android:onClick="createTask"
-        android:text="@string/add_button" />
+        <ImageButton
+            android:id="@+id/delete_item_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="5sp"
+            android:onClick="deleteTasks"
+            android:src="@drawable/trashcan" 
+            android:contentDescription="@string/button_ok">
+            </ImageButton>
+        
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/todo_listview"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/add_item_button"
+        android:layout_above="@id/bottomLayout"
         android:layout_below="@id/topLayout" />
 
 </RelativeLayout>

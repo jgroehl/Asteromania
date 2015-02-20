@@ -17,15 +17,18 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import de.asteromania.doitlist.R;
+import de.asteromania.doitlist.activities.AbstractDoItActivity;
 import de.asteromania.doitlist.domain.DoItTask;
+import de.asteromania.doitlist.intent.IntentHandler;
+import de.asteromania.doitlist.intent.IntentHandler.Intent;
 
 @SuppressLint("ViewHolder")
 public class DoItTaskAdapter extends BaseAdapter
 {
-	private final Context context;
+	private final AbstractDoItActivity context;
 	private final ArrayList<DoItTask> values = new ArrayList<DoItTask>();
 
-	public DoItTaskAdapter(Collection<? extends DoItTask> values, Context context)
+	public DoItTaskAdapter(Collection<? extends DoItTask> values, AbstractDoItActivity context)
 	{
 		this.context = context;
 		if (values != null)
@@ -69,6 +72,7 @@ public class DoItTaskAdapter extends BaseAdapter
 				getItem(position).setFinished(isChecked);
 				formatTextView(position, textView);
 				textView.invalidate();
+				context.getDatabase().updateTask(getItem(position));
 			}
 		});
 
@@ -77,8 +81,8 @@ public class DoItTaskAdapter extends BaseAdapter
 			@Override
 			public void onClick(View v)
 			{
-				// TODO
-				// IntentHandler.startIntent(Intent.UPDATE, v.getContext());
+				context.getDataDao().setSelectedTaskId(getItem(position).getId());
+				IntentHandler.startIntent(Intent.UPDATE, v.getContext());
 			}
 		});
 

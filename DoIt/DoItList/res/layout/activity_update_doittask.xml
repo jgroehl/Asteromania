@@ -11,29 +11,37 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/textview_create_doittask"
+        android:id="@+id/textview_update_doittask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20sp"
         android:layout_marginTop="20sp"
-        android:text="@string/create_doittask_heading"
+        android:layout_alignParentTop="true"
+        android:text="@string/update_doittask_heading"
         android:textSize="24sp" />
 
     <EditText
-        android:id="@+id/edittext_create_doittask"
+        android:id="@+id/edittext_update_doittask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textview_create_doittask"
+        android:layout_below="@id/textview_update_doittask"
         android:hint="@string/create_doittask_hint"
         android:inputType="textImeMultiLine"
         android:imeOptions="actionDone"
         android:maxLines="4" />
 
-    <Button
-        android:id="@+id/button_create_doittask_ok"
+    <DatePicker
+        android:id="@+id/date_picker_update_doittask"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edittext_create_doittask"
+        android:layout_below="@id/edittext_update_doittask"
+        android:calendarViewShown="false" />
+
+    <Button
+        android:id="@+id/button_update_doittask_ok"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_picker_update_doittask"
         android:onClick="okayClicked"
         android:text="@string/button_ok"
         android:textSize="18sp" />

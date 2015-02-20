@@ -7,6 +7,9 @@
     <string name="create_doittask_hint">Enter your Text here.</string>
     <string name="button_ok">Okay</string>
     <string name="create_doittask_heading">Create a new Task</string>
+    <string name="update_doittask_heading">Update Task</string>
     <string name="main_doittask_heading">My Tasks:</string>
+    <string name="lesser_than">&lt;</string>
+    <string name="greater_than">&gt;</string>
 
 </resources>
