@@ -11,5 +11,13 @@
     <string name="main_doittask_heading">My Tasks:</string>
     <string name="lesser_than">&lt;</string>
     <string name="greater_than">&gt;</string>
+    <string name="today">TODAY</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 
 </resources>

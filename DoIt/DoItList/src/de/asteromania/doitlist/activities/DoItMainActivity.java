@@ -1,6 +1,7 @@
 package de.asteromania.doitlist.activities;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,44 @@ public class DoItMainActivity extends AbstractDoItActivity
 
 		TextView textView = (TextView) findViewById(R.id.textview_main_date);
 		String dateString = TasksDao.DATE_FORMAT.format(selectedDate);
-		textView.setText(dateString.equals(TasksDao.DATE_FORMAT.format(new Date())) ? "HEUTE" : dateString);
+		dateString = (dateString.equals(TasksDao.DATE_FORMAT.format(new Date())) ? getString(R.string.today) + "\n"
+				: dateString);
+		Calendar c = Calendar.getInstance();
+		c.setTime(selectedDate);
+
+		textView.setText(dateString + calcWeekday(c.get(Calendar.DAY_OF_WEEK)));
+	}
+
+	private String calcWeekday(int day)
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append(" (");
+		switch (day)
+		{
+			case Calendar.MONDAY:
+				sb.append(getString(R.string.monday));
+				break;
+			case Calendar.TUESDAY:
+				sb.append(getString(R.string.tuesday));
+				break;
+			case Calendar.WEDNESDAY:
+				sb.append(getString(R.string.wednesday));
+				break;
+			case Calendar.THURSDAY:
+				sb.append(getString(R.string.thursday));
+				break;
+			case Calendar.FRIDAY:
+				sb.append(getString(R.string.friday));
+				break;
+			case Calendar.SATURDAY:
+				sb.append(getString(R.string.saturday));
+				break;
+			case Calendar.SUNDAY:
+				sb.append(getString(R.string.sunday));
+				break;
+		}
+		sb.append(")");
+		return sb.toString();
 	}
 
 	@Override

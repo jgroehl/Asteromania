@@ -8,5 +8,13 @@
     <string name="create_doittask_heading">Neue Aufgabe erstellen</string>
     <string name="update_doittask_heading">Aufgabe bearbeiten</string>
     <string name="main_doittask_heading">Meine Aufgaben:</string>
+    <string name="today">HEUTE</string>
+    <string name="monday">Montag</string>
+    <string name="tuesday">Dienstag</string>
+    <string name="wednesday">Mittwoch</string>
+    <string name="thursday">Donnerstag</string>
+    <string name="friday">Freitag</string>
+    <string name="saturday">Samstag</string>
+    <string name="sunday">Sonntag</string>
 
 </resources>
