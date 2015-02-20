@@ -24,12 +24,16 @@ public class DoItCreateActivity extends AbstractDoItActivity
 
 		editText = (EditText) findViewById(R.id.edittext_create_doittask);
 		datePicker = (DatePicker) findViewById(R.id.date_picker_create_doittask);
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(getDataDao().getSelectedDate());
+		datePicker.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 	}
 
 	public void okayClicked(View view)
 	{
 		if (!editText.getText().toString().trim().isEmpty())
-			getDoItTasks().add(new DoItTask(editText.getText().toString(), getDateFromDatePicket(datePicker)));
+			getDatabase().storeTask(new DoItTask(editText.getText().toString(), getDateFromDatePicket(datePicker)));
 		finish();
 	}
 
@@ -40,7 +44,7 @@ public class DoItCreateActivity extends AbstractDoItActivity
 		int year = datePicker.getYear();
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(year, month, day, 23, 59, 59);
+		calendar.set(year, month, day, 0, 0, 0);
 
 		return calendar.getTime();
 	}

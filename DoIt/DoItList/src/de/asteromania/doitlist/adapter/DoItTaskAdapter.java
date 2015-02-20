@@ -1,10 +1,7 @@
 package de.asteromania.doitlist.adapter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -24,8 +22,6 @@ import de.asteromania.doitlist.domain.DoItTask;
 @SuppressLint("ViewHolder")
 public class DoItTaskAdapter extends BaseAdapter
 {
-
-	private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 	private final Context context;
 	private final ArrayList<DoItTask> values = new ArrayList<DoItTask>();
 
@@ -60,11 +56,8 @@ public class DoItTaskAdapter extends BaseAdapter
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
 		final TextView textView = (TextView) rowView.findViewById(R.id.row_textview);
-		final TextView dateView = (TextView) rowView.findViewById(R.id.row_dateview);
-		dateView.setText(dateFormat.format(getItem(position).getDate()) + ":");
 		textView.setText(getItem(position).getText());
 		formatTextView(position, textView);
-		formatTextView(position, dateView);
 
 		final CheckBox checkbox = (CheckBox) rowView.findViewById(R.id.row_checkbox);
 		checkbox.setChecked(getItem(position).isFinished());
@@ -75,8 +68,17 @@ public class DoItTaskAdapter extends BaseAdapter
 			{
 				getItem(position).setFinished(isChecked);
 				formatTextView(position, textView);
-				formatTextView(position, dateView);
 				textView.invalidate();
+			}
+		});
+
+		textView.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				// TODO
+				// IntentHandler.startIntent(Intent.UPDATE, v.getContext());
 			}
 		});
 
@@ -89,11 +91,6 @@ public class DoItTaskAdapter extends BaseAdapter
 		{
 			textView.setTextColor(Color.GREEN);
 			textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-		}
-		else if (getItem(position).getDate().compareTo(Calendar.getInstance().getTime()) <= 0)
-		{
-			textView.setTextColor(Color.RED);
-			textView.setPaintFlags(textView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 		}
 		else
 		{

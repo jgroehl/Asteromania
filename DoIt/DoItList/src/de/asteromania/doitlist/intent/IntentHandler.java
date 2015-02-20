@@ -7,7 +7,7 @@ public final class IntentHandler
 
 	public enum Intent
 	{
-		CREATE;
+		CREATE, UPDATE;
 
 		private final String action;
 

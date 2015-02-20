@@ -1,71 +1,32 @@
 package de.asteromania.doitlist.activities;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
-import org.simpleframework.xml.core.Persister;
-
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
-import de.asteromania.doitlist.domain.DoItTasks;
+import de.asteromania.doitlist.utils.DataDao;
+import de.asteromania.doitlist.utils.DataDaoImpl;
+import de.asteromania.doitlist.utils.DatabaseHelper;
+import de.asteromania.doitlist.utils.TaskDaoImpl;
+import de.asteromania.doitlist.utils.TasksDao;
 
 public class AbstractDoItActivity extends Activity
 {
 
-	private static final String TAG = DoItMainActivity.class.getSimpleName();
-	private static final String FILE_NAME = "tasks";
-	private DoItTasks tasks;
+	private final TasksDao tasksDao;
+	private final DataDao dataDao;
 
-	@Override
-	protected void onStart()
+	public AbstractDoItActivity()
 	{
-		Log.d(TAG, "On Start called.");
-		super.onResume();
-		tasks = readTasks();
-	}
-	
-	@Override
-	protected void onPause()
-	{
-		writeTasks();
-		super.onPause();
+		tasksDao = new TaskDaoImpl(new DatabaseHelper(this));
+		dataDao = new DataDaoImpl(this);
 	}
 
-	protected void writeTasks()
+	public TasksDao getDatabase()
 	{
-		FileOutputStream out;
-		try
-		{
-			Log.d(TAG, "Writing tasks.");
-			out = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-			new Persister().write(tasks, out);
-		}
-		catch (Exception e)
-		{
-			Log.e(TAG, e.getMessage());
-		}
+		return tasksDao;
 	}
 
-	protected DoItTasks readTasks()
+	public DataDao getDataDao()
 	{
-		FileInputStream fis = null;
-		try
-		{
-			Log.d(TAG, "Reading tasks.");
-			fis = openFileInput(FILE_NAME);
-			return new Persister().read(DoItTasks.class, fis);
-		}
-		catch (Exception e)
-		{
-			Log.e(TAG, e.getMessage());
-			return new DoItTasks(null);
-		}
-	}
-
-	public DoItTasks getDoItTasks()
-	{
-		return tasks;
+		return dataDao;
 	}
 
 }

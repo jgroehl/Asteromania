@@ -2,25 +2,27 @@ package de.asteromania.doitlist.domain;
 
 import java.util.Date;
 
-import org.simpleframework.xml.Default;
-
-@Default
 public class DoItTask
 {
-	private long id = System.currentTimeMillis();
+	private final long id;
 	private String text;
 	private Date date;
-	private boolean finished = false;
-
-	@Deprecated
-	DoItTask()
-	{
-	}
+	private boolean finished;
 
 	public DoItTask(String text, Date date)
 	{
+		id = System.currentTimeMillis();
 		this.text = text;
 		this.date = date;
+		finished = false;
+	}
+
+	public DoItTask(long id, String text, Date date, boolean finished)
+	{
+		this.id = id;
+		this.text = text;
+		this.date = date;
+		this.finished = finished;
 	}
 
 	public String getText()
