@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Do It List</string>
+    <string name="app_name">Do-It List</string>
     <string name="action_quit">Quit</string>
     <string name="add_button">+</string>
-    <string name="create_doittask_hint">Enter your Text here.</string>
+    <string name="create_doittask_hint">Enter your text here.</string>
     <string name="button_ok">Okay</string>
     <string name="create_doittask_heading">Create a new Task</string>
     <string name="update_doittask_heading">Update Task</string>
@@ -21,5 +21,7 @@
     <string name="sunday">Sunday</string>
     <string name="action_select_all">Select All</string>
     <string name="action_select_none">Select None</string>
+    <string name="list_menu_heading">List Management</string>
+    <string name="button_create_list">Create new List</string>
 
 </resources>

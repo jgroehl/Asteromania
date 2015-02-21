@@ -117,11 +117,11 @@ public class DoItMainActivity extends AbstractDoItActivity
 
 	private void selectAll(boolean select)
 	{
-		for(DoItTask t : getDatabase().getTasks(getDataDao().getSelectedDate()))
+		for (DoItTask t : getDatabase().getTasks(getDataDao().getSelectedDate()))
 		{
 			t.setFinished(select);
 			getDatabase().updateTask(t);
-		}		
+		}
 	}
 
 	public void createTask(View view)
@@ -142,6 +142,11 @@ public class DoItMainActivity extends AbstractDoItActivity
 			getDatabase().deleteTasks(selectedTasks);
 			updateView();
 		}
+	}
+
+	public void openListMenu(View view)
+	{
+		IntentHandler.startIntent(Intent.LIST_MENU, this);
 	}
 
 	public void nextDay(View view)

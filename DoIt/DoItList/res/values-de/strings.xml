@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Do It List</string>
+    <string name="app_name">Do-It Liste</string>
     <string name="action_quit">Beenden</string>
     <string name="create_doittask_hint">Geben Sie Ihren Text hier ein.</string>
     <string name="button_ok">Okay</string>
@@ -18,5 +18,7 @@
     <string name="sunday">Sonntag</string>
     <string name="action_select_all">Alle Markieren</string>
     <string name="action_select_none">Keinen Markieren</string>
+    <string name="list_menu_heading">Listenverwaltung</string>
+    <string name="button_create_list">Neue Liste erstellen</string>
 
 </resources>

@@ -85,6 +85,19 @@
             android:src="@drawable/trashcan" 
             android:contentDescription="@string/button_ok">
             </ImageButton>
+            
+        <ImageButton
+            android:id="@+id/add_list_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/add_item_button"
+            android:layout_toStartOf="@id/add_item_button"
+            android:layout_marginBottom="5sp"
+            android:onClick="openListMenu"
+            android:src="@drawable/add_list" 
+            android:contentDescription="@string/button_ok">
+            </ImageButton>
         
     </RelativeLayout>
 
