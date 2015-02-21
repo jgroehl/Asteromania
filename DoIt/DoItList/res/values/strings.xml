@@ -19,5 +19,7 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="action_select_all">Select All</string>
+    <string name="action_select_none">Select None</string>
 
 </resources>

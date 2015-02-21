@@ -98,12 +98,30 @@ public class DoItMainActivity extends AbstractDoItActivity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		int id = item.getItemId();
-		if (id == R.id.action_quit)
+		switch (id)
 		{
-			finish();
-			return true;
+			case R.id.action_quit:
+				finish();
+				return true;
+			case R.id.action_select_all:
+				selectAll(true);
+				updateView();
+				return true;
+			case R.id.action_select_none:
+				selectAll(false);
+				updateView();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void selectAll(boolean select)
+	{
+		for(DoItTask t : getDatabase().getTasks(getDataDao().getSelectedDate()))
+		{
+			t.setFinished(select);
+			getDatabase().updateTask(t);
+		}		
 	}
 
 	public void createTask(View view)

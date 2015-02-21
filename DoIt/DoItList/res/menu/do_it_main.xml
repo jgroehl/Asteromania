@@ -2,10 +2,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.asteromania.doitlist.DoItMainActivity" >
+    
+    <item
+        android:id="@+id/action_select_all"
+        android:orderInCategory="100"
+        android:title="@string/action_select_all"
+        app:showAsAction="collapseActionView"/>
+    
+    <item
+        android:id="@+id/action_select_none"
+        android:orderInCategory="200"
+        android:title="@string/action_select_none"
+        app:showAsAction="collapseActionView"/>
 
     <item
         android:id="@+id/action_quit"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         android:title="@string/action_quit"
         app:showAsAction="collapseActionView"/>
 
