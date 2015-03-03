@@ -1,4 +1,4 @@
-package de.asteromania.doitlist.utils;
+package de.asteromania.doitlist.dao;
 
 import java.util.Date;
 

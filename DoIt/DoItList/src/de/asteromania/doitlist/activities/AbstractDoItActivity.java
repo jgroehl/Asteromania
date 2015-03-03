@@ -5,11 +5,11 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.widget.DatePicker;
-import de.asteromania.doitlist.utils.DataDao;
-import de.asteromania.doitlist.utils.DataDaoImpl;
-import de.asteromania.doitlist.utils.DatabaseHelper;
-import de.asteromania.doitlist.utils.TaskDaoImpl;
-import de.asteromania.doitlist.utils.TasksDao;
+import de.asteromania.doitlist.dao.DataDao;
+import de.asteromania.doitlist.dao.DataDaoImpl;
+import de.asteromania.doitlist.dao.DatabaseHelper;
+import de.asteromania.doitlist.dao.TaskDaoImpl;
+import de.asteromania.doitlist.dao.TasksDao;
 
 public class AbstractDoItActivity extends Activity
 {

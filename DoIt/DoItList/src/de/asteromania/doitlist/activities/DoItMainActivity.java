@@ -13,10 +13,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.asteromania.doitlist.R;
 import de.asteromania.doitlist.adapter.DoItTaskAdapter;
+import de.asteromania.doitlist.dao.TasksDao;
 import de.asteromania.doitlist.domain.DoItTask;
 import de.asteromania.doitlist.intent.IntentHandler;
 import de.asteromania.doitlist.intent.IntentHandler.Intent;
-import de.asteromania.doitlist.utils.TasksDao;
 
 public class DoItMainActivity extends AbstractDoItActivity
 {

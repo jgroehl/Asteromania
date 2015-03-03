@@ -1,4 +1,4 @@
-package de.asteromania.doitlist.utils;
+package de.asteromania.doitlist.dao;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import de.asteromania.doitlist.dao.scheme.SchemeTask;
 import de.asteromania.doitlist.domain.DoItTask;
 
 public class TaskDaoImpl implements TasksDao
@@ -29,8 +30,8 @@ public class TaskDaoImpl implements TasksDao
 
 		SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
-		Cursor c = db.rawQuery("SELECT * FROM " + TaskTableScheme.TABLE_NAME + " WHERE "
-				+ TaskTableScheme.COLUMN_NAME_DATE + " = (?)", new String[] { datetime });
+		Cursor c = db.rawQuery("SELECT * FROM " + SchemeTask.TABLE_NAME + " WHERE "
+				+ SchemeTask.COLUMN_NAME_DATE + " = (?)", new String[] { datetime });
 
 		List<DoItTask> tasks = new ArrayList<DoItTask>();
 
@@ -61,7 +62,7 @@ public class TaskDaoImpl implements TasksDao
 		for (DoItTask task : tasks)
 		{
 			SQLiteDatabase db = databaseHelper.getWritableDatabase();
-			db.delete(TaskTableScheme.TABLE_NAME, TaskTableScheme.COLUMN_NAME_ID + " = (?)",
+			db.delete(SchemeTask.TABLE_NAME, SchemeTask.COLUMN_NAME_ID + " = (?)",
 					new String[] { "" + task.getId() });
 		}
 	}
@@ -71,8 +72,8 @@ public class TaskDaoImpl implements TasksDao
 	{
 		SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-		int rows = db.update(TaskTableScheme.TABLE_NAME, createContentValuesFromTask(task),
-				TaskTableScheme.COLUMN_NAME_ID + " = (?)", new String[] { "" + task.getId() });
+		int rows = db.update(SchemeTask.TABLE_NAME, createContentValuesFromTask(task),
+				SchemeTask.COLUMN_NAME_ID + " = (?)", new String[] { "" + task.getId() });
 
 		Log.d(TAG, "Updated rows: " + rows);
 	}
@@ -82,16 +83,16 @@ public class TaskDaoImpl implements TasksDao
 	{
 		SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-		db.insert(TaskTableScheme.TABLE_NAME, null, createContentValuesFromTask(task));
+		db.insert(SchemeTask.TABLE_NAME, null, createContentValuesFromTask(task));
 	}
 
 	private ContentValues createContentValuesFromTask(DoItTask task)
 	{
 		ContentValues values = new ContentValues();
-		values.put(TaskTableScheme.COLUMN_NAME_ID, task.getId());
-		values.put(TaskTableScheme.COLUMN_NAME_TEXT, task.getText());
-		values.put(TaskTableScheme.COLUMN_NAME_DATE, DATE_FORMAT.format(task.getDate()));
-		values.put(TaskTableScheme.COLUMN_NAME_FINISHED, String.valueOf(task.isFinished()));
+		values.put(SchemeTask.COLUMN_NAME_ID, task.getId());
+		values.put(SchemeTask.COLUMN_NAME_TEXT, task.getText());
+		values.put(SchemeTask.COLUMN_NAME_DATE, DATE_FORMAT.format(task.getDate()));
+		values.put(SchemeTask.COLUMN_NAME_FINISHED, String.valueOf(task.isFinished()));
 		return values;
 	}
 
@@ -100,8 +101,8 @@ public class TaskDaoImpl implements TasksDao
 	{
 		SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
-		Cursor c = db.rawQuery("SELECT * FROM " + TaskTableScheme.TABLE_NAME + " WHERE "
-				+ TaskTableScheme.COLUMN_NAME_ID + " = (?)", new String[] { "" + selectedTaskId });
+		Cursor c = db.rawQuery("SELECT * FROM " + SchemeTask.TABLE_NAME + " WHERE "
+				+ SchemeTask.COLUMN_NAME_ID + " = (?)", new String[] { "" + selectedTaskId });
 
 		if (c.moveToNext())
 		{
