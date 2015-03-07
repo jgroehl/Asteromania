@@ -12,7 +12,7 @@ import android.util.Log;
 import de.asteromania.doitlist.dao.scheme.SchemeTask;
 import de.asteromania.doitlist.domain.DoItTask;
 
-public class TaskDaoImpl implements TasksDao
+public class TaskDaoImpl implements TaskDao
 {
 
 	private static final String TAG = TaskDaoImpl.class.getSimpleName();

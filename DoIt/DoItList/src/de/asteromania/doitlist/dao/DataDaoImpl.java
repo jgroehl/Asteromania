@@ -34,7 +34,7 @@ public class DataDaoImpl implements DataDao
 			String read = readFromFile(FILE_NAME_DATE);
 			if (read == null)
 				return new Date();
-			return TasksDao.DATE_FORMAT.parse(read);
+			return TaskDao.DATE_FORMAT.parse(read);
 		}
 		catch (ParseException e)
 		{
@@ -45,7 +45,7 @@ public class DataDaoImpl implements DataDao
 	@Override
 	public void setSelectedDate(Date date)
 	{
-		writeToFile(FILE_NAME_DATE, TasksDao.DATE_FORMAT.format(date));
+		writeToFile(FILE_NAME_DATE, TaskDao.DATE_FORMAT.format(date));
 	}
 
 	@Override

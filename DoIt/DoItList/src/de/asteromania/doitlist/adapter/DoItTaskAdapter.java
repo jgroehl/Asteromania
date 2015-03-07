@@ -1,6 +1,5 @@
 package de.asteromania.doitlist.adapter;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import android.annotation.SuppressLint;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -23,40 +21,18 @@ import de.asteromania.doitlist.intent.IntentHandler;
 import de.asteromania.doitlist.intent.IntentHandler.Intent;
 
 @SuppressLint("ViewHolder")
-public class DoItTaskAdapter extends BaseAdapter
+public class DoItTaskAdapter extends AbstractAdapter<DoItTask>
 {
-	private final AbstractDoItActivity context;
-	private final ArrayList<DoItTask> values = new ArrayList<DoItTask>();
 
-	public DoItTaskAdapter(Collection<? extends DoItTask> values, AbstractDoItActivity context)
+	public DoItTaskAdapter(Collection<? extends DoItTask> lists, AbstractDoItActivity context)
 	{
-		this.context = context;
-		if (values != null)
-			this.values.addAll(values);
-	}
-
-	@Override
-	public int getCount()
-	{
-		return values.size();
-	}
-
-	@Override
-	public DoItTask getItem(int position)
-	{
-		return values.get(position);
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return values.get(position).getId();
+		super(lists, context);
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent)
 	{
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
 		final TextView textView = (TextView) rowView.findViewById(R.id.row_textview);
 		textView.setText(getItem(position).getText());
@@ -72,7 +48,7 @@ public class DoItTaskAdapter extends BaseAdapter
 				getItem(position).setFinished(isChecked);
 				formatTextView(position, textView);
 				textView.invalidate();
-				context.getDatabase().updateTask(getItem(position));
+				getContext().getDatabase().updateTask(getItem(position));
 			}
 		});
 
@@ -81,7 +57,7 @@ public class DoItTaskAdapter extends BaseAdapter
 			@Override
 			public void onClick(View v)
 			{
-				context.getDataDao().setSelectedTaskId(getItem(position).getId());
+				getContext().getDataDao().setSelectedTaskId(getItem(position).getId());
 				IntentHandler.startIntent(Intent.UPDATE, v.getContext());
 			}
 		});

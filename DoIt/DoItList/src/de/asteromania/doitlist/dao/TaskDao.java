@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import de.asteromania.doitlist.domain.DoItTask;
 
-public interface TasksDao
+public interface TaskDao
 {
 
 	final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());

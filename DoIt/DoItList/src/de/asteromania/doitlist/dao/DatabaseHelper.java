@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	private static final String SQL_CREATE_TABLE_LIST_ITEM = "CREATE TABLE " + SchemeListItem.TABLE_NAME + "("
 			+ SchemeListItem.COLUMN_NAME_ID + " LONG PRIMARY KEY, " + SchemeListItem.COLUMN_NAME_TEXT + " TEXT, "
 			+ SchemeListItem.COLUMN_LIST_ID + " LONG, " + "FOREIGN KEY (" + SchemeListItem.COLUMN_LIST_ID
-			+ ") REFERENCES " + SchemeList.TABLE_NAME + " (" + SchemeList.COLUMN_NAME_ID + "))";
+			+ ") REFERENCES " + SchemeList.TABLE_NAME + " (" + SchemeList.COLUMN_NAME_ID + ") ON DELETE CASCADE)";
 
 	private static final String SQL_DELETE_TASKS = "DROP TABLE IF EXISTS " + SchemeTask.TABLE_NAME;
 	private static final String SQL_DELETE_LIST_ITEMS = "DROP TABLE IF EXISTS " + SchemeListItem.TABLE_NAME;

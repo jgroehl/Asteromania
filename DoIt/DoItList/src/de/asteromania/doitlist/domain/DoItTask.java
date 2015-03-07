@@ -2,7 +2,7 @@ package de.asteromania.doitlist.domain;
 
 import java.util.Date;
 
-public class DoItTask
+public class DoItTask implements DbObject
 {
 	private final long id;
 	private String text;
@@ -40,6 +40,7 @@ public class DoItTask
 		return finished;
 	}
 
+	@Override
 	public long getId()
 	{
 		return id;

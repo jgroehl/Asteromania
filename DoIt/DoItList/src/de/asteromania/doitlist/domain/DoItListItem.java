@@ -1,6 +1,6 @@
 package de.asteromania.doitlist.domain;
 
-public class DoItListItem
+public class DoItListItem implements DbObject
 {
 	private final long id;
 	private String text;
@@ -21,6 +21,7 @@ public class DoItListItem
 		this(System.currentTimeMillis(), text);
 	}
 
+	@Override
 	public long getId()
 	{
 		return id;

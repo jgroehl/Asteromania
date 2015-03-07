@@ -2,7 +2,10 @@ package de.asteromania.doitlist.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import de.asteromania.doitlist.R;
+import de.asteromania.doitlist.intent.IntentHandler;
+import de.asteromania.doitlist.intent.IntentHandler.Intent;
 
 public class DoItListMenuActivity extends AbstractDoItActivity
 {
@@ -16,6 +19,11 @@ public class DoItListMenuActivity extends AbstractDoItActivity
 
 	public void createClicked(View view)
 	{
-
+		IntentHandler.startIntent(Intent.CREATE_LIST, this);
+	}
+	
+	private void updateView()
+	{
+		ListView listView = (ListView) findViewById(R.id.lists_listview);
 	}
 }

@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.asteromania.doitlist.R;
 import de.asteromania.doitlist.adapter.DoItTaskAdapter;
-import de.asteromania.doitlist.dao.TasksDao;
+import de.asteromania.doitlist.dao.TaskDao;
 import de.asteromania.doitlist.domain.DoItTask;
 import de.asteromania.doitlist.intent.IntentHandler;
 import de.asteromania.doitlist.intent.IntentHandler.Intent;
@@ -46,8 +46,8 @@ public class DoItMainActivity extends AbstractDoItActivity
 		listView.setAdapter(adapter);
 
 		TextView textView = (TextView) findViewById(R.id.textview_main_date);
-		String dateString = TasksDao.DATE_FORMAT.format(selectedDate);
-		dateString = (dateString.equals(TasksDao.DATE_FORMAT.format(new Date())) ? getString(R.string.today) + "\n"
+		String dateString = TaskDao.DATE_FORMAT.format(selectedDate);
+		dateString = (dateString.equals(TaskDao.DATE_FORMAT.format(new Date())) ? getString(R.string.today) + "\n"
 				: dateString);
 		Calendar c = Calendar.getInstance();
 		c.setTime(selectedDate);

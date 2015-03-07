@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class DoItList
+public class DoItList implements DbObject
 {
 
 	private final long id;
@@ -31,6 +31,7 @@ public class DoItList
 			this.listItems.addAll(listItems);
 	}
 
+	@Override
 	public long getId()
 	{
 		return id;
