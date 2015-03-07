@@ -1,5 +1,8 @@
 package de.asteromania.doitlist.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.database.sqlite.SQLiteDatabase;
 import de.asteromania.doitlist.domain.DoItList;
 
@@ -21,6 +24,16 @@ public class ListDaoImpl implements ListDao
 
 		SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
+	}
+
+	@Override
+	public List<DoItList> getEmptyLists()
+	{
+		List<DoItList> lists = new ArrayList<DoItList>();
+		lists.add(new DoItList("Testliste 1"));
+		lists.add(new DoItList("Testliste 2"));
+		lists.add(new DoItList("Testliste 3"));
+		return lists;
 	}
 
 }

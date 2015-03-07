@@ -7,7 +7,7 @@ public final class IntentHandler
 
 	public enum Intent
 	{
-		CREATE, UPDATE, LIST_MENU, CREATE_LIST;
+		CREATE, UPDATE, LIST_MENU, CREATE_LIST, SHOW_LIST;
 
 		private final String action;
 
@@ -30,7 +30,8 @@ public final class IntentHandler
 
 	public static void startIntent(Intent i, Context c)
 	{
-		c.startActivity(new android.content.Intent(i.getAction()));
+		android.content.Intent intent = new android.content.Intent(i.getAction());
+		c.startActivity(intent);
 	}
 
 }

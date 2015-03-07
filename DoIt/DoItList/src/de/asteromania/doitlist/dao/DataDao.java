@@ -12,4 +12,8 @@ public interface DataDao
 	long getSelectedTaskId();
 
 	void setSelectedTaskId(long id);
+
+	void setSelectedListId(long id);
+
+	long getSelectedListId();
 }

@@ -18,6 +18,7 @@ public class DataDaoImpl implements DataDao
 
 	private static final String FILE_NAME_DATE = "currentDate";
 	private static final String FILE_NAME_TASK_ID = "currentTaskId";
+	private static final String FILE_NAME_LIST_ID = "currentListId";
 	private static final String TAG = DataDaoImpl.class.getSimpleName();
 	private final Context context;
 
@@ -113,6 +114,21 @@ public class DataDaoImpl implements DataDao
 		{
 			Log.e(TAG, "Saving value " + data + " for " + file + " failed because of IO: " + e.getMessage());
 		}
+	}
+
+	@Override
+	public void setSelectedListId(long id)
+	{
+		writeToFile(FILE_NAME_LIST_ID, String.valueOf(id));
+	}
+
+	@Override
+	public long getSelectedListId()
+	{
+		String readFromFile = readFromFile(FILE_NAME_LIST_ID);
+		if (readFromFile == null)
+			return -1;
+		return Long.parseLong(readFromFile);
 	}
 
 }
