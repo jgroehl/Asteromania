@@ -1,34 +1,24 @@
 package de.asteromania.doitlist.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class DoItList implements DbObject
 {
-
 	private final long id;
 	private String name;
-	private final List<DoItListItem> listItems = new ArrayList<DoItListItem>();
 
 	/**
-	 * Creates a new {@link DoItList} with a generated unique id and and empty
-	 * list of {@link DoItListItem} Objects.
+	 * Creates a new {@link DoItList} with a generated unique id..
 	 * 
 	 * @param name
 	 */
 	public DoItList(String name)
 	{
-		this(System.currentTimeMillis(), name, null);
+		this(System.currentTimeMillis(), name);
 	}
 
-	public DoItList(long id, String name, Collection<? extends DoItListItem> listItems)
+	public DoItList(long id, String name)
 	{
-		super();
 		this.id = id;
 		this.name = name;
-		if (listItems != null)
-			this.listItems.addAll(listItems);
 	}
 
 	@Override
@@ -41,10 +31,4 @@ public class DoItList implements DbObject
 	{
 		return name;
 	}
-
-	public List<DoItListItem> getListItems()
-	{
-		return listItems;
-	}
-
 }

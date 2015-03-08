@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.database.sqlite.SQLiteDatabase;
 import de.asteromania.doitlist.domain.DoItList;
+import de.asteromania.doitlist.domain.DoItListItem;
 
 public class ListDaoImpl implements ListDao
 {
@@ -34,6 +35,22 @@ public class ListDaoImpl implements ListDao
 		lists.add(new DoItList("Testliste 2"));
 		lists.add(new DoItList("Testliste 3"));
 		return lists;
+	}
+
+	@Override
+	public List<DoItListItem> getListItems(long listid)
+	{
+		List<DoItListItem> lists = new ArrayList<DoItListItem>();
+		lists.add(new DoItListItem("Testitem 1"));
+		lists.add(new DoItListItem("Testitem 2"));
+		lists.add(new DoItListItem("Testitem 3"));
+		return lists;
+	}
+
+	@Override
+	public void deleteList(long listId)
+	{
+		SQLiteDatabase db = databaseHelper.getWritableDatabase();
 	}
 
 }
