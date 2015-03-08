@@ -20,6 +20,10 @@
     <string name="action_select_none">Keinen Markieren</string>
     <string name="list_menu_heading">Listenverwaltung</string>
     <string name="button_create_list">Neue Liste erstellen</string>
+    <string name="button_create_list_item">Neuen Eintrag erstellen</string>
+    <string name="button_add_list_entries">Liste eintragen</string>
     <string name="create_list_heading">Liste erstellen</string>
+    <string name="show_list_heading">Liste verwalten</string>
+    <string name="create_list_item_heading">Neuer Listeneintrag</string>
 
 </resources>

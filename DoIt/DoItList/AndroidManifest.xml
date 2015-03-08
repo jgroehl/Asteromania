@@ -25,8 +25,8 @@
         </activity>
         <activity
             android:name="de.asteromania.doitlist.activities.DoItCreateActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" >
             <intent-filter>
                 <action android:name="de.asteromania.doitlist.CREATE" />
 
@@ -35,8 +35,8 @@
         </activity>
         <activity
             android:name="de.asteromania.doitlist.activities.DoItUpdateActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" >
             <intent-filter>
                 <action android:name="de.asteromania.doitlist.UPDATE" />
 
@@ -57,6 +57,24 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="de.asteromania.doitlist.CREATE_LIST" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="de.asteromania.doitlist.activities.DoItShowListActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="de.asteromania.doitlist.SHOW_LIST" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="de.asteromania.doitlist.activities.DoItListItemCreateActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="de.asteromania.doitlist.CREATE_LIST_ITEM" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
