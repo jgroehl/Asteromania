@@ -20,4 +20,6 @@ public interface ListDao
 	DoItListItem getListItem(long selectedTaskId);
 
 	void updateListItem(DoItListItem doItListItem);
+
+	void updateListName(long selectedListId, String string);
 }

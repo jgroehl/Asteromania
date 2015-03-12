@@ -78,4 +78,11 @@ public class ListDaoImpl implements ListDao
 
 	}
 
+	@Override
+	public void updateListName(long selectedListId, String string)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
 }

@@ -8,6 +8,7 @@
     <string name="create_doittask_heading">Neue Aufgabe erstellen</string>
     <string name="update_doittask_heading">Aufgabe bearbeiten</string>
     <string name="update_list_item_heading">Listeneintrag bearbeiten</string>
+    <string name="update_list_name_heading">Listenname bearbeiten</string>
     <string name="main_doittask_heading">Meine Aufgaben:</string>
     <string name="today">HEUTE</string>
     <string name="monday">Montag</string>

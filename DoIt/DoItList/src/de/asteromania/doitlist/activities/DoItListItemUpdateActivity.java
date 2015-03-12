@@ -20,7 +20,7 @@ public class DoItListItemUpdateActivity extends AbstractDoItActivity
 
 		editText = (EditText) findViewById(R.id.edittext_update_list_item);
 
-		doItListItem = getListDao().getListItem(getDataDao().getSelectedTaskId());
+		doItListItem = getListDao().getListItem(getDataDao().getSelectedListItem());
 
 		if (doItListItem == null)
 			finish();
