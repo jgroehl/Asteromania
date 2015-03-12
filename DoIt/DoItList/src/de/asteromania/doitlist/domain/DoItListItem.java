@@ -31,4 +31,9 @@ public class DoItListItem implements DbObject
 	{
 		return text;
 	}
+
+	public void setText(String text)
+	{
+		this.text = text;
+	}
 }

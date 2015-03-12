@@ -11,36 +11,32 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/textview_show_list"
+        android:id="@+id/textview_update_list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20sp"
         android:layout_marginTop="20sp"
+        android:layout_alignParentTop="true"
+        android:text="@string/update_list_item_heading"
         android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/button_create_list_item"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:onClick="createClicked"
-        android:text="@string/button_create_list_item"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/button_add_list_entries"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/button_create_list_item"
-        android:onClick="addClicked"
-        android:text="@string/button_add_list_entries"
-        android:textSize="18sp" />
-
-    <ListView
-        android:id="@+id/show_list_listview"
+    <EditText
+        android:id="@+id/edittext_update_list_item"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/button_add_list_entries"
-        android:layout_below="@id/textview_show_list" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_update_list_item"
+        android:hint="@string/create_doittask_hint"
+        android:inputType="textImeMultiLine"
+        android:imeOptions="actionDone"
+        android:maxLines="4" />
+
+    <Button
+        android:id="@+id/button_update_list_item_ok"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_update_list_item"
+        android:onClick="okayClicked"
+        android:text="@string/button_ok"
+        android:textSize="18sp" />
 
 </RelativeLayout>

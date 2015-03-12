@@ -21,6 +21,7 @@ public class ListDaoImpl implements ListDao
 	@Override
 	public void createList(String listName)
 	{
+		// TODO
 		DoItList list = new DoItList(listName);
 
 		SQLiteDatabase db = databaseHelper.getWritableDatabase();
@@ -30,6 +31,7 @@ public class ListDaoImpl implements ListDao
 	@Override
 	public List<DoItList> getEmptyLists()
 	{
+		// TODO
 		List<DoItList> lists = new ArrayList<DoItList>();
 		lists.add(new DoItList("Testliste 1"));
 		lists.add(new DoItList("Testliste 2"));
@@ -40,6 +42,7 @@ public class ListDaoImpl implements ListDao
 	@Override
 	public List<DoItListItem> getListItems(long listid)
 	{
+		// TODO
 		List<DoItListItem> lists = new ArrayList<DoItListItem>();
 		lists.add(new DoItListItem("Testitem 1"));
 		lists.add(new DoItListItem("Testitem 2"));
@@ -50,7 +53,29 @@ public class ListDaoImpl implements ListDao
 	@Override
 	public void deleteList(long listId)
 	{
+		// TODO
 		SQLiteDatabase db = databaseHelper.getWritableDatabase();
+	}
+
+	@Override
+	public String getListName(long selectedListId)
+	{
+		// TODO Auto-generated method stub
+		return "List Name";
+	}
+
+	@Override
+	public DoItListItem getListItem(long selectedTaskId)
+	{
+		// TODO Auto-generated method stub
+		return new DoItListItem("TestItem");
+	}
+
+	@Override
+	public void updateListItem(DoItListItem doItListItem)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 }

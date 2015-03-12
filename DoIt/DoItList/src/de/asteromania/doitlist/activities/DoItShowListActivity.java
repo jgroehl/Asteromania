@@ -3,6 +3,7 @@ package de.asteromania.doitlist.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import de.asteromania.doitlist.R;
 import de.asteromania.doitlist.adapter.DoItListItemAdapter;
 import de.asteromania.doitlist.intent.IntentHandler;
@@ -39,8 +40,12 @@ public class DoItShowListActivity extends AbstractDoItActivity
 	private void updateView()
 	{
 		ListView listView = (ListView) findViewById(R.id.show_list_listview);
+		long selectedListId = getDataDao().getSelectedListId();
 		DoItListItemAdapter adapter = new DoItListItemAdapter(getListDao().getListItems(
-				getDataDao().getSelectedListId()), this);
+				selectedListId), this);
 		listView.setAdapter(adapter);
+		
+		TextView textView = (TextView) findViewById(R.id.textview_show_list);
+		textView.setText(getListDao().getListName(selectedListId));
 	}
 }

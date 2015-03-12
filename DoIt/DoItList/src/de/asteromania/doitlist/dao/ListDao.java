@@ -10,8 +10,14 @@ public interface ListDao
 	void createList(String listName);
 
 	List<DoItList> getEmptyLists();
-	
+
 	List<DoItListItem> getListItems(long listid);
-	
+
 	void deleteList(long listId);
+
+	String getListName(long selectedListId);
+
+	DoItListItem getListItem(long selectedTaskId);
+
+	void updateListItem(DoItListItem doItListItem);
 }

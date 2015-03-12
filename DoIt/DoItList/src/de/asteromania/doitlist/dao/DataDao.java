@@ -16,4 +16,8 @@ public interface DataDao
 	void setSelectedListId(long id);
 
 	long getSelectedListId();
+	
+	void setSelectedListItem(long id);
+	
+	long getSelectedListItem();
 }
