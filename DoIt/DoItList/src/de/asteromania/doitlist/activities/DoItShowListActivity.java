@@ -30,6 +30,28 @@ public class DoItShowListActivity extends AbstractDoItActivity
 		finish();
 	}
 
+	public void deleteListClicked(View view)
+	{
+		// TODO
+		finish();
+	}
+
+	public void deleteItemsClicked(View view)
+	{
+		// TODO
+	}
+
+	public void registerItemsClicked(View view)
+	{
+		// TODO
+		finish();
+	}
+
+	public void editNameClicked(View view)
+	{
+		IntentHandler.startIntent(Intent.UPDATE_LIST_NAME, this);
+	}
+
 	@Override
 	protected void onStart()
 	{
@@ -41,10 +63,9 @@ public class DoItShowListActivity extends AbstractDoItActivity
 	{
 		ListView listView = (ListView) findViewById(R.id.show_list_listview);
 		long selectedListId = getDataDao().getSelectedListId();
-		DoItListItemAdapter adapter = new DoItListItemAdapter(getListDao().getListItems(
-				selectedListId), this);
+		DoItListItemAdapter adapter = new DoItListItemAdapter(getListDao().getListItems(selectedListId), this);
 		listView.setAdapter(adapter);
-		
+
 		TextView textView = (TextView) findViewById(R.id.textview_show_list);
 		textView.setText(getListDao().getListName(selectedListId));
 	}
