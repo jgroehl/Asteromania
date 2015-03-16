@@ -33,7 +33,7 @@ public class DoItListItemUpdateActivity extends AbstractDoItActivity
 		if (!editText.getText().toString().trim().isEmpty())
 		{
 			doItListItem.setText(editText.getText().toString());
-			getListDao().updateListItem(doItListItem);
+			getListDao().updateListItem(doItListItem, getDataDao().getSelectedListId());
 		}
 		finish();
 	}

@@ -20,11 +20,11 @@ public interface ListDao
 
 	DoItListItem getListItem(long selectedItemId);
 
-	void updateListItem(DoItListItem doItListItem);
+	void updateListItem(DoItListItem doItListItem, long listId);
 
 	void updateListName(long selectedListId, String string);
 
 	void deleteItems(Collection<DoItListItem> selectedItems);
 
-	void createListItem(String itemName);
+	void createListItem(String itemName, long listId);
 }
