@@ -25,7 +25,7 @@ public class DoItUpdateActivity extends AbstractDoItActivity
 		editText = (EditText) findViewById(R.id.edittext_update_doittask);
 		datePicker = (DatePicker) findViewById(R.id.date_picker_update_doittask);
 
-		doItTask = getDatabase().getTask(getDataDao().getSelectedTaskId());
+		doItTask = getTaskDao().getTask(getDataDao().getSelectedTaskId());
 
 		if (doItTask == null)
 			finish();
@@ -44,7 +44,7 @@ public class DoItUpdateActivity extends AbstractDoItActivity
 		{
 			doItTask.setDate(getDateFromDatePicker(datePicker));
 			doItTask.setText(editText.getText().toString());
-			getDatabase().updateTask(doItTask);
+			getTaskDao().updateTask(doItTask);
 		}
 		finish();
 	}

@@ -2,6 +2,8 @@ package de.asteromania.doitlist.adapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import android.widget.BaseAdapter;
 import de.asteromania.doitlist.activities.AbstractDoItActivity;
@@ -41,5 +43,10 @@ public abstract class AbstractAdapter<E extends DbObject> extends BaseAdapter
 	public AbstractDoItActivity getContext()
 	{
 		return context;
+	}
+
+	public List<E> getValues()
+	{
+		return Collections.unmodifiableList(values);
 	}
 }

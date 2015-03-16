@@ -4,6 +4,7 @@ public class DoItListItem implements DbObject
 {
 	private final long id;
 	private String text;
+	private boolean selected;
 
 	public DoItListItem(long id, String text)
 	{
@@ -35,5 +36,15 @@ public class DoItListItem implements DbObject
 	public void setText(String text)
 	{
 		this.text = text;
+	}
+
+	public boolean isSelected()
+	{
+		return selected;
+	}
+
+	public void setSelected(boolean selected)
+	{
+		this.selected = selected;
 	}
 }

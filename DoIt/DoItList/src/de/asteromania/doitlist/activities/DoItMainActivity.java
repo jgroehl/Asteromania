@@ -42,7 +42,7 @@ public class DoItMainActivity extends AbstractDoItActivity
 	{
 		ListView listView = (ListView) findViewById(R.id.todo_listview);
 		Date selectedDate = getDataDao().getSelectedDate();
-		DoItTaskAdapter adapter = new DoItTaskAdapter(getDatabase().getTasks(selectedDate), this);
+		DoItTaskAdapter adapter = new DoItTaskAdapter(getTaskDao().getTasks(selectedDate), this);
 		listView.setAdapter(adapter);
 
 		TextView textView = (TextView) findViewById(R.id.textview_main_date);
@@ -117,10 +117,10 @@ public class DoItMainActivity extends AbstractDoItActivity
 
 	private void selectAll(boolean select)
 	{
-		for (DoItTask t : getDatabase().getTasks(getDataDao().getSelectedDate()))
+		for (DoItTask t : getTaskDao().getTasks(getDataDao().getSelectedDate()))
 		{
 			t.setFinished(select);
-			getDatabase().updateTask(t);
+			getTaskDao().updateTask(t);
 		}
 	}
 
@@ -132,14 +132,14 @@ public class DoItMainActivity extends AbstractDoItActivity
 	public void deleteTasks(View view)
 	{
 		List<DoItTask> selectedTasks = new ArrayList<DoItTask>();
-		for (DoItTask task : getDatabase().getTasks(getDataDao().getSelectedDate()))
+		for (DoItTask task : getTaskDao().getTasks(getDataDao().getSelectedDate()))
 		{
 			if (task.isFinished())
 				selectedTasks.add(task);
 		}
 		if (selectedTasks.size() > 0)
 		{
-			getDatabase().deleteTasks(selectedTasks);
+			getTaskDao().deleteTasks(selectedTasks);
 			updateView();
 		}
 	}

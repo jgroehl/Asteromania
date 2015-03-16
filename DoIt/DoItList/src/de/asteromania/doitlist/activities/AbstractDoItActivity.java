@@ -28,7 +28,7 @@ public class AbstractDoItActivity extends Activity
 		listDao = new ListDaoImpl(databaseHelper);
 	}
 
-	public TaskDao getDatabase()
+	public TaskDao getTaskDao()
 	{
 		return tasksDao;
 	}

@@ -11,6 +11,8 @@ import de.asteromania.doitlist.intent.IntentHandler.Intent;
 
 public class DoItShowListActivity extends AbstractDoItActivity
 {
+	
+	private DoItListItemAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -24,26 +26,20 @@ public class DoItShowListActivity extends AbstractDoItActivity
 		IntentHandler.startIntent(Intent.CREATE_LIST_ITEM, this);
 	}
 
-	public void addClicked(View view)
-	{
-		// TODO
-		finish();
-	}
-
 	public void deleteListClicked(View view)
 	{
-		// TODO
+		getListDao().deleteList(getDataDao().getSelectedListId());
 		finish();
 	}
 
 	public void deleteItemsClicked(View view)
 	{
-		// TODO
+		getListDao().deleteItems(adapter.getSelectedItems());
 	}
 
 	public void registerItemsClicked(View view)
 	{
-		// TODO
+		getTaskDao().createTasks(adapter.getValues(), getDataDao().getSelectedDate());
 		finish();
 	}
 
@@ -63,7 +59,7 @@ public class DoItShowListActivity extends AbstractDoItActivity
 	{
 		ListView listView = (ListView) findViewById(R.id.show_list_listview);
 		long selectedListId = getDataDao().getSelectedListId();
-		DoItListItemAdapter adapter = new DoItListItemAdapter(getListDao().getListItems(selectedListId), this);
+		adapter = new DoItListItemAdapter(getListDao().getListItems(selectedListId), this);
 		listView.setAdapter(adapter);
 
 		TextView textView = (TextView) findViewById(R.id.textview_show_list);

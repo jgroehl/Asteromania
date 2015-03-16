@@ -22,7 +22,7 @@ public class DoItCreateActivity extends AbstractDoItActivity
 	public void okayClicked(View view)
 	{
 		if (!editText.getText().toString().trim().isEmpty())
-			getDatabase().storeTask(new DoItTask(editText.getText().toString(), getDataDao().getSelectedDate()));
+			getTaskDao().storeTask(new DoItTask(editText.getText().toString(), getDataDao().getSelectedDate()));
 		finish();
 	}
 }

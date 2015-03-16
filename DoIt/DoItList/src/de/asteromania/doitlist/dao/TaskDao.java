@@ -1,10 +1,12 @@
 package de.asteromania.doitlist.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import de.asteromania.doitlist.domain.DoItListItem;
 import de.asteromania.doitlist.domain.DoItTask;
 
 public interface TaskDao
@@ -14,12 +16,14 @@ public interface TaskDao
 
 	List<DoItTask> getTasks(Date date);
 
-	void deleteTasks(List<DoItTask> tasks);
+	void deleteTasks(Collection<? extends DoItTask> tasks);
 
 	void updateTask(DoItTask task);
 
 	void storeTask(DoItTask task);
 
 	DoItTask getTask(long selectedTaskId);
+
+	void createTasks(Collection<? extends DoItListItem> values, Date selectedDate);
 
 }

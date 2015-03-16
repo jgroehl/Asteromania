@@ -1,5 +1,6 @@
 package de.asteromania.doitlist.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import de.asteromania.doitlist.domain.DoItList;
@@ -17,9 +18,13 @@ public interface ListDao
 
 	String getListName(long selectedListId);
 
-	DoItListItem getListItem(long selectedTaskId);
+	DoItListItem getListItem(long selectedItemId);
 
 	void updateListItem(DoItListItem doItListItem);
 
 	void updateListName(long selectedListId, String string);
+
+	void deleteItems(Collection<DoItListItem> selectedItems);
+
+	void createListItem(String itemName);
 }

@@ -48,7 +48,7 @@ public class DoItTaskAdapter extends AbstractAdapter<DoItTask>
 				getItem(position).setFinished(isChecked);
 				formatTextView(position, textView);
 				textView.invalidate();
-				getContext().getDatabase().updateTask(getItem(position));
+				getContext().getTaskDao().updateTask(getItem(position));
 			}
 		});
 

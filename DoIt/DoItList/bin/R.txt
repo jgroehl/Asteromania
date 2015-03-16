@@ -253,9 +253,9 @@ int id action_context_bar 0x7f05001d
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
-int id action_quit 0x7f050069
-int id action_select_all 0x7f050067
-int id action_select_none 0x7f050068
+int id action_quit 0x7f05006b
+int id action_select_all 0x7f050069
+int id action_select_none 0x7f05006a
 int id activity_chooser_view_content 0x7f050025
 int id add_item_button 0x7f05004b
 int id add_list_button 0x7f05004d
@@ -311,6 +311,8 @@ int id progress_horizontal 0x7f050019
 int id radio 0x7f05002f
 int id register_list_items_button 0x7f050057
 int id row_checkbox 0x7f050064
+int id row_list_item_checkbox 0x7f050067
+int id row_list_item_textview 0x7f050068
 int id row_list_textview 0x7f050066
 int id row_textview 0x7f050065
 int id search_badge 0x7f050032
@@ -384,7 +386,8 @@ int layout activity_update_list_item 0x7f03001f
 int layout activity_update_list_name 0x7f030020
 int layout rowlayout 0x7f030021
 int layout rowlayout_list 0x7f030022
-int layout support_simple_spinner_dropdown_item 0x7f030023
+int layout rowlayout_list_items 0x7f030023
+int layout support_simple_spinner_dropdown_item 0x7f030024
 int menu do_it_main 0x7f0c0000
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002

@@ -22,7 +22,7 @@ public class DoItListItemCreateActivity extends AbstractDoItActivity
 	public void okayClicked(View view)
 	{
 		String listName = itemNameEditText.getText().toString();
-		getListDao().createList(listName);
+		getListDao().createListItem(listName);
 		finish();
 	}
 }
