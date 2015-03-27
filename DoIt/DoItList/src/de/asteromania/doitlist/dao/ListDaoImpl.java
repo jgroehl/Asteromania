@@ -7,15 +7,16 @@ import java.util.List;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import de.asteromania.doitlist.dao.scheme.SchemeList;
 import de.asteromania.doitlist.dao.scheme.SchemeListItem;
-import de.asteromania.doitlist.dao.scheme.SchemeTask;
 import de.asteromania.doitlist.domain.DoItList;
 import de.asteromania.doitlist.domain.DoItListItem;
 
 public class ListDaoImpl implements ListDao
 {
 
+	private static final String TAG = ListDaoImpl.class.getSimpleName();
 	private final DatabaseHelper databaseHelper;
 
 	public ListDaoImpl(DatabaseHelper databaseHelper)
@@ -27,7 +28,8 @@ public class ListDaoImpl implements ListDao
 	public void createList(String listName)
 	{
 		SQLiteDatabase db = databaseHelper.getWritableDatabase();
-		db.insert(SchemeList.TABLE_NAME, null, createContentValuesFromList(new DoItList(listName)));
+		long id = db.insert(SchemeList.TABLE_NAME, null, createContentValuesFromList(new DoItList(listName)));
+		Log.d(TAG, "Created List [" + listName + "] with result " + id);
 	}
 
 	private ContentValues createContentValuesFromList(DoItList list)
@@ -43,13 +45,15 @@ public class ListDaoImpl implements ListDao
 	{
 		SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
-		Cursor c = db.rawQuery("SELECT " + SchemeList.COLUMN_NAME_NAME + " FROM " + SchemeList.TABLE_NAME,
-				new String[] {});
+		String query = "SELECT " + SchemeList.COLUMN_NAME_NAME + ", " + SchemeList.COLUMN_NAME_ID + " FROM "
+				+ SchemeList.TABLE_NAME;
+		Log.d(TAG, query);
+		Cursor c = db.rawQuery(query, new String[] {});
 
 		List<DoItList> lists = new ArrayList<DoItList>();
 
 		while (c.moveToNext())
-			lists.add(new DoItList(c.getString(0)));
+			lists.add(new DoItList(c.getLong(1), c.getString(0)));
 
 		return lists;
 	}
@@ -59,9 +63,10 @@ public class ListDaoImpl implements ListDao
 	{
 		SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
-		Cursor c = db.rawQuery("SELECT " + SchemeListItem.COLUMN_NAME_ID + ", " + SchemeListItem.COLUMN_NAME_TEXT
-				+ " FROM " + SchemeListItem.TABLE_NAME + " WHERE " + SchemeListItem.COLUMN_LIST_ID + " = ?",
-				new String[] { String.valueOf(listid) });
+		String query = "SELECT " + SchemeListItem.COLUMN_NAME_ID + ", " + SchemeListItem.COLUMN_NAME_TEXT + " FROM "
+				+ SchemeListItem.TABLE_NAME + " WHERE " + SchemeListItem.COLUMN_LIST_ID + " = ?";
+		Log.d(TAG, query);
+		Cursor c = db.rawQuery(query, new String[] { String.valueOf(listid) });
 
 		List<DoItListItem> list = new ArrayList<DoItListItem>();
 
@@ -76,7 +81,7 @@ public class ListDaoImpl implements ListDao
 	public void deleteList(long listId)
 	{
 		SQLiteDatabase db = databaseHelper.getWritableDatabase();
-		db.delete(SchemeList.TABLE_NAME, SchemeList.COLUMN_NAME_ID + " = (?)", new String[] { String.valueOf(listId) });
+		db.delete(SchemeList.TABLE_NAME, SchemeList.COLUMN_NAME_ID + " = ?", new String[] { String.valueOf(listId) });
 	}
 
 	@Override
@@ -84,24 +89,31 @@ public class ListDaoImpl implements ListDao
 	{
 		SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
-		Cursor c = db.rawQuery("SELECT " + SchemeList.COLUMN_NAME_NAME + " FROM " + SchemeList.TABLE_NAME + " WHERE "
-				+ SchemeList.COLUMN_NAME_ID + " = (?)", new String[] { String.valueOf(selectedListId) });
+		String query = "SELECT " + SchemeList.COLUMN_NAME_NAME + " FROM " + SchemeList.TABLE_NAME + " WHERE "
+				+ SchemeList.COLUMN_NAME_ID + " = ?";
+
+		Log.d(TAG, query);
+		Cursor c = db.rawQuery(query, new String[] { String.valueOf(selectedListId) });
 
 		if (c.moveToNext())
 		{
-			return c.getString(0);
+			String result = c.getString(0);
+			return result;
 		}
 		else
+		{
 			return null;
+		}
 	}
 
 	@Override
 	public DoItListItem getListItem(long selectedListItemId)
 	{
 		SQLiteDatabase db = databaseHelper.getReadableDatabase();
-		Cursor c = db.rawQuery("SELECT " + SchemeListItem.COLUMN_NAME_ID + ", " + SchemeListItem.COLUMN_NAME_TEXT
-				+ " FROM " + SchemeListItem.TABLE_NAME + " WHERE " + SchemeListItem.COLUMN_NAME_ID + " = (?)",
-				new String[] { String.valueOf(selectedListItemId) });
+		String query = "SELECT " + SchemeListItem.COLUMN_NAME_ID + ", " + SchemeListItem.COLUMN_NAME_TEXT + " FROM "
+				+ SchemeListItem.TABLE_NAME + " WHERE " + SchemeListItem.COLUMN_NAME_ID + " = ?";
+		Log.d(TAG, query);
+		Cursor c = db.rawQuery(query, new String[] { String.valueOf(selectedListItemId) });
 
 		if (c.moveToNext())
 		{

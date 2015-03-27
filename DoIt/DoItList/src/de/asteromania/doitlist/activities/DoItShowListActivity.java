@@ -11,7 +11,7 @@ import de.asteromania.doitlist.intent.IntentHandler.Intent;
 
 public class DoItShowListActivity extends AbstractDoItActivity
 {
-	
+
 	private DoItListItemAdapter adapter;
 
 	@Override
@@ -63,6 +63,7 @@ public class DoItShowListActivity extends AbstractDoItActivity
 		listView.setAdapter(adapter);
 
 		TextView textView = (TextView) findViewById(R.id.textview_show_list);
-		textView.setText(getListDao().getListName(selectedListId));
+		String listName = getListDao().getListName(selectedListId);
+		textView.setText(listName);
 	}
 }
