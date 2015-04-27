@@ -26,7 +26,7 @@ public class Coin extends Collectable
 					{
 						AsteromaniaGameHandler asteromaniaGameHandler = (AsteromaniaGameHandler) gameHandler;
 						asteromaniaGameHandler.getSoundManager().playCoinSound();
-						asteromaniaGameHandler.getPlayerInfo().addCoins(coinAmount);
+						asteromaniaGameHandler.getPlayerInfo().addCoins(2 * coinAmount);
 
 					}
 				});

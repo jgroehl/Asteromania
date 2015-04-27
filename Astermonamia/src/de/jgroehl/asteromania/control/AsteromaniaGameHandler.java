@@ -21,7 +21,7 @@ import de.jgroehl.asteromania.graphics.ui.overlay.PlayerInfoDisplay;
 public class AsteromaniaGameHandler extends BaseGameHandler
 {
 
-	private static final int NEW_LEVEL_SHIELD_SECONDS = 4;
+	private static final int NEW_LEVEL_SHIELD_SECONDS = 6;
 
 	private final SoundManager soundManager;
 
@@ -74,7 +74,7 @@ public class AsteromaniaGameHandler extends BaseGameHandler
 					transition.initialize();
 					playerInfo.incerementBonusFactor();
 					if (playerInfo.getCurrentHighscore() > 0)
-						playerInfo.addCoins(playerInfo.getLevel());
+						playerInfo.addCoins((int) (playerInfo.getLevel() * 1.5));
 					playerInfo.nextLevel(this);
 				}
 				if (transition.isFinished())
