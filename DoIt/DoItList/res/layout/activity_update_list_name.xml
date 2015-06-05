@@ -38,5 +38,15 @@
         android:onClick="okayClicked"
         android:text="@string/button_ok"
         android:textSize="18sp" />
+    
+    <Button
+        android:id="@+id/button_update_list_name_delete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_update_list_name_ok"
+        android:onClick="deleteListClicked"
+        android:layout_marginTop="20dp"
+        android:text="@string/delete_list"
+        android:textSize="18sp" />
 
 </RelativeLayout>

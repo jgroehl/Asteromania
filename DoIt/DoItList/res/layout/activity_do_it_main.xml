@@ -53,6 +53,8 @@
             android:layout_toRightOf="@id/button_main_left"
             android:layout_toStartOf="@id/button_main_right"
             android:gravity="center"
+            android:clickable="true"
+            android:onClick="dateClicked"
             android:textSize="20sp" />
     </RelativeLayout>
 

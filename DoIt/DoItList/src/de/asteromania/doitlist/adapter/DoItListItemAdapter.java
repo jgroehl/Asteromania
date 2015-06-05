@@ -23,6 +23,9 @@ import de.asteromania.doitlist.intent.IntentHandler.Intent;
 
 public class DoItListItemAdapter extends AbstractAdapter<DoItListItem>
 {
+	
+	private List<CheckBox> checkboxes = new ArrayList<CheckBox>();
+	private boolean allSelected = false;
 
 	public DoItListItemAdapter(Collection<? extends DoItListItem> values, AbstractDoItActivity context)
 	{
@@ -49,12 +52,16 @@ public class DoItListItemAdapter extends AbstractAdapter<DoItListItem>
 		});
 
 		final CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.row_list_item_checkbox);
+		checkBox.setChecked(getItem(position).isSelected());
+		checkboxes.add(checkBox);
 		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
 		{
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
 				getItem(position).setSelected(isChecked);
+				if(!isChecked)
+					allSelected = false;
 			}
 		});
 
@@ -68,6 +75,19 @@ public class DoItListItemAdapter extends AbstractAdapter<DoItListItem>
 			if (i.isSelected())
 				items.add(i);
 		return items;
+	}
+	
+	public void selectAll(boolean selected)
+	{
+		for(CheckBox checkBox : checkboxes)
+			checkBox.setChecked(selected);
+		
+		allSelected  = selected;
+	}
+
+	public boolean allItemsSelected()
+	{
+		return allSelected;
 	}
 
 }

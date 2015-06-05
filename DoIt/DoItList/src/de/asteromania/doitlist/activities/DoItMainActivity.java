@@ -21,6 +21,7 @@ import de.asteromania.doitlist.intent.IntentHandler.Intent;
 public class DoItMainActivity extends AbstractDoItActivity
 {
 
+	private boolean showAll = false;
 	private static final long DAY_MILLISECS = 86400000L;
 
 	@Override
@@ -42,17 +43,23 @@ public class DoItMainActivity extends AbstractDoItActivity
 	{
 		ListView listView = (ListView) findViewById(R.id.todo_listview);
 		Date selectedDate = getDataDao().getSelectedDate();
-		DoItTaskAdapter adapter = new DoItTaskAdapter(getTaskDao().getTasks(selectedDate), this);
+		DoItTaskAdapter adapter = new DoItTaskAdapter(getTaskDao().getTasks(showAll ? null : selectedDate), this);
 		listView.setAdapter(adapter);
 
 		TextView textView = (TextView) findViewById(R.id.textview_main_date);
-		String dateString = TaskDao.DATE_FORMAT.format(selectedDate);
-		dateString = (dateString.equals(TaskDao.DATE_FORMAT.format(new Date())) ? getString(R.string.today) + "\n"
-				: dateString);
-		Calendar c = Calendar.getInstance();
-		c.setTime(selectedDate);
+		if (!showAll)
+		{
+			String dateString = TaskDao.DATE_FORMAT.format(selectedDate);
+			dateString = (dateString.equals(TaskDao.DATE_FORMAT.format(new Date())) ? getString(R.string.today) + "\n"
+					: dateString);
+			Calendar c = Calendar.getInstance();
+			c.setTime(selectedDate);
 
-		textView.setText(dateString + calcWeekday(c.get(Calendar.DAY_OF_WEEK)));
+			textView.setText(dateString + calcWeekday(c.get(Calendar.DAY_OF_WEEK)));
+		}
+		else
+			textView.setText(getString(R.string.all));
+
 	}
 
 	private String calcWeekday(int day)
@@ -132,7 +139,7 @@ public class DoItMainActivity extends AbstractDoItActivity
 	public void deleteTasks(View view)
 	{
 		List<DoItTask> selectedTasks = new ArrayList<DoItTask>();
-		for (DoItTask task : getTaskDao().getTasks(getDataDao().getSelectedDate()))
+		for (DoItTask task : getTaskDao().getTasks(showAll ? null : getDataDao().getSelectedDate()))
 		{
 			if (task.isFinished())
 				selectedTasks.add(task);
@@ -151,13 +158,21 @@ public class DoItMainActivity extends AbstractDoItActivity
 
 	public void nextDay(View view)
 	{
+		showAll = false;
 		getDataDao().setSelectedDate(new Date(getDataDao().getSelectedDate().getTime() + DAY_MILLISECS));
 		updateView();
 	}
 
 	public void previousDay(View view)
 	{
+		showAll = false;
 		getDataDao().setSelectedDate(new Date(getDataDao().getSelectedDate().getTime() - DAY_MILLISECS));
+		updateView();
+	}
+	
+	public void dateClicked(View view)
+	{
+		showAll = !showAll;
 		updateView();
 	}
 }

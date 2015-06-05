@@ -28,12 +28,18 @@ public class TaskDaoImpl implements TaskDao
 	@Override
 	public List<DoItTask> getTasks(Date date)
 	{
-		String datetime = DATE_FORMAT.format(date);
-
 		SQLiteDatabase db = databaseHelper.getReadableDatabase();
-
-		Cursor c = db.rawQuery("SELECT * FROM " + SchemeTask.TABLE_NAME + " WHERE " + SchemeTask.COLUMN_NAME_DATE
-				+ " = (?)", new String[] { datetime });
+		Cursor c = null;
+		if (date != null)
+		{
+			String datetime = DATE_FORMAT.format(date);
+			c = db.rawQuery("SELECT * FROM " + SchemeTask.TABLE_NAME + " WHERE " + SchemeTask.COLUMN_NAME_DATE
+					+ " = (?)", new String[] { datetime });
+		}
+		else
+		{
+			c = db.rawQuery("SELECT * FROM " + SchemeTask.TABLE_NAME, new String[] {});
+		}
 
 		List<DoItTask> tasks = new ArrayList<DoItTask>();
 

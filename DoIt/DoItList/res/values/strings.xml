@@ -30,5 +30,8 @@
     <string name="create_list_heading">Create List</string>
     <string name="show_list_heading">Manage List</string>
     <string name="create_list_item_heading">Create New List Item</string>
+    <string name="delete_list">Delete List</string>
+    <string name="show_list_added">Items added on </string>
+    <string name="all">ALL</string>
 
 </resources>

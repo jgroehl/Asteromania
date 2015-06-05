@@ -27,5 +27,8 @@
     <string name="create_list_heading">Liste erstellen</string>
     <string name="show_list_heading">Liste verwalten</string>
     <string name="create_list_item_heading">Neuer Listeneintrag</string>
+    <string name="delete_list">Liste löschen</string>
+    <string name="show_list_added">Einträge hinzugefügt am </string>
+    <string name="all">ALLE</string>
 
 </resources>

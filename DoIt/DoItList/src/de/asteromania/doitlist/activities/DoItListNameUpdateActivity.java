@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import de.asteromania.doitlist.R;
+import de.asteromania.doitlist.intent.IntentHandler;
+import de.asteromania.doitlist.intent.IntentHandler.Intent;
 
 public class DoItListNameUpdateActivity extends AbstractDoItActivity
 {
@@ -28,6 +30,13 @@ public class DoItListNameUpdateActivity extends AbstractDoItActivity
 			getListDao().updateListName(getDataDao().getSelectedListId(), editText.getText().toString());
 		}
 		finish();
+	}
+	
+	public void deleteListClicked(View view)
+	{
+		getListDao().deleteList(getDataDao().getSelectedListId());
+		finish();
+		IntentHandler.startIntent(Intent.LIST_MENU, this);
 	}
 
 }
