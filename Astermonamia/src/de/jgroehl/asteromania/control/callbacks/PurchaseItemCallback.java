@@ -14,8 +14,8 @@ public class PurchaseItemCallback implements EventCallback
 
 	public enum PurchaseType
 	{
-		SHIELD_GENERATOR(750, R.string.shield_generator), DOUBLE_SHOT(2000, R.string.double_shot), TRIPLE_SHOT(6000,
-				R.string.triple_shot), ROCKET_LAUNCHER(1000, R.string.rocket_launcher);
+		SHIELD_GENERATOR(400, R.string.shield_generator), DOUBLE_SHOT(2000, R.string.double_shot), TRIPLE_SHOT(10000,
+				R.string.triple_shot), ROCKET_LAUNCHER(750, R.string.rocket_launcher);
 
 		public final int cost;
 		public final int textId;

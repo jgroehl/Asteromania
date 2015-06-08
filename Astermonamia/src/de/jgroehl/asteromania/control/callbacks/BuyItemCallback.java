@@ -17,10 +17,10 @@ public class BuyItemCallback implements EventCallback
 	public enum ItemType
 	{
 
-		HP(1, 2, R.string.lifepoint, false), DAMAGE(1, 3,
+		HP(1, 1, R.string.lifepoint, false), DAMAGE(1, 3,
 
-		R.string.damage, false), SPEED(0.1f, 1, R.string.speed, false), SHOT_SPEED(0.1f, 2, R.string.shot_speed, false), SHOT_FREQUENCY(
-				0.1f, 2, R.string.shot_frequency, false), SHIELD_SECONDS(5, 2, R.string.shield, true), AMMO(1, 20,
+		R.string.damage, false), SPEED(0.1f, 1, R.string.speed, false), SHOT_SPEED(0.1f, 1, R.string.shot_speed, false), SHOT_FREQUENCY(
+				0.1f, 1, R.string.shot_frequency, false), SHIELD_SECONDS(5, 2, R.string.shield, true), AMMO(1, 20,
 				R.string.rocket_ammo, true);
 
 		public final float increaseValue;
@@ -45,11 +45,11 @@ public class BuyItemCallback implements EventCallback
 				case DAMAGE:
 					return (playerInfo.getBonusDamage() + baseCost) * (playerInfo.getBonusDamage() + baseCost);
 				case SPEED:
-					return (int) Math.pow((((playerInfo.getMaxSpeedFactor() - 1) * 6) + baseCost), 3);
+					return (int) Math.pow((((playerInfo.getMaxSpeedFactor() - 1) * 3) + baseCost), 3);
 				case SHOT_FREQUENCY:
-					return (int) Math.pow((((playerInfo.getShotFrequencyFactor() - 1) * 12) + baseCost), 3);
+					return (int) Math.pow((((playerInfo.getShotFrequencyFactor() - 1) * 9) + baseCost), 3);
 				case SHOT_SPEED:
-					return (int) Math.pow((((playerInfo.getShotSpeedFactor() - 1) * 9) + baseCost), 3);
+					return (int) Math.pow((((playerInfo.getShotSpeedFactor() - 1) * 6) + baseCost), 3);
 				case SHIELD_SECONDS:
 					return (int) (baseCost * playerInfo.getLevel());
 				case AMMO:
