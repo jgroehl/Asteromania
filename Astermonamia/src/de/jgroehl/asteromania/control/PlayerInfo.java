@@ -672,9 +672,9 @@ public class PlayerInfo
 		ammo -= 1;
 	}
 
-	public void incrementAmmo()
+	public void incrementAmmo(int amount)
 	{
-		ammo += 1;
+		ammo += amount;
 	}
 
 	public String getAppId()

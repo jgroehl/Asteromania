@@ -44,7 +44,7 @@ public class NormalEnemy extends BaseEnemy
 	@Override
 	protected void dropItems(AsteromaniaGameHandler asteromaniaGameHandler)
 	{
-		int amountCoins = (int) ((0.5 + Math.random() * 0.25) * getShotDamage() + 1);
+		int amountCoins = (int) ((0.75 + Math.random() * 0.25) * getShotDamage() + 1);
 		Coin.addToHandler(amountCoins, asteromaniaGameHandler, this);
 		if (asteromaniaGameHandler.getPlayerInfo().isMissingHealth() && Math.random() < 0.4f)
 		{

@@ -46,15 +46,14 @@ public class BossEnemy extends BaseEnemy
 	@Override
 	protected void dropItems(AsteromaniaGameHandler asteromaniaGameHandler)
 	{
-		int amountCoins = (int) ((0.25 + Math.random() * 0.125) * getShotDamage());
+		int amountCoins = (int) ((0.75 + Math.random() * 0.5) * getShotDamage());
 		Coin.addToHandler(amountCoins, asteromaniaGameHandler, this);
 		if (asteromaniaGameHandler.getPlayerInfo().isMissingHealth() && Math.random() < 0.8f)
 		{
 			Heart.addToHandler(getShotDamage() / 2, asteromaniaGameHandler, this);
 		}
 		if (asteromaniaGameHandler.getPlayerInfo().purchasedItem(PurchaseType.ROCKET_LAUNCHER) && Math.random() < 0.9f)
-			for (int i = 0, limit = (int) Math.random() * 5 + 1; i < limit; i++)
-				Ammo.addToHandler(asteromaniaGameHandler, this);
+			Ammo.addToHandler(Math.max(1, getShotDamage() / 4), asteromaniaGameHandler, this);
 	}
 
 }

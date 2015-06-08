@@ -125,7 +125,7 @@ public class Asteroid extends GraphicsObject implements Updatable, Hitable, Kill
 				if (life <= 0)
 				{
 					asteromaniaGameHandler.remove(this);
-					int amountCoins = (int) Math.round((0.5 + Math.random() * 0.5) * Math.sqrt(damage)) + 1;
+					int amountCoins = (int) Math.round((0.75 + Math.random()*0.25) * Math.sqrt(damage)) + 1;
 					Coin.addToHandler(amountCoins, asteromaniaGameHandler, this);
 					asteromaniaGameHandler.getApiHandler().destroyedAsteroid();
 					asteromaniaGameHandler.getPlayerInfo().addScore((damage + 3) / 4);

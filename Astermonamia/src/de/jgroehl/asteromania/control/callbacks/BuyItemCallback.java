@@ -140,7 +140,7 @@ public class BuyItemCallback implements EventCallback
 					case SHIELD_SECONDS:
 						asteromaniaGameHandler.getPlayer().addShieldSeconds((int) type.increaseValue);
 					case AMMO:
-						asteromaniaGameHandler.getPlayerInfo().incrementAmmo();
+						asteromaniaGameHandler.getPlayerInfo().incrementAmmo(1);
 						break;
 				}
 			}
