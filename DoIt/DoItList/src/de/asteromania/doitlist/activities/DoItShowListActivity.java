@@ -37,6 +37,7 @@ public class DoItShowListActivity extends AbstractDoItActivity
 	public void deleteItemsClicked(View view)
 	{
 		getListDao().deleteItems(adapter.getSelectedItems());
+		updateView();
 	}
 
 	public void registerItemsClicked(View view)
